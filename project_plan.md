@@ -3,7 +3,7 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 15, 2026 at 11:12 PM EDT |
-| Last updated | August 15, 2026 at 11:42 PM EDT |
+| Last updated | August 16, 2026 at 2:22 AM EDT |
 | Timezone | America/Toronto (UTC−04:00) |
 | Estimated reading time | 33 minutes |
 
@@ -643,36 +643,39 @@ Pomorise will earn trust through details:
 - No uncaught errors during normal use
 - Plain-language privacy explanations
 - No network requests beyond loading the static application itself
+- Beginner-friendly adjacent comments for every human-authored code line, with companion annotations for formats that cannot contain comments
 
 ## Delivery sequence
 
-### 1. Confirm behavior and scope
+Development will proceed through **seven phases**. The detailed tasks, validation checks, and exit gates live in [`implementation_plan.md`](implementation_plan.md).
 
-Settle the remaining timer, task, reflection, progress, sound, and visual details.
+### 1. Foundation and guardrails
 
-### 2. Approve the design direction
+Create the reproducible React, TypeScript, and Vite scaffold, quality commands, test layers, Pages base path, source structure, and code-commenting review rule.
 
-Choose the personality, layout, color, typography, interaction style, and visual progress concept.
+### 2. Design system and application shell
 
-### 3. Establish the application foundation
+Turn the approved identity into accessible light and dark tokens, reusable components, and a responsive application shell.
 
-Create the React, TypeScript, and Vite application, configure the GitHub Pages base path, and add the first tests.
+### 3. Reliable timer engine
 
-### 4. Build the focus loop
+Implement and verify the timestamp-based timer state machine, controls, recovery behavior, sound, and optional notifications.
+
+### 4. Complete focus loop
 
 Implement the timer, intention, distraction inbox, guided break, reflection, and private progress experience.
 
-### 5. Add local persistence and privacy controls
+### 5. Local data and privacy controls
 
 Implement IndexedDB, settings storage, migrations, export, import, deletion, and transparent privacy messaging.
 
-### 6. Make it installable and offline
+### 6. Offline experience and quality hardening
 
-Add the manifest, service worker, caching rules, update experience, and offline verification.
+Add the manifest, service worker, caching rules, update experience, accessibility review, responsive verification, privacy inspection, and resilience work.
 
-### 7. Verify and publish
+### 7. Release verification and publication
 
-Test critical behavior, accessibility, responsive layouts, privacy constraints, production builds, and the public GitHub Pages deployment.
+Run every clean-install quality gate, deploy through GitHub Actions, and verify Pomorise 1.0: First Light on its public GitHub Pages URL.
 
 ## Out of scope
 
@@ -706,8 +709,8 @@ These items remain out of scope unless the project owner explicitly changes the 
 
 | Verification information | Value |
 | --- | --- |
-| Last verified | August 15, 2026 at 11:42 PM EDT |
-| Verification scope | Browser storage, persistence, private browsing, offline and background limits, GitHub Pages privacy boundary, deployment assumptions, confirmed tools, rejected-tool alternatives, proposed data flow, and approved logo asset paths and dimensions |
+| Last verified | August 16, 2026 at 2:22 AM EDT |
+| Verification scope | Browser storage, persistence, private browsing, offline and background limits, GitHub Pages privacy boundary, deployment assumptions, confirmed tools, rejected-tool alternatives, proposed data flow, approved logo assets, seven implementation phases, and code-commenting requirements |
 | Source standard | Current primary documentation from MDN, GitHub, React, Vite, and any selected library’s official documentation |
 | Result | The plan is technically coherent for a static, local-first application. Limitations are stated explicitly rather than hidden. |
 
@@ -737,6 +740,7 @@ Fact-checking is continuous. Before implementation, dependency choices and brows
 - **GitHub Pages:** GitHub’s static website hosting service and the confirmed home for Pomorise.
 - **IndexedDB:** An asynchronous browser database for structured, queryable local data.
 - **Local-first:** A product model in which personal data is created, read, and stored on the user’s device by default.
+- **Companion annotation:** A separate explanation for a required file format that cannot legally or meaningfully contain comments.
 - **Logo lockup:** The approved arrangement of a symbol, wordmark, and optional tagline.
 - **`localStorage`:** A synchronous browser key-value store suitable for small preferences, not growing structured history.
 - **Origin:** The combination of scheme, host, and port that browsers use to isolate one website’s storage from another.
@@ -755,6 +759,7 @@ Fact-checking is continuous. Before implementation, dependency choices and brows
 
 ## Further reading
 
+- [Pomorise implementation plan](implementation_plan.md)
 - [MDN: Client-side storage](https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Client-side_APIs/Client-side_storage)
 - [MDN: Using IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Using_IndexedDB)
 - [MDN: Web Storage API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API)

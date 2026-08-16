@@ -3,9 +3,9 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 15, 2026 at 10:36 PM EDT |
-| Last updated | August 15, 2026 at 11:42 PM EDT |
+| Last updated | August 16, 2026 at 2:22 AM EDT |
 | Timezone | America/Toronto (UTC−04:00) |
-| Estimated reading time | 28 minutes |
+| Estimated reading time | 31 minutes |
 | Verification status | Commit facts checked against local Git history; technical claims checked against linked primary documentation |
 
 Every commit moves Pomorise somewhere. This changelog tells that story in chronological detail, capturing the purpose, files, behavior, implementation choices, validation, and follow-up behind each step.
@@ -16,7 +16,8 @@ The newest commit should be added at the top of the **Commit history** section.
 
 - [Entry template](#entry-template)
 - [Commit history](#commit-history)
-  - [Pending: Approve the light and dark Pomorise logos](#pending-approve-the-light-and-dark-pomorise-logos)
+  - [Pending: Define the seven-phase implementation plan](#pending-define-the-seven-phase-implementation-plan)
+  - [`4add167`: Approve light and dark Pomorise logos](#4add167-approve-light-and-dark-pomorise-logos)
   - [`6fb739a`: Confirm the First Light development toolset](#6fb739a-confirm-the-first-light-development-toolset)
   - [`cecd97e`: Name Pomorise 1.0 First Light](#cecd97e-name-pomorise-10-first-light)
   - [`dac259b`: Add new functionality and refine existing behavior](#dac259b-add-new-functionality-and-refine-existing-behavior)
@@ -92,13 +93,105 @@ Describe what a visitor or maintainer will notice. Write “None” when the cha
 
 ## Commit history
 
-### `Pending`: Approve the light and dark Pomorise logos
+### `Pending`: Define the seven-phase implementation plan
 
 - **Status:** Prepared for the next commit
-- **Prepared:** 2026-08-15 23:42 EDT
+- **Prepared:** 2026-08-16 02:18 EDT
 - **Author:** Aman Ali with Codex collaboration
 - **Full commit:** Assigned after the commit is created
-- **Expected files:** `assets/`, `changelog.md`, `meta_thinking.md`, and `project_plan.md`
+- **Expected files:** `README.md`, `changelog.md`, `implementation_plan.md`, `meta_thinking.md`, and `project_plan.md`
+
+#### Purpose
+
+Turn the approved product direction into an executable development sequence with clear phase boundaries, validation gates, and a binding beginner-readability standard.
+
+#### Decision context
+
+The project owner first left a future reminder to create an implementation plan, choose the number of development phases, and require detailed comments. They later activated those tasks and explicitly confirmed that every code line must be commented. The project already contained a seven-step delivery direction, so the implementation plan formalizes seven engineering phases rather than creating a competing count.
+
+#### Changes
+
+- Created `implementation_plan.md` with document metadata, a table of contents, glossary, primary-source links, and a verification record.
+- Fixed development at seven phases with a purpose, work list, validation list, and exit gate for each phase.
+- Defined the phases as foundation, design shell, timer, focus loop, local data, offline hardening, and release publication.
+- Added fixed architectural, privacy, testing, and deployment boundaries.
+- Made adjacent beginner-friendly comments mandatory for every human-authored code line.
+- Defined comment placement, content, review expectations, and an annotated TypeScript example.
+- Defined companion Markdown annotations for strict JSON and other required formats that cannot safely contain comments.
+- Added cross-phase testing responsibilities, phase closeout steps, and a risk-control table.
+- Updated the repository overview to point readers to the seven-phase plan and its readiness state.
+- Aligned the project plan’s delivery sequence and quality standard with the new implementation plan.
+- Recorded the activated request and confirmed decisions in the discussion history.
+- Resolved the previous pending logo entry as commit `4add167`.
+
+#### Files affected
+
+- `implementation_plan.md`: New detailed seven-phase execution plan and line-by-line commenting standard.
+- `README.md`: Links the new plan and reflects readiness for Phase 1 when requested.
+- `project_plan.md`: Aligns the delivery sequence, quality expectations, glossary, sources, and verification record.
+- `meta_thinking.md`: Records the reminder, activation, phase count, and mandatory commenting decision.
+- `changelog.md`: Resolves the logo commit and prepares this implementation-planning entry.
+
+#### User-visible impact
+
+There is no application interface change yet. Contributors now have one development sequence that identifies what to build, how to prove each phase is complete, and how thoroughly every code line must be explained for beginners.
+
+#### Decisions and tradeoffs
+
+- Seven phases balance meaningful engineering boundaries with the project owner’s desire to begin development soon.
+- Exit gates are evidence-based and have no invented calendar estimates.
+- The unusually detailed commenting requirement is accepted as a project-specific readability rule.
+- Companion annotations preserve the rule’s teaching purpose when strict file formats would become invalid if comments were inserted directly.
+- The implementation plan orders work without choosing unresolved product behavior on the owner’s behalf.
+
+#### Risks and limitations
+
+- Line-by-line comments will make source files substantially longer and require disciplined maintenance.
+- Incorrect or stale comments could mislead beginners even when tests pass.
+- Exact dependency versions, supported browsers, and measurable performance budgets remain installation-phase decisions.
+- Some product behavior still requires explicit decisions before its implementation phase can close.
+
+#### Validation
+
+- Checked the phase sequence against the confirmed React, Vite, GitHub Pages, local storage, PWA, and testing architecture.
+- Verified Vite’s documented `dist` output and repository base-path requirement for GitHub Pages.
+- Verified that GitHub Pages custom workflows support built artifact deployment.
+- Checked every phase for a purpose, work list, validation list, and exit gate.
+- Checked the code-commenting rule for strict JSON, generated files, lockfiles, and binary assets.
+- Verified tables of contents, glossaries, further-reading sections, timestamps, and estimated reading times.
+- Checked all Markdown for formatting errors and forbidden em dashes.
+
+#### Lessons learned by the agent
+
+- A phase count is useful only when every phase has an observable exit gate.
+- Literal line-by-line commenting needs an explicit policy for formats that reject comments.
+- The existing seven-step project direction provided a sound backbone and prevented unnecessary replanning.
+
+#### Lessons learned by the user
+
+- The project owner explicitly confirmed that commenting every code line is mandatory for beginner readability.
+- The project owner chose to activate implementation planning after initially preserving it only as a personal reminder.
+
+#### Related references
+
+- Detailed execution plan: `implementation_plan.md`
+- Product direction: `project_plan.md`
+- Conversation record: `meta_thinking.md`
+- [Vite static deployment guide](https://vite.dev/guide/static-deploy.html)
+- [GitHub Pages custom workflow documentation](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages)
+
+#### Follow-up
+
+- Resolve the remaining product behavior and visual-system decisions needed by their implementation phases.
+- Begin Phase 1 only after the project owner requests implementation.
+- Replace `Pending` with the commit hash while preparing the next meaningful change.
+
+### `4add167`: Approve light and dark Pomorise logos
+
+- **Date:** 2026-08-15 23:45 EDT
+- **Author:** Aman Ali
+- **Full commit:** `4add1674379554b659a00812a2c63d9ccbe10027`
+- **Change size:** 8 files changed, 149 lines added, 15 lines removed
 
 #### Purpose
 
@@ -176,7 +269,7 @@ Pomorise now has a recognizable approved identity for light and dark surfaces. T
 - Integrate the correct logo variant when the themed application shell is implemented.
 - Test the mark at website-header, mobile-header, application-icon, and favicon sizes.
 - Reconstruct a project-owned SVG and derive reduced-detail icon variants if required by implementation.
-- Replace `Pending` with the commit hash while preparing the next meaningful change.
+- Resolve the pending entry with the final commit hash. Completed in the implementation-planning change.
 
 ### `6fb739a`: Confirm the First Light development toolset
 

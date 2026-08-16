@@ -3,9 +3,9 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 15, 2026 at 10:36 PM EDT |
-| Last updated | August 15, 2026 at 11:42 PM EDT |
+| Last updated | August 16, 2026 at 2:22 AM EDT |
 | Timezone | America/Toronto (UTC−04:00) |
-| Estimated reading time | 19 minutes |
+| Estimated reading time | 20 minutes |
 | Verification status | Fact-checked and sanity-checked against the primary sources in **Further reading** |
 
 This is Pomorise's shared memory. It captures the conversations, requests, decisions, and working agreements that shape the product. It does not contain private internal reasoning.
@@ -33,6 +33,7 @@ This is Pomorise's shared memory. It captures the conversations, requests, decis
   - [First public release named](#2026-08-15-first-public-release-named)
   - [Development toolset confirmed](#2026-08-15-development-toolset-confirmed)
   - [Light and dark logos approved](#2026-08-15-light-and-dark-logos-approved)
+  - [Seven-phase implementation planning activated](#2026-08-16-seven-phase-implementation-planning-activated)
 - [Confirmed decisions](#confirmed-decisions)
 - [Open decisions](#open-decisions)
 - [Documentation verification standard](#documentation-verification-standard)
@@ -339,6 +340,23 @@ The project owner asked to begin Pomorise’s visual identity with coordinated l
 
 After reviewing both renders, the project owner described the direction as perfect and approved it. The opaque variants were promoted to `assets/logos/light_mode.png` and `assets/logos/dark_mode.png`. Original concept renders remain in `assets/brand/concepts/` for provenance.
 
+### 2026-08-16: Seven-phase implementation planning activated
+
+| Conversation details | Value |
+| --- | --- |
+| Conversation date | August 16, 2026 |
+| Conversation timestamp | Exact send time was not retained |
+| Entry recorded | August 16, 2026 at 2:17:29 AM EDT |
+| ISO 8601 entry timestamp | `2026-08-16T02:17:29-04:00` |
+| Timezone | America/Toronto (UTC−04:00) |
+| Entry reading time | 1 minute |
+
+The project owner first left a private reminder to create an implementation plan, decide the number of phases, and require detailed beginner-friendly comments without changing any files. They then activated the first three tasks and confirmed that commenting every code line is mandatory rather than an open question.
+
+Development is now organized into seven phases: foundation and guardrails, design system and application shell, reliable timer engine, complete focus loop, local data and privacy controls, offline experience and quality hardening, and release verification and publication.
+
+The project-specific commenting rule applies to every human-authored code line. Comment lines and blank lines do not require recursive comments. Formats that cannot legally or meaningfully contain comments must use companion Markdown annotations so the underlying decisions remain readable without corrupting the files.
+
 ## Confirmed decisions
 
 These are the firm foundations beneath Pomorise:
@@ -365,6 +383,8 @@ These are the firm foundations beneath Pomorise:
 - **Development baseline:** The complete First Light tool table is confirmed with no remaining `Planned` status
 - **Tool rejection:** Excluded tools require a documented reason, confirmed replacement, and reconsideration condition
 - **Logo direction:** Segmented timer ring, rising sun, and subtle lowercase `p`, with coordinated approved light and dark variants
+- **Implementation sequence:** Seven phases with an observable exit gate for each phase
+- **Code readability:** Every human-authored code line requires an adjacent beginner-friendly explanation, with companion annotations for non-commentable formats
 
 ## Open decisions
 
@@ -395,6 +415,7 @@ Official sources are preferred in this order: standards and browser documentatio
 ## Glossary
 
 - **ASCII interface:** A text-character sketch that communicates layout and hierarchy without final visual styling.
+- **Companion annotation:** A separate Markdown explanation for a required file format that cannot contain comments safely.
 - **Fact-check:** Verification that a claim agrees with an authoritative and current source.
 - **First Light:** The name of Pomorise 1.0 and its first complete public release.
 - **ISO 8601:** A standard timestamp format that includes an unambiguous date, time, and UTC offset.
@@ -408,6 +429,7 @@ Official sources are preferred in this order: standards and browser documentatio
 ## Further reading
 
 - [Project plan](project_plan.md)
+- [Implementation plan](implementation_plan.md)
 - [Commit changelog](changelog.md)
 - [MDN: Client-side storage](https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Client-side_APIs/Client-side_storage)
 - [MDN: Storage quotas and eviction](https://developer.mozilla.org/en-US/docs/Web/API/Storage_API/Storage_quotas_and_eviction_criteria)
