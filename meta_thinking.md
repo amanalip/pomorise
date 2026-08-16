@@ -3,9 +3,10 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 15, 2026 at 10:36 PM EDT |
-| Last updated | August 15, 2026 at 10:51 PM EDT |
+| Last updated | August 15, 2026 at 11:22 PM EDT |
 | Timezone | America/Toronto (UTC−04:00) |
-| Estimated reading time | 9 minutes |
+| Estimated reading time | 16 minutes |
+| Verification status | Fact-checked and sanity-checked against the primary sources in **Further reading** |
 
 This is Pomorise's shared memory. It captures the conversations, requests, decisions, and working agreements that shape the product. It does not contain private internal reasoning.
 
@@ -24,8 +25,16 @@ This is Pomorise's shared memory. It captures the conversations, requests, decis
   - [Conversation tracking standard established](#2026-08-15-conversation-tracking-standard-established)
   - [Commit synchronization established](#2026-08-15-commit-synchronization-established)
   - [Technical foundation and quality ambition approved](#2026-08-15-technical-foundation-and-quality-ambition-approved)
+  - [Feature possibilities explored](#2026-08-15-feature-possibilities-explored)
+  - [Local-first privacy direction confirmed](#2026-08-15-local-first-privacy-direction-confirmed)
+  - [Documentation verification standard confirmed](#2026-08-15-documentation-verification-standard-confirmed)
+  - [ASCII interface sketches requested](#2026-08-15-ascii-interface-sketches-requested)
+  - [Detailed tooling and data flow requested](#2026-08-15-detailed-tooling-and-data-flow-requested)
 - [Confirmed decisions](#confirmed-decisions)
 - [Open decisions](#open-decisions)
+- [Documentation verification standard](#documentation-verification-standard)
+- [Glossary](#glossary)
+- [Further reading](#further-reading)
 - [Maintenance rules](#maintenance-rules)
 
 ## Project origin
@@ -191,6 +200,93 @@ The React, TypeScript, and Vite foundation was approved. GitHub Pages remains th
 
 The next product step remains feature definition. Implementation will wait until the feature set and design direction are settled.
 
+### 2026-08-15: Feature possibilities explored
+
+| Conversation details | Value |
+| --- | --- |
+| Conversation date | August 15, 2026 |
+| Conversation timestamp | August 15, 2026 at 11:05:13 PM EDT |
+| ISO 8601 timestamp | `2026-08-15T23:05:13-04:00` |
+| Timezone | America/Toronto (UTC−04:00) |
+| Entry reading time | 2 minutes |
+
+The project owner asked what Pomorise could become beyond a standard 25-minute timer and gave permission to introduce additional JavaScript technology when it creates real value.
+
+Research across established focus products revealed several familiar strengths: task estimates and reports in Pomofocus, detailed task management and synchronization in Focus To-Do, intention setting and reflection in Session, and visible progress, ambient sound, and gentle gamification in Forest.
+
+The proposed Pomorise distinction is a complete focus loop:
+
+1. **Choose:** Name one clear intention and estimate the effort.
+2. **Focus:** Enter a dependable, distraction-light session.
+3. **Recover:** Take a guided break that restores attention instead of inviting aimless browsing.
+4. **Reflect:** Capture progress, distractions, and the best next step.
+5. **Learn:** Turn completed sessions into useful patterns without guilt-driven metrics.
+
+Possible feature groups include flexible timer modes, a small task layer, guided breaks, a distraction inbox, session notes, progress analytics, ambient sound, local-first privacy, offline installation, accessibility, and thoughtful personalization. Accounts, cross-device synchronization, collaboration, calendar connections, and genuine website blocking belong to later phases because they require external services or a browser extension.
+
+These ideas are proposals, not approved requirements. React remains the only recommended interface framework. Additional libraries should be introduced only when an approved feature needs them. Likely candidates include a small offline-installation plugin and IndexedDB support for rich local history. A second interface framework would add complexity without improving the experience.
+
+### 2026-08-15: Local-first privacy direction confirmed
+
+| Conversation details | Value |
+| --- | --- |
+| Conversation date | August 15, 2026 |
+| Conversation timestamp | August 15, 2026 at 11:12:28 PM EDT |
+| ISO 8601 timestamp | `2026-08-15T23:12:28-04:00` |
+| Timezone | America/Toronto (UTC−04:00) |
+| Entry reading time | 2 minutes |
+
+The project owner confirmed that Pomorise will be public-facing and strongly privacy-focused. The application will not offer sign-in, collect application logs, track behavior, or store personal product data on a server. The proposed focus-loop features remain desired, but their information must stay in the user’s browser.
+
+This direction makes Pomorise a local-first application. Small preferences will use `localStorage`, while structured tasks, session history, distractions, and reflections will use IndexedDB. Offline application files will use the Cache API through a service worker. Export, import, and clear-data controls will give each user direct ownership of their information.
+
+Browser storage fits the requirement, but it carries honest limitations. Data stays with one browser profile and device, can disappear when site data is cleared, and is normally temporary in private browsing. Browsers may also remove best-effort data under storage pressure. Pomorise will request persistent storage where appropriate, explain that the browser can decline, and encourage portable backups.
+
+The project plan was opened for the first time and now treats privacy as an architectural boundary rather than a settings option. No approved dependency may introduce analytics, remote assets, or hidden network calls.
+
+### 2026-08-15: Documentation verification standard confirmed
+
+| Conversation details | Value |
+| --- | --- |
+| Conversation date | August 15, 2026 |
+| Conversation timestamp | August 15, 2026 at 11:14:22 PM EDT |
+| ISO 8601 timestamp | `2026-08-15T23:14:22-04:00` |
+| Timezone | America/Toronto (UTC−04:00) |
+| Entry reading time | 1 minute |
+
+The project owner required every Markdown document to be fact-checked and sanity-checked. They also requested glossaries and embedded links to external sources for readers who want to explore a topic further.
+
+Primary documentation is now the standard for technical, browser, privacy, hosting, and dependency claims. Consequential statements should link to their supporting source near the claim. Every populated Markdown document will also maintain a glossary and a **Further reading** section. Verification records must say what was checked, when it was checked, which sources were used, and whether any uncertainty remains.
+
+### 2026-08-15: ASCII interface sketches requested
+
+| Conversation details | Value |
+| --- | --- |
+| Conversation date | August 15, 2026 |
+| Conversation timestamp | August 15, 2026 at 11:16:19 PM EDT |
+| ISO 8601 timestamp | `2026-08-15T23:16:19-04:00` |
+| Timezone | America/Toronto (UTC−04:00) |
+| Entry reading time | Less than 1 minute |
+
+The project owner requested ASCII interface sketches inside the project plan. Conceptual layouts were added for the desktop workspace, focused session, distraction capture, guided break, reflection, mobile timer, private progress, and local data controls. These sketches establish hierarchy and flow without prematurely approving a final visual style.
+
+### 2026-08-15: Detailed tooling and data flow requested
+
+| Conversation details | Value |
+| --- | --- |
+| Conversation date | August 15, 2026 |
+| Conversation timestamp | Exact send time was not retained |
+| Entry recorded | August 15, 2026 at 11:22:21 PM EDT |
+| ISO 8601 entry timestamp | `2026-08-15T23:22:21-04:00` |
+| Timezone | America/Toronto (UTC−04:00) |
+| Entry reading time | 1 minute |
+
+The project owner requested a detailed account of the tools intended for Pomorise and a step-by-step explanation of the product’s data flow. They clarified that “tools” includes frameworks and required each tool to appear in a table with its selection reason and a link to its official website or documentation.
+
+The project plan now distinguishes interface, build, storage, validation, offline, state, testing, accessibility, quality, automation, and hosting tools. Each table row states the tool’s category, approval status, role, reason for selection, and privacy implications.
+
+The data-flow plan now follows Pomorise through deployment, first load, local schema, timer transitions, distraction capture, reflection, private analytics, export, import, deletion, offline updates, notifications, and audio. It also defines invariants that prevent personal information from crossing the device boundary.
+
 ## Confirmed decisions
 
 These are the firm foundations beneath Pomorise:
@@ -205,6 +301,14 @@ These are the firm foundations beneath Pomorise:
 - **Quality ambition:** Aim to make Pomorise the best Pomodoro website through usefulness, reliability, accessibility, and delight
 - **Application foundation:** React, TypeScript, and Vite
 - **Deployment output:** Build with GitHub Actions and publish only the generated `dist` directory
+- **Product model:** Public-facing, local-first, and usable without an account
+- **Privacy boundary:** No application analytics, telemetry, behavioral logs, advertising trackers, or server-side user data
+- **Local persistence:** Browser storage with user-controlled export, import, and deletion
+- **Documentation quality:** Fact-check and sanity-check every populated Markdown document using current primary sources
+- **Documentation support:** Maintain a glossary, embedded source links, and a **Further reading** section
+- **Planning visuals:** Use ASCII interface sketches to clarify information hierarchy before final design
+- **Tool documentation:** Keep frameworks, libraries, browser APIs, tests, and delivery tools in a linked table with explicit selection reasons
+- **Data-flow documentation:** Trace personal data and application assets through every meaningful product operation
 
 ## Open decisions
 
@@ -214,11 +318,51 @@ The heart of the product is still taking shape. These questions will guide the n
 - Which controls should always be within reach?
 - Should sessions advance automatically?
 - Should completion alerts use sound, browser notifications, or both?
-- Does Pomorise need task management?
+- How much task detail belongs in the deliberately small task layer?
 - Should it celebrate progress, history, or streaks?
 - Which settings and personal touches would genuinely help?
 - What should Pomorise look and feel like?
-- How far should its accessibility and offline support extend beyond a strong baseline?
+- Which exact accessibility and offline behaviors will define the strong baseline?
+- Which optional details should be deferred without weakening the approved focus loop?
+
+## Documentation verification standard
+
+Every populated Markdown document must pass four checks:
+
+1. **Factual check:** Technical and privacy claims agree with current primary documentation.
+2. **Sanity check:** The proposal is internally consistent, compatible with GitHub Pages, and honest about limitations.
+3. **Traceability check:** Important claims link to supporting sources, and the conversation or commit that introduced them remains identifiable.
+4. **Reader check:** Specialized language is explained in a glossary, with further reading available for deeper understanding.
+
+Official sources are preferred in this order: standards and browser documentation, platform documentation, framework documentation, and library documentation. Competitor websites may support feature research, but they do not establish browser or privacy facts.
+
+## Glossary
+
+- **ASCII interface:** A text-character sketch that communicates layout and hierarchy without final visual styling.
+- **Fact-check:** Verification that a claim agrees with an authoritative and current source.
+- **ISO 8601:** A standard timestamp format that includes an unambiguous date, time, and UTC offset.
+- **Local-first:** A product model in which personal data stays on the user’s device by default.
+- **Primary source:** Official documentation, a technical standard, or an original product source rather than a secondary summary.
+- **Sanity check:** A practical review for contradictions, impossible promises, missing constraints, and mismatched scope.
+- **Telemetry:** Usage, performance, or behavioral data transmitted from an application to its operator.
+
+## Further reading
+
+- [Project plan](project_plan.md)
+- [Commit changelog](changelog.md)
+- [MDN: Client-side storage](https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Client-side_APIs/Client-side_storage)
+- [MDN: Storage quotas and eviction](https://developer.mozilla.org/en-US/docs/Web/API/Storage_API/Storage_quotas_and_eviction_criteria)
+- [MDN: Progressive web apps](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/What_is_a_progressive_web_app)
+- [GitHub Pages documentation](https://docs.github.com/en/pages)
+- [GitHub General Privacy Statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement)
+- [React documentation](https://react.dev/learn)
+- [Vite documentation](https://vite.dev/guide/)
+- [TypeScript documentation](https://www.typescriptlang.org/docs/)
+- [Dexie API reference](https://dexie.org/docs/API-Reference)
+- [Zod documentation](https://zod.dev/)
+- [Vite PWA plugin guide](https://vite-pwa-org.netlify.app/guide/)
+- [Vitest guide](https://vitest.dev/guide/)
+- [Playwright documentation](https://playwright.dev/docs/intro)
 
 ## Maintenance rules
 
@@ -236,3 +380,8 @@ When this file is updated:
 10. Include an ISO 8601 timestamp for new conversations when the exact time is available.
 11. Never invent a historical timestamp. Clearly mark unavailable times and record when the entry itself was added.
 12. Update the changelog and discussion record together before each commit when both contain relevant project history.
+13. Fact-check and sanity-check consequential claims against current primary sources.
+14. Keep the glossary and **Further reading** section current.
+15. Embed source links near important external claims whenever it helps the reader verify them.
+16. Keep intended tools in a table with their role, selection reason, status, privacy impact, and official source.
+17. Keep the project plan’s data flow aligned with approved storage and network boundaries.

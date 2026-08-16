@@ -3,9 +3,10 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 15, 2026 at 10:36 PM EDT |
-| Last updated | August 15, 2026 at 10:51 PM EDT |
+| Last updated | August 15, 2026 at 11:16 PM EDT |
 | Timezone | America/Toronto (UTC−04:00) |
-| Estimated reading time | 15 minutes |
+| Estimated reading time | 20 minutes |
+| Verification status | Commit facts checked against local Git history; technical claims checked against linked primary documentation |
 
 Every commit moves Pomorise somewhere. This changelog tells that story in chronological detail, capturing the purpose, files, behavior, implementation choices, validation, and follow-up behind each step.
 
@@ -15,11 +16,14 @@ The newest commit should be added at the top of the **Commit history** section.
 
 - [Entry template](#entry-template)
 - [Commit history](#commit-history)
-  - [Pending: Prepare Vite deployment for GitHub Pages](#pending-prepare-vite-deployment-for-github-pages)
+  - [Pending: Define the local-first product plan and documentation standard](#pending-define-the-local-first-product-plan-and-documentation-standard)
+  - [`7753811`: Prepare Vite deployment for GitHub Pages](#7753811-prepare-vite-deployment-for-github-pages)
   - [`562126d`: Refine project documentation and collaboration tracking](#562126d-refine-project-documentation-and-collaboration-tracking)
   - [`fce4b4b`: Initial push](#fce4b4b-initial-push)
   - [`01d529e`: Add GitHub Actions workflow for static site deployment](#01d529e-add-github-actions-workflow-for-static-site-deployment)
   - [`7cd737a`: Initial commit](#7cd737a-initial-commit)
+- [Glossary](#glossary)
+- [Further reading](#further-reading)
 - [Maintenance rules](#maintenance-rules)
 
 ## Entry template
@@ -85,92 +89,189 @@ Describe what a visitor or maintainer will notice. Write “None” when the cha
 
 ## Commit history
 
-### `Pending`: Prepare Vite deployment for GitHub Pages
+### `Pending`: Define the local-first product plan and documentation standard
 
 - **Status:** Prepared for the next commit
-- **Prepared:** 2026-08-15 22:51 EDT
+- **Prepared:** 2026-08-15 23:16 EDT
 - **Author:** Aman Ali with Codex collaboration
 - **Full commit:** Assigned after the commit is created
-- **Expected files:** `.github/workflows/static.yml`, `changelog.md`, and `meta_thinking.md`
+- **Expected files:** `README.md`, `changelog.md`, `meta_thinking.md`, and `project_plan.md`
 
 #### Purpose
 
-Prepare a safe, modern path from the future React application to GitHub Pages. The workflow can now recognize when the app is ready, produce its optimized Vite build, and publish only the files visitors need.
+Give Pomorise a concrete product direction built around private, device-local focus data. Make the project documentation easier to trust and explore through fact-checking, sanity checks, glossaries, authoritative links, and conceptual interface sketches.
 
 #### Decision context
 
-The project owner approved React, TypeScript, and Vite as the technical foundation and asked for the GitHub Pages workflow to be updated. They also set an ambitious product direction: Pomorise should aim to become the best Pomodoro website. Feature and design decisions still come before application implementation.
+The project owner approved the complete focus-loop direction while setting a strict boundary: Pomorise will have no sign-in, application logs, analytics, trackers, or server-side user data. They requested a fully updated plan, factual verification for every Markdown document, glossaries, further-reading links, and ASCII interface sketches.
+
+#### Changes
+
+- Opened `project_plan.md` with the approved vision, focus loop, Version 1 features, privacy model, storage architecture, limitations, technology, quality standard, and delivery sequence.
+- Assigned small preferences to `localStorage`, structured product data to IndexedDB, and offline assets to the Cache API.
+- Added user-controlled export, import, deletion, and persistent-storage requirements.
+- Added honest limitations for device-local data, private browsing, browser eviction, background alarms, and website blocking.
+- Added ASCII sketches for the primary workspace, focused session, distraction capture, break, reflection, mobile view, progress, and data settings.
+- Added a detailed tool table covering frameworks, libraries, Web APIs, testing, accessibility, code quality, automation, and hosting.
+- Documented each tool’s category, approval status, role, reason for selection, privacy impact, and official source.
+- Added an end-to-end data-flow diagram and detailed flows for deployment, startup, timer state, local records, distraction capture, reflection, analytics, export, import, deletion, offline updates, notifications, and audio.
+- Added data-boundary invariants that prevent personal records from entering network traffic, caches, build logs, or third-party services.
+- Added a verification record backed by primary documentation.
+- Added glossaries, embedded source links, and further-reading sections to every populated Markdown document.
+- Expanded the README with project status and privacy direction.
+- Recorded all new product and documentation decisions in the discussion record.
+- Resolved the previous pending workflow entry as commit `7753811`.
+
+#### Files affected
+
+- `README.md`: Adds current status, privacy direction, terminology, verification status, and learning resources.
+- `changelog.md`: Resolves the workflow commit and prepares this complete documentation entry.
+- `meta_thinking.md`: Records the privacy, verification, sourcing, glossary, and ASCII-interface decisions.
+- `project_plan.md`: Establishes the fact-checked local-first product plan and conceptual interfaces.
+
+#### User-visible impact
+
+Repository visitors can now understand what Pomorise intends to become, how it protects focus data, which limitations come with local storage, and how the core experience may flow across desktop and mobile.
+
+#### Decisions and tradeoffs
+
+- Rich product history will stay in the browser rather than gaining account-based synchronization.
+- Privacy takes priority over cross-device convenience.
+- IndexedDB supports growing structured records, while `localStorage` remains limited to small preferences.
+- Backup and import controls compensate for the absence of cloud storage.
+- ASCII sketches clarify hierarchy without locking in the final visual design.
+- Primary sources establish technical facts; competitor pages remain suitable only for feature research.
+
+#### Risks and limitations
+
+- Browser data can be removed by the user, private browsing behavior, or browser storage policies.
+- No cloud copy exists unless the user exports a backup.
+- The exact storage library and browser-support matrix require another verification before implementation.
+- Planned tools still need exact version, license, bundle-size, maintenance, and compatibility review before installation.
+- Reading-time estimates vary by reader and must be refreshed as documents grow.
+
+#### Validation
+
+- Cross-checked storage, eviction, private browsing, service worker, GitHub hosting, React, and Vite claims against current primary documentation.
+- Verified that every populated Markdown file has a table of contents, glossary, and further-reading links.
+- Checked internal plan consistency against GitHub Pages static-hosting constraints.
+- Checked Markdown for whitespace errors and forbidden em dashes.
+- Confirmed that the ASCII sketches contain no unsupported product promises.
+- Confirmed that every intended tool has an official link and a stated reason for selection.
+- Sanity-checked the detailed data flow against the local-first privacy boundary and static GitHub Pages hosting.
+
+#### Lessons learned by the agent
+
+- Privacy-focused hosting claims must distinguish application behavior from the hosting provider’s own request processing.
+- Browser storage is a sound fit for explicitly device-local product data, but export and data-loss explanations are essential.
+- Conceptual wireframes can clarify product flow without starting implementation or prematurely deciding visual style.
+- A tool list is not sufficient on its own. Selection reasons and privacy consequences make architectural choices reviewable.
+- Explicit data-flow invariants make it easier to detect future features or dependencies that violate the local-first promise.
+
+#### Lessons learned by the user
+
+- The project owner confirmed that rich progress features can remain private by calculating them locally.
+- The project owner established verification, sourcing, terminology, and further reading as permanent documentation requirements.
+- The project owner chose ASCII interfaces as a practical bridge between feature planning and visual design.
+- The project owner requested transparent reasoning for every planned framework, library, platform API, and delivery tool.
+- The project owner established detailed data-flow documentation as part of the product plan, not an implementation afterthought.
+
+#### Related references
+
+- Product plan: `project_plan.md`
+- Discussion record: `meta_thinking.md`
+- [MDN client-side storage](https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Client-side_APIs/Client-side_storage)
+- [MDN storage quotas and eviction](https://developer.mozilla.org/en-US/docs/Web/API/Storage_API/Storage_quotas_and_eviction_criteria)
+- [GitHub General Privacy Statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement)
+- [React documentation](https://react.dev/learn)
+- [Vite documentation](https://vite.dev/guide/)
+- [Dexie API reference](https://dexie.org/docs/API-Reference)
+- [Zod documentation](https://zod.dev/)
+- [Vitest guide](https://vitest.dev/guide/)
+- [Playwright documentation](https://playwright.dev/docs/intro)
+
+#### Follow-up
+
+- Approve the remaining timer and task behaviors.
+- Approve the visual direction after behavior is settled.
+- Verify dependency versions and browser support before scaffolding the application.
+- Replace `Pending` with the commit hash while preparing the next meaningful change.
+
+### `7753811`: Prepare Vite deployment for GitHub Pages
+
+- **Date:** 2026-08-15 22:53 EDT
+- **Author:** Aman Ali
+- **Full commit:** `77538113516332e0985759ff345f763df77c19f6`
+- **Change size:** 1 file changed, 51 lines added, 19 lines removed
+
+#### Purpose
+
+Prepare a safe, modern path from the future React application to GitHub Pages. The workflow can recognize when the app is ready, produce its optimized Vite build, and publish only the files visitors need.
+
+#### Decision context
+
+The project owner approved React, TypeScript, and Vite as the technical foundation and asked for the GitHub Pages workflow to be updated. Product implementation remained deferred until features and design were approved.
 
 #### Changes
 
 - Renamed the workflow to describe both building and deploying Pomorise.
 - Split the workflow into dedicated build and deployment jobs.
 - Added a readiness check for `package.json` and `package-lock.json`.
-- Made documentation-only pushes safe while the application scaffold is not yet present.
+- Made documentation-only pushes safe while the application scaffold is absent.
 - Added Node.js 24 setup with npm dependency caching.
 - Added clean dependency installation through `npm ci`.
-- Added the production build command.
-- Changed the Pages artifact from the entire repository to the generated `dist` directory.
-- Updated the checkout and Pages artifact actions to their current supported major versions.
-- Preserved manual workflow runs, deployment permissions, concurrency protection, and the public Pages URL.
+- Added the Vite production build command.
+- Changed the Pages artifact from the entire repository to `dist`.
+- Updated the checkout and Pages artifact actions to their supported major versions at the time of the commit.
+- Preserved manual runs, deployment permissions, concurrency protection, and the public Pages URL.
 
 #### Files affected
 
 - `.github/workflows/static.yml`: Builds the future Vite application and deploys only its production output.
-- `changelog.md`: Resolves the previous pending commit and prepares this workflow entry.
-- `meta_thinking.md`: Records the approved foundation, product ambition, and deployment decision.
 
 #### User-visible impact
 
-There is no product interface yet. Once the application scaffold is committed, every push to `main` can build and publish the optimized Pomorise website automatically. Until then, the workflow exits safely without publishing repository documentation as a website.
+No interface existed yet. Once the application scaffold is committed, pushes to `main` can build and publish Pomorise automatically. Until then, the workflow exits safely without publishing repository documentation.
 
 #### Decisions and tradeoffs
 
-- React, TypeScript, and Vite are confirmed as the application foundation.
-- GitHub Pages remains the hosting destination.
-- The workflow waits for both the package manifest and lockfile, which protects reproducible builds.
+- The workflow waits for both the package manifest and lockfile to support reproducible installs.
 - Deployment is skipped during planning instead of publishing the repository root or failing because the app does not exist.
-- Only `dist` will be public, keeping internal project documents out of the deployed artifact.
+- Only `dist` becomes public through the Pages artifact.
 
 #### Risks and limitations
 
-- No deployment will occur until both `package.json` and `package-lock.json` exist.
-- The future Vite configuration must use the correct GitHub Pages base path for `/pomorise/`.
-- The workflow cannot validate the application build until the scaffold and dependencies are present.
+- No deployment occurs until both package files exist.
+- Vite still needs the correct `/pomorise/` base path when the scaffold is created.
+- The application build cannot be validated before application files exist.
 
 #### Validation
 
-- Checked the workflow structure and output references.
-- Confirmed that the deploy job depends on a successful, ready build.
+- Parsed the workflow as valid YAML.
+- Confirmed that the deploy job depends on a ready build.
 - Confirmed that only `dist` is selected for upload.
-- Checked all Markdown changes for whitespace errors and forbidden em dashes.
+- Checked output references and workflow structure.
 
 #### Lessons learned by the agent
 
-- Infrastructure can be prepared before product implementation when the technology choice is approved and the workflow remains safe during discovery.
-- A readiness gate prevents temporary planning states from becoming broken deployments.
-- Publishing only generated assets protects internal documentation from accidental exposure on the public website.
+- Approved infrastructure can move forward safely during discovery when it does not assume unapproved product behavior.
+- A readiness gate prevents a temporary planning state from becoming a broken deployment.
 
 #### Lessons learned by the user
 
-- The project owner confirmed that GitHub Pages can still support a rich interactive experience when JavaScript runs in the browser.
-- The project owner chose an ambitious quality bar while preserving the step-by-step decision process.
+- The project owner confirmed that GitHub Pages can support a rich interactive experience through compiled browser JavaScript.
 
 #### Related references
 
 - Deployment workflow: `.github/workflows/static.yml`
-- Discussion and decision record: `meta_thinking.md`
-- React interactivity guide: `https://react.dev/learn/adding-interactivity`
-- Vite static deployment guide: `https://vite.dev/guide/static-deploy.html`
-- GitHub Pages custom workflow guide: `https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages`
+- [Vite static deployment guide](https://vite.dev/guide/static-deploy.html)
+- [GitHub Pages custom workflow guide](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages)
 
 #### Follow-up
 
-- Decide the Version 1 feature set before application implementation.
-- Decide the visual and interaction direction.
-- Add the React, TypeScript, and Vite scaffold after those decisions are approved.
-- Configure Vite for the `/pomorise/` repository path.
-- Replace `Pending` with the resulting commit hash while preparing the next meaningful commit.
+- Define the Version 1 features and privacy model.
+- Configure the Vite base path when the scaffold is added.
+- Build and verify the application before enabling a real deployment.
 
 ### `562126d`: Refine project documentation and collaboration tracking
 
@@ -460,6 +561,26 @@ No user lesson was recorded for this commit.
 - Build the static website.
 - Add a deployment process for GitHub Pages.
 
+## Glossary
+
+- **Artifact:** A packaged output produced by a workflow, such as the `dist` files uploaded for GitHub Pages.
+- **Commit:** A recorded Git snapshot with authorship, time, message, content, and parent history.
+- **Commit hash:** The identifier Git calculates from a commit’s contents and metadata.
+- **Deployment:** The act of publishing a tested build to its public hosting destination.
+- **Pending entry:** A complete changelog record prepared before Git creates the final commit hash.
+- **Primary source:** Official documentation, a technical standard, or original Git history used to verify a claim.
+- **Retrospective entry:** A changelog record written after the corresponding commit already exists.
+- **Workflow:** An automated sequence of GitHub Actions jobs and steps.
+
+## Further reading
+
+- [Git: Recording changes to the repository](https://git-scm.com/book/en/v2/Git-Basics-Recording-Changes-to-the-Repository)
+- [GitHub Actions documentation](https://docs.github.com/en/actions)
+- [GitHub Pages custom workflows](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages)
+- [Vite static deployment guide](https://vite.dev/guide/static-deploy.html)
+- [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
+- [Semantic Versioning](https://semver.org/)
+
 ## Maintenance rules
 
 1. Document every commit, including documentation-only and maintenance commits.
@@ -475,3 +596,6 @@ No user lesson was recorded for this commit.
 11. Never invent a lesson for the agent or project owner. State that no lesson was recorded when the history does not provide one.
 12. Prepare the newest entry before committing and mark its hash as `Pending`.
 13. Resolve the pending hash when preparing the next meaningful commit, then add the new pending entry in the same change.
+14. Fact-check commit metadata against Git history and technical statements against current primary documentation.
+15. Sanity-check that each entry describes only files and behavior actually present in that commit.
+16. Keep the glossary, embedded source links, and **Further reading** section current.
