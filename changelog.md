@@ -3,9 +3,9 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 15, 2026 at 10:36 PM EDT |
-| Last updated | August 15, 2026 at 10:45 PM EDT |
+| Last updated | August 15, 2026 at 10:51 PM EDT |
 | Timezone | America/Toronto (UTC−04:00) |
-| Estimated reading time | 12 minutes |
+| Estimated reading time | 15 minutes |
 
 Every commit moves Pomorise somewhere. This changelog tells that story in chronological detail, capturing the purpose, files, behavior, implementation choices, validation, and follow-up behind each step.
 
@@ -15,7 +15,8 @@ The newest commit should be added at the top of the **Commit history** section.
 
 - [Entry template](#entry-template)
 - [Commit history](#commit-history)
-  - [Pending: Refine living documentation and conversation tracking](#pending-refine-living-documentation-and-conversation-tracking)
+  - [Pending: Prepare Vite deployment for GitHub Pages](#pending-prepare-vite-deployment-for-github-pages)
+  - [`562126d`: Refine project documentation and collaboration tracking](#562126d-refine-project-documentation-and-collaboration-tracking)
   - [`fce4b4b`: Initial push](#fce4b4b-initial-push)
   - [`01d529e`: Add GitHub Actions workflow for static site deployment](#01d529e-add-github-actions-workflow-for-static-site-deployment)
   - [`7cd737a`: Initial commit](#7cd737a-initial-commit)
@@ -84,13 +85,99 @@ Describe what a visitor or maintainer will notice. Write “None” when the cha
 
 ## Commit history
 
-### `Pending`: Refine living documentation and conversation tracking
+### `Pending`: Prepare Vite deployment for GitHub Pages
 
 - **Status:** Prepared for the next commit
-- **Prepared:** 2026-08-15 22:45 EDT
+- **Prepared:** 2026-08-15 22:51 EDT
 - **Author:** Aman Ali with Codex collaboration
 - **Full commit:** Assigned after the commit is created
-- **Expected files:** `README.md`, `changelog.md`, and `meta_thinking.md`
+- **Expected files:** `.github/workflows/static.yml`, `changelog.md`, and `meta_thinking.md`
+
+#### Purpose
+
+Prepare a safe, modern path from the future React application to GitHub Pages. The workflow can now recognize when the app is ready, produce its optimized Vite build, and publish only the files visitors need.
+
+#### Decision context
+
+The project owner approved React, TypeScript, and Vite as the technical foundation and asked for the GitHub Pages workflow to be updated. They also set an ambitious product direction: Pomorise should aim to become the best Pomodoro website. Feature and design decisions still come before application implementation.
+
+#### Changes
+
+- Renamed the workflow to describe both building and deploying Pomorise.
+- Split the workflow into dedicated build and deployment jobs.
+- Added a readiness check for `package.json` and `package-lock.json`.
+- Made documentation-only pushes safe while the application scaffold is not yet present.
+- Added Node.js 24 setup with npm dependency caching.
+- Added clean dependency installation through `npm ci`.
+- Added the production build command.
+- Changed the Pages artifact from the entire repository to the generated `dist` directory.
+- Updated the checkout and Pages artifact actions to their current supported major versions.
+- Preserved manual workflow runs, deployment permissions, concurrency protection, and the public Pages URL.
+
+#### Files affected
+
+- `.github/workflows/static.yml`: Builds the future Vite application and deploys only its production output.
+- `changelog.md`: Resolves the previous pending commit and prepares this workflow entry.
+- `meta_thinking.md`: Records the approved foundation, product ambition, and deployment decision.
+
+#### User-visible impact
+
+There is no product interface yet. Once the application scaffold is committed, every push to `main` can build and publish the optimized Pomorise website automatically. Until then, the workflow exits safely without publishing repository documentation as a website.
+
+#### Decisions and tradeoffs
+
+- React, TypeScript, and Vite are confirmed as the application foundation.
+- GitHub Pages remains the hosting destination.
+- The workflow waits for both the package manifest and lockfile, which protects reproducible builds.
+- Deployment is skipped during planning instead of publishing the repository root or failing because the app does not exist.
+- Only `dist` will be public, keeping internal project documents out of the deployed artifact.
+
+#### Risks and limitations
+
+- No deployment will occur until both `package.json` and `package-lock.json` exist.
+- The future Vite configuration must use the correct GitHub Pages base path for `/pomorise/`.
+- The workflow cannot validate the application build until the scaffold and dependencies are present.
+
+#### Validation
+
+- Checked the workflow structure and output references.
+- Confirmed that the deploy job depends on a successful, ready build.
+- Confirmed that only `dist` is selected for upload.
+- Checked all Markdown changes for whitespace errors and forbidden em dashes.
+
+#### Lessons learned by the agent
+
+- Infrastructure can be prepared before product implementation when the technology choice is approved and the workflow remains safe during discovery.
+- A readiness gate prevents temporary planning states from becoming broken deployments.
+- Publishing only generated assets protects internal documentation from accidental exposure on the public website.
+
+#### Lessons learned by the user
+
+- The project owner confirmed that GitHub Pages can still support a rich interactive experience when JavaScript runs in the browser.
+- The project owner chose an ambitious quality bar while preserving the step-by-step decision process.
+
+#### Related references
+
+- Deployment workflow: `.github/workflows/static.yml`
+- Discussion and decision record: `meta_thinking.md`
+- React interactivity guide: `https://react.dev/learn/adding-interactivity`
+- Vite static deployment guide: `https://vite.dev/guide/static-deploy.html`
+- GitHub Pages custom workflow guide: `https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages`
+
+#### Follow-up
+
+- Decide the Version 1 feature set before application implementation.
+- Decide the visual and interaction direction.
+- Add the React, TypeScript, and Vite scaffold after those decisions are approved.
+- Configure Vite for the `/pomorise/` repository path.
+- Replace `Pending` with the resulting commit hash while preparing the next meaningful commit.
+
+### `562126d`: Refine project documentation and collaboration tracking
+
+- **Date:** 2026-08-15 22:47 EDT
+- **Author:** Aman Ali
+- **Full commit:** `562126d1b34435176e26ef77838efdcee8514c2a`
+- **Change size:** 3 files changed, 521 lines added, 61 lines removed
 
 #### Purpose
 
@@ -161,7 +248,7 @@ Readers can now understand the project's story more quickly. They can see when e
 
 #### Follow-up
 
-- After this commit is created, replace `Pending` with its short and full hashes while preparing the next meaningful commit.
+- Replace the prepared entry with its short and full hashes while preparing the next meaningful commit. Completed in the workflow preparation change.
 - Continue updating `changelog.md` and `meta_thinking.md` together whenever project decisions become committed work.
 
 ### `fce4b4b`: Initial push

@@ -3,9 +3,9 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 15, 2026 at 10:36 PM EDT |
-| Last updated | August 15, 2026 at 10:45 PM EDT |
+| Last updated | August 15, 2026 at 10:51 PM EDT |
 | Timezone | America/Toronto (UTC−04:00) |
-| Estimated reading time | 8 minutes |
+| Estimated reading time | 9 minutes |
 
 This is Pomorise's shared memory. It captures the conversations, requests, decisions, and working agreements that shape the product. It does not contain private internal reasoning.
 
@@ -23,6 +23,7 @@ This is Pomorise's shared memory. It captures the conversations, requests, decis
   - [Commit record expanded](#2026-08-15-commit-record-expanded)
   - [Conversation tracking standard established](#2026-08-15-conversation-tracking-standard-established)
   - [Commit synchronization established](#2026-08-15-commit-synchronization-established)
+  - [Technical foundation and quality ambition approved](#2026-08-15-technical-foundation-and-quality-ambition-approved)
 - [Confirmed decisions](#confirmed-decisions)
 - [Open decisions](#open-decisions)
 - [Maintenance rules](#maintenance-rules)
@@ -174,6 +175,22 @@ Before committing the documentation updates, the project owner asked whether the
 
 Git creates a commit hash only after its contents are fixed, so a changelog inside that commit cannot already know its own final hash. Pomorise will solve this cleanly: prepare the newest entry with a `Pending` hash, then resolve that hash while preparing the next meaningful commit. This keeps the tracker aligned with the work without creating an endless trail of commits that exist only to update one another.
 
+### 2026-08-15: Technical foundation and quality ambition approved
+
+| Conversation details | Value |
+| --- | --- |
+| Conversation date | August 15, 2026 |
+| Conversation timestamp | August 15, 2026 at 10:51:15 PM EDT |
+| ISO 8601 timestamp | `2026-08-15T22:51:15-04:00` |
+| Timezone | America/Toronto (UTC−04:00) |
+| Entry reading time | 1 minute |
+
+The project owner set the quality ambition clearly: Pomorise should aim to become the best Pomodoro website. This is a standard for thoughtful usefulness, reliability, accessibility, and delight. It is not permission to add a large collection of unapproved features.
+
+The React, TypeScript, and Vite foundation was approved. GitHub Pages remains the hosting destination, with GitHub Actions responsible for producing and publishing the static application. The deployment workflow can now wait safely during product discovery, then build and publish `dist` as soon as the approved application scaffold exists.
+
+The next product step remains feature definition. Implementation will wait until the feature set and design direction are settled.
+
 ## Confirmed decisions
 
 These are the firm foundations beneath Pomorise:
@@ -185,6 +202,9 @@ These are the firm foundations beneath Pomorise:
 - **Writing style:** Clear, engaging, and free of em dashes
 - **Commit records:** Capture context, tradeoffs, risks, agent lessons, user lessons, and related references
 - **Commit synchronization:** Prepare entries before committing, then resolve pending hashes with the next meaningful change
+- **Quality ambition:** Aim to make Pomorise the best Pomodoro website through usefulness, reliability, accessibility, and delight
+- **Application foundation:** React, TypeScript, and Vite
+- **Deployment output:** Build with GitHub Actions and publish only the generated `dist` directory
 
 ## Open decisions
 
