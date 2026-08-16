@@ -3,9 +3,9 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 15, 2026 at 10:36 PM EDT |
-| Last updated | August 15, 2026 at 11:22 PM EDT |
+| Last updated | August 15, 2026 at 11:25 PM EDT |
 | Timezone | America/Toronto (UTC−04:00) |
-| Estimated reading time | 16 minutes |
+| Estimated reading time | 17 minutes |
 | Verification status | Fact-checked and sanity-checked against the primary sources in **Further reading** |
 
 This is Pomorise's shared memory. It captures the conversations, requests, decisions, and working agreements that shape the product. It does not contain private internal reasoning.
@@ -30,6 +30,7 @@ This is Pomorise's shared memory. It captures the conversations, requests, decis
   - [Documentation verification standard confirmed](#2026-08-15-documentation-verification-standard-confirmed)
   - [ASCII interface sketches requested](#2026-08-15-ascii-interface-sketches-requested)
   - [Detailed tooling and data flow requested](#2026-08-15-detailed-tooling-and-data-flow-requested)
+  - [First public release named](#2026-08-15-first-public-release-named)
 - [Confirmed decisions](#confirmed-decisions)
 - [Open decisions](#open-decisions)
 - [Documentation verification standard](#documentation-verification-standard)
@@ -287,6 +288,21 @@ The project plan now distinguishes interface, build, storage, validation, offlin
 
 The data-flow plan now follows Pomorise through deployment, first load, local schema, timer transitions, distraction capture, reflection, private analytics, export, import, deletion, offline updates, notifications, and audio. It also defines invariants that prevent personal information from crossing the device boundary.
 
+### 2026-08-15: First public release named
+
+| Conversation details | Value |
+| --- | --- |
+| Conversation date | August 15, 2026 |
+| Conversation timestamp | Exact send time was not retained |
+| Entry recorded | August 15, 2026 at 11:25:34 PM EDT |
+| ISO 8601 entry timestamp | `2026-08-15T23:25:34-04:00` |
+| Timezone | America/Toronto (UTC−04:00) |
+| Entry reading time | Less than 1 minute |
+
+The project owner asked the agent to name the first public release rather than leaving it as a generic “Version 1.” The release is now named **Pomorise 1.0: First Light**.
+
+First Light reflects the beginning of Pomorise and the product’s promise to help people rise through steady sessions. It identifies one complete public release without implying that a fixed series of later versions has already been planned.
+
 ## Confirmed decisions
 
 These are the firm foundations beneath Pomorise:
@@ -309,6 +325,7 @@ These are the firm foundations beneath Pomorise:
 - **Planning visuals:** Use ASCII interface sketches to clarify information hierarchy before final design
 - **Tool documentation:** Keep frameworks, libraries, browser APIs, tests, and delivery tools in a linked table with explicit selection reasons
 - **Data-flow documentation:** Trace personal data and application assets through every meaningful product operation
+- **First public release:** Pomorise 1.0: First Light
 
 ## Open decisions
 
@@ -340,6 +357,7 @@ Official sources are preferred in this order: standards and browser documentatio
 
 - **ASCII interface:** A text-character sketch that communicates layout and hierarchy without final visual styling.
 - **Fact-check:** Verification that a claim agrees with an authoritative and current source.
+- **First Light:** The name of Pomorise 1.0 and its first complete public release.
 - **ISO 8601:** A standard timestamp format that includes an unambiguous date, time, and UTC offset.
 - **Local-first:** A product model in which personal data stays on the user’s device by default.
 - **Primary source:** Official documentation, a technical standard, or an original product source rather than a secondary summary.

@@ -3,7 +3,7 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 15, 2026 at 11:12 PM EDT |
-| Last updated | August 15, 2026 at 11:22 PM EDT |
+| Last updated | August 15, 2026 at 11:25 PM EDT |
 | Timezone | America/Toronto (UTC−04:00) |
 | Estimated reading time | 27 minutes |
 
@@ -15,7 +15,7 @@ Pomorise will be a private, local-first focus companion that guides people from 
 - [The Pomorise promise](#the-pomorise-promise)
 - [The focus loop](#the-focus-loop)
 - [Conceptual ASCII interfaces](#conceptual-ascii-interfaces)
-- [Version 1 features](#version-1-features)
+- [Pomorise 1.0: First Light](#pomorise-10-first-light)
 - [Privacy model](#privacy-model)
 - [Local data architecture](#local-data-architecture)
 - [Data ownership and controls](#data-ownership-and-controls)
@@ -216,7 +216,11 @@ Saving a distraction returns keyboard focus to the timer and does not interrupt 
 
 Every final interface will need responsive behavior, visible keyboard focus, accessible names, screen-reader announcements for meaningful timer changes, and alternatives to motion and sound.
 
-## Version 1 features
+## Pomorise 1.0: First Light
+
+**First Light** is the name of Pomorise’s first complete public release. The name connects the beginning of the product with its promise to help people rise through steady, focused sessions.
+
+No fixed number of later releases is planned. Future releases will be shaped by genuine needs discovered after First Light is complete and in use.
 
 ### Excellent timer
 
@@ -340,7 +344,7 @@ Local-first privacy creates tradeoffs that Pomorise must explain clearly:
 - Exported backups are the reliable way to move or preserve information.
 - Offline support keeps the app usable without a connection, but it does not create cloud synchronization.
 - A web application cannot guarantee an alarm after the browser or operating system fully closes it. [Service workers can be stopped by the browser and do not run continuously](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/Offline_and_background_operation).
-- A normal website cannot block other websites. That would require a separate browser extension, which is not part of Version 1.
+- A normal website cannot block other websites. That would require a separate browser extension, which is not part of First Light.
 
 ## Technical foundation
 
@@ -635,7 +639,7 @@ These items remain out of scope unless the project owner explicitly changes the 
 - Exact automatic-transition behavior
 - Default long-break frequency
 - Maximum and minimum custom durations
-- Whether stopwatch mode belongs in Version 1
+- Whether stopwatch mode belongs in First Light
 - The right level of task detail
 - Which guided break activities are included
 - Which progress visualization best expresses “rise”
@@ -654,7 +658,7 @@ These items remain out of scope unless the project owner explicitly changes the 
 
 The plan passed the following sanity checks:
 
-- **Hosting fit:** Every Version 1 feature can run as static client-side code on GitHub Pages.
+- **Hosting fit:** Every First Light feature can run as static client-side code on GitHub Pages.
 - **Privacy fit:** No approved feature requires an application account, server database, analytics service, or remote user-data transfer.
 - **Storage fit:** Small preferences suit `localStorage`; growing structured records suit IndexedDB; offline application files suit the Cache API.
 - **Data-loss honesty:** Export, import, deletion, private browsing, eviction, and device-local limitations are included.
@@ -672,6 +676,7 @@ Fact-checking is continuous. Before implementation, dependency choices and brows
 - **Artifact:** The packaged build output passed from continuous integration to a deployment system.
 - **Client-side:** Work performed on the visitor’s device by the browser rather than on an application server.
 - **Dexie:** An optional JavaScript wrapper that simplifies IndexedDB access, queries, schema versions, and migrations.
+- **First Light:** The name of Pomorise 1.0, the first complete public release.
 - **GitHub Pages:** GitHub’s static website hosting service and the confirmed home for Pomorise.
 - **IndexedDB:** An asynchronous browser database for structured, queryable local data.
 - **Local-first:** A product model in which personal data is created, read, and stored on the user’s device by default.

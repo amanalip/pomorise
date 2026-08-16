@@ -4,7 +4,7 @@ Rise one session at a time.
 
 | Document information | Value |
 | --- | --- |
-| Last updated | August 15, 2026 at 11:16 PM EDT |
+| Last updated | August 15, 2026 at 11:25 PM EDT |
 | Timezone | America/Toronto (UTC−04:00) |
 | Estimated reading time | 2 minutes |
 | Verification status | Fact-checked and sanity-checked against the linked primary documentation |
@@ -25,7 +25,7 @@ The goal is simple: make it easier to choose one meaningful task, give it your f
 
 ## Project status
 
-Pomorise is in product planning. The approved foundation is React, TypeScript, and Vite, producing a static website for [GitHub Pages](https://docs.github.com/en/pages). The current product direction lives in [`project_plan.md`](project_plan.md).
+Pomorise is in product planning. The first complete public release is named **Pomorise 1.0: First Light**. The approved foundation is React, TypeScript, and Vite, producing a static website for [GitHub Pages](https://docs.github.com/en/pages). The current product direction lives in [`project_plan.md`](project_plan.md).
 
 ## Privacy direction
 
@@ -36,6 +36,7 @@ Browser storage is device-local and can be cleared or evicted, so Pomorise will 
 ## Glossary
 
 - **GitHub Pages:** Static website hosting provided by GitHub.
+- **First Light:** Pomorise 1.0 and the project’s first complete public release.
 - **Local-first:** A product approach that keeps personal information on the user’s device by default.
 - **Pomodoro:** A focus interval followed by a restorative break, traditionally using 25-minute focus sessions.
 - **Progressive web app (PWA):** A website enhanced with installable and offline-capable behavior.

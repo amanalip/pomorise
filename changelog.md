@@ -3,9 +3,9 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 15, 2026 at 10:36 PM EDT |
-| Last updated | August 15, 2026 at 11:16 PM EDT |
+| Last updated | August 15, 2026 at 11:25 PM EDT |
 | Timezone | America/Toronto (UTC−04:00) |
-| Estimated reading time | 20 minutes |
+| Estimated reading time | 22 minutes |
 | Verification status | Commit facts checked against local Git history; technical claims checked against linked primary documentation |
 
 Every commit moves Pomorise somewhere. This changelog tells that story in chronological detail, capturing the purpose, files, behavior, implementation choices, validation, and follow-up behind each step.
@@ -16,7 +16,8 @@ The newest commit should be added at the top of the **Commit history** section.
 
 - [Entry template](#entry-template)
 - [Commit history](#commit-history)
-  - [Pending: Define the local-first product plan and documentation standard](#pending-define-the-local-first-product-plan-and-documentation-standard)
+  - [Pending: Name Pomorise 1.0 First Light](#pending-name-pomorise-10-first-light)
+  - [`dac259b`: Add new functionality and refine existing behavior](#dac259b-add-new-functionality-and-refine-existing-behavior)
   - [`7753811`: Prepare Vite deployment for GitHub Pages](#7753811-prepare-vite-deployment-for-github-pages)
   - [`562126d`: Refine project documentation and collaboration tracking](#562126d-refine-project-documentation-and-collaboration-tracking)
   - [`fce4b4b`: Initial push](#fce4b4b-initial-push)
@@ -89,13 +90,83 @@ Describe what a visitor or maintainer will notice. Write “None” when the cha
 
 ## Commit history
 
-### `Pending`: Define the local-first product plan and documentation standard
+### `Pending`: Name Pomorise 1.0 First Light
 
 - **Status:** Prepared for the next commit
-- **Prepared:** 2026-08-15 23:16 EDT
+- **Prepared:** 2026-08-15 23:25 EDT
 - **Author:** Aman Ali with Codex collaboration
 - **Full commit:** Assigned after the commit is created
 - **Expected files:** `README.md`, `changelog.md`, `meta_thinking.md`, and `project_plan.md`
+
+#### Purpose
+
+Give the first public release a memorable identity that reflects the spirit of Pomorise and removes ambiguity from the generic “Version 1” label.
+
+#### Decision context
+
+The project owner asked how many versions were planned after seeing “Version 1” in the plan. Only the first complete public release is currently planned. They then invited the agent to name it.
+
+#### Changes
+
+- Named the first complete public release **Pomorise 1.0: First Light**.
+- Replaced generic “Version 1” references in the current project plan.
+- Explained that no fixed sequence of later releases is planned.
+- Added the release name to the README, discussion record, glossaries, and project plan.
+- Resolved the previous pending documentation entry as commit `dac259b`.
+
+#### Files affected
+
+- `README.md`: Introduces the First Light release name in the project status and glossary.
+- `changelog.md`: Records the release naming decision and resolves the previous commit.
+- `meta_thinking.md`: Preserves the naming conversation and confirmed decision.
+- `project_plan.md`: Replaces the generic release label and explains the name’s meaning.
+
+#### User-visible impact
+
+Readers now see a clear, memorable name for the release being planned instead of an unexplained version placeholder.
+
+#### Decisions and tradeoffs
+
+- “First Light” was selected because it connects the project’s beginning with the idea of rising through focused sessions.
+- The semantic version remains 1.0 because this is intended to be the first complete public release.
+- Later release names and numbers remain undecided until genuine post-launch needs appear.
+
+#### Risks and limitations
+
+- The release name identifies the planned scope but does not set a release date.
+- Future release naming should remain consistent without forcing an unnecessary theme.
+
+#### Validation
+
+- Searched current Markdown documents for generic “Version 1” references.
+- Confirmed that the project plan table of contents points to the renamed release section.
+- Checked Markdown for forbidden em dashes and formatting errors.
+
+#### Lessons learned by the agent
+
+- A named release communicates purpose more effectively than an unexplained version placeholder.
+- Version labels should not imply a detailed future roadmap when none has been approved.
+
+#### Lessons learned by the user
+
+- The project owner clarified that release naming is part of the agent’s creative responsibility in this collaboration.
+
+#### Related references
+
+- First Light plan: `project_plan.md`
+- Naming discussion: `meta_thinking.md`
+
+#### Follow-up
+
+- Complete the remaining First Light behavior and design decisions.
+- Replace `Pending` with the commit hash while preparing the next meaningful change.
+
+### `dac259b`: Add new functionality and refine existing behavior
+
+- **Date:** 2026-08-15 23:24 EDT
+- **Author:** Aman Ali
+- **Full commit:** `dac259b255838993296226ef0a39ff737e1e7951`
+- **Change size:** 4 files changed, 1,081 lines added, 44 lines removed
 
 #### Purpose
 
@@ -195,7 +266,7 @@ Repository visitors can now understand what Pomorise intends to become, how it p
 - Approve the remaining timer and task behaviors.
 - Approve the visual direction after behavior is settled.
 - Verify dependency versions and browser support before scaffolding the application.
-- Replace `Pending` with the commit hash while preparing the next meaningful change.
+- Resolve the pending entry with the final commit hash. Completed in the First Light naming change.
 
 ### `7753811`: Prepare Vite deployment for GitHub Pages
 
