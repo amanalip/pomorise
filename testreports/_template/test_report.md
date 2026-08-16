@@ -5,11 +5,11 @@
 | Report identifier | `_template` |
 | Report status | Template, replace with `Passed`, `Failed`, `Blocked`, or `Incomplete` in a copied report |
 | Created | August 16, 2026 at 2:28:00 AM EDT |
-| Last updated | August 16, 2026 at 2:35:10 AM EDT |
+| Last updated | August 16, 2026 at 2:50:30 AM EDT |
 | ISO 8601 created | `2026-08-16T02:28:00-04:00` |
-| ISO 8601 last updated | `2026-08-16T02:35:10-04:00` |
+| ISO 8601 last updated | `2026-08-16T02:50:30-04:00` |
 | Timezone | America/Toronto (UTC−04:00) |
-| Estimated reading time | 14 minutes for this blank template; recalculate after completing a copied report |
+| Estimated reading time | 15 minutes for this blank template; recalculate after completing a copied report |
 | Prepared by | Replace with name or agent |
 | Verification status | Template only, no test run recorded |
 
@@ -20,6 +20,7 @@ This template becomes the permanent evidence record for one Pomorise phase, run,
 - [Executive result](#executive-result)
 - [Scope and acceptance criteria](#scope-and-acceptance-criteria)
 - [Change under test](#change-under-test)
+- [Paired development document](#paired-development-document)
 - [Test environment](#test-environment)
 - [Synthetic test data](#synthetic-test-data)
 - [Tools and versions](#tools-and-versions)
@@ -97,6 +98,16 @@ Write a plain-language summary of what was tested, what passed, what failed, wha
 | Previous comparison point | Replace with commit, report, or `None` |
 
 Summarize the implementation change in enough detail that another contributor understands what result is expected without reading the entire diff first.
+
+## Paired development document
+
+Use the same identifier for this report and its technical narrative. Link the real file after it exists:
+
+```text
+development_docs/<same-identifier>/doc.md
+```
+
+Confirm that the development document explains the implemented design, architecture, decisions, assumptions, files, and limitations reflected by this test run. If evidence changes the design understanding, update the development document without erasing the earlier assumption or decision.
 
 ## Test environment
 
@@ -299,6 +310,7 @@ Write `None observed` only after reviewing the complete evidence.
 ## Mandatory closeout checklist
 
 - [ ] The approved scope and every deviation are documented.
+- [ ] The paired development document uses the same identifier and matches the implementation under test.
 - [ ] Every required validation item is checked and linked to evidence.
 - [ ] Every human-authored code line satisfies the commenting standard.
 - [ ] Required companion annotations are complete.
@@ -329,6 +341,7 @@ Explain the evidence supporting that result, the behaviors that are safe to rely
 - **Artifact:** A retained machine-generated output such as a JSON result, browser trace, video, coverage file, or HTML report.
 - **Blocked:** Testing cannot proceed because a stated dependency or environment condition is unavailable.
 - **Exit gate:** The complete evidence requirements that must pass before a phase closes.
+- **Development document:** The technical narrative explaining what was built and why, paired with this evidence report.
 - **Flaky:** A case produced inconsistent results without an intentional change that explains the difference.
 - **Residual risk:** A known risk remaining after the tested controls.
 - **Synthetic data:** Invented test information containing no real visitor or contributor data.
@@ -338,6 +351,7 @@ Explain the evidence supporting that result, the behaviors that are safe to rely
 
 - [Pomorise test report index](../README.md)
 - [Pomorise implementation plan](../../implementation_plan.md)
+- [Pomorise development documentation index](../../development_docs/README.md)
 - [Playwright screenshots](https://playwright.dev/docs/screenshots)
 - [Playwright reporters](https://playwright.dev/docs/test-reporters)
 - [Playwright trace viewer](https://playwright.dev/docs/trace-viewer-intro)
@@ -354,3 +368,4 @@ Explain the evidence supporting that result, the behaviors that are safe to rely
 6. Keep result totals consistent across the executive summary and detailed tables.
 7. Update timestamps, reading time, table of contents, glossary, and sources whenever the report changes substantially.
 8. Keep the writing factual, detailed, beginner-friendly, and free of em dashes.
+9. Keep the paired development document synchronized with findings, failures, corrections, and changed assumptions.

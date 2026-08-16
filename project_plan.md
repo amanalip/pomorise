@@ -3,8 +3,8 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 15, 2026 at 11:12 PM EDT |
-| Last updated | August 16, 2026 at 2:35:10 AM EDT |
-| ISO 8601 last updated | `2026-08-16T02:35:10-04:00` |
+| Last updated | August 16, 2026 at 2:50:30 AM EDT |
+| ISO 8601 last updated | `2026-08-16T02:50:30-04:00` |
 | Timezone | America/Toronto (UTC−04:00) |
 | Estimated reading time | 34 minutes |
 
@@ -647,6 +647,8 @@ Pomorise will earn trust through details:
 - Beginner-friendly adjacent comments for every human-authored code line, with companion annotations for formats that cannot contain comments
 - A detailed report for every meaningful phase, run, or verified step, stored under `testreports/<phase_or_run_or_step>/test_report.md`
 - Local screenshot evidence, raw command logs, failures, and retest history in every real test report
+- A deep beginner-focused development narrative under `development_docs/<phase_or_run_or_step>/doc.md` for every meaningful implementation unit
+- Traceable design methods, system views, decisions, assumptions, files, flows, alternatives, limitations, and learning guidance paired with test evidence
 
 ## Delivery sequence
 
@@ -712,8 +714,8 @@ These items remain out of scope unless the project owner explicitly changes the 
 
 | Verification information | Value |
 | --- | --- |
-| Last verified | August 16, 2026 at 2:35:10 AM EDT |
-| Verification scope | Browser storage, persistence, private browsing, offline and background limits, GitHub Pages privacy boundary, deployment assumptions, confirmed tools, rejected-tool alternatives, proposed data flow, approved logo assets, seven implementation phases, and code-commenting requirements |
+| Last verified | August 16, 2026 at 2:50:30 AM EDT |
+| Verification scope | Browser storage, persistence, private browsing, offline and background limits, GitHub Pages privacy boundary, deployment assumptions, confirmed tools, rejected-tool alternatives, proposed data flow, approved logo assets, seven implementation phases, code-commenting requirements, test evidence, and beginner-focused development documentation |
 | Source standard | Current primary documentation from MDN, GitHub, React, Vite, and any selected library’s official documentation |
 | Result | The plan is technically coherent for a static, local-first application. Limitations are stated explicitly rather than hidden. |
 
@@ -728,6 +730,7 @@ The plan passed the following sanity checks:
 - **Deployment fit:** Vite can produce the `dist` artifact expected by the GitHub Pages workflow.
 - **Tooling fit:** Every confirmed tool has a defined purpose, an official source, and no required runtime data service.
 - **Rejection fit:** Every rejected tool has a confirmed replacement and an explicit condition for reconsideration.
+- **Documentation fit:** Development narratives explain intent, architecture, decisions, and assumptions, while paired test reports preserve observed evidence, screenshots, failures, and retests.
 - **Data-flow fit:** Personal records remain inside browser-controlled storage or explicit user-created export files.
 
 Fact-checking is continuous. Before implementation, dependency choices and browser-support targets must be verified again. Before release, the built application must be checked for unexpected network requests, storage behavior, accessibility, offline behavior, and accurate privacy wording.
@@ -744,6 +747,7 @@ Fact-checking is continuous. Before implementation, dependency choices and brows
 - **IndexedDB:** An asynchronous browser database for structured, queryable local data.
 - **Local-first:** A product model in which personal data is created, read, and stored on the user’s device by default.
 - **Companion annotation:** A separate explanation for a required file format that cannot legally or meaningfully contain comments.
+- **Development document:** The deep technical and educational narrative explaining one implementation unit’s design method, architecture, decisions, assumptions, files, behavior, and beginner learning path.
 - **Logo lockup:** The approved arrangement of a symbol, wordmark, and optional tagline.
 - **`localStorage`:** A synchronous browser key-value store suitable for small preferences, not growing structured history.
 - **Origin:** The combination of scheme, host, and port that browsers use to isolate one website’s storage from another.
@@ -764,6 +768,7 @@ Fact-checking is continuous. Before implementation, dependency choices and brows
 ## Further reading
 
 - [Pomorise implementation plan](implementation_plan.md)
+- [Pomorise development documentation index](development_docs/README.md)
 - [Pomorise test report index](testreports/README.md)
 - [MDN: Client-side storage](https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Client-side_APIs/Client-side_storage)
 - [MDN: Using IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Using_IndexedDB)
@@ -804,3 +809,4 @@ Fact-checking is continuous. Before implementation, dependency choices and brows
 12. Update the data-flow section whenever storage, networking, export, deletion, offline, or deployment behavior changes.
 13. Keep rejected tools in the audit with a reason, confirmed replacement, and evidence-based reconsideration condition.
 14. Require a timestamped, screenshot-backed test report before checking off any implementation phase exit gate.
+15. Require a current beginner-focused development document paired with the corresponding test report for every meaningful implementation unit.

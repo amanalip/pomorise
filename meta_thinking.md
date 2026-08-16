@@ -3,10 +3,10 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 15, 2026 at 10:36 PM EDT |
-| Last updated | August 16, 2026 at 2:35:10 AM EDT |
-| ISO 8601 last updated | `2026-08-16T02:35:10-04:00` |
+| Last updated | August 16, 2026 at 2:50:30 AM EDT |
+| ISO 8601 last updated | `2026-08-16T02:50:30-04:00` |
 | Timezone | America/Toronto (UTC−04:00) |
-| Estimated reading time | 22 minutes |
+| Estimated reading time | 23 minutes |
 | Verification status | Fact-checked and sanity-checked against the primary sources in **Further reading** |
 
 This is Pomorise's shared memory. It captures the conversations, requests, decisions, and working agreements that shape the product. It does not contain private internal reasoning.
@@ -36,6 +36,7 @@ This is Pomorise's shared memory. It captures the conversations, requests, decis
   - [Light and dark logos approved](#2026-08-15-light-and-dark-logos-approved)
   - [Seven-phase implementation planning activated](#2026-08-16-seven-phase-implementation-planning-activated)
   - [Screenshot-backed test reporting required](#2026-08-16-screenshot-backed-test-reporting-required)
+  - [Beginner-focused development documents required](#2026-08-16-beginner-focused-development-documents-required)
 - [Confirmed decisions](#confirmed-decisions)
 - [Open decisions](#open-decisions)
 - [Documentation verification standard](#documentation-verification-standard)
@@ -378,6 +379,23 @@ The project owner also required a very detailed report after every meaningful ph
 
 The project owner then clarified that test reports, and every Markdown document, must include a date and timestamp plus an estimated reading time. The documentation metadata standard now makes human-readable timestamps, timezone, ISO 8601 timestamps where exact values are known, and estimated reading time explicit.
 
+### 2026-08-16: Beginner-focused development documents required
+
+| Conversation details | Value |
+| --- | --- |
+| Conversation date | August 16, 2026 |
+| Conversation timestamp | Exact send time was not retained |
+| Entry recorded | August 16, 2026 at 2:41:40 AM EDT |
+| ISO 8601 entry timestamp | `2026-08-16T02:41:40-04:00` |
+| Timezone | America/Toronto (UTC−04:00) |
+| Entry reading time | 1 minute |
+
+The project owner requested a new `development_docs/` document set for beginners and new programmers. Each narrative will live at `development_docs/<phase_or_run_or_step>/doc.md` and explain what development happened in the related step or commit.
+
+The requested depth goes beyond a changed-file summary. Each document records the design method, system design, architecture, design decisions, assumptions, requirements, constraints, runtime and data flows, state, components, file responsibilities, accessibility, privacy, storage, errors, performance, dependencies, deployment impact, rejected alternatives, limitations, and a guided beginner learning path.
+
+Development documents and test reports will use the same identifier when they describe the same unit of work. The development document explains intent and implementation, while the report provides observable evidence. Both remain connected to the changelog, project direction, implementation phase, and conversation record.
+
 ## Confirmed decisions
 
 These are the firm foundations beneath Pomorise:
@@ -409,6 +427,8 @@ These are the firm foundations beneath Pomorise:
 - **Phase checklists:** Every phase has checkable validation items and a mandatory evidence-based closeout checklist
 - **Test reporting:** Every meaningful phase, run, or independently verified step requires a detailed report under `testreports/` with raw logs and embedded screenshots
 - **Document metadata:** Every Markdown document requires dated human-readable timestamps, timezone, and estimated reading time, plus ISO 8601 timestamps where exact values are known
+- **Development documentation:** Every meaningful implementation phase, run, step, or commit requires an in-depth beginner-focused narrative under `development_docs/`
+- **Explanation and evidence pairing:** Matching development documents and test reports share one identifier and cross-link
 
 ## Open decisions
 
@@ -440,6 +460,7 @@ Official sources are preferred in this order: standards and browser documentatio
 
 - **ASCII interface:** A text-character sketch that communicates layout and hierarchy without final visual styling.
 - **Companion annotation:** A separate Markdown explanation for a required file format that cannot contain comments safely.
+- **Development document:** The in-depth beginner-focused explanation of one implementation unit’s design, architecture, decisions, assumptions, files, flows, and learning path.
 - **Fact-check:** Verification that a claim agrees with an authoritative and current source.
 - **First Light:** The name of Pomorise 1.0 and its first complete public release.
 - **ISO 8601:** A standard timestamp format that includes an unambiguous date, time, and UTC offset.
@@ -455,6 +476,7 @@ Official sources are preferred in this order: standards and browser documentatio
 
 - [Project plan](project_plan.md)
 - [Implementation plan](implementation_plan.md)
+- [Development documentation index](development_docs/README.md)
 - [Test report index](testreports/README.md)
 - [Commit changelog](changelog.md)
 - [MDN: Client-side storage](https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Client-side_APIs/Client-side_storage)

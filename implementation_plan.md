@@ -3,10 +3,10 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 16, 2026 at 2:18 AM EDT |
-| Last updated | August 16, 2026 at 2:35:10 AM EDT |
-| ISO 8601 last updated | `2026-08-16T02:35:10-04:00` |
+| Last updated | August 16, 2026 at 2:50:30 AM EDT |
+| ISO 8601 last updated | `2026-08-16T02:50:30-04:00` |
 | Timezone | America/Toronto (UTC−04:00) |
-| Estimated reading time | 27 minutes |
+| Estimated reading time | 29 minutes |
 | Verification status | Fact-checked and sanity-checked against the linked primary documentation and the confirmed project plan |
 
 This plan turns Pomorise 1.0: First Light from an approved direction into a dependable public website. Development will proceed through **seven phases**. Each phase produces something usable, has a clear completion gate, and protects the local-first privacy promise.
@@ -27,6 +27,7 @@ This plan turns Pomorise 1.0: First Light from an approved direction into a depe
 - [Line-by-line commenting standard](#line-by-line-commenting-standard)
 - [Testing strategy](#testing-strategy)
 - [Test report standard](#test-report-standard)
+- [Development documentation standard](#development-documentation-standard)
 - [Mandatory phase closeout checklist](#mandatory-phase-closeout-checklist)
 - [Phase completion protocol](#phase-completion-protocol)
 - [Risks and controls](#risks-and-controls)
@@ -72,6 +73,7 @@ The following decisions apply to every phase:
 - Send no tasks, sessions, reflections, settings, diagnostics, analytics, or telemetry away from the visitor’s device.
 - Preserve the approved light and dark Pomorise logos.
 - Apply the mandatory line-by-line commenting standard to every human-authored code file.
+- Create a deep beginner-focused development document for every meaningful phase, run, step, or implementation commit.
 
 Exact package versions will be selected during Phase 1 after compatibility and license checks. The committed lockfile will preserve the reviewed dependency graph.
 
@@ -486,6 +488,29 @@ Playwright may capture page, full-page, or element screenshots and may retain tr
 
 The canonical template is [`testreports/_template/test_report.md`](testreports/_template/test_report.md). The navigation index and naming rules live in [`testreports/README.md`](testreports/README.md).
 
+## Development documentation standard
+
+Every meaningful implementation phase, run, step, or commit must have a deep technical and educational narrative at:
+
+```text
+development_docs/<phase_or_run_or_step>/doc.md
+```
+
+The development document explains what changed, why it changed, how it was designed, how the system works, which assumptions and alternatives shaped it, and what a beginner should learn. The paired test report records whether the implementation behaved as intended.
+
+Whenever both describe the same work, they use the same stable identifier:
+
+```text
+development_docs/<identifier>/doc.md
+testreports/<identifier>/test_report.md
+```
+
+Every development document must cover the relevant requirements, design method, system context, architecture, runtime flow, data flow, state model, decisions, assumptions, component responsibilities, file changes, types, interface behavior, accessibility, privacy, storage, offline behavior, errors, performance, dependencies, deployment, comments, tests, alternatives, limitations, and beginner learning path. A section that does not apply remains present with a concise reason.
+
+Important decisions must state their context, considered options, selected approach, rationale, tradeoffs, consequences, and evidence-based reconsideration condition. Assumptions must have an explicit status, risk if wrong, and validation or fallback plan.
+
+The canonical template is [`development_docs/_template/doc.md`](development_docs/_template/doc.md). The navigation, naming, depth, traceability, and lifecycle rules live in [`development_docs/README.md`](development_docs/README.md).
+
 ## Mandatory phase closeout checklist
 
 This checklist must be copied into the phase report and checked with direct evidence. An unchecked item prevents the phase from being marked complete.
@@ -502,6 +527,9 @@ This checklist must be copied into the phase report and checked with direct evid
 - [ ] Screenshots are stored locally, embedded in the report, captioned, and tied to test cases.
 - [ ] Screenshots and logs contain only synthetic data and no secrets or personal records.
 - [ ] Known limitations and residual risks are explicit.
+- [ ] The development document explains the design method, system design, decisions, assumptions, flows, files, tradeoffs, and beginner learning path in depth.
+- [ ] The development document and test report share the same identifier and cross-link where both exist.
+- [ ] `development_docs/README.md` links to the completed development document.
 - [ ] The report conclusion matches the recorded evidence.
 - [ ] `testreports/README.md` links to the completed report.
 - [ ] Project documentation and the commit tracker are synchronized.
@@ -511,18 +539,20 @@ This checklist must be copied into the phase report and checked with direct evid
 
 Every phase follows the same evidence-driven closeout sequence:
 
-1. Create the report directory from the canonical template before testing begins.
-2. Record the environment, scope, commit, commands, and planned test cases.
-3. Complete only the approved work for that phase.
-4. Confirm every authored code line satisfies the commenting standard.
-5. Run the phase’s required automated checks while preserving raw logs.
-6. Perform the listed manual checks and capture screenshots during testing.
-7. Record runtime network activity and local-data behavior where applicable.
-8. Document failures and retests without deleting the earlier result from the report.
-9. Complete the mandatory phase closeout checklist with links to evidence.
-10. Add the report to `testreports/README.md`.
-11. Update `implementation_plan.md`, `project_plan.md`, `meta_thinking.md`, and `changelog.md` in sync.
-12. Commit a coherent phase result only after its exit gate and report conclusion both pass.
+1. Create the development document directory from its canonical template when the implementation unit begins.
+2. Record the starting requirement, system state, constraints, assumptions, and intended design.
+3. Create the paired report directory from the canonical test template before testing begins.
+4. Record the test environment, scope, commit, commands, and planned cases.
+5. Complete only the approved work while updating the development narrative alongside the code.
+6. Confirm every authored code line satisfies the commenting standard.
+7. Run the phase’s required automated checks while preserving raw logs.
+8. Perform the listed manual checks and capture screenshots during testing.
+9. Record runtime network activity and local-data behavior where applicable.
+10. Document failures, design corrections, changed assumptions, and retests without deleting earlier history.
+11. Complete the mandatory phase closeout checklist with links to explanation and evidence.
+12. Add the documents to `development_docs/README.md` and `testreports/README.md`.
+13. Update `implementation_plan.md`, `project_plan.md`, `meta_thinking.md`, and `changelog.md` in sync.
+14. Commit a coherent phase result only after its exit gate, development-document checklist, and report conclusion all pass.
 
 If a phase reveals a requirement that materially changes privacy, hosting, or product scope, development pauses at that boundary for an explicit project-owner decision.
 
@@ -540,14 +570,15 @@ If a phase reveals a requirement that materially changes privacy, hosting, or pr
 | Dependencies introduce unexpected code or requests | Privacy and performance could change without a visible feature change | Lock versions, audit the production graph, bundle locally, and inspect runtime requests |
 | Screenshots expose private or irrelevant information | Evidence may accidentally retain secrets, personal data, or unrelated windows | Use synthetic data, capture only the relevant application or terminal surface, inspect every image, and redact before committing |
 | Reports become summaries instead of evidence | A pass label without commands, logs, and screenshots cannot be independently reviewed | Require the canonical template, raw artifacts, screenshot index, and closeout checklist for every phase or run |
+| Development reasoning is lost inside code and commits | A beginner may see final lines without understanding the design method, assumptions, architecture, or tradeoffs | Require a paired development document with decisions, flows, file walkthroughs, learning guidance, and commit traceability |
 
 ## Fact-check and sanity-check record
 
 | Verification information | Value |
 | --- | --- |
-| Last verified | August 16, 2026 at 2:35:10 AM EDT |
-| Verification scope | Seven-phase sequence, Vite static output, GitHub Pages artifact deployment, React component model, confirmed test layers, local-first boundaries, comment-format limitations, screenshot capture, and evidence-report requirements |
-| Primary sources | React, TypeScript, Vite, GitHub Pages, Vitest, Testing Library, Playwright, MDN, Dexie, Zod, and Vite PWA documentation linked below |
+| Last verified | August 16, 2026 at 2:50:30 AM EDT |
+| Verification scope | Seven-phase sequence, Vite static output, GitHub Pages artifact deployment, React component model, confirmed test layers, local-first boundaries, comment-format limitations, screenshot capture, evidence reports, and beginner-focused development documentation |
+| Primary sources | React, TypeScript, Vite, GitHub Pages, Vitest, Testing Library, Playwright, MDN, Dexie, Zod, Vite PWA, C4, ADR, arc42, Diátaxis, and W3C documentation linked below |
 | Result | The sequence is compatible with the confirmed static, browser-only architecture and can begin without selecting another framework or service |
 
 The plan passed these sanity checks:
@@ -558,6 +589,7 @@ The plan passed these sanity checks:
 - **Privacy fit:** No phase requires an account, application backend, analytics service, or remote personal-data store.
 - **Testing fit:** Unit, component, browser, accessibility, and manual checks protect different risks.
 - **Evidence fit:** Each completed phase or meaningful run requires commands, raw logs, screenshots, case results, failures, retests, and a final evidence-based conclusion.
+- **Learning fit:** Each implementation unit requires a deep narrative connecting user value, design method, architecture, decisions, assumptions, files, comments, tests, and next steps.
 - **Commenting fit:** The project-specific every-line rule remains valid without corrupting strict JSON, lockfiles, generated output, or binary assets.
 - **Scope fit:** The plan defines implementation order without inventing additional product versions.
 
@@ -568,6 +600,7 @@ Package versions, browser-support targets, performance budgets, and exact access
 - **Artifact:** The packaged files passed from a build job to a deployment job.
 - **Companion annotation:** A Markdown explanation for a required file format that cannot legally or meaningfully contain comments.
 - **Continuous integration:** Automated checks that run from the repository to verify a clean installation, tests, and build.
+- **Development document:** The beginner-focused technical narrative explaining what was built in one phase, run, step, or commit and why it works that way.
 - **Exit gate:** The complete set of observable conditions that must pass before a phase closes.
 - **Focus loop:** The Pomorise sequence of plan, focus, capture, recover, reflect, and rise.
 - **Line-by-line commenting:** The Pomorise requirement that every human-authored code line has an adjacent beginner-friendly explanation.
@@ -582,6 +615,8 @@ Package versions, browser-support targets, performance budgets, and exact access
 
 ## Further reading
 
+- [Pomorise development documentation index](development_docs/README.md)
+- [Pomorise development document template](development_docs/_template/doc.md)
 - [React documentation](https://react.dev/learn)
 - [TypeScript documentation](https://www.typescriptlang.org/docs/)
 - [Vite guide](https://vite.dev/guide/)
@@ -617,3 +652,5 @@ Package versions, browser-support targets, performance budgets, and exact access
 10. Record phase completion and meaningful deviations in `meta_thinking.md` and `changelog.md`.
 11. Create and index a detailed screenshot-backed report for every meaningful phase, run, or independently verified step.
 12. Never check a phase exit gate without a passing report and complete closeout checklist.
+13. Require a current development document and paired test report for every meaningful implementation unit.
+14. Preserve changed decisions and assumptions instead of rewriting the narrative to show only the final outcome.

@@ -3,10 +3,10 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 15, 2026 at 10:36 PM EDT |
-| Last updated | August 16, 2026 at 2:35:10 AM EDT |
-| ISO 8601 last updated | `2026-08-16T02:35:10-04:00` |
+| Last updated | August 16, 2026 at 2:50:30 AM EDT |
+| ISO 8601 last updated | `2026-08-16T02:50:30-04:00` |
 | Timezone | America/Toronto (UTC−04:00) |
-| Estimated reading time | 36 minutes |
+| Estimated reading time | 40 minutes |
 | Verification status | Commit facts checked against local Git history; technical claims checked against linked primary documentation |
 
 Every commit moves Pomorise somewhere. This changelog tells that story in chronological detail, capturing the purpose, files, behavior, implementation choices, validation, and follow-up behind each step.
@@ -17,7 +17,8 @@ The newest commit should be added at the top of the **Commit history** section.
 
 - [Entry template](#entry-template)
 - [Commit history](#commit-history)
-  - [Pending: Establish screenshot-backed test reporting](#pending-establish-screenshot-backed-test-reporting)
+  - [Pending: Establish beginner-focused development documentation](#pending-establish-beginner-focused-development-documentation)
+  - [`00c4ec9`: Establish screenshot-backed test reporting](#00c4ec9-establish-screenshot-backed-test-reporting)
   - [`554be76`: Define seven-phase implementation plan](#554be76-define-seven-phase-implementation-plan)
   - [`4add167`: Approve light and dark Pomorise logos](#4add167-approve-light-and-dark-pomorise-logos)
   - [`6fb739a`: Confirm the First Light development toolset](#6fb739a-confirm-the-first-light-development-toolset)
@@ -95,13 +96,119 @@ Describe what a visitor or maintainer will notice. Write “None” when the cha
 
 ## Commit history
 
-### `Pending`: Establish screenshot-backed test reporting
+### `Pending`: Establish beginner-focused development documentation
 
 - **Status:** Prepared for the next commit
-- **Prepared:** 2026-08-16 02:32 EDT
+- **Prepared:** 2026-08-16 02:48 EDT
 - **Author:** Aman Ali with Codex collaboration
 - **Full commit:** Assigned after the commit is created
-- **Expected files:** `README.md`, `changelog.md`, `implementation_plan.md`, `meta_thinking.md`, `project_plan.md`, and `testreports/`
+- **Expected files:** `README.md`, `changelog.md`, `development_docs/`, `implementation_plan.md`, `meta_thinking.md`, `project_plan.md`, and `testreports/`
+
+#### Purpose
+
+Preserve the complete technical story behind every meaningful Pomorise implementation unit so a beginner can understand what changed, why it was designed that way, how the system works, and where evidence supports the result.
+
+#### Decision context
+
+The project owner requested a new document set at `development_docs/<phase_or_run_or_step>/doc.md`. The goal is not another short change summary. It is an in-depth guide for beginners and new programmers covering development within a commit or step, including design method, system design, design decisions, assumptions, architecture, code responsibilities, and every other detail needed to continue confidently.
+
+#### Changes
+
+- Created `development_docs/README.md` as the navigation, naming, depth, traceability, lifecycle, and privacy guide.
+- Created `development_docs/_template/doc.md` as the comprehensive reusable development narrative.
+- Defined a direct distinction between product direction, implementation order, development explanation, test evidence, commit history, and conversation history.
+- Required matching development documents and test reports to share the same stable identifier and cross-link.
+- Added sections for learning outcomes, executive explanation, commit identity, prerequisites, user value, before-and-after behavior, goals, non-goals, constraints, and requirements traceability.
+- Added a detailed design-method record and system-context, architecture, runtime, data-flow, and state-model sections.
+- Added structured design decisions with options, rationale, tradeoffs, consequences, and reconsideration conditions.
+- Added an assumption register with evidence, status, risk, and fallback plans.
+- Added component, module, file, symbol, type, contract, schema, and validation walkthroughs.
+- Added interface, accessibility, privacy, security, storage, migration, offline, update, error, recovery, performance, dependency, configuration, build, and deployment explanations.
+- Added line-by-line comment coverage, companion annotation, testing, screenshot, rejected alternative, limitation, and technical-debt sections.
+- Added a beginner reading order, complete synthetic example, learning exercises, common mistakes, debugging guide, and next-learning resources.
+- Added a detailed documentation completion checklist.
+- Updated the implementation phase closeout checklist and protocol to require development documents alongside test reports.
+- Updated test-report navigation and templates to link paired development narratives.
+- Synchronized the README, project plan, discussion record, and changelog.
+- Resolved the previous pending test-reporting entry as commit `00c4ec9`.
+
+#### Files affected
+
+- `development_docs/README.md`: New chronological index and documentation governance guide.
+- `development_docs/_template/doc.md`: New in-depth beginner-focused development document template.
+- `implementation_plan.md`: Makes development narratives a binding implementation and phase-closeout requirement.
+- `testreports/README.md`: Adds the explanation-and-evidence relationship to report navigation.
+- `testreports/_template/test_report.md`: Adds the paired development document to report scope and closeout.
+- `project_plan.md`: Adds development narratives to the project quality standard.
+- `meta_thinking.md`: Records the request, intended depth, and pairing decision.
+- `README.md`: Links the development documentation index and explains its purpose.
+- `changelog.md`: Resolves the reporting commit and prepares this documentation-system entry.
+
+#### User-visible impact
+
+There is no application interface change. Future contributors will be able to move from a commit or phase to a complete beginner-friendly explanation of the design and then to the paired test evidence, without reconstructing the system from raw diffs.
+
+#### Decisions and tradeoffs
+
+- Development narratives are separate from test reports because intended design and observed evidence answer different questions.
+- The same identifier connects both records and prevents explanation from drifting away from evidence.
+- The template is intentionally comprehensive. Non-applicable sections remain with reasons instead of disappearing silently.
+- Important decisions and changed assumptions remain in history rather than being rewritten to show only the final answer.
+- The template uses project-owned structure while borrowing useful coverage ideas from C4, ADR, arc42, and Diátaxis references.
+- Whole source files are not duplicated in the narrative. The document explains responsibilities and uses small excerpts only when they improve learning.
+
+#### Risks and limitations
+
+- Deep documentation requires time and disciplined synchronization with code.
+- A large template can become mechanical if authors fill sections without explaining real evidence and tradeoffs.
+- Incorrect architecture prose may mislead beginners even when line-level comments remain correct.
+- Development documents will increase repository size, though less sharply than screenshot and trace evidence.
+- The template does not replace source code, tests, browser evidence, or direct practice.
+
+#### Validation
+
+- Confirmed the required `development_docs/<phase_or_run_or_step>/doc.md` path appears consistently.
+- Confirmed the index and template include timestamps, ISO timestamps, timezone, estimated reading time, table of contents, glossary, and further reading.
+- Confirmed the template covers design method, system design, decisions, assumptions, requirements, architecture, flows, state, files, types, interface, accessibility, privacy, storage, errors, performance, dependencies, deployment, testing, alternatives, limitations, and beginner guidance.
+- Confirmed development and test templates require matching identifiers and cross-links.
+- Checked the documentation approach against primary C4, ADR, arc42, Diátaxis, and W3C references.
+- Checked every populated Markdown file for required metadata, balanced code fences, required document sections, local links, and forbidden em dashes.
+- Validated all external links.
+
+#### Lessons learned by the agent
+
+- Line-by-line comments explain local code intent, while a separate narrative is needed to teach architecture, tradeoffs, and system behavior.
+- Pairing explanation and evidence with one identifier creates a clearer audit trail than placing both inside one oversized report.
+- Assumptions deserve first-class records because many design errors begin when an unverified belief is treated as fact.
+
+#### Lessons learned by the user
+
+- The project owner explicitly wants development history to teach beginners and new programmers, not merely record changed files.
+- The project owner specifically requires design method, system design, decisions, assumptions, and related development detail to be explained in depth.
+
+#### Related references
+
+- Development document index: `development_docs/README.md`
+- Canonical development template: `development_docs/_template/doc.md`
+- Paired evidence system: `testreports/README.md`
+- [C4 model](https://c4model.com/)
+- [Architectural Decision Records](https://adr.github.io/)
+- [arc42 overview](https://arc42.org/overview/)
+- [Diátaxis documentation framework](https://diataxis.fr/)
+
+#### Follow-up
+
+- Create the first real development narrative when Phase 1 or another meaningful implementation unit begins.
+- Use the same identifier for its paired test report.
+- Add every completed document to `development_docs/README.md`.
+- Replace `Pending` with the commit hash while preparing the next meaningful change.
+
+### `00c4ec9`: Establish screenshot-backed test reporting
+
+- **Date:** 2026-08-16 02:37 EDT
+- **Author:** Aman Ali
+- **Full commit:** `00c4ec9e2f6102fcac4734d6d914a41858873a2b`
+- **Change size:** 7 files changed, 881 lines added, 77 lines removed
 
 #### Purpose
 
@@ -194,7 +301,7 @@ There is no application interface change. Future readers will be able to navigat
 
 - Create the first real report directory when the first implementation or test run begins.
 - Add every completed report to `testreports/README.md`.
-- Replace `Pending` with the commit hash while preparing the next meaningful change.
+- Resolve the pending entry with the final commit hash. Completed in the development-documentation change.
 
 ### `554be76`: Define seven-phase implementation plan
 

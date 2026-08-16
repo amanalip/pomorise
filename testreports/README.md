@@ -3,10 +3,10 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 16, 2026 at 2:28 AM EDT |
-| Last updated | August 16, 2026 at 2:35:10 AM EDT |
-| ISO 8601 last updated | `2026-08-16T02:35:10-04:00` |
+| Last updated | August 16, 2026 at 2:50:30 AM EDT |
+| ISO 8601 last updated | `2026-08-16T02:50:30-04:00` |
 | Timezone | America/Toronto (UTC−04:00) |
-| Estimated reading time | 7 minutes |
+| Estimated reading time | 8 minutes |
 | Verification status | Fact-checked and sanity-checked against the implementation plan and linked primary testing documentation |
 
 This directory is the permanent evidence library for Pomorise testing. Every meaningful phase, test run, or independently verified step receives its own folder, detailed Markdown report, raw logs, screenshots, and supporting artifacts.
@@ -18,6 +18,7 @@ This directory is the permanent evidence library for Pomorise testing. Every mea
 - [Identifier rules](#identifier-rules)
 - [When a report is required](#when-a-report-is-required)
 - [Required evidence](#required-evidence)
+- [Paired development documents](#paired-development-documents)
 - [Screenshot rules](#screenshot-rules)
 - [Logging rules](#logging-rules)
 - [Report lifecycle](#report-lifecycle)
@@ -31,9 +32,9 @@ This directory is the permanent evidence library for Pomorise testing. Every mea
 
 No implementation test run has been completed yet. Add every future report to the top of this table when its directory is created.
 
-| Date | Identifier | Scope | Environment | Result | Screenshots | Report |
-| --- | --- | --- | --- | --- | --- | --- |
-| Not run | `_template` | Reusable report structure only | Not applicable | Template | Instructions only | [`_template/test_report.md`](_template/test_report.md) |
+| Date | Identifier | Scope | Environment | Result | Screenshots | Development narrative | Report |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Not run | `_template` | Reusable report structure only | Not applicable | Template | Instructions only | [`development_docs/_template/doc.md`](../development_docs/_template/doc.md) | [`_template/test_report.md`](_template/test_report.md) |
 
 Result values are `Passed`, `Failed`, `Blocked`, `Incomplete`, or `Template`. A report that includes any unexplained failure, missing required screenshot, missing command log, or unchecked closeout item cannot be marked `Passed`.
 
@@ -115,6 +116,19 @@ Every real `test_report.md` must contain:
 
 The reusable structure lives in [`_template/test_report.md`](_template/test_report.md).
 
+## Paired development documents
+
+The test report answers whether the work behaved correctly. The development document explains what was built, why it was designed that way, how the system works, and what a beginner should understand.
+
+Use the same stable identifier for both:
+
+```text
+development_docs/<identifier>/doc.md
+testreports/<identifier>/test_report.md
+```
+
+Each real test report must link its paired development document. Each development document must link back to the report. When testing changes a design decision or invalidates an assumption, update both records without removing the original failure or reasoning history.
+
 ## Screenshot rules
 
 Screenshots are mandatory in every real report.
@@ -156,7 +170,8 @@ Every test command and manual check must be traceable.
 6. Complete the closeout checklist.
 7. Set the final status from the evidence.
 8. Add or update the navigation table in this README.
-9. Synchronize the project plan, implementation plan, discussion record, and changelog.
+9. Confirm that the paired development document reflects the tested implementation and links back to the report.
+10. Synchronize the development-document index, project plan, implementation plan, discussion record, and changelog.
 
 ## Navigation maintenance
 
@@ -179,6 +194,7 @@ Test evidence is committed to the repository, so it must be safe for public view
 
 - **Artifact:** A retained machine-generated output such as a JSON result, browser trace, coverage file, or HTML report.
 - **Closeout checklist:** The evidence list that must be completed before a phase is marked finished.
+- **Development document:** The deep beginner-focused narrative explaining the design, architecture, decisions, assumptions, files, and learning path behind the tested work.
 - **Flaky test:** A test that produces different results without an intentional code or environment change.
 - **Raw log:** The unabridged output captured from a test or build command.
 - **Residual risk:** A known risk that remains after current controls and testing.
@@ -190,6 +206,7 @@ Test evidence is committed to the repository, so it must be safe for public view
 ## Further reading
 
 - [Pomorise implementation plan](../implementation_plan.md)
+- [Pomorise development documentation index](../development_docs/README.md)
 - [Playwright screenshots](https://playwright.dev/docs/screenshots)
 - [Playwright reporters](https://playwright.dev/docs/test-reporters)
 - [Playwright trace viewer](https://playwright.dev/docs/trace-viewer-intro)
@@ -206,3 +223,4 @@ Test evidence is committed to the repository, so it must be safe for public view
 6. Keep paths relative so reports render on GitHub Pages and in repository viewers.
 7. Update the timestamp, reading time, table of contents, glossary, and references whenever this README changes substantially.
 8. Keep the writing precise, detailed, beginner-friendly, and free of em dashes.
+9. Pair every real report with the matching development document identifier and maintain links in both directions.
