@@ -3,9 +3,10 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 16, 2026 at 2:18 AM EDT |
-| Last updated | August 16, 2026 at 2:22 AM EDT |
+| Last updated | August 16, 2026 at 2:35:10 AM EDT |
+| ISO 8601 last updated | `2026-08-16T02:35:10-04:00` |
 | Timezone | America/Toronto (UTC−04:00) |
-| Estimated reading time | 22 minutes |
+| Estimated reading time | 27 minutes |
 | Verification status | Fact-checked and sanity-checked against the linked primary documentation and the confirmed project plan |
 
 This plan turns Pomorise 1.0: First Light from an approved direction into a dependable public website. Development will proceed through **seven phases**. Each phase produces something usable, has a clear completion gate, and protects the local-first privacy promise.
@@ -25,6 +26,8 @@ This plan turns Pomorise 1.0: First Light from an approved direction into a depe
 - [Phase 7: Release verification and publication](#phase-7-release-verification-and-publication)
 - [Line-by-line commenting standard](#line-by-line-commenting-standard)
 - [Testing strategy](#testing-strategy)
+- [Test report standard](#test-report-standard)
+- [Mandatory phase closeout checklist](#mandatory-phase-closeout-checklist)
 - [Phase completion protocol](#phase-completion-protocol)
 - [Risks and controls](#risks-and-controls)
 - [Fact-check and sanity-check record](#fact-check-and-sanity-check-record)
@@ -106,17 +109,19 @@ Create the smallest trustworthy project foundation before feature code begins. T
 
 ### Required validation
 
-- A clean `npm ci` succeeds from the lockfile.
-- Formatting, linting, and TypeScript checks succeed.
-- The first Vitest and component tests succeed.
-- The production build creates `dist`.
-- The built application works under the `/pomorise/` base path.
-- GitHub Actions uses the same install and build commands as local development.
-- No secrets or environment-specific private values are required.
+- [ ] A clean `npm ci` succeeds from the lockfile.
+- [ ] Formatting, linting, and TypeScript checks succeed.
+- [ ] The first Vitest and component tests succeed.
+- [ ] The production build creates `dist`.
+- [ ] The built application works under the `/pomorise/` base path.
+- [ ] GitHub Actions uses the same install and build commands as local development.
+- [ ] No secrets or environment-specific private values are required.
 
 ### Exit gate
 
 Phase 1 is complete when a new contributor can clone the repository, run the documented commands, see the Pomorise shell, execute all quality checks, and build the exact artifact expected by GitHub Pages.
+
+- [ ] **Phase 1 completion:** Exit gate satisfied and linked test report status is `Passed`.
 
 ## Phase 2: Design system and application shell
 
@@ -139,16 +144,18 @@ Turn the approved identity into a calm, readable, and reusable interface foundat
 
 ### Required validation
 
-- Light and dark themes remain readable at 200 percent zoom.
-- The shell reflows without horizontal page scrolling at the supported mobile width.
-- Every interactive shell control is reachable and operable by keyboard.
-- Automated accessibility checks find no known serious or critical issues.
-- Manual contrast checks cover text, controls, focus indicators, status colors, and disabled states.
-- Theme selection persists locally and does not create a network request.
+- [ ] Light and dark themes remain readable at 200 percent zoom.
+- [ ] The shell reflows without horizontal page scrolling at the supported mobile width.
+- [ ] Every interactive shell control is reachable and operable by keyboard.
+- [ ] Automated accessibility checks find no known serious or critical issues.
+- [ ] Manual contrast checks cover text, controls, focus indicators, status colors, and disabled states.
+- [ ] Theme selection persists locally and does not create a network request.
 
 ### Exit gate
 
 Phase 2 is complete when the application looks recognizably Pomorise on desktop and mobile, the approved logos are integrated correctly, and every later feature has accessible project-owned components to build upon.
+
+- [ ] **Phase 2 completion:** Exit gate satisfied and linked test report status is `Passed`.
 
 ## Phase 3: Reliable timer engine
 
@@ -172,16 +179,18 @@ Build the core promise as a deterministic state machine before tasks or progress
 
 ### Required validation
 
-- Unit tests cover every legal transition and reject invalid transitions.
-- Fake-clock tests cover completion boundaries, pause and resume, added time, skipped sessions, and overtime.
-- Component tests cover controls, labels, announcements, and permission explanations.
-- Browser tests cover refresh recovery, hidden-tab recovery, storage restoration, and responsive controls.
-- Manual tests cover device sleep and a simulated clock change where automation is insufficient.
-- The timer remains usable when sound and notifications are unsupported or denied.
+- [ ] Unit tests cover every legal transition and reject invalid transitions.
+- [ ] Fake-clock tests cover completion boundaries, pause and resume, added time, skipped sessions, and overtime.
+- [ ] Component tests cover controls, labels, announcements, and permission explanations.
+- [ ] Browser tests cover refresh recovery, hidden-tab recovery, storage restoration, and responsive controls.
+- [ ] Manual tests cover device sleep and a simulated clock change where automation is insufficient.
+- [ ] The timer remains usable when sound and notifications are unsupported or denied.
 
 ### Exit gate
 
 Phase 3 is complete when the countdown is accurate, recoverable, keyboard-accessible, touch-accessible, and independent of browser interval precision.
+
+- [ ] **Phase 3 completion:** Exit gate satisfied and linked test report status is `Passed`.
 
 ## Phase 4: Complete focus loop
 
@@ -205,17 +214,19 @@ Build the experience that makes Pomorise more useful than an isolated 25-minute 
 
 ### Required validation
 
-- A complete intention-to-reflection journey works with keyboard only.
-- The same journey works with pointer and touch-sized controls.
-- Component tests cover empty, partial, complete, canceled, and error states.
-- Browser tests cover session completion with and without a selected task.
-- Progress values match deterministic calculations from synthetic session records.
-- User-generated text is rendered as text and never injected as raw HTML.
-- The focus screen remains visually quiet while capture controls stay reachable.
+- [ ] A complete intention-to-reflection journey works with keyboard only.
+- [ ] The same journey works with pointer and touch-sized controls.
+- [ ] Component tests cover empty, partial, complete, canceled, and error states.
+- [ ] Browser tests cover session completion with and without a selected task.
+- [ ] Progress values match deterministic calculations from synthetic session records.
+- [ ] User-generated text is rendered as text and never injected as raw HTML.
+- [ ] The focus screen remains visually quiet while capture controls stay reachable.
 
 ### Exit gate
 
 Phase 4 is complete when a visitor can plan a session, focus, capture a distraction, take a break, reflect, and understand personal progress without leaving Pomorise or creating an account.
+
+- [ ] **Phase 4 completion:** Exit gate satisfied and linked test report status is `Passed`.
 
 ## Phase 5: Local data and privacy controls
 
@@ -240,18 +251,20 @@ Make browser-only data ownership dependable, transparent, and recoverable.
 
 ### Required validation
 
-- Data survives refresh and normal browser restart behavior.
-- Migration tests preserve older synthetic records.
-- Malformed imports fail safely without partial writes.
-- Valid imports produce expected records and derived progress.
-- Exported data can be imported into a clean browser profile.
-- Each deletion scope removes exactly the promised records.
-- Browser tests confirm that personal values never appear in URLs or network request bodies.
-- The application still works if persistent-storage permission is unavailable or declined.
+- [ ] Data survives refresh and normal browser restart behavior.
+- [ ] Migration tests preserve older synthetic records.
+- [ ] Malformed imports fail safely without partial writes.
+- [ ] Valid imports produce expected records and derived progress.
+- [ ] Exported data can be imported into a clean browser profile.
+- [ ] Each deletion scope removes exactly the promised records.
+- [ ] Browser tests confirm that personal values never appear in URLs or network request bodies.
+- [ ] The application still works if persistent-storage permission is unavailable or declined.
 
 ### Exit gate
 
 Phase 5 is complete when visitors can understand, back up, restore, inspect, and delete their Pomorise data without sending that data to Pomorise or another application service.
+
+- [ ] **Phase 5 completion:** Exit gate satisfied and linked test report status is `Passed`.
 
 ## Phase 6: Offline experience and quality hardening
 
@@ -275,17 +288,19 @@ Make the integrated product resilient across browsers, screen sizes, permissions
 
 ### Required validation
 
-- The installed or previously loaded application opens without a network connection.
-- An active session remains recoverable after an application update.
-- Automated accessibility tests pass, followed by the documented manual accessibility review.
-- All primary flows pass at representative mobile and desktop sizes.
-- No personal data enters service-worker caches.
-- Runtime network inspection shows only approved static application requests.
-- Production performance budgets defined during Phase 1 pass on the built application.
+- [ ] The installed or previously loaded application opens without a network connection.
+- [ ] An active session remains recoverable after an application update.
+- [ ] Automated accessibility tests pass, followed by the documented manual accessibility review.
+- [ ] All primary flows pass at representative mobile and desktop sizes.
+- [ ] No personal data enters service-worker caches.
+- [ ] Runtime network inspection shows only approved static application requests.
+- [ ] Production performance budgets defined during Phase 1 pass on the built application.
 
 ### Exit gate
 
 Phase 6 is complete when Pomorise remains understandable and useful through offline use, denied permissions, viewport changes, browser throttling, refreshes, and ordinary update conditions.
+
+- [ ] **Phase 6 completion:** Exit gate satisfied and linked test report status is `Passed`.
 
 ## Phase 7: Release verification and publication
 
@@ -308,18 +323,20 @@ Prove that Pomorise 1.0: First Light works as deployed, not only inside the deve
 
 ### Required validation
 
-- The clean continuous-integration run passes without ignored failures.
-- The public URL loads without missing assets or incorrect base paths.
-- The deployed application makes no unapproved runtime requests.
-- The privacy promise matches observed application behavior.
-- A fresh visitor can complete the main focus loop.
-- An existing visitor’s synthetic local data survives a compatible application update.
-- The final accessibility and responsive checklist is signed off.
-- Backup, restore, and delete-everything flows pass on the deployed build.
+- [ ] The clean continuous-integration run passes without ignored failures.
+- [ ] The public URL loads without missing assets or incorrect base paths.
+- [ ] The deployed application makes no unapproved runtime requests.
+- [ ] The privacy promise matches observed application behavior.
+- [ ] A fresh visitor can complete the main focus loop.
+- [ ] An existing visitor’s synthetic local data survives a compatible application update.
+- [ ] The final accessibility and responsive checklist is signed off.
+- [ ] Backup, restore, and delete-everything flows pass on the deployed build.
 
 ### Exit gate
 
 Phase 7 is complete only when the public GitHub Pages deployment passes the release checklist and is ready to be called **Pomorise 1.0: First Light**.
+
+- [ ] **Phase 7 completion:** Exit gate satisfied and linked test report status is `Passed`.
 
 ## Line-by-line commenting standard
 
@@ -421,18 +438,91 @@ The test layers divide responsibility instead of repeating the same checks every
 
 Tests use synthetic records only. No real visitor data is copied into fixtures, screenshots, logs, or continuous-integration artifacts.
 
+## Test report standard
+
+Every meaningful test phase, run, or independently verified step must create a detailed permanent report at:
+
+```text
+testreports/<phase_or_run_or_step>/test_report.md
+```
+
+The directory name must be a stable lowercase identifier such as `phase-01-foundation`, `run-2026-08-16-timer-recovery`, or `step-dark-theme-keyboard-review`. Each report keeps its supporting evidence beside it:
+
+```text
+testreports/<phase_or_run_or_step>/
+|-- test_report.md
+|-- screenshots/
+|   |-- 001-initial-state.png
+|   |-- 002-primary-flow-passed.png
+|   `-- 003-test-runner-summary.png
+|-- logs/
+|   `-- 001-command-output.txt
+`-- artifacts/
+    `-- optional-machine-report.json
+```
+
+Every report must include:
+
+- Human-readable creation and last-updated timestamps, ISO 8601 timestamps where exact values are known, timezone, and estimated reading time.
+- The phase, run, or step identifier and its purpose.
+- The exact commit, branch, application URL, build mode, operating system, browser engines, viewport sizes, locale, timezone, and relevant tool versions.
+- The start time, end time, duration, command, exit code, expected result, actual result, and log path for every automated command.
+- A numbered record for every automated and manual test case.
+- Setup data and preconditions using synthetic information only.
+- Pass, fail, blocked, skipped, and flaky counts with an explanation for every non-pass result.
+- Full failure symptoms, reproduction steps, likely cause, affected scope, fix or deferral decision, and retest result.
+- Accessibility, keyboard, responsive, privacy, storage, network, performance, offline, and comment-coverage findings when relevant.
+- Known limitations, residual risks, deferred checks, and follow-up owners.
+- A screenshot index with a descriptive caption, capture timestamp, test-case link, viewport, theme, expected state, and observed state for every image.
+- Relative Markdown image embeds so screenshots are visible while reading the report.
+- Links to raw logs, machine-readable results, traces, videos, coverage output, and other retained artifacts.
+- A final checklist and an evidence-based conclusion that states passed, failed, blocked, or incomplete.
+
+Every timestamp must include its date and timezone. Every completed report must show a realistic estimated reading time near the top so reviewers know its length before beginning.
+
+Screenshots are mandatory for every report. A browser-visible run must show the tested interface states, including relevant light, dark, desktop, and mobile evidence. A command-only run must include a readable terminal or test-reporter screenshot. Screenshots supplement logs and assertions; they never replace them.
+
+Playwright may capture page, full-page, or element screenshots and may retain traces for failed or diagnostically important browser cases. Vitest and other command runs must retain text output in `logs/` in addition to the report summary. Secret values, personal data, access tokens, private file paths, unrelated browser tabs, and real user records must be removed before any evidence is committed.
+
+The canonical template is [`testreports/_template/test_report.md`](testreports/_template/test_report.md). The navigation index and naming rules live in [`testreports/README.md`](testreports/README.md).
+
+## Mandatory phase closeout checklist
+
+This checklist must be copied into the phase report and checked with direct evidence. An unchecked item prevents the phase from being marked complete.
+
+- [ ] The approved phase scope is implemented, and any deviation is documented.
+- [ ] Every phase-specific **Required validation** checkbox is checked and linked to evidence.
+- [ ] Every human-authored code line satisfies the line-by-line commenting standard.
+- [ ] Companion annotations cover every human-maintained format that cannot contain comments.
+- [ ] Formatting, linting, type checking, unit tests, component tests, browser tests, and builds required by this phase have recorded commands and exit codes.
+- [ ] Manual keyboard, accessibility, responsive, permission, privacy, and recovery checks required by this phase are recorded.
+- [ ] Runtime network and browser-storage findings are recorded where the phase can affect them.
+- [ ] Every failure, retry, skipped case, flaky result, and blocked check has an explanation.
+- [ ] Raw logs and available machine-readable reports are stored beside the report.
+- [ ] Screenshots are stored locally, embedded in the report, captioned, and tied to test cases.
+- [ ] Screenshots and logs contain only synthetic data and no secrets or personal records.
+- [ ] Known limitations and residual risks are explicit.
+- [ ] The report conclusion matches the recorded evidence.
+- [ ] `testreports/README.md` links to the completed report.
+- [ ] Project documentation and the commit tracker are synchronized.
+- [ ] The phase exit gate is checked only after the complete report passes review.
+
 ## Phase completion protocol
 
-Every phase follows the same closeout sequence:
+Every phase follows the same evidence-driven closeout sequence:
 
-1. Complete only the approved work for that phase.
-2. Confirm every authored code line satisfies the commenting standard.
-3. Run the phase’s required automated checks.
-4. Perform the listed manual checks.
-5. Review runtime network activity and local-data behavior where applicable.
-6. Update `implementation_plan.md`, `project_plan.md`, `meta_thinking.md`, and `changelog.md` in sync.
-7. Record known limitations rather than hiding or silently deferring them.
-8. Commit a coherent phase result only after its exit gate passes.
+1. Create the report directory from the canonical template before testing begins.
+2. Record the environment, scope, commit, commands, and planned test cases.
+3. Complete only the approved work for that phase.
+4. Confirm every authored code line satisfies the commenting standard.
+5. Run the phase’s required automated checks while preserving raw logs.
+6. Perform the listed manual checks and capture screenshots during testing.
+7. Record runtime network activity and local-data behavior where applicable.
+8. Document failures and retests without deleting the earlier result from the report.
+9. Complete the mandatory phase closeout checklist with links to evidence.
+10. Add the report to `testreports/README.md`.
+11. Update `implementation_plan.md`, `project_plan.md`, `meta_thinking.md`, and `changelog.md` in sync.
+12. Commit a coherent phase result only after its exit gate and report conclusion both pass.
 
 If a phase reveals a requirement that materially changes privacy, hosting, or product scope, development pauses at that boundary for an explicit project-owner decision.
 
@@ -448,13 +538,15 @@ If a phase reveals a requirement that materially changes privacy, hosting, or pr
 | GitHub Pages uses a repository subpath | Incorrect asset paths can break the public build | Configure and test Vite’s `/pomorise/` base path from Phase 1 onward |
 | Automated accessibility tests miss human experience | Tools cannot judge every screen-reader, keyboard, motion, or comprehension issue | Require manual accessibility gates in multiple phases |
 | Dependencies introduce unexpected code or requests | Privacy and performance could change without a visible feature change | Lock versions, audit the production graph, bundle locally, and inspect runtime requests |
+| Screenshots expose private or irrelevant information | Evidence may accidentally retain secrets, personal data, or unrelated windows | Use synthetic data, capture only the relevant application or terminal surface, inspect every image, and redact before committing |
+| Reports become summaries instead of evidence | A pass label without commands, logs, and screenshots cannot be independently reviewed | Require the canonical template, raw artifacts, screenshot index, and closeout checklist for every phase or run |
 
 ## Fact-check and sanity-check record
 
 | Verification information | Value |
 | --- | --- |
-| Last verified | August 16, 2026 at 2:22 AM EDT |
-| Verification scope | Seven-phase sequence, Vite static output, GitHub Pages artifact deployment, React component model, confirmed test layers, local-first boundaries, and comment-format limitations |
+| Last verified | August 16, 2026 at 2:35:10 AM EDT |
+| Verification scope | Seven-phase sequence, Vite static output, GitHub Pages artifact deployment, React component model, confirmed test layers, local-first boundaries, comment-format limitations, screenshot capture, and evidence-report requirements |
 | Primary sources | React, TypeScript, Vite, GitHub Pages, Vitest, Testing Library, Playwright, MDN, Dexie, Zod, and Vite PWA documentation linked below |
 | Result | The sequence is compatible with the confirmed static, browser-only architecture and can begin without selecting another framework or service |
 
@@ -465,6 +557,7 @@ The plan passed these sanity checks:
 - **Hosting fit:** Vite’s default production output is `dist`, and GitHub Pages custom workflows can publish a built artifact.
 - **Privacy fit:** No phase requires an account, application backend, analytics service, or remote personal-data store.
 - **Testing fit:** Unit, component, browser, accessibility, and manual checks protect different risks.
+- **Evidence fit:** Each completed phase or meaningful run requires commands, raw logs, screenshots, case results, failures, retests, and a final evidence-based conclusion.
 - **Commenting fit:** The project-specific every-line rule remains valid without corrupting strict JSON, lockfiles, generated output, or binary assets.
 - **Scope fit:** The plan defines implementation order without inventing additional product versions.
 
@@ -478,6 +571,7 @@ Package versions, browser-support targets, performance budgets, and exact access
 - **Exit gate:** The complete set of observable conditions that must pass before a phase closes.
 - **Focus loop:** The Pomorise sequence of plan, focus, capture, recover, reflect, and rise.
 - **Line-by-line commenting:** The Pomorise requirement that every human-authored code line has an adjacent beginner-friendly explanation.
+- **Test report:** The permanent Markdown record that connects a test scope to its environment, commands, cases, logs, screenshots, failures, retests, and conclusion.
 - **Local-first:** A product model in which personal data stays on the visitor’s device by default.
 - **Migration:** A versioned transformation that moves stored records safely from an older schema to a newer schema.
 - **Production build:** The optimized static application output created for public hosting.
@@ -501,6 +595,10 @@ Package versions, browser-support targets, performance budgets, and exact access
 - [Testing Library user-event introduction](https://testing-library.com/docs/user-event/intro/)
 - [Playwright documentation](https://playwright.dev/docs/intro)
 - [Playwright accessibility testing](https://playwright.dev/docs/accessibility-testing)
+- [Playwright screenshots](https://playwright.dev/docs/screenshots)
+- [Playwright reporters](https://playwright.dev/docs/test-reporters)
+- [Playwright trace viewer](https://playwright.dev/docs/trace-viewer-intro)
+- [Vitest reporters](https://vitest.dev/guide/reporters)
 - [MDN: Using IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Using_IndexedDB)
 - [MDN: Storage quotas and eviction](https://developer.mozilla.org/en-US/docs/Web/API/Storage_API/Storage_quotas_and_eviction_criteria)
 - [MDN: Progressive web apps](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/What_is_a_progressive_web_app)
@@ -517,3 +615,5 @@ Package versions, browser-support targets, performance budgets, and exact access
 8. Update the timestamp, reading time, table of contents, glossary, sources, and verification record whenever this document changes substantially.
 9. Keep the prose engaging, precise, beginner-friendly, and free of em dashes.
 10. Record phase completion and meaningful deviations in `meta_thinking.md` and `changelog.md`.
+11. Create and index a detailed screenshot-backed report for every meaningful phase, run, or independently verified step.
+12. Never check a phase exit gate without a passing report and complete closeout checklist.

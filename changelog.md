@@ -3,9 +3,10 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 15, 2026 at 10:36 PM EDT |
-| Last updated | August 16, 2026 at 2:22 AM EDT |
+| Last updated | August 16, 2026 at 2:35:10 AM EDT |
+| ISO 8601 last updated | `2026-08-16T02:35:10-04:00` |
 | Timezone | America/Toronto (UTC−04:00) |
-| Estimated reading time | 31 minutes |
+| Estimated reading time | 36 minutes |
 | Verification status | Commit facts checked against local Git history; technical claims checked against linked primary documentation |
 
 Every commit moves Pomorise somewhere. This changelog tells that story in chronological detail, capturing the purpose, files, behavior, implementation choices, validation, and follow-up behind each step.
@@ -16,7 +17,8 @@ The newest commit should be added at the top of the **Commit history** section.
 
 - [Entry template](#entry-template)
 - [Commit history](#commit-history)
-  - [Pending: Define the seven-phase implementation plan](#pending-define-the-seven-phase-implementation-plan)
+  - [Pending: Establish screenshot-backed test reporting](#pending-establish-screenshot-backed-test-reporting)
+  - [`554be76`: Define seven-phase implementation plan](#554be76-define-seven-phase-implementation-plan)
   - [`4add167`: Approve light and dark Pomorise logos](#4add167-approve-light-and-dark-pomorise-logos)
   - [`6fb739a`: Confirm the First Light development toolset](#6fb739a-confirm-the-first-light-development-toolset)
   - [`cecd97e`: Name Pomorise 1.0 First Light](#cecd97e-name-pomorise-10-first-light)
@@ -93,13 +95,113 @@ Describe what a visitor or maintainer will notice. Write “None” when the cha
 
 ## Commit history
 
-### `Pending`: Define the seven-phase implementation plan
+### `Pending`: Establish screenshot-backed test reporting
 
 - **Status:** Prepared for the next commit
-- **Prepared:** 2026-08-16 02:18 EDT
+- **Prepared:** 2026-08-16 02:32 EDT
 - **Author:** Aman Ali with Codex collaboration
 - **Full commit:** Assigned after the commit is created
-- **Expected files:** `README.md`, `changelog.md`, `implementation_plan.md`, `meta_thinking.md`, and `project_plan.md`
+- **Expected files:** `README.md`, `changelog.md`, `implementation_plan.md`, `meta_thinking.md`, `project_plan.md`, and `testreports/`
+
+#### Purpose
+
+Make every phase and meaningful test run independently reviewable through explicit checklists, exact timestamps, raw logs, screenshots, case results, failure history, and evidence-based conclusions.
+
+#### Decision context
+
+The project owner asked whether each phase had a checklist that would be checked as work completed. They also required a highly detailed report with screenshots after every phase or run, stored at `testreports/<phase_or_run_or_step>/test_report.md`, plus a navigation README. They then clarified that test reports and all Markdown documents must carry dated timestamps and estimated reading times.
+
+#### Changes
+
+- Converted all seven phase validation lists into unchecked Markdown task lists.
+- Added a mandatory phase closeout checklist that blocks completion when evidence is missing.
+- Added a test-report standard covering scope, environment, commands, exit codes, cases, raw logs, screenshots, artifacts, failures, retests, risks, and conclusions.
+- Required screenshots for browser-visible and command-only reports.
+- Required synthetic data and sensitive-information review for screenshots, logs, traces, and artifacts.
+- Defined stable report paths and evidence subdirectories for screenshots, logs, and machine-readable artifacts.
+- Created `testreports/README.md` as the chronological navigation and governance index.
+- Created `testreports/_template/test_report.md` as the detailed reusable report structure.
+- Added report-specific sections for accessibility, responsiveness, themes, privacy, network activity, browser storage, offline behavior, updates, performance, and code-comment coverage.
+- Added failure and retest history that preserves the original failing evidence.
+- Required human-readable timestamps, timezone, estimated reading time, and ISO 8601 timestamps where exact values are known across Markdown documents.
+- Synchronized the repository overview, product plan, implementation plan, decision record, and changelog.
+- Resolved the previous pending implementation-plan entry as commit `554be76`.
+
+#### Files affected
+
+- `testreports/README.md`: New report navigation, naming, evidence, screenshot, logging, lifecycle, and privacy rules.
+- `testreports/_template/test_report.md`: New detailed template for every future phase, run, or step report.
+- `implementation_plan.md`: Adds checkable phase validations, report requirements, evidence rules, and closeout checklist.
+- `project_plan.md`: Adds test-reporting and screenshot evidence to the product quality standard.
+- `meta_thinking.md`: Records the checklist, reporting, screenshot, and metadata decisions.
+- `README.md`: Links the public report index and summarizes the evidence promise.
+- `changelog.md`: Resolves the implementation-plan commit and prepares this reporting entry.
+
+#### User-visible impact
+
+There is no application interface change. Future readers will be able to navigate from a phase or run to a detailed report and inspect what was tested, in which environment, with which commands, what failed, what was retried, and which screenshots support the conclusion.
+
+#### Decisions and tradeoffs
+
+- Phase validation uses unchecked task lists until direct evidence exists.
+- A phase cannot be marked complete without a passing report and completed closeout checklist.
+- Screenshots are mandatory even for command-only runs, which use a terminal or test-reporter capture.
+- Screenshots supplement assertions and logs rather than replacing them.
+- Failed evidence remains in history after a successful retest.
+- Reports stay inside the repository instead of using an external reporting service, preserving the local and transparent project model.
+- The reusable template is not an executed report and therefore contains instructions instead of fabricated screenshots or results.
+
+#### Risks and limitations
+
+- Detailed reports and screenshot evidence will increase repository size and testing time.
+- Screenshots and traces can accidentally expose sensitive information if they are not reviewed carefully.
+- A comprehensive template can become administrative overhead if reports are filled mechanically rather than from observed evidence.
+- Browser screenshots show visible state but cannot replace assertions, raw output, accessibility review, or privacy inspection.
+
+#### Validation
+
+- Confirmed that each of the seven phases has a checkable **Required validation** list.
+- Confirmed the mandatory closeout checklist covers scope, comments, automated tests, manual tests, logs, screenshots, privacy, failures, risks, document synchronization, and exit-gate evidence.
+- Verified that the requested `testreports/<phase_or_run_or_step>/test_report.md` structure is documented consistently.
+- Verified that the template includes human-readable and ISO timestamps, timezone, run duration, and estimated reading time.
+- Checked screenshot and raw-log requirements against current Playwright and Vitest reporting documentation.
+- Checked every populated Markdown document for metadata, table of contents, glossary, further reading, balanced code fences, and forbidden em dashes.
+- Validated all external links and existing local document links.
+
+#### Lessons learned by the agent
+
+- A validation list becomes operational only when it can be checked and tied to durable evidence.
+- Screenshot evidence needs captions, environment context, and test-case links to remain meaningful later.
+- Preserving failures and retests in one history is more honest and useful than rewriting a report to show only the final pass.
+
+#### Lessons learned by the user
+
+- The project owner explicitly requires checklists to be checked after every phase.
+- The project owner explicitly requires detailed timestamped reports with screenshots after every phase or run.
+- The project owner requires dates, readable timestamps, and estimated reading times across all Markdown documents.
+
+#### Related references
+
+- Test report index: `testreports/README.md`
+- Canonical report template: `testreports/_template/test_report.md`
+- Phase and report rules: `implementation_plan.md`
+- [Playwright screenshots](https://playwright.dev/docs/screenshots)
+- [Playwright reporters](https://playwright.dev/docs/test-reporters)
+- [Playwright trace viewer](https://playwright.dev/docs/trace-viewer-intro)
+- [Vitest reporters](https://vitest.dev/guide/reporters)
+
+#### Follow-up
+
+- Create the first real report directory when the first implementation or test run begins.
+- Add every completed report to `testreports/README.md`.
+- Replace `Pending` with the commit hash while preparing the next meaningful change.
+
+### `554be76`: Define seven-phase implementation plan
+
+- **Date:** 2026-08-16 02:23 EDT
+- **Author:** Aman Ali
+- **Full commit:** `554be76587fd8666dc8ef9edeb749effcbb6ec2b`
+- **Change size:** 5 files changed, 668 lines added, 27 lines removed
 
 #### Purpose
 
@@ -184,7 +286,7 @@ There is no application interface change yet. Contributors now have one developm
 
 - Resolve the remaining product behavior and visual-system decisions needed by their implementation phases.
 - Begin Phase 1 only after the project owner requests implementation.
-- Replace `Pending` with the commit hash while preparing the next meaningful change.
+- Resolve the pending entry with the final commit hash. Completed in the test-reporting change.
 
 ### `4add167`: Approve light and dark Pomorise logos
 

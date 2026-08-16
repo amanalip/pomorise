@@ -3,9 +3,10 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 15, 2026 at 10:36 PM EDT |
-| Last updated | August 16, 2026 at 2:22 AM EDT |
+| Last updated | August 16, 2026 at 2:35:10 AM EDT |
+| ISO 8601 last updated | `2026-08-16T02:35:10-04:00` |
 | Timezone | America/Toronto (UTC−04:00) |
-| Estimated reading time | 20 minutes |
+| Estimated reading time | 22 minutes |
 | Verification status | Fact-checked and sanity-checked against the primary sources in **Further reading** |
 
 This is Pomorise's shared memory. It captures the conversations, requests, decisions, and working agreements that shape the product. It does not contain private internal reasoning.
@@ -34,6 +35,7 @@ This is Pomorise's shared memory. It captures the conversations, requests, decis
   - [Development toolset confirmed](#2026-08-15-development-toolset-confirmed)
   - [Light and dark logos approved](#2026-08-15-light-and-dark-logos-approved)
   - [Seven-phase implementation planning activated](#2026-08-16-seven-phase-implementation-planning-activated)
+  - [Screenshot-backed test reporting required](#2026-08-16-screenshot-backed-test-reporting-required)
 - [Confirmed decisions](#confirmed-decisions)
 - [Open decisions](#open-decisions)
 - [Documentation verification standard](#documentation-verification-standard)
@@ -357,6 +359,25 @@ Development is now organized into seven phases: foundation and guardrails, desig
 
 The project-specific commenting rule applies to every human-authored code line. Comment lines and blank lines do not require recursive comments. Formats that cannot legally or meaningfully contain comments must use companion Markdown annotations so the underlying decisions remain readable without corrupting the files.
 
+### 2026-08-16: Screenshot-backed test reporting required
+
+| Conversation details | Value |
+| --- | --- |
+| Conversation date | August 16, 2026 |
+| Conversation timestamp | Exact send time was not retained |
+| Entry recorded | August 16, 2026 at 2:27:38 AM EDT |
+| ISO 8601 entry timestamp | `2026-08-16T02:27:38-04:00` |
+| Metadata clarification recorded | August 16, 2026 at 2:31:45 AM EDT |
+| ISO 8601 metadata clarification | `2026-08-16T02:31:45-04:00` |
+| Timezone | America/Toronto (UTC−04:00) |
+| Entry reading time | 1 minute |
+
+The project owner asked whether the implementation plan contained a checklist that would be checked after every phase. The earlier plan contained validation lists and a completion protocol, but not a formal Markdown checkbox system. Every phase now has checkable validation items, and a mandatory closeout checklist prevents an exit gate from passing without linked evidence.
+
+The project owner also required a very detailed report after every meaningful phase or test run. Each report will live at `testreports/<phase_or_run_or_step>/test_report.md` with raw logs, case-by-case results, failures, retests, risks, and locally stored screenshots. A navigation README and reusable report template establish the format before implementation begins.
+
+The project owner then clarified that test reports, and every Markdown document, must include a date and timestamp plus an estimated reading time. The documentation metadata standard now makes human-readable timestamps, timezone, ISO 8601 timestamps where exact values are known, and estimated reading time explicit.
+
 ## Confirmed decisions
 
 These are the firm foundations beneath Pomorise:
@@ -385,6 +406,9 @@ These are the firm foundations beneath Pomorise:
 - **Logo direction:** Segmented timer ring, rising sun, and subtle lowercase `p`, with coordinated approved light and dark variants
 - **Implementation sequence:** Seven phases with an observable exit gate for each phase
 - **Code readability:** Every human-authored code line requires an adjacent beginner-friendly explanation, with companion annotations for non-commentable formats
+- **Phase checklists:** Every phase has checkable validation items and a mandatory evidence-based closeout checklist
+- **Test reporting:** Every meaningful phase, run, or independently verified step requires a detailed report under `testreports/` with raw logs and embedded screenshots
+- **Document metadata:** Every Markdown document requires dated human-readable timestamps, timezone, and estimated reading time, plus ISO 8601 timestamps where exact values are known
 
 ## Open decisions
 
@@ -423,6 +447,7 @@ Official sources are preferred in this order: standards and browser documentatio
 - **Logo lockup:** The arrangement of a symbol, wordmark, and optional tagline as one brand asset.
 - **Primary source:** Official documentation, a technical standard, or an original product source rather than a secondary summary.
 - **Rejected tools audit:** A record of intentionally excluded technologies, the reason for exclusion, the selected replacement, and the condition that could justify reconsideration.
+- **Test report:** A permanent record connecting a test scope to its environment, cases, commands, logs, screenshots, failures, retests, and conclusion.
 - **Sanity check:** A practical review for contradictions, impossible promises, missing constraints, and mismatched scope.
 - **Telemetry:** Usage, performance, or behavioral data transmitted from an application to its operator.
 
@@ -430,6 +455,7 @@ Official sources are preferred in this order: standards and browser documentatio
 
 - [Project plan](project_plan.md)
 - [Implementation plan](implementation_plan.md)
+- [Test report index](testreports/README.md)
 - [Commit changelog](changelog.md)
 - [MDN: Client-side storage](https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Client-side_APIs/Client-side_storage)
 - [MDN: Storage quotas and eviction](https://developer.mozilla.org/en-US/docs/Web/API/Storage_API/Storage_quotas_and_eviction_criteria)

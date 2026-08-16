@@ -4,9 +4,11 @@ Rise one session at a time.
 
 | Document information | Value |
 | --- | --- |
-| Last updated | August 16, 2026 at 2:22 AM EDT |
+| Created | August 15, 2026 at 10:14:39 PM EDT |
+| Last updated | August 16, 2026 at 2:35:10 AM EDT |
+| ISO 8601 last updated | `2026-08-16T02:35:10-04:00` |
 | Timezone | America/Toronto (UTC−04:00) |
-| Estimated reading time | 2 minutes |
+| Estimated reading time | 3 minutes |
 | Verification status | Fact-checked and sanity-checked against the linked primary documentation |
 
 ## Table of contents
@@ -27,6 +29,8 @@ The goal is simple: make it easier to choose one meaningful task, give it your f
 
 Pomorise is ready for the first implementation phase when the project owner requests it. The first complete public release is named **Pomorise 1.0: First Light**. The approved foundation is React, TypeScript, and Vite, producing a static website for [GitHub Pages](https://docs.github.com/en/pages). The product direction lives in [`project_plan.md`](project_plan.md), while the seven-phase development sequence and mandatory line-by-line commenting standard live in [`implementation_plan.md`](implementation_plan.md).
 
+Every meaningful phase, run, or independently verified step will produce a detailed report with commands, raw logs, screenshots, failures, retests, and an evidence-based conclusion. Reports are indexed in [`testreports/README.md`](testreports/README.md).
+
 ## Privacy direction
 
 Pomorise will work without sign-in, application analytics, advertising trackers, or server-side user data. Tasks, sessions, reflections, and preferences will stay in the visitor’s browser unless they choose to export them.
@@ -41,12 +45,14 @@ Browser storage is device-local and can be cleared or evicted, so Pomorise will 
 - **Local-first:** A product approach that keeps personal information on the user’s device by default.
 - **Pomodoro:** A focus interval followed by a restorative break, traditionally using 25-minute focus sessions.
 - **Progressive web app (PWA):** A website enhanced with installable and offline-capable behavior.
+- **Test report:** The permanent evidence record for one implementation phase, run, or verified step.
 - **Vite:** The development and build tool selected to produce Pomorise’s static website files.
 
 ## Further reading
 
 - [Project plan](project_plan.md)
 - [Implementation plan](implementation_plan.md)
+- [Test report index](testreports/README.md)
 - [Discussion and decision record](meta_thinking.md)
 - [Detailed commit changelog](changelog.md)
 - [GitHub Pages documentation](https://docs.github.com/en/pages)

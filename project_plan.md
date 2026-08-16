@@ -3,9 +3,10 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 15, 2026 at 11:12 PM EDT |
-| Last updated | August 16, 2026 at 2:22 AM EDT |
+| Last updated | August 16, 2026 at 2:35:10 AM EDT |
+| ISO 8601 last updated | `2026-08-16T02:35:10-04:00` |
 | Timezone | America/Toronto (UTC−04:00) |
-| Estimated reading time | 33 minutes |
+| Estimated reading time | 34 minutes |
 
 Pomorise will be a private, local-first focus companion that guides people from a clear intention to meaningful progress. It will offer more than a countdown while remaining calm, fast, and trustworthy.
 
@@ -644,6 +645,8 @@ Pomorise will earn trust through details:
 - Plain-language privacy explanations
 - No network requests beyond loading the static application itself
 - Beginner-friendly adjacent comments for every human-authored code line, with companion annotations for formats that cannot contain comments
+- A detailed report for every meaningful phase, run, or verified step, stored under `testreports/<phase_or_run_or_step>/test_report.md`
+- Local screenshot evidence, raw command logs, failures, and retest history in every real test report
 
 ## Delivery sequence
 
@@ -709,7 +712,7 @@ These items remain out of scope unless the project owner explicitly changes the 
 
 | Verification information | Value |
 | --- | --- |
-| Last verified | August 16, 2026 at 2:22 AM EDT |
+| Last verified | August 16, 2026 at 2:35:10 AM EDT |
 | Verification scope | Browser storage, persistence, private browsing, offline and background limits, GitHub Pages privacy boundary, deployment assumptions, confirmed tools, rejected-tool alternatives, proposed data flow, approved logo assets, seven implementation phases, and code-commenting requirements |
 | Source standard | Current primary documentation from MDN, GitHub, React, Vite, and any selected library’s official documentation |
 | Result | The plan is technically coherent for a static, local-first application. Limitations are stated explicitly rather than hidden. |
@@ -751,6 +754,7 @@ Fact-checking is continuous. Before implementation, dependency choices and brows
 - **State machine:** A model that limits the timer to defined states and valid transitions, such as idle, running, paused, completed, and skipped.
 - **Static hosting:** Hosting that serves prebuilt files without running a private application server for each request.
 - **Telemetry:** Data sent from an application to its operator about usage, performance, or behavior. Pomorise will not add application telemetry.
+- **Test report:** The timestamped evidence record containing scope, environment, commands, cases, logs, screenshots, failures, retests, risks, and conclusion for one phase or run.
 - **Transaction:** A group of database operations that succeeds or fails as one unit where the storage engine supports it.
 - **Validation:** Checking unknown data against explicit rules before the application trusts or stores it.
 - **Wordmark:** A brand name drawn or typeset as a recognizable part of its visual identity.
@@ -760,6 +764,7 @@ Fact-checking is continuous. Before implementation, dependency choices and brows
 ## Further reading
 
 - [Pomorise implementation plan](implementation_plan.md)
+- [Pomorise test report index](testreports/README.md)
 - [MDN: Client-side storage](https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Client-side_APIs/Client-side_storage)
 - [MDN: Using IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Using_IndexedDB)
 - [MDN: Web Storage API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API)
@@ -798,3 +803,4 @@ Fact-checking is continuous. Before implementation, dependency choices and brows
 11. Keep every intended tool in a table with its category, status, role, selection reason, privacy review, and official link.
 12. Update the data-flow section whenever storage, networking, export, deletion, offline, or deployment behavior changes.
 13. Keep rejected tools in the audit with a reason, confirmed replacement, and evidence-based reconsideration condition.
+14. Require a timestamped, screenshot-backed test report before checking off any implementation phase exit gate.
