@@ -3,9 +3,9 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 15, 2026 at 10:36 PM EDT |
-| Last updated | August 15, 2026 at 11:36 PM EDT |
+| Last updated | August 15, 2026 at 11:42 PM EDT |
 | Timezone | America/Toronto (UTC−04:00) |
-| Estimated reading time | 25 minutes |
+| Estimated reading time | 28 minutes |
 | Verification status | Commit facts checked against local Git history; technical claims checked against linked primary documentation |
 
 Every commit moves Pomorise somewhere. This changelog tells that story in chronological detail, capturing the purpose, files, behavior, implementation choices, validation, and follow-up behind each step.
@@ -16,7 +16,8 @@ The newest commit should be added at the top of the **Commit history** section.
 
 - [Entry template](#entry-template)
 - [Commit history](#commit-history)
-  - [Pending: Confirm the First Light development toolset](#pending-confirm-the-first-light-development-toolset)
+  - [Pending: Approve the light and dark Pomorise logos](#pending-approve-the-light-and-dark-pomorise-logos)
+  - [`6fb739a`: Confirm the First Light development toolset](#6fb739a-confirm-the-first-light-development-toolset)
   - [`cecd97e`: Name Pomorise 1.0 First Light](#cecd97e-name-pomorise-10-first-light)
   - [`dac259b`: Add new functionality and refine existing behavior](#dac259b-add-new-functionality-and-refine-existing-behavior)
   - [`7753811`: Prepare Vite deployment for GitHub Pages](#7753811-prepare-vite-deployment-for-github-pages)
@@ -91,13 +92,98 @@ Describe what a visitor or maintainer will notice. Write “None” when the cha
 
 ## Commit history
 
-### `Pending`: Confirm the First Light development toolset
+### `Pending`: Approve the light and dark Pomorise logos
 
 - **Status:** Prepared for the next commit
-- **Prepared:** 2026-08-15 23:30 EDT
+- **Prepared:** 2026-08-15 23:42 EDT
 - **Author:** Aman Ali with Codex collaboration
 - **Full commit:** Assigned after the commit is created
-- **Expected files:** `changelog.md`, `meta_thinking.md`, and `project_plan.md`
+- **Expected files:** `assets/`, `changelog.md`, `meta_thinking.md`, and `project_plan.md`
+
+#### Purpose
+
+Give Pomorise a distinctive visual identity that connects focused time with steady progress, while providing coordinated assets for both light and dark interface themes.
+
+#### Decision context
+
+The project owner asked to see the logo idea as ASCII before image creation. The proposed construction combined a segmented timer ring, a rising sun and horizon, and a subtle lowercase `p`. After reviewing the generated light and dark variants, the project owner described them as perfect and approved their addition at exact production paths.
+
+#### Changes
+
+- Created an ivory light-mode logo with deep plum lettering and a warm coral and apricot sunrise.
+- Created a midnight-violet dark-mode logo with pale lavender-white lettering and a luminous coral and apricot sunrise.
+- Preserved matching geometry, wordmark, tagline, layout, and spacing across both variants.
+- Added the approved assets at `assets/logos/light_mode.png` and `assets/logos/dark_mode.png`.
+- Preserved the original concept renders in `assets/brand/concepts/` for design provenance.
+- Added the approved logo construction, palette, paths, and implementation notes to the project plan.
+- Recorded the request and explicit approval in the discussion history.
+- Resolved the previous pending toolset entry as commit `6fb739a`.
+
+#### Files affected
+
+- `assets/logos/light_mode.png`: Approved opaque light-mode logo.
+- `assets/logos/dark_mode.png`: Approved opaque dark-mode logo.
+- `assets/brand/concepts/`: Original light, transparent-light, and dark concept renders.
+- `project_plan.md`: Records the approved logo direction and remaining visual-system work.
+- `meta_thinking.md`: Records the ASCII-first request, creation, and approval.
+- `changelog.md`: Resolves the previous commit and prepares this logo entry.
+
+#### User-visible impact
+
+Pomorise now has a recognizable approved identity for light and dark surfaces. The segmented ring communicates focused time, while the sunrise and lowercase `p` connect the mark directly to the Pomorise name and First Light release.
+
+#### Decisions and tradeoffs
+
+- The same structure is used in both themes so visitors learn one brand mark rather than two competing identities.
+- Separate opaque PNGs provide predictable review and initial integration on their intended backgrounds.
+- A transparent light concept is retained as a working asset, but the explicitly approved production path uses the opaque ivory version.
+- PNG renders are accepted for initial development. A precise SVG reconstruction remains a release-quality follow-up if scalable geometry is needed.
+
+#### Risks and limitations
+
+- The wide lockup includes a small tagline that will not remain legible at favicon size.
+- The icon still needs dedicated small-size and monochrome variants before every possible brand placement is covered.
+- The final interface palette and typography must be designed around, but not copied mechanically from, the logo.
+
+#### Validation
+
+- Confirmed both approved files are readable 1672 by 941 pixel RGB PNG images.
+- Visually reviewed the light logo on ivory and the dark logo on midnight violet.
+- Confirmed both wordmarks read `pomorise` and both taglines read `rise one session at a time`.
+- Confirmed the requested production filenames and paths exactly match the project owner’s instruction.
+- Checked updated Markdown structure, reading times, and the no-em-dash rule.
+
+#### Lessons learned by the agent
+
+- Showing the structural idea in ASCII created a useful approval checkpoint before image generation.
+- Theme variants feel coherent when geometry and spacing stay fixed while contrast treatment changes.
+- Generated transparent artwork can appear misleading in dark preview surfaces, so theme review needs an opaque background presentation.
+
+#### Lessons learned by the user
+
+- The project owner explicitly confirmed that the proposed symbol, palette, wordmark, and coordinated theme treatment fit the desired identity.
+- The project owner chose exact production paths for predictable application integration.
+
+#### Related references
+
+- Approved identity and ASCII construction: `project_plan.md`
+- Conversation and approval record: `meta_thinking.md`
+- Light logo: `assets/logos/light_mode.png`
+- Dark logo: `assets/logos/dark_mode.png`
+
+#### Follow-up
+
+- Integrate the correct logo variant when the themed application shell is implemented.
+- Test the mark at website-header, mobile-header, application-icon, and favicon sizes.
+- Reconstruct a project-owned SVG and derive reduced-detail icon variants if required by implementation.
+- Replace `Pending` with the commit hash while preparing the next meaningful change.
+
+### `6fb739a`: Confirm the First Light development toolset
+
+- **Date:** 2026-08-15 23:37 EDT
+- **Author:** Aman Ali
+- **Full commit:** `6fb739a4e22fc55e052d5bea6f53d6808c71abd1`
+- **Change size:** 3 files changed, 169 lines added, 28 lines removed
 
 #### Purpose
 
@@ -172,7 +258,7 @@ There is no interface change yet. The project is now ready to scaffold without r
 
 - Scaffold First Light with the confirmed tools after the remaining product behavior and visual direction are approved.
 - Verify exact compatible versions, licenses, and the production dependency graph during installation.
-- Replace `Pending` with the commit hash while preparing the next meaningful change.
+- Resolve the pending entry with the final commit hash. Completed in the approved-logo change.
 
 ### `cecd97e`: Name Pomorise 1.0 First Light
 

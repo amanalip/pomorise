@@ -3,9 +3,9 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 15, 2026 at 11:12 PM EDT |
-| Last updated | August 15, 2026 at 11:36 PM EDT |
+| Last updated | August 15, 2026 at 11:42 PM EDT |
 | Timezone | America/Toronto (UTC−04:00) |
-| Estimated reading time | 32 minutes |
+| Estimated reading time | 33 minutes |
 
 Pomorise will be a private, local-first focus companion that guides people from a clear intention to meaningful progress. It will offer more than a countdown while remaining calm, fast, and trustworthy.
 
@@ -16,6 +16,7 @@ Pomorise will be a private, local-first focus companion that guides people from 
 - [The focus loop](#the-focus-loop)
 - [Conceptual ASCII interfaces](#conceptual-ascii-interfaces)
 - [Pomorise 1.0: First Light](#pomorise-10-first-light)
+- [Approved logo direction](#approved-logo-direction)
 - [Privacy model](#privacy-model)
 - [Local data architecture](#local-data-architecture)
 - [Data ownership and controls](#data-ownership-and-controls)
@@ -282,6 +283,33 @@ No fixed number of later releases is planned. Future releases will be shaped by 
 - Reduced-motion support
 - Responsive behavior across desktop, tablet, and mobile
 - Installable and usable offline as a progressive web app
+
+## Approved logo direction
+
+The approved Pomorise logo joins three ideas in one compact mark: a segmented timer ring, a sun rising over a horizon, and a subtle lowercase `p` formed by the ring and descending stem.
+
+```text
+        12 o'clock
+             |
+        .----+----.
+      /             \
+     |       o       |  rising sun
+     |   ---------   |  horizon and progress line
+      \      |      /
+        '----|----'
+             |
+       subtle p stem
+
+        [ focus ring ]   pomorise
+                         rise one session at a time
+```
+
+| Variant | Background | Primary ink | Sunrise accent | Approved asset |
+| --- | --- | --- | --- | --- |
+| Light mode | Soft ivory | Deep plum | Warm coral and apricot | `assets/logos/light_mode.png` |
+| Dark mode | Midnight violet | Pale lavender-white | Luminous coral and apricot | `assets/logos/dark_mode.png` |
+
+Both variants preserve the same geometry, lowercase wordmark, spacing, and tagline. The color treatment changes to maintain the intended character and contrast on each theme. The approved PNGs are the source assets for initial development. Before public release, the mark will also be checked at header and favicon sizes and translated into precise project-owned SVG geometry if a scalable vector asset is required.
 
 ## Privacy model
 
@@ -671,15 +699,15 @@ These items remain out of scope unless the project owner explicitly changes the 
 - Which guided break activities are included
 - Which progress visualization best expresses “rise”
 - Which ambient sounds are genuinely useful
-- Visual direction and brand personality
+- The remaining visual system around the approved logo, including typography, interface color tokens, spacing, and component character
 - Whether exported backups are encrypted by an optional user passphrase
 
 ## Fact-check and sanity-check record
 
 | Verification information | Value |
 | --- | --- |
-| Last verified | August 15, 2026 at 11:36 PM EDT |
-| Verification scope | Browser storage, persistence, private browsing, offline and background limits, GitHub Pages privacy boundary, deployment assumptions, confirmed tools, rejected-tool alternatives, and proposed data flow |
+| Last verified | August 15, 2026 at 11:42 PM EDT |
+| Verification scope | Browser storage, persistence, private browsing, offline and background limits, GitHub Pages privacy boundary, deployment assumptions, confirmed tools, rejected-tool alternatives, proposed data flow, and approved logo asset paths and dimensions |
 | Source standard | Current primary documentation from MDN, GitHub, React, Vite, and any selected library’s official documentation |
 | Result | The plan is technically coherent for a static, local-first application. Limitations are stated explicitly rather than hidden. |
 
@@ -709,6 +737,7 @@ Fact-checking is continuous. Before implementation, dependency choices and brows
 - **GitHub Pages:** GitHub’s static website hosting service and the confirmed home for Pomorise.
 - **IndexedDB:** An asynchronous browser database for structured, queryable local data.
 - **Local-first:** A product model in which personal data is created, read, and stored on the user’s device by default.
+- **Logo lockup:** The approved arrangement of a symbol, wordmark, and optional tagline.
 - **`localStorage`:** A synchronous browser key-value store suitable for small preferences, not growing structured history.
 - **Origin:** The combination of scheme, host, and port that browsers use to isolate one website’s storage from another.
 - **Persistent storage:** Browser storage that has received stronger protection from automatic eviction. The user can still remove it.
@@ -720,6 +749,7 @@ Fact-checking is continuous. Before implementation, dependency choices and brows
 - **Telemetry:** Data sent from an application to its operator about usage, performance, or behavior. Pomorise will not add application telemetry.
 - **Transaction:** A group of database operations that succeeds or fails as one unit where the storage engine supports it.
 - **Validation:** Checking unknown data against explicit rules before the application trusts or stores it.
+- **Wordmark:** A brand name drawn or typeset as a recognizable part of its visual identity.
 - **Schema migration:** A versioned change that safely transforms stored data when the application’s record structure evolves.
 - **Zod:** The confirmed TypeScript-oriented runtime validation library for checking imports and persistence boundaries.
 

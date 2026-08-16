@@ -3,9 +3,9 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 15, 2026 at 10:36 PM EDT |
-| Last updated | August 15, 2026 at 11:36 PM EDT |
+| Last updated | August 15, 2026 at 11:42 PM EDT |
 | Timezone | America/Toronto (UTC−04:00) |
-| Estimated reading time | 18 minutes |
+| Estimated reading time | 19 minutes |
 | Verification status | Fact-checked and sanity-checked against the primary sources in **Further reading** |
 
 This is Pomorise's shared memory. It captures the conversations, requests, decisions, and working agreements that shape the product. It does not contain private internal reasoning.
@@ -32,6 +32,7 @@ This is Pomorise's shared memory. It captures the conversations, requests, decis
   - [Detailed tooling and data flow requested](#2026-08-15-detailed-tooling-and-data-flow-requested)
   - [First public release named](#2026-08-15-first-public-release-named)
   - [Development toolset confirmed](#2026-08-15-development-toolset-confirmed)
+  - [Light and dark logos approved](#2026-08-15-light-and-dark-logos-approved)
 - [Confirmed decisions](#confirmed-decisions)
 - [Open decisions](#open-decisions)
 - [Documentation verification standard](#documentation-verification-standard)
@@ -323,6 +324,21 @@ The test tools shown in the attached screenshot remain. They protect different l
 
 A rejected-tools audit now explains why First Light will not use full-stack React frameworks, extra state libraries, client routing, utility CSS, generic component kits, large chart libraries, network and date wrappers, direct Workbox configuration, backend and authentication platforms, analytics services, or desktop wrappers. Rejection is scoped to First Light and includes a clear condition for reconsideration.
 
+### 2026-08-15: Light and dark logos approved
+
+| Conversation details | Value |
+| --- | --- |
+| Conversation date | August 15, 2026 |
+| Conversation timestamp | Exact send time was not retained |
+| Entry recorded | August 15, 2026 at 11:41:35 PM EDT |
+| ISO 8601 entry timestamp | `2026-08-15T23:41:35-04:00` |
+| Timezone | America/Toronto (UTC−04:00) |
+| Entry reading time | 1 minute |
+
+The project owner asked to begin Pomorise’s visual identity with coordinated light-mode and dark-mode logos and requested an ASCII explanation before creation. The proposed mark combines a segmented timer ring, a sunrise crossing a horizon, and a subtle lowercase `p`. The lowercase wordmark includes the tagline “rise one session at a time.”
+
+After reviewing both renders, the project owner described the direction as perfect and approved it. The opaque variants were promoted to `assets/logos/light_mode.png` and `assets/logos/dark_mode.png`. Original concept renders remain in `assets/brand/concepts/` for provenance.
+
 ## Confirmed decisions
 
 These are the firm foundations beneath Pomorise:
@@ -348,6 +364,7 @@ These are the firm foundations beneath Pomorise:
 - **First public release:** Pomorise 1.0: First Light
 - **Development baseline:** The complete First Light tool table is confirmed with no remaining `Planned` status
 - **Tool rejection:** Excluded tools require a documented reason, confirmed replacement, and reconsideration condition
+- **Logo direction:** Segmented timer ring, rising sun, and subtle lowercase `p`, with coordinated approved light and dark variants
 
 ## Open decisions
 
@@ -360,7 +377,7 @@ The heart of the product is still taking shape. These questions will guide the n
 - How much task detail belongs in the deliberately small task layer?
 - Should it celebrate progress, history, or streaks?
 - Which settings and personal touches would genuinely help?
-- What should Pomorise look and feel like?
+- Which typography, interface colors, spacing, and component character should surround the approved logo?
 - Which exact accessibility and offline behaviors will define the strong baseline?
 - Which optional details should be deferred without weakening the approved focus loop?
 
@@ -382,6 +399,7 @@ Official sources are preferred in this order: standards and browser documentatio
 - **First Light:** The name of Pomorise 1.0 and its first complete public release.
 - **ISO 8601:** A standard timestamp format that includes an unambiguous date, time, and UTC offset.
 - **Local-first:** A product model in which personal data stays on the user’s device by default.
+- **Logo lockup:** The arrangement of a symbol, wordmark, and optional tagline as one brand asset.
 - **Primary source:** Official documentation, a technical standard, or an original product source rather than a secondary summary.
 - **Rejected tools audit:** A record of intentionally excluded technologies, the reason for exclusion, the selected replacement, and the condition that could justify reconsideration.
 - **Sanity check:** A practical review for contradictions, impossible promises, missing constraints, and mismatched scope.
