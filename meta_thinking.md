@@ -3,9 +3,9 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 15, 2026 at 10:36 PM EDT |
-| Last updated | August 15, 2026 at 11:25 PM EDT |
+| Last updated | August 15, 2026 at 11:36 PM EDT |
 | Timezone | America/Toronto (UTC−04:00) |
-| Estimated reading time | 17 minutes |
+| Estimated reading time | 18 minutes |
 | Verification status | Fact-checked and sanity-checked against the primary sources in **Further reading** |
 
 This is Pomorise's shared memory. It captures the conversations, requests, decisions, and working agreements that shape the product. It does not contain private internal reasoning.
@@ -31,6 +31,7 @@ This is Pomorise's shared memory. It captures the conversations, requests, decis
   - [ASCII interface sketches requested](#2026-08-15-ascii-interface-sketches-requested)
   - [Detailed tooling and data flow requested](#2026-08-15-detailed-tooling-and-data-flow-requested)
   - [First public release named](#2026-08-15-first-public-release-named)
+  - [Development toolset confirmed](#2026-08-15-development-toolset-confirmed)
 - [Confirmed decisions](#confirmed-decisions)
 - [Open decisions](#open-decisions)
 - [Documentation verification standard](#documentation-verification-standard)
@@ -303,6 +304,25 @@ The project owner asked the agent to name the first public release rather than l
 
 First Light reflects the beginning of Pomorise and the product’s promise to help people rise through steady sessions. It identifies one complete public release without implying that a fixed series of later versions has already been planned.
 
+### 2026-08-15: Development toolset confirmed
+
+| Conversation details | Value |
+| --- | --- |
+| Conversation date | August 15, 2026 |
+| Conversation timestamp | Exact send time was not retained |
+| Entry recorded | August 15, 2026 at 11:30:43 PM EDT |
+| ISO 8601 entry timestamp | `2026-08-15T23:30:43-04:00` |
+| Timezone | America/Toronto (UTC−04:00) |
+| Entry reading time | 2 minutes |
+
+The project owner asked the agent to remove uncertainty from the tool table before development begins. The instruction was to keep every tool that materially helps make Pomorise excellent, move those tools to confirmed, and document rejected alternatives instead of leaving a collection of indefinite possibilities.
+
+The development baseline is now confirmed: React, TypeScript, Node.js 24, npm, Vite, the official React plugin for Vite, Dexie, Zod, the Vite PWA plugin, React reducer and context, browser Web APIs, Vitest, React Testing Library, user-event, Playwright, axe, ESLint, typescript-eslint, Prettier, GitHub Actions, and GitHub Pages.
+
+The test tools shown in the attached screenshot remain. They protect different layers: Vitest covers deterministic timer and validation logic, React Testing Library covers accessible component behavior, and Playwright covers real-browser storage, refresh recovery, offline behavior, permissions, and responsive flows. Removing one would leave an important risk untested.
+
+A rejected-tools audit now explains why First Light will not use full-stack React frameworks, extra state libraries, client routing, utility CSS, generic component kits, large chart libraries, network and date wrappers, direct Workbox configuration, backend and authentication platforms, analytics services, or desktop wrappers. Rejection is scoped to First Light and includes a clear condition for reconsideration.
+
 ## Confirmed decisions
 
 These are the firm foundations beneath Pomorise:
@@ -326,6 +346,8 @@ These are the firm foundations beneath Pomorise:
 - **Tool documentation:** Keep frameworks, libraries, browser APIs, tests, and delivery tools in a linked table with explicit selection reasons
 - **Data-flow documentation:** Trace personal data and application assets through every meaningful product operation
 - **First public release:** Pomorise 1.0: First Light
+- **Development baseline:** The complete First Light tool table is confirmed with no remaining `Planned` status
+- **Tool rejection:** Excluded tools require a documented reason, confirmed replacement, and reconsideration condition
 
 ## Open decisions
 
@@ -361,6 +383,7 @@ Official sources are preferred in this order: standards and browser documentatio
 - **ISO 8601:** A standard timestamp format that includes an unambiguous date, time, and UTC offset.
 - **Local-first:** A product model in which personal data stays on the user’s device by default.
 - **Primary source:** Official documentation, a technical standard, or an original product source rather than a secondary summary.
+- **Rejected tools audit:** A record of intentionally excluded technologies, the reason for exclusion, the selected replacement, and the condition that could justify reconsideration.
 - **Sanity check:** A practical review for contradictions, impossible promises, missing constraints, and mismatched scope.
 - **Telemetry:** Usage, performance, or behavioral data transmitted from an application to its operator.
 

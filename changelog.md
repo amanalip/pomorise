@@ -3,9 +3,9 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 15, 2026 at 10:36 PM EDT |
-| Last updated | August 15, 2026 at 11:25 PM EDT |
+| Last updated | August 15, 2026 at 11:36 PM EDT |
 | Timezone | America/Toronto (UTC−04:00) |
-| Estimated reading time | 22 minutes |
+| Estimated reading time | 25 minutes |
 | Verification status | Commit facts checked against local Git history; technical claims checked against linked primary documentation |
 
 Every commit moves Pomorise somewhere. This changelog tells that story in chronological detail, capturing the purpose, files, behavior, implementation choices, validation, and follow-up behind each step.
@@ -16,7 +16,8 @@ The newest commit should be added at the top of the **Commit history** section.
 
 - [Entry template](#entry-template)
 - [Commit history](#commit-history)
-  - [Pending: Name Pomorise 1.0 First Light](#pending-name-pomorise-10-first-light)
+  - [Pending: Confirm the First Light development toolset](#pending-confirm-the-first-light-development-toolset)
+  - [`cecd97e`: Name Pomorise 1.0 First Light](#cecd97e-name-pomorise-10-first-light)
   - [`dac259b`: Add new functionality and refine existing behavior](#dac259b-add-new-functionality-and-refine-existing-behavior)
   - [`7753811`: Prepare Vite deployment for GitHub Pages](#7753811-prepare-vite-deployment-for-github-pages)
   - [`562126d`: Refine project documentation and collaboration tracking](#562126d-refine-project-documentation-and-collaboration-tracking)
@@ -90,13 +91,95 @@ Describe what a visitor or maintainer will notice. Write “None” when the cha
 
 ## Commit history
 
-### `Pending`: Name Pomorise 1.0 First Light
+### `Pending`: Confirm the First Light development toolset
 
 - **Status:** Prepared for the next commit
-- **Prepared:** 2026-08-15 23:25 EDT
+- **Prepared:** 2026-08-15 23:30 EDT
 - **Author:** Aman Ali with Codex collaboration
 - **Full commit:** Assigned after the commit is created
-- **Expected files:** `README.md`, `changelog.md`, `meta_thinking.md`, and `project_plan.md`
+- **Expected files:** `changelog.md`, `meta_thinking.md`, and `project_plan.md`
+
+#### Purpose
+
+Remove uncertainty from the development baseline so implementation can begin with a lean but complete quality system. Preserve rejected alternatives and their reconsideration conditions instead of leaving technology choices ambiguous.
+
+#### Decision context
+
+The project owner shared a screenshot of Vitest, React Testing Library, and Playwright marked as `Planned`. They asked the agent to decide which tools are genuinely necessary for the best usable website, move required tools to confirmed, and add a rejected-tools audit explaining every exclusion.
+
+#### Changes
+
+- Removed every `Planned` status from the intended tool table.
+- Confirmed the complete build, runtime, storage, validation, offline, state, testing, accessibility, quality, automation, and hosting baseline.
+- Kept Vitest, React Testing Library, and Playwright because they protect distinct and necessary layers of quality.
+- Added Node.js 24, npm, the official React plugin for Vite, and Testing Library user-event to make the implementation toolchain complete.
+- Added explicit selection reasons and privacy checks for every confirmed tool.
+- Added a rejected-tools audit with replacements and objective reconsideration conditions.
+- Rejected unnecessary full-stack frameworks, duplicate state libraries, client routing, CSS and component frameworks, motion and chart libraries, network and date wrappers, direct Workbox configuration, remote backends, authentication, analytics, monitoring, and desktop wrappers for First Light.
+- Recorded the decision in the discussion history and confirmed decisions.
+- Resolved the previous pending entry as commit `cecd97e`.
+
+#### Files affected
+
+- `changelog.md`: Resolves the First Light naming commit and prepares this toolset decision entry.
+- `meta_thinking.md`: Records the request, rationale, confirmed baseline, and audit requirement.
+- `project_plan.md`: Replaces uncertainty with confirmed tools and adds the rejected-tools audit.
+
+#### User-visible impact
+
+There is no interface change yet. The project is now ready to scaffold without reopening basic technology choices, and future readers can see why each tool is present or absent.
+
+#### Decisions and tradeoffs
+
+- Test depth is retained because timing, browser persistence, offline behavior, and accessibility are core product qualities.
+- A larger development toolchain is accepted where tools prevent different classes of defects.
+- Runtime dependencies remain narrow and local-first.
+- Rejected tools can return only when a concrete approved requirement satisfies their documented reconsideration condition.
+
+#### Risks and limitations
+
+- Exact compatible package versions still require verification at installation time.
+- Automated accessibility testing cannot replace manual accessibility review.
+- Rejected tools may become appropriate if the product’s approved scope changes.
+
+#### Validation
+
+- Confirmed that no intended tool remains marked `Planned`.
+- Checked every confirmed and rejected tool for a stated reason and official link.
+- Sanity-checked the baseline against GitHub Pages, local-first privacy, offline operation, timer reliability, and accessibility requirements.
+- Checked Markdown for formatting errors and forbidden em dashes.
+
+#### Lessons learned by the agent
+
+- Uncertain tool labels delay implementation even when the product requirements already justify a decision.
+- The smallest responsible toolset is not the one with the fewest packages. It is the one that covers every material risk without duplicate solutions.
+- A rejected-tools audit prevents discarded ideas from returning without context.
+
+#### Lessons learned by the user
+
+- The project owner delegated final tool selection to the agent while preserving the goal of a highly usable, privacy-focused website.
+- The project owner requested transparent reasoning for rejected tools, not only a list of chosen technologies.
+
+#### Related references
+
+- Confirmed and rejected tool tables: `project_plan.md`
+- Decision record: `meta_thinking.md`
+- [Vitest documentation](https://vitest.dev/guide/)
+- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
+- [Playwright documentation](https://playwright.dev/docs/intro)
+
+#### Follow-up
+
+- Scaffold First Light with the confirmed tools after the remaining product behavior and visual direction are approved.
+- Verify exact compatible versions, licenses, and the production dependency graph during installation.
+- Replace `Pending` with the commit hash while preparing the next meaningful change.
+
+### `cecd97e`: Name Pomorise 1.0 First Light
+
+- **Date:** 2026-08-15 23:27 EDT
+- **Author:** Aman Ali
+- **Full commit:** `cecd97e0fb7f6e89d3c65f1ab3e7d3e73ebdf0fc`
+- **Change size:** 4 files changed, 111 lines added, 16 lines removed
 
 #### Purpose
 
@@ -159,7 +242,7 @@ Readers now see a clear, memorable name for the release being planned instead of
 #### Follow-up
 
 - Complete the remaining First Light behavior and design decisions.
-- Replace `Pending` with the commit hash while preparing the next meaningful change.
+- Resolve the pending entry with the final commit hash. Completed in the toolset confirmation change.
 
 ### `dac259b`: Add new functionality and refine existing behavior
 

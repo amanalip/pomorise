@@ -3,9 +3,9 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 15, 2026 at 11:12 PM EDT |
-| Last updated | August 15, 2026 at 11:25 PM EDT |
+| Last updated | August 15, 2026 at 11:36 PM EDT |
 | Timezone | America/Toronto (UTC−04:00) |
-| Estimated reading time | 27 minutes |
+| Estimated reading time | 32 minutes |
 
 Pomorise will be a private, local-first focus companion that guides people from a clear intention to meaningful progress. It will offer more than a countdown while remaining calm, fast, and trustworthy.
 
@@ -23,6 +23,7 @@ Pomorise will be a private, local-first focus companion that guides people from 
 - [Technical foundation](#technical-foundation)
 - [Tool selection principles](#tool-selection-principles)
 - [Intended toolset](#intended-toolset)
+- [Rejected tools audit](#rejected-tools-audit)
 - [Detailed data flow](#detailed-data-flow)
 - [Data boundaries and invariants](#data-boundaries-and-invariants)
 - [Quality standard](#quality-standard)
@@ -359,7 +360,7 @@ Local-first privacy creates tradeoffs that Pomorise must explain clearly:
 - Native Web Notifications and Web Audio where browser support allows
 - Automated unit tests for time, transitions, storage migrations, imports, and exports
 
-React remains the only interface framework. Additional libraries will be selected narrowly, reviewed for privacy, and bundled with the application. No runtime dependency may introduce analytics, remote asset loading, or hidden network traffic.
+React remains the only interface framework. The confirmed toolset below is sufficient to begin development and deliver First Light. No runtime dependency may introduce analytics, remote asset loading, or hidden network traffic.
 
 ## Tool selection principles
 
@@ -374,7 +375,7 @@ Every tool must earn its place. A dependency will be accepted only when it:
 - Does not duplicate a reliable browser or React capability without a clear benefit
 - Can be tested and replaced behind a small project-owned boundary
 
-Exact versions will be selected and recorded when the application scaffold is created. Versions will not be guessed in advance. The lockfile will preserve the reviewed dependency graph used by builds.
+Each confirmed tool will be installed at a verified compatible version during scaffolding. The lockfile will preserve the reviewed dependency graph used by local and automated builds.
 
 ## Intended toolset
 
@@ -382,22 +383,48 @@ Exact versions will be selected and recorded when the application scaffold is cr
 | --- | --- | --- | --- | --- | --- |
 | [React](https://react.dev/learn) | Interface framework | Confirmed | Components, interactive state, and accessible UI composition | The product contains several coordinated interactive states, and React provides a mature component model without requiring a server runtime. | Runs in the browser. React does not require application data to be sent to a server. |
 | [TypeScript](https://www.typescriptlang.org/docs/) | Language tooling | Confirmed | Types for timer states, stored records, imports, exports, and migrations | Explicit state and record types reduce invalid transitions and unsafe data assumptions in the most sensitive logic. | Compile-time tool. It adds no visitor network activity. |
+| [Node.js 24](https://nodejs.org/docs/latest-v24.x/api/) | Build runtime | Confirmed | Run Vite, tests, linting, formatting, and production builds | It matches the deployment workflow and provides a supported JavaScript runtime for the selected development tools. | Build-time only. Node.js does not run in the visitor’s browser or receive product data. |
+| [npm](https://docs.npmjs.com/cli/commands/npm-ci) | Package manager | Confirmed | Install the locked dependency tree locally and in GitHub Actions | It ships with Node.js, works with the existing `npm ci` workflow, and avoids adding another package-management layer. | Build-time only. The committed lockfile supports reproducible dependency review. |
 | [Vite](https://vite.dev/guide/) | Build framework | Confirmed | Development server, asset bundling, and production `dist` output | It fits React and TypeScript, produces static assets for GitHub Pages, and keeps the development and build setup small. | Build-time tool. Runtime code will use relative or `/pomorise/` asset paths configured for GitHub Pages. |
-| [Dexie](https://dexie.org/docs/API-Reference) | Local database library | Planned | Typed wrapper around IndexedDB with schema versions and transactions | Native IndexedDB is capable but verbose. Dexie provides clearer queries, transactions, and versioned migrations while retaining IndexedDB as the storage engine. | Stores data in the browser’s IndexedDB. Dexie Cloud will not be installed or configured. |
-| [Zod](https://zod.dev/) | Validation library | Planned | Runtime validation for imported backups, stored schemas, settings, and migration boundaries | TypeScript types disappear at runtime. Zod can verify files and persisted values before the application trusts them. | Validation runs locally. It prevents malformed or unexpected import data from entering the database. |
-| [Vite PWA plugin](https://vite-pwa-org.netlify.app/guide/) | Offline build plugin | Planned | Generate the web app manifest and service worker using Workbox | It integrates with Vite and provides a maintained path to installability, versioned precaching, and controlled updates. | Will cache only versioned application assets. Personal records will remain in IndexedDB and never enter the service-worker cache. |
-| [React `useReducer`](https://react.dev/reference/react/useReducer) and [context](https://react.dev/learn/passing-data-deeply-with-context) | State tools | Planned | Coordinate timer and interface state before considering another state library | The approved state model can begin with React’s built-in tools, avoiding a larger dependency until real complexity demonstrates a need. | Built into React. Redux, Zustand, or another state framework will not be added unless measured complexity justifies it. |
+| [`@vitejs/plugin-react`](https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react) | React build plugin | Confirmed | Add JSX transformation and Fast Refresh to Vite | It is the official default React plugin maintained in the Vite organization and avoids a custom transformation setup. | Development and build-time only. It adds no external runtime service. |
+| [Dexie](https://dexie.org/docs/API-Reference) | Local database library | Confirmed | Typed wrapper around IndexedDB with schema versions and transactions | Native IndexedDB is capable but verbose. Dexie provides clearer queries, transactions, and versioned migrations while retaining IndexedDB as the storage engine. | Stores data in the browser’s IndexedDB. Dexie Cloud will not be installed or configured. |
+| [Zod](https://zod.dev/) | Validation library | Confirmed | Runtime validation for imported backups, stored schemas, settings, and migration boundaries | TypeScript types disappear at runtime. Zod verifies files and persisted values before the application trusts them. | Validation runs locally. It prevents malformed or unexpected import data from entering the database. |
+| [Vite PWA plugin](https://vite-pwa-org.netlify.app/guide/) | Offline build plugin | Confirmed | Generate the web app manifest and service worker using Workbox | It integrates with Vite and provides a maintained path to installability, versioned precaching, and controlled updates. | It will cache only versioned application assets. Personal records remain in IndexedDB and never enter the service-worker cache. |
+| [React `useReducer`](https://react.dev/reference/react/useReducer) and [context](https://react.dev/learn/passing-data-deeply-with-context) | State tools | Confirmed | Coordinate timer and interface state | The approved state model fits React’s built-in tools, avoiding a larger state dependency while keeping transitions explicit and testable. | Built into React and adds no service or dependency. |
 | [Browser Web APIs](https://developer.mozilla.org/en-US/docs/Web/API) | Web platform | Confirmed | Storage, files, notifications, audio, visibility, installation, and offline behavior | Native browser capabilities cover the required device-local features and minimize third-party runtime code. | Every permission will be requested in context and remain optional. Browser support will be checked per feature. |
-| [Vitest](https://vitest.dev/guide/) | Unit-test framework | Planned | Fast tests for timer transitions, calculations, validation, and migrations | It shares Vite’s configuration model and is well suited to TypeScript modules and deterministic state logic. | Development-only tool. Test output stays in project and continuous-integration logs. Tests will use synthetic data. |
-| [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) | Component-test library | Planned | Component tests through user-visible roles, labels, text, and interactions | Its user-centered queries encourage tests that reflect accessible behavior rather than private component structure. | Development-only and uses synthetic interface state. |
-| [Playwright](https://playwright.dev/docs/intro) | Browser-test framework | Planned | Real-browser tests for primary flows, offline behavior, storage, refresh recovery, and responsive layouts | Timer recovery, PWA behavior, IndexedDB, and browser permissions require verification in real browser engines. | Development-only. Tests will run against local or preview builds with synthetic records. |
-| [axe with Playwright](https://playwright.dev/docs/accessibility-testing) | Accessibility test library | Planned | Automated detection of common accessibility problems | It catches a useful subset of labeling, structure, and contrast problems inside the existing browser-test workflow. | Automated checks supplement, but never replace, keyboard, screen-reader, zoom, contrast, and manual review. |
-| [ESLint](https://eslint.org/docs/latest/) and [typescript-eslint](https://typescript-eslint.io/getting-started/) | Static analysis | Planned | Code-quality and TypeScript-aware lint checks | They catch unsafe or inconsistent code patterns before those patterns reach tests or production. | Development-only tools with no visitor runtime behavior. |
-| [Prettier](https://prettier.io/docs/) | Formatter | Planned | Consistent formatting for supported source files | Automated formatting reduces review noise and keeps code style predictable. | Development-only and deterministic. Markdown formatting must preserve the project’s reading style. |
+| [Vitest](https://vitest.dev/guide/) | Unit-test framework | Confirmed | Fast tests for timer transitions, calculations, and validation | It shares Vite’s configuration model and is well suited to TypeScript modules and deterministic state logic. Timer correctness is too important to leave to manual testing. | Development-only. Test output stays in project and continuous-integration logs. Tests use synthetic data. |
+| [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) | Component-test library | Confirmed | Component tests through user-visible roles, labels, text, and interactions | Its user-centered queries encourage tests that reflect accessible behavior rather than private component structure. | Development-only and uses synthetic interface state. |
+| [Testing Library user-event](https://testing-library.com/docs/user-event/intro/) | Interaction-test library | Confirmed | Simulate realistic keyboard, pointer, and form interactions in component tests | It models the sequence of events a user produces more accurately than dispatching isolated DOM events. | Development-only and does not receive real user activity. |
+| [Playwright](https://playwright.dev/docs/intro) | Browser-test framework | Confirmed | Real-browser tests for primary flows, offline behavior, storage, refresh recovery, migrations, and responsive layouts | Timer recovery, PWA behavior, IndexedDB, and browser permissions require verification in real browser engines. | Development-only. Tests run against local or preview builds with synthetic records. |
+| [axe with Playwright](https://playwright.dev/docs/accessibility-testing) | Accessibility test library | Confirmed | Automated detection of common accessibility problems | It catches a useful subset of labeling, structure, and contrast problems inside the existing browser-test workflow. | Automated checks supplement, but never replace, keyboard, screen-reader, zoom, contrast, and manual review. |
+| [ESLint](https://eslint.org/docs/latest/) and [typescript-eslint](https://typescript-eslint.io/getting-started/) | Static analysis | Confirmed | Code-quality and TypeScript-aware lint checks | They catch unsafe or inconsistent code patterns before those patterns reach tests or production. | Development-only tools with no visitor runtime behavior. |
+| [Prettier](https://prettier.io/docs/) | Formatter | Confirmed | Consistent formatting for supported source files | Automated formatting reduces review noise and keeps code style predictable as the application grows. | Development-only and deterministic. Markdown formatting must preserve the project’s reading style. |
 | [GitHub Actions](https://docs.github.com/en/actions) | Continuous integration and deployment | Confirmed | Reproducible install, test, build, artifact upload, and deployment | It is already integrated with the repository and is the supported automation path for custom GitHub Pages builds. | Build logs must never receive personal product data because production user data never leaves browsers. |
 | [GitHub Pages](https://docs.github.com/en/pages) | Static hosting | Confirmed | Public hosting for the compiled website | It matches the project owner’s chosen platform and serves the static output produced by Vite without an application server. | GitHub remains a separate infrastructure provider under its own privacy statement. Pomorise adds no application tracking. |
 
-No chart library is selected yet. Progress views will first be evaluated with semantic HTML, CSS, and small project-owned SVG charts backed by an accessible data table. A chart dependency will be added only if it improves clarity without harming accessibility or bundle size.
+This confirmed set is the development baseline for First Light. It includes the tools needed to build the product and prove that its timer, persistence, privacy, offline behavior, and accessibility work correctly.
+
+## Rejected tools audit
+
+“Rejected” means the tool is intentionally excluded from First Light after review. It can be reconsidered only if a concrete requirement appears and the replacement benefit outweighs its cost.
+
+| Rejected tool or category | Category | Why it was rejected for First Light | Confirmed replacement | Reconsider only if |
+| --- | --- | --- | --- | --- |
+| [Next.js](https://nextjs.org/docs) and [Remix](https://remix.run/docs) | Full-stack React frameworks | Their server, routing, and data-loading capabilities are unnecessary for a static local-first application and would complicate GitHub Pages deployment. | React with Vite | Pomorise gains approved server-rendered or server-owned features, which would require a separate privacy decision. |
+| [Redux Toolkit](https://redux-toolkit.js.org/) | Global state library | The timer and interface state fit an explicit reducer and a small number of contexts. Another state layer would add concepts and bundle weight before the need exists. | React `useReducer` and context | Measured state complexity creates unmanageable coupling or performance problems. |
+| [Zustand](https://zustand.docs.pmnd.rs/) | Global state library | It duplicates the confirmed built-in state approach without solving a current requirement. | React `useReducer` and context | The built-in approach becomes demonstrably harder to maintain after implementation evidence. |
+| [React Router](https://reactrouter.com/) | Client-side routing | First Light is designed as one focused application workspace with panels and views, not a collection of independently routed pages. | Accessible view state in React | Approved deep links or independently shareable application screens become necessary. |
+| [Tailwind CSS](https://tailwindcss.com/docs) | CSS framework | Pomorise needs a distinctive design system and a small runtime surface. Project-owned CSS variables, layers, and components provide direct control without utility-class coupling. | Modern project-owned CSS | The final design demonstrates repeated styling complexity that native CSS cannot manage clearly. |
+| [Material UI](https://mui.com/material-ui/getting-started/) and similar component kits | Interface component libraries | A generic component appearance would work against the bespoke Pomorise identity and add a large styling abstraction. | Semantic HTML and project-owned accessible components | A specific complex widget is proven safer and more accessible through a narrowly imported library. |
+| [Motion for React](https://motion.dev/docs/react) | Animation library | First Light needs restrained transitions that CSS and the Web Animations API can provide with direct reduced-motion control. | CSS transitions and Web Animations API | Approved interaction design requires orchestrated motion that native tools cannot express maintainably. |
+| [Chart.js](https://www.chartjs.org/docs/latest/), [Recharts](https://recharts.org/), and [Apache ECharts](https://echarts.apache.org/en/index.html) | Chart libraries | Initial progress visuals are small and must always have an accessible table. Project-owned HTML, CSS, and SVG avoid a large chart dependency. | Semantic tables with small project-owned visuals | Analytics grow beyond the approved summaries and a library passes accessibility and bundle-size review. |
+| [Axios](https://axios-http.com/docs/intro) | Network library | First Light has no application API, and the browser `fetch` API is sufficient for static asset behavior if needed. | Browser Web APIs | A future approved API introduces networking requirements that native `fetch` cannot handle clearly. |
+| [date-fns](https://date-fns.org/docs/Getting-Started) and [Day.js](https://day.js.org/docs/en/installation/installation) | Date utility libraries | Timer arithmetic needs timestamps, while display formatting fits `Intl.DateTimeFormat`. A date dependency does not solve a current gap. | `Date`, `Intl`, and tested project functions | Approved calendar or timezone behavior becomes too complex for a small verified utility layer. |
+| Direct [Workbox](https://developer.chrome.com/docs/workbox/) configuration | Service-worker toolkit | The confirmed Vite PWA plugin already integrates Workbox and provides the required manifest, cache, and update workflow. Direct setup would duplicate configuration. | Vite PWA plugin | A required cache strategy cannot be expressed safely through the plugin. |
+| [Firebase](https://firebase.google.com/docs), [Supabase](https://supabase.com/docs), and hosted databases | Backend services | Accounts, cloud data, telemetry, and remote persistence conflict with the confirmed local-first boundary. | IndexedDB through Dexie | The project owner explicitly changes the no-account and device-local privacy model. |
+| [Auth0](https://auth0.com/docs) and authentication frameworks | Authentication | First Light has no accounts or identity requirement. | No authentication | The project owner explicitly approves accounts in a future privacy review. |
+| [Google Analytics](https://developers.google.com/analytics), [PostHog](https://posthog.com/docs), and [Sentry](https://docs.sentry.io/) | Analytics and monitoring services | They would transmit usage, behavior, or error information away from the device and conflict with the no-logging promise. | Local testing and user-controlled diagnostics with no transmission | The privacy model changes explicitly. They are not required to make First Light reliable. |
+| [Electron](https://www.electronjs.org/docs/latest/) and [Tauri](https://v2.tauri.app/start/) | Desktop application frameworks | First Light is a website and installable PWA hosted on GitHub Pages. Native packaging would create another release and security surface. | Progressive web app | A future desktop-only capability is approved and cannot be delivered through the web platform. |
 
 ## Detailed data flow
 
@@ -651,8 +678,8 @@ These items remain out of scope unless the project owner explicitly changes the 
 
 | Verification information | Value |
 | --- | --- |
-| Last verified | August 15, 2026 at 11:22 PM EDT |
-| Verification scope | Browser storage, persistence, private browsing, offline and background limits, GitHub Pages privacy boundary, deployment assumptions, intended tools, and proposed data flow |
+| Last verified | August 15, 2026 at 11:36 PM EDT |
+| Verification scope | Browser storage, persistence, private browsing, offline and background limits, GitHub Pages privacy boundary, deployment assumptions, confirmed tools, rejected-tool alternatives, and proposed data flow |
 | Source standard | Current primary documentation from MDN, GitHub, React, Vite, and any selected library’s official documentation |
 | Result | The plan is technically coherent for a static, local-first application. Limitations are stated explicitly rather than hidden. |
 
@@ -665,7 +692,8 @@ The plan passed the following sanity checks:
 - **Background honesty:** Offline access is achievable, but a guaranteed alarm after complete closure is not promised.
 - **Security fit:** User-generated text remains local and will be rendered as text, not executable markup.
 - **Deployment fit:** Vite can produce the `dist` artifact expected by the GitHub Pages workflow.
-- **Tooling fit:** Confirmed and planned tools have a defined purpose, an official source, and no required runtime data service.
+- **Tooling fit:** Every confirmed tool has a defined purpose, an official source, and no required runtime data service.
+- **Rejection fit:** Every rejected tool has a confirmed replacement and an explicit condition for reconsideration.
 - **Data-flow fit:** Personal records remain inside browser-controlled storage or explicit user-created export files.
 
 Fact-checking is continuous. Before implementation, dependency choices and browser-support targets must be verified again. Before release, the built application must be checked for unexpected network requests, storage behavior, accessibility, offline behavior, and accurate privacy wording.
@@ -675,6 +703,7 @@ Fact-checking is continuous. Before implementation, dependency choices and brows
 - **Cache API:** Browser storage designed for network request and response pairs, commonly used by service workers to support offline loading.
 - **Artifact:** The packaged build output passed from continuous integration to a deployment system.
 - **Client-side:** Work performed on the visitor’s device by the browser rather than on an application server.
+- **Confirmed tool:** A technology approved for the First Light implementation after purpose, privacy, compatibility, and quality review.
 - **Dexie:** An optional JavaScript wrapper that simplifies IndexedDB access, queries, schema versions, and migrations.
 - **First Light:** The name of Pomorise 1.0, the first complete public release.
 - **GitHub Pages:** GitHub’s static website hosting service and the confirmed home for Pomorise.
@@ -684,6 +713,7 @@ Fact-checking is continuous. Before implementation, dependency choices and brows
 - **Origin:** The combination of scheme, host, and port that browsers use to isolate one website’s storage from another.
 - **Persistent storage:** Browser storage that has received stronger protection from automatic eviction. The user can still remove it.
 - **Progressive web app (PWA):** A website enhanced with installable and offline-capable behavior through a web app manifest and, commonly, a service worker.
+- **Rejected tools audit:** The record of excluded technologies, their rejection reasons, confirmed replacements, and reconsideration conditions.
 - **Service worker:** A browser-managed worker that can intercept requests and support caching and some background events. It does not run continuously.
 - **State machine:** A model that limits the timer to defined states and valid transitions, such as idle, running, paused, completed, and skipped.
 - **Static hosting:** Hosting that serves prebuilt files without running a private application server for each request.
@@ -691,7 +721,7 @@ Fact-checking is continuous. Before implementation, dependency choices and brows
 - **Transaction:** A group of database operations that succeeds or fails as one unit where the storage engine supports it.
 - **Validation:** Checking unknown data against explicit rules before the application trusts or stores it.
 - **Schema migration:** A versioned change that safely transforms stored data when the application’s record structure evolves.
-- **Zod:** A TypeScript-oriented runtime validation library planned for checking imports and persistence boundaries.
+- **Zod:** The confirmed TypeScript-oriented runtime validation library for checking imports and persistence boundaries.
 
 ## Further reading
 
@@ -707,10 +737,14 @@ Fact-checking is continuous. Before implementation, dependency choices and brows
 - [React: Adding interactivity](https://react.dev/learn/adding-interactivity)
 - [Dexie: Official API reference](https://dexie.org/docs/API-Reference)
 - [TypeScript documentation](https://www.typescriptlang.org/docs/)
+- [Node.js 24 documentation](https://nodejs.org/docs/latest-v24.x/api/)
+- [npm ci documentation](https://docs.npmjs.com/cli/commands/npm-ci)
+- [Official Vite React plugin](https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react)
 - [Zod documentation](https://zod.dev/)
 - [Vite PWA plugin guide](https://vite-pwa-org.netlify.app/guide/)
 - [Vitest guide](https://vitest.dev/guide/)
 - [React Testing Library introduction](https://testing-library.com/docs/react-testing-library/intro/)
+- [Testing Library user-event](https://testing-library.com/docs/user-event/intro/)
 - [Playwright documentation](https://playwright.dev/docs/intro)
 - [Playwright accessibility testing](https://playwright.dev/docs/accessibility-testing)
 
@@ -728,3 +762,4 @@ Fact-checking is continuous. Before implementation, dependency choices and brows
 10. Record the verification date, scope, sources, and result after each substantial fact-check.
 11. Keep every intended tool in a table with its category, status, role, selection reason, privacy review, and official link.
 12. Update the data-flow section whenever storage, networking, export, deletion, offline, or deployment behavior changes.
+13. Keep rejected tools in the audit with a reason, confirmed replacement, and evidence-based reconsideration condition.
