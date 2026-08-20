@@ -1,6 +1,6 @@
-/* Open the root design values needed only to make the Phase 1 proof readable. */
+/* Define shared geometry, type, motion, and light-theme color decisions at the document root. */
 :root {
-  /* Use a system font stack so Pomorise makes no remote font request. */
+  /* Use only local system fonts so typography never creates a remote request. */
   font-family:
     Inter,
     ui-sans-serif,
@@ -9,110 +9,1085 @@
     BlinkMacSystemFont,
     "Segoe UI",
     sans-serif;
-  /* Give browsers permission to render native controls appropriately in either system theme. */
-  color-scheme: light dark;
-  /* Provide a calm light background derived from the approved ivory logo field. */
-  background: #fff8ef;
-  /* Use deep plum text that remains readable on the light background. */
-  color: #351d3f;
-  /* Close the root values after establishing local typography and basic colors. */
+  /* Improve the consistency and readability of system-font rendering. */
+  font-synthesis: none;
+  /* Give native controls permission to render for the current light palette. */
+  color-scheme: light;
+  /* Use a compact modular scale for reusable space inside controls and cards. */
+  --space-1: 0.25rem;
+  /* Provide a small gap for tightly related labels and indicators. */
+  --space-2: 0.5rem;
+  /* Provide the default compact control and text spacing. */
+  --space-3: 0.75rem;
+  /* Provide a comfortable base unit for controls and card rhythm. */
+  --space-4: 1rem;
+  /* Separate related groups without breaking their visual connection. */
+  --space-5: 1.25rem;
+  /* Give primary card content a calm medium separation. */
+  --space-6: 1.5rem;
+  /* Separate larger interface regions at compact widths. */
+  --space-8: 2rem;
+  /* Give major desktop regions generous breathing room. */
+  --space-10: 2.5rem;
+  /* Round small badges and text fields without making them pill-shaped. */
+  --radius-sm: 0.75rem;
+  /* Round cards and grouped controls with a friendly product character. */
+  --radius-md: 1.125rem;
+  /* Give the central timer surface a distinctive spacious silhouette. */
+  --radius-lg: 1.75rem;
+  /* Make primary buttons approachable while preserving a clear rectangular target. */
+  --radius-pill: 999px;
+  /* Keep content transitions restrained and fast enough not to delay interaction. */
+  --motion-fast: 140ms;
+  /* Use a smooth non-bouncy curve for quiet state changes. */
+  --motion-curve: cubic-bezier(0.2, 0.8, 0.2, 1);
+  /* Set the approved soft ivory direction as the outer page canvas. */
+  --color-canvas: #fbf5ec;
+  /* Use a subtly lighter ivory for raised content surfaces. */
+  --color-surface: #fffaf3;
+  /* Use a warm tinted surface for grouped secondary controls. */
+  --color-surface-muted: #f3eadf;
+  /* Use deep plum as the primary readable ink derived from the approved logo. */
+  --color-ink: #321b3b;
+  /* Use a softened plum for descriptions that still exceeds readable contrast. */
+  --color-ink-muted: #6f6073;
+  /* Use a quiet mauve border to separate surfaces without strong visual noise. */
+  --color-border: #d9ccd8;
+  /* Use warm coral as the approved high-emphasis action color. */
+  --color-accent: #df594f;
+  /* Darken coral for readable action text and stronger hover feedback. */
+  --color-accent-strong: #a42e39;
+  /* Use deep plum on coral so the primary button remains high contrast. */
+  --color-on-accent: #211126;
+  /* Use pale coral for selected tracks and informational explanations. */
+  --color-accent-soft: #fde0d5;
+  /* Use a distinct blue-violet ring that stays visible beside coral controls. */
+  --color-focus: #6656cf;
+  /* Use subdued warm gray for controls that cannot currently be activated. */
+  --color-disabled: #a89da7;
+  /* Use a calm green family for successful future state messages. */
+  --color-success: #2f6e57;
+  /* Use a deep amber family for warnings that does not rely on bright yellow. */
+  --color-warning: #80521d;
+  /* Use deep red for recoverable errors with readable light-theme contrast. */
+  --color-error: #a02f42;
+  /* Define a gentle surface shadow derived from plum rather than pure black. */
+  --shadow-sm: 0 0.5rem 1.5rem rgb(50 27 59 / 8%);
+  /* Define stronger depth only for the central workspace and modal dialog. */
+  --shadow-lg: 0 1.5rem 4rem rgb(50 27 59 / 14%);
+  /* Keep overlay content above the application shell and sticky navigation. */
+  --layer-dialog: 30;
+  /* Keep compact navigation above scrolling page content. */
+  --layer-navigation: 20;
+  /* Keep the keyboard skip link above every standard shell surface. */
+  --layer-skip-link: 40;
+  /* Close the root tokens after defining the complete light visual system. */
 }
 
-/* Open the universal box-sizing rule so padding never causes accidental overflow. */
+/* Replace only semantic colors and native rendering instructions for the approved dark palette. */
+:root[data-theme="dark"] {
+  /* Tell the browser to paint supported native controls with dark defaults. */
+  color-scheme: dark;
+  /* Use the approved midnight-violet direction as the dark page canvas. */
+  --color-canvas: #170f1d;
+  /* Lift primary content slightly above the midnight canvas. */
+  --color-surface: #24152d;
+  /* Use a softer violet for grouped secondary controls. */
+  --color-surface-muted: #33213c;
+  /* Use the approved pale lavender-white as primary dark-theme ink. */
+  --color-ink: #fff7ee;
+  /* Use muted lavender for secondary copy while preserving readable contrast. */
+  --color-ink-muted: #c8b9c9;
+  /* Use a mid-violet line that remains visible without outlining every surface strongly. */
+  --color-border: #544159;
+  /* Brighten the approved coral accent for the midnight background. */
+  --color-accent: #ff7565;
+  /* Use pale apricot for hover and selected accent emphasis. */
+  --color-accent-strong: #ffae72;
+  /* Use midnight ink on luminous coral for strong button-label contrast. */
+  --color-on-accent: #211126;
+  /* Use a restrained plum-coral tint behind dark-theme informational content. */
+  --color-accent-soft: #4b293b;
+  /* Use luminous apricot for a focus ring distinct from coral action fills. */
+  --color-focus: #ffc28b;
+  /* Use muted lavender for unavailable controls on the dark surface. */
+  --color-disabled: #786b7b;
+  /* Use pale mint for readable dark-theme success states. */
+  --color-success: #8ed5b7;
+  /* Use pale apricot for readable dark-theme warning states. */
+  --color-warning: #f0bc72;
+  /* Use pale rose for readable dark-theme error states. */
+  --color-error: #ff9ca9;
+  /* Deepen the compact shadow so surfaces remain distinct on midnight violet. */
+  --shadow-sm: 0 0.75rem 2rem rgb(0 0 0 / 22%);
+  /* Deepen the elevated shadow without turning it into a sharp border. */
+  --shadow-lg: 0 1.75rem 4.5rem rgb(0 0 0 / 32%);
+  /* Close dark tokens after replacing every palette-dependent value. */
+}
+
+/* Make sizing predictable so padding never creates unexpected horizontal overflow. */
 * {
-  /* Include borders and padding inside each element's declared dimensions. */
+  /* Include padding and borders inside every element's declared dimensions. */
   box-sizing: border-box;
-  /* Close the universal sizing rule after setting its single predictable behavior. */
+  /* Close the universal sizing rule after its one predictable behavior. */
 }
 
-/* Open the body reset that lets the application shell fill the browser viewport. */
+/* Enable smooth anchor movement only when the visitor has not reduced motion. */
+html {
+  /* Use restrained scrolling for the keyboard skip-link destination. */
+  scroll-behavior: smooth;
+  /* Paint the browser overscroll area with the same application canvas. */
+  background: var(--color-canvas);
+  /* Close document behavior after defining scroll and canvas treatment. */
+}
+
+/* Reset the page and establish the readable themed application canvas. */
 body {
-  /* Remove browser-default margins so the shell controls its own spacing. */
+  /* Remove browser-default margins so shell spacing owns the visible rhythm. */
   margin: 0;
-  /* Ensure short foundation content still occupies the full visible viewport. */
-  min-width: 320px;
-  /* Preserve a usable full-height canvas before the responsive design phase begins. */
+  /* Keep short screens filled by the application background. */
   min-height: 100vh;
-  /* Close the body reset after establishing its safe viewport bounds. */
+  /* Paint every view with the active theme's outer canvas token. */
+  background: var(--color-canvas);
+  /* Use the active theme's primary ink for inherited text. */
+  color: var(--color-ink);
+  /* Improve paragraph readability without making control labels unusually loose. */
+  line-height: 1.5;
+  /* Close the body foundation after establishing layout and readable theme colors. */
 }
 
-/* Open the minimal centered layout used to prove React, CSS, and assets integrate. */
-.foundation-shell {
-  /* Center the shell's children without assuming a final Phase 2 page grid. */
-  display: grid;
-  /* Keep each child centered while allowing readable natural widths. */
-  justify-items: center;
-  /* Add generous but responsive breathing room around the proof interface. */
-  padding: clamp(2rem, 8vw, 6rem) 1.25rem;
-  /* Center explanatory copy for this intentionally compact foundation screen. */
-  text-align: center;
-  /* Close the foundation layout after declaring its temporary Phase 1 geometry. */
-}
-
-/* Open the approved logo sizing rule used by the minimal product shell. */
-.foundation-logo {
-  /* Prevent the large source image from exceeding the available mobile width. */
-  max-width: min(100%, 34rem);
-  /* Preserve the source image's approved aspect ratio as its width changes. */
-  height: auto;
-  /* Close the logo sizing rule after protecting responsive behavior. */
-}
-
-/* Open the heading spacing rule to keep the message visually connected to the identity. */
-h1 {
-  /* Pull the heading toward the logo without relying on unexplained browser margins. */
-  margin: 0.5rem 0;
-  /* Scale the foundation message smoothly across compact and wide viewports. */
-  font-size: clamp(2rem, 6vw, 4rem);
-  /* Close the heading rule after defining its temporary Phase 1 rhythm. */
-}
-
-/* Open the button rule for the one interactive proof in the foundation shell. */
-button {
-  /* Use the approved warm coral direction without claiming the final Phase 2 token value. */
-  background: #e96655;
-  /* Remove the default border so the simple shape reads consistently across browsers. */
-  border: 0;
-  /* Round the control enough to distinguish it as an approachable action. */
-  border-radius: 999px;
-  /* Preserve strong text contrast on the coral action surface. */
-  color: #211126;
-  /* Show that the control is interactive when a pointer is available. */
-  cursor: pointer;
-  /* Inherit the local system font rather than triggering any external font request. */
+/* Ensure form controls inherit the private local typography system. */
+button,
+/* Continue the shared font selector for text inputs. */
+input,
+/* Continue the shared font selector for native dialog content. */
+dialog {
+  /* Avoid browser-specific fonts that would fracture the visual system. */
   font: inherit;
-  /* Make the action label prominent without creating another heading. */
-  font-weight: 700;
-  /* Create a touch-friendly control size around the visible label. */
-  padding: 0.8rem 1.25rem;
-  /* Close the action rule after defining its readable temporary appearance. */
+  /* Close the shared form typography after applying inherited font values. */
 }
 
-/* Open the keyboard focus treatment so the proof interaction is visibly operable. */
-button:focus-visible {
-  /* Draw a thick outline that remains visible against the light foundation background. */
-  outline: 3px solid #351d3f;
-  /* Separate the outline from the control so its boundary stays easy to perceive. */
+/* Keep all locally bundled images inside their responsive containers. */
+img {
+  /* Prevent intrinsic image dimensions from forcing horizontal page scrolling. */
+  max-width: 100%;
+  /* Preserve the source aspect ratio when responsive width changes. */
+  height: auto;
+  /* Close the global image safety rule after protecting responsive geometry. */
+}
+
+/* Place the application inside a full-height layout with room for compact navigation. */
+.app-shell {
+  /* Use grid so header, workspace, and mobile navigation form clear page regions. */
+  display: grid;
+  /* Let the main workspace expand while header and navigation use natural height. */
+  grid-template-rows: auto 1fr auto;
+  /* Keep the shell at least as tall as the modern dynamic viewport. */
+  min-height: 100dvh;
+  /* Close the full-height application frame after defining its row behavior. */
+}
+
+/* Hide the skip link until a keyboard visitor focuses it. */
+.skip-link {
+  /* Keep the link above headers and dialogs when it becomes visible. */
+  z-index: var(--layer-skip-link);
+  /* Pin the link near the upper-left viewport edge for predictable discovery. */
+  position: fixed;
+  /* Leave a small visible margin around the revealed focus target. */
+  inset: var(--space-3) auto auto var(--space-3);
+  /* Move the link beyond the top edge while it is not focused. */
+  transform: translateY(-200%);
+  /* Use the primary action fill so the shortcut is unmistakably interactive. */
+  background: var(--color-accent);
+  /* Keep the shortcut text readable on the accent fill. */
+  color: var(--color-on-accent);
+  /* Give the shortcut the same approachable geometry as other controls. */
+  border-radius: var(--radius-pill);
+  /* Create a comfortable keyboard target around its visible text. */
+  padding: var(--space-3) var(--space-5);
+  /* Preserve a conventional link underline for immediate recognition. */
+  text-decoration: underline;
+  /* Give the shortcut enough weight to stay legible over page content. */
+  font-weight: 750;
+  /* Close the hidden skip-link treatment after defining its offscreen state. */
+}
+
+/* Reveal the skip link immediately when keyboard focus reaches it. */
+.skip-link:focus-visible {
+  /* Return the shortcut to its fixed visible position. */
+  transform: translateY(0);
+  /* Close the revealed shortcut state after restoring its position. */
+}
+
+/* Arrange product identity and shell controls inside a quiet bounded header. */
+.app-header {
+  /* Use a three-column grid so identity and settings stay anchored around navigation. */
+  display: grid;
+  /* Let the logo use natural width while navigation expands between edge controls. */
+  grid-template-columns: minmax(10rem, 15rem) 1fr auto;
+  /* Align every header control vertically despite differing content height. */
+  align-items: center;
+  /* Separate logo, navigation, and settings without wasting compact width. */
+  gap: var(--space-5);
+  /* Match the workspace's centered maximum reading width. */
+  width: min(100%, 80rem);
+  /* Center the bounded header inside wide browser canvases. */
+  margin-inline: auto;
+  /* Create responsive outer space without pushing compact content offscreen. */
+  padding: var(--space-5) clamp(var(--space-4), 4vw, var(--space-10));
+  /* Separate header and content with a quiet theme-aware line. */
+  border-bottom: 1px solid var(--color-border);
+  /* Close the header layout after anchoring its three primary regions. */
+}
+
+/* Crop the oversized approved source artwork into a useful header wordmark. */
+.app-header__logo {
+  /* Use a compact header width while preserving the approved logo's proportions. */
+  width: clamp(9.5rem, 18vw, 13rem);
+  /* Crop the large blank source canvas around the centered approved artwork. */
+  aspect-ratio: 3.5 / 1;
+  /* Preserve the logo artwork while hiding only its baked-in surrounding canvas. */
+  object-fit: cover;
+  /* Center the approved mark and wordmark inside the cropped header frame. */
+  object-position: center;
+  /* Close the header identity rule after adapting the source PNG non-destructively. */
+}
+
+/* Center the desktop destinations inside the available header space. */
+.desktop-navigation {
+  /* Use flex so three concise destinations remain one readable row. */
+  display: flex;
+  /* Keep the navigation centered rather than attached to either edge action. */
+  justify-content: center;
+  /* Add a small gap that still allows visible individual focus rings. */
+  gap: var(--space-2);
+  /* Close the desktop destination layout after centering its controls. */
+}
+
+/* Give every project-owned action consistent size, weight, state, and focus behavior. */
+.button {
+  /* Remove inconsistent native borders so the variant system owns the boundary. */
+  border: 1px solid transparent;
+  /* Use the shared pill shape for friendly touch targets. */
+  border-radius: var(--radius-pill);
+  /* Keep every action at or above the common 44-pixel touch target guidance. */
+  min-height: 2.75rem;
+  /* Add balanced horizontal room around short and medium labels. */
+  padding: var(--space-3) var(--space-5);
+  /* Keep all actions in the local system typeface with clear emphasis. */
+  font-weight: 750;
+  /* Prevent button labels from wrapping into ambiguous multi-line targets. */
+  white-space: nowrap;
+  /* Signal availability to pointer users without making disabled controls deceptive. */
+  cursor: pointer;
+  /* Animate only direct state properties with the restrained motion token. */
+  transition:
+    background-color var(--motion-fast) var(--motion-curve),
+    color var(--motion-fast) var(--motion-curve),
+    border-color var(--motion-fast) var(--motion-curve),
+    transform var(--motion-fast) var(--motion-curve);
+  /* Close the shared action foundation after sizing and interaction treatment. */
+}
+
+/* Paint the highest-priority action with the approved coral direction. */
+.button--primary {
+  /* Use the accent fill as the strongest actionable signal. */
+  background: var(--color-accent);
+  /* Use the dedicated readable ink chosen for the accent surface. */
+  color: var(--color-on-accent);
+  /* Close the primary action treatment after applying fill and label colors. */
+}
+
+/* Strengthen the primary action when a pointer hovers over it. */
+.button--primary:hover:not(:disabled) {
+  /* Shift to the stronger accent token without changing the control's geometry. */
+  background: var(--color-accent-strong);
+  /* Preserve dark readable ink on the stronger light or luminous accent. */
+  color: var(--color-on-accent);
+  /* Close the primary hover state after its theme-aware color change. */
+}
+
+/* Give secondary actions a quiet surface and visible boundary. */
+.button--secondary {
+  /* Use the main surface so secondary actions do not compete with primary coral. */
+  background: var(--color-surface);
+  /* Draw a visible theme-aware boundary around the action. */
+  border-color: var(--color-border);
+  /* Use primary ink so the label remains easy to read. */
+  color: var(--color-ink);
+  /* Close the secondary action treatment after surface, border, and text. */
+}
+
+/* Give available secondary actions a clear pointer-hover response. */
+.button--secondary:hover:not(:disabled) {
+  /* Shift to the muted grouped surface to acknowledge the pointer. */
+  background: var(--color-surface-muted);
+  /* Strengthen the boundary with the accent rather than relying on fill alone. */
+  border-color: var(--color-accent);
+  /* Close the secondary hover state after changing surface and boundary. */
+}
+
+/* Keep low-priority actions visually integrated with their surrounding surface. */
+.button--quiet {
+  /* Start transparent so navigation and tertiary actions do not create visual clutter. */
+  background: transparent;
+  /* Use muted ink for quiet actions until selection or hover adds emphasis. */
+  color: var(--color-ink-muted);
+  /* Close the quiet action treatment after its neutral initial state. */
+}
+
+/* Reveal quiet action availability when a pointer hovers over it. */
+.button--quiet:hover:not(:disabled) {
+  /* Use the muted surface as a restrained pointer response. */
+  background: var(--color-surface-muted);
+  /* Increase label contrast while the visitor is targeting the control. */
+  color: var(--color-ink);
+  /* Close the quiet hover state after increasing surface and text contrast. */
+}
+
+/* Communicate the selected shell destination independently of page position. */
+.button[aria-current="page"] {
+  /* Use the accent-soft surface as a stable selection indicator. */
+  background: var(--color-accent-soft);
+  /* Use primary ink so selected destination text remains readable in both themes. */
+  color: var(--color-ink);
+  /* Close the current-page state after applying its persistent visual selection. */
+}
+
+/* Give every available project control a strong keyboard focus indicator. */
+.button:focus-visible,
+/* Continue the shared keyboard focus selector for native text fields. */
+.field__control:focus-visible,
+/* Continue the shared keyboard focus selector for segmented radio options. */
+.segmented__option:has(input:focus-visible) {
+  /* Draw a high-contrast ring chosen separately from action colors. */
+  outline: 3px solid var(--color-focus);
+  /* Separate the ring from component edges so it remains visually distinct. */
   outline-offset: 3px;
-  /* Close the keyboard focus rule after defining both visibility properties. */
+  /* Close the common focus treatment after ensuring thickness and separation. */
 }
 
-/* Open the dark-system override that pairs the interface with the approved dark logo. */
-@media (prefers-color-scheme: dark) {
-  /* Open dark root values while preserving the same semantic layout and content. */
-  :root {
-    /* Use the logo's midnight-violet direction for a coherent local background. */
-    background: #211126;
-    /* Use pale lavender-white text for legibility on the dark background. */
-    color: #fff8ef;
-    /* Close the dark root values after replacing both page colors. */
+/* Let the skip link move keyboard focus to the workspace without outlining the full page grid. */
+.workspace:focus {
+  /* Remove the enormous default outline because the moved viewport already reveals the destination. */
+  outline: none;
+  /* Close the programmatic workspace focus treatment after suppressing only its full-grid ring. */
+}
+
+/* Show unavailable controls without removing their visible label or layout context. */
+.button:disabled {
+  /* Use the dedicated disabled ink instead of insufficient opacity alone. */
+  color: var(--color-disabled);
+  /* Keep a quiet surface so the target remains recognizable as a control. */
+  background: var(--color-surface-muted);
+  /* Use a visible subdued boundary to preserve control shape. */
+  border-color: var(--color-border);
+  /* Remove the pointer cursor because the action cannot currently run. */
+  cursor: not-allowed;
+  /* Close the disabled action state after preserving readable unavailable context. */
+}
+
+/* Provide tactile feedback while an available pointer action is being pressed. */
+.button:active:not(:disabled) {
+  /* Move the surface by one pixel without creating an attention-grabbing animation. */
+  transform: translateY(1px);
+  /* Close the active pointer state after its restrained physical response. */
+}
+
+/* Arrange the primary and supporting surfaces inside a bounded responsive grid. */
+.workspace {
+  /* Use grid so the timer dominates while support content forms a narrower column. */
+  display: grid;
+  /* Give the primary workspace roughly twice the width of supporting panels. */
+  grid-template-columns: minmax(0, 1.7fr) minmax(17rem, 0.8fr);
+  /* Align independent cards at the top rather than stretching short supporting surfaces. */
+  align-items: start;
+  /* Separate the two visual regions with generous but responsive whitespace. */
+  gap: clamp(var(--space-5), 4vw, var(--space-10));
+  /* Limit line lengths and surface scale on very wide screens. */
+  width: min(100%, 80rem);
+  /* Center the complete workspace inside the available page canvas. */
+  margin-inline: auto;
+  /* Create responsive edge space and room above compact sticky navigation. */
+  padding: clamp(var(--space-6), 4vw, var(--space-10));
+  /* Close the main workspace layout after defining its hierarchy and bounds. */
+}
+
+/* Establish the shared project-owned surface used by current and future panels. */
+.card {
+  /* Paint each group with the active theme's readable raised surface. */
+  background: var(--color-surface);
+  /* Separate the surface from its canvas using a quiet semantic border. */
+  border: 1px solid var(--color-border);
+  /* Apply the medium brand radius to supporting surfaces. */
+  border-radius: var(--radius-md);
+  /* Give content enough responsive room without wasting compact width. */
+  padding: clamp(var(--space-5), 3vw, var(--space-8));
+  /* Use restrained depth to keep cards readable without a dashboard-like stack. */
+  box-shadow: var(--shadow-sm);
+  /* Close the shared card treatment after defining its boundary and internal space. */
+}
+
+/* Give the central timer slightly stronger hierarchy than supporting surfaces. */
+.card--elevated {
+  /* Use the largest shared radius for a calm focal container. */
+  border-radius: var(--radius-lg);
+  /* Apply the stronger shadow only to the page's primary workspace. */
+  box-shadow: var(--shadow-lg);
+  /* Close the elevated card treatment after distinguishing the central surface. */
+}
+
+/* Arrange the central focus experience as a calm vertical reading sequence. */
+.timer-card {
+  /* Use grid so spacing remains consistent between varied semantic elements. */
+  display: grid;
+  /* Separate each timer section with the shared comfortable rhythm. */
+  gap: var(--space-6);
+  /* Give the central surface extra desktop room around its primary content. */
+  padding: clamp(var(--space-6), 5vw, 3.5rem);
+  /* Close the timer card layout after establishing its vertical flow. */
+}
+
+/* Balance the session mode and sequence around the timer-card width. */
+.timer-card__eyebrow {
+  /* Use flex so the two concise labels occupy opposite sides. */
+  display: flex;
+  /* Place session mode and cycle position at the two logical edges. */
+  justify-content: space-between;
+  /* Preserve a useful gap when the row becomes tight. */
+  gap: var(--space-4);
+  /* Use the accent-strong token for a distinct but readable label. */
+  color: var(--color-accent-strong);
+  /* Mark these labels as contextual metadata rather than body copy. */
+  font-size: 0.78rem;
+  /* Strengthen small uppercase text for reliable legibility. */
+  font-weight: 800;
+  /* Add measured tracking for the short all-caps labels. */
+  letter-spacing: 0.09em;
+  /* Present mode metadata consistently regardless of source casing. */
+  text-transform: uppercase;
+  /* Close the timer context row after defining its alignment and hierarchy. */
+}
+
+/* Give the page purpose a warm editorial scale without a remote display font. */
+.timer-card h1 {
+  /* Remove browser margins so grid gap owns the vertical rhythm. */
+  margin: 0;
+  /* Scale smoothly from mobile to desktop without overwhelming 200-percent zoom. */
+  font-size: clamp(1.8rem, 4vw, 3.15rem);
+  /* Keep the heading compact and calm across wrapped lines. */
+  line-height: 1.08;
+  /* Use slightly tightened tracking at large system-font sizes. */
+  letter-spacing: -0.035em;
+  /* Limit the line length so the heading remains a readable focal statement. */
+  max-width: 16ch;
+  /* Close the timer heading treatment after defining its focal scale. */
+}
+
+/* Keep the optional-intention explanation readable but visually secondary. */
+.timer-card__intro {
+  /* Remove browser margins so card grid spacing remains the single rhythm source. */
+  margin: 0;
+  /* Use muted ink without reducing opacity or readability. */
+  color: var(--color-ink-muted);
+  /* Limit line length to a comfortable reading measure. */
+  max-width: 55ch;
+  /* Close the timer introduction after controlling tone and measure. */
+}
+
+/* Group label, native field, and linked guidance inside one semantic component. */
+.field {
+  /* Use grid so each field relationship remains visible in a predictable order. */
+  display: grid;
+  /* Keep label and guidance close to the control they explain. */
+  gap: var(--space-2);
+  /* Close the reusable field layout after establishing its vertical relationship. */
+}
+
+/* Distinguish the field label from guidance and entered text. */
+.field__label {
+  /* Use primary ink because labels are essential interaction content. */
+  color: var(--color-ink);
+  /* Strengthen the label enough to scan quickly inside the timer surface. */
+  font-weight: 750;
+  /* Close the visible field label after applying essential text emphasis. */
+}
+
+/* Give native text inputs the full project-owned control treatment. */
+.field__control {
+  /* Fill the available card width without exceeding its safe grid column. */
+  width: 100%;
+  /* Preserve a comfortable touch and text-editing target. */
+  min-height: 3.25rem;
+  /* Use the main surface so typed text remains clear. */
+  background: var(--color-surface);
+  /* Draw an explicit control boundary in both themes. */
+  border: 1px solid var(--color-border);
+  /* Apply the small shared radius to distinguish fields from pill actions. */
+  border-radius: var(--radius-sm);
+  /* Use primary ink for visitor-entered text. */
+  color: var(--color-ink);
+  /* Give typed and placeholder text comfortable internal room. */
+  padding: var(--space-3) var(--space-4);
+  /* Transition only border and background during direct interaction. */
+  transition:
+    border-color var(--motion-fast) var(--motion-curve),
+    background-color var(--motion-fast) var(--motion-curve);
+  /* Close the reusable native field treatment after size, color, and motion. */
+}
+
+/* Strengthen an editable field boundary when a pointer hovers over it. */
+.field__control:hover:not(:disabled) {
+  /* Use the accent border as an additional non-motion affordance. */
+  border-color: var(--color-accent);
+  /* Close the editable field hover state after acknowledging availability. */
+}
+
+/* Keep placeholder examples visible without competing with entered content. */
+.field__control::placeholder {
+  /* Use muted ink as a full color token instead of unreliable low opacity. */
+  color: var(--color-ink-muted);
+  /* Close the placeholder treatment after setting its secondary text color. */
+}
+
+/* Present optional field guidance as concise secondary information. */
+.field__hint {
+  /* Use readable muted ink for information that remains interaction-relevant. */
+  color: var(--color-ink-muted);
+  /* Set a compact size without falling below readable interface copy. */
+  font-size: 0.875rem;
+  /* Close the linked field hint after defining its secondary hierarchy. */
+}
+
+/* Center the future countdown as the shell's strongest status object. */
+.timer-display {
+  /* Use grid so duration and state form one compact readable group. */
+  display: grid;
+  /* Center both visual lines inside the timer workspace. */
+  justify-items: center;
+  /* Keep state text close to the duration it describes. */
+  gap: var(--space-1);
+  /* Create generous vertical rest around the clock without hard-coded height. */
+  padding-block: clamp(var(--space-4), 4vw, var(--space-8));
+  /* Close the timer display group after centering its two semantic values. */
+}
+
+/* Make the countdown readable at a glance and stable as digits change later. */
+.timer-display__time {
+  /* Scale the clock strongly while still reflowing at 200-percent zoom. */
+  font-size: clamp(4.2rem, 14vw, 8.75rem);
+  /* Keep the duration visually compact within its line box. */
+  line-height: 0.9;
+  /* Use a strong but not heavy weight for a calm numerical focal point. */
+  font-weight: 780;
+  /* Keep each digit width stable for the later running timer. */
+  font-variant-numeric: tabular-nums;
+  /* Tighten large system digits so the clock reads as one unit. */
+  letter-spacing: -0.065em;
+  /* Close the duration treatment after defining scale and numeric stability. */
+}
+
+/* Label the timer's non-running state without animation. */
+.timer-display__state {
+  /* Use the accent-strong token for a small but visible status distinction. */
+  color: var(--color-accent-strong);
+  /* Strengthen the short status word for readable small text. */
+  font-weight: 800;
+  /* Separate the status letters slightly beneath the dense duration. */
+  letter-spacing: 0.1em;
+  /* Present the state consistently as interface metadata. */
+  text-transform: uppercase;
+  /* Close the timer state label after defining its readable distinction. */
+}
+
+/* Keep timer actions centered and adaptable when text or zoom increases. */
+.timer-actions {
+  /* Use flex so priority order stays logical while allowing wrapping. */
+  display: flex;
+  /* Center the complete control group beneath the duration. */
+  justify-content: center;
+  /* Allow controls to form another row before they cause page overflow. */
+  flex-wrap: wrap;
+  /* Separate targets enough for pointer and keyboard focus visibility. */
+  gap: var(--space-3);
+  /* Close the timer action group after defining responsive behavior. */
+}
+
+/* Center the quiet live status beneath the timer controls. */
+.timer-status {
+  /* Keep the feedback message centered with the action group it describes. */
+  text-align: center;
+  /* Close the timer-specific status alignment after its one local override. */
+}
+
+/* Stack supporting surfaces while preserving the main timer's visual quiet. */
+.supporting-panels {
+  /* Use grid so support cards share one predictable vertical rhythm. */
+  display: grid;
+  /* Separate each independent support topic with comfortable whitespace. */
+  gap: var(--space-5);
+  /* Close the supporting panel column after defining its stack. */
+}
+
+/* Balance supporting card titles and compact state badges. */
+.card__heading-row {
+  /* Use flex so title and count stay on one row when space allows. */
+  display: flex;
+  /* Place the title and state at opposing logical edges. */
+  justify-content: space-between;
+  /* Align title text and badge around their visual center. */
+  align-items: center;
+  /* Preserve space when either label grows under zoom. */
+  gap: var(--space-3);
+  /* Close the supporting heading row after establishing its balanced layout. */
+}
+
+/* Normalize supporting headings so shared card padding owns outer rhythm. */
+.card h2 {
+  /* Remove default top margin while leaving controlled space after the heading. */
+  margin: 0 0 var(--space-3);
+  /* Keep supporting headings clearly subordinate to the page heading. */
+  font-size: 1.05rem;
+  /* Preserve compact but readable line spacing across wrapped titles. */
+  line-height: 1.3;
+  /* Close the supporting heading treatment after defining hierarchy and rhythm. */
+}
+
+/* Remove redundant bottom spacing when a heading shares a state row. */
+.card__heading-row h2 {
+  /* Let the heading row control vertical alignment instead of browser margin. */
+  margin: 0;
+  /* Close the row-specific heading adjustment after removing its margin. */
+}
+
+/* Present compact neutral states without suggesting urgency or success. */
+.badge {
+  /* Use the muted grouped surface for a low-pressure state label. */
+  background: var(--color-surface-muted);
+  /* Keep the badge boundary visible in both themes. */
+  border: 1px solid var(--color-border);
+  /* Give short state text a compact pill silhouette. */
+  border-radius: var(--radius-pill);
+  /* Use readable muted ink rather than low opacity. */
+  color: var(--color-ink-muted);
+  /* Add compact internal room around the count. */
+  padding: var(--space-1) var(--space-3);
+  /* Keep small badge text readable and clearly secondary. */
+  font-size: 0.78rem;
+  /* Strengthen the compact label enough for reliable scanning. */
+  font-weight: 750;
+  /* Prevent the two-word count from breaking across lines. */
+  white-space: nowrap;
+  /* Close the neutral badge treatment after defining its compact geometry. */
+}
+
+/* Reuse one readable secondary-copy treatment across empty and permission states. */
+.muted-copy {
+  /* Remove top margin because the preceding heading or row already supplies rhythm. */
+  margin-top: var(--space-3);
+  /* Use readable muted ink rather than reducing the entire element's opacity. */
+  color: var(--color-ink-muted);
+  /* Close the secondary-copy treatment after defining its spacing and tone. */
+}
+
+/* Group a large progress value with its plain-language explanation. */
+.supporting-stat {
+  /* Use flex so value and label align cleanly on one readable line. */
+  display: flex;
+  /* Align the smaller label to the large value's text baseline. */
+  align-items: baseline;
+  /* Separate number and explanation without weakening their relationship. */
+  gap: var(--space-3);
+  /* Keep card spacing controlled rather than inherited from browser paragraphs. */
+  margin: var(--space-3) 0 var(--space-5);
+  /* Use muted ink for the explanatory portion of the metric. */
+  color: var(--color-ink-muted);
+  /* Close the supporting statistic layout after grouping value and meaning. */
+}
+
+/* Give the empty progress number clear but subordinate visual emphasis. */
+.supporting-stat strong {
+  /* Use primary ink so the value reads immediately. */
+  color: var(--color-ink);
+  /* Make the value prominent without competing with the central countdown. */
+  font-size: 2rem;
+  /* Keep future changing values stable in width. */
+  font-variant-numeric: tabular-nums;
+  /* Close the support value treatment after defining emphasis and stability. */
+}
+
+/* Present explanations and statuses with a reusable non-color-only boundary. */
+.notice {
+  /* Use the soft accent surface for informative default messages. */
+  background: var(--color-accent-soft);
+  /* Add a visible left boundary so the pattern never depends on fill color alone. */
+  border-inline-start: 0.25rem solid var(--color-accent);
+  /* Round the notice enough to match cards while preserving its directional marker. */
+  border-radius: var(--radius-sm);
+  /* Keep notice text readable using the primary theme ink. */
+  color: var(--color-ink);
+  /* Remove browser paragraph margins so callers control surrounding rhythm. */
+  margin: 0;
+  /* Create comfortable but compact room around concise messages. */
+  padding: var(--space-3) var(--space-4);
+  /* Use slightly compact text appropriate for contextual guidance. */
+  font-size: 0.9rem;
+  /* Close the default notice pattern after applying its readable explanation surface. */
+}
+
+/* Distinguish successful future statuses with both color and the shared boundary shape. */
+.notice--success {
+  /* Use the semantic success token for the leading status boundary. */
+  border-inline-start-color: var(--color-success);
+  /* Close the success notice modifier after applying its semantic boundary. */
+}
+
+/* Distinguish warning explanations without using color as the only visual cue. */
+.notice--warning {
+  /* Use the semantic warning token for the leading status boundary. */
+  border-inline-start-color: var(--color-warning);
+  /* Close the warning notice modifier after applying its semantic boundary. */
+}
+
+/* Distinguish recoverable errors while preserving the common readable notice geometry. */
+.notice--error {
+  /* Use the semantic error token for the leading status boundary. */
+  border-inline-start-color: var(--color-error);
+  /* Close the error notice modifier after applying its semantic boundary. */
+}
+
+/* Use a softer surface for the future permission-explanation pattern. */
+.permission-card {
+  /* Replace the standard card surface with the grouped muted surface. */
+  background: var(--color-surface-muted);
+  /* Remove depth so permissions never appear more urgent than the timer. */
+  box-shadow: none;
+  /* Close the permission card adjustment after reducing its visual pressure. */
+}
+
+/* Hide compact navigation while the full header navigation has enough space. */
+.mobile-navigation {
+  /* Remove compact navigation from desktop layout and accessibility order. */
+  display: none;
+  /* Close the default compact navigation state after hiding it on wide screens. */
+}
+
+/* Style the native modal while preserving browser-owned semantics and focus behavior. */
+.dialog {
+  /* Keep settings above the shell and its compact sticky navigation. */
+  z-index: var(--layer-dialog);
+  /* Limit the modal to a readable compact measure on wide screens. */
+  width: min(calc(100% - 2rem), 33rem);
+  /* Remove inconsistent browser dialog margins inside the centered modal algorithm. */
+  margin: auto;
+  /* Paint the dialog with the active raised surface. */
+  background: var(--color-surface);
+  /* Draw an explicit theme-aware modal boundary. */
+  border: 1px solid var(--color-border);
+  /* Use the largest surface radius for the focused modal task. */
+  border-radius: var(--radius-lg);
+  /* Use primary ink for all inherited dialog text. */
+  color: var(--color-ink);
+  /* Give the modal content spacious but responsive internal room. */
+  padding: clamp(var(--space-6), 5vw, var(--space-8));
+  /* Separate the modal from its backdrop with the strong elevation token. */
+  box-shadow: var(--shadow-lg);
+  /* Close the native dialog treatment after applying size, theme, and elevation. */
+}
+
+/* Dim the application behind settings without making the modal edge ambiguous. */
+.dialog::backdrop {
+  /* Use translucent midnight plum so both light and dark shells recede consistently. */
+  background: rgb(23 15 29 / 68%);
+  /* Soften the underlying page slightly without obscuring its orientation entirely. */
+  backdrop-filter: blur(0.2rem);
+  /* Close the native backdrop treatment after defining modal separation. */
+}
+
+/* Give the modal title clear hierarchy above appearance settings. */
+.dialog__title {
+  /* Remove browser heading margins so the dialog owns its vertical rhythm. */
+  margin: 0;
+  /* Keep the compact modal title clearly below the page heading scale. */
+  font-size: 1.75rem;
+  /* Close the modal title treatment after defining hierarchy and spacing. */
+}
+
+/* Introduce the settings scope without crowding the first control. */
+.dialog__intro {
+  /* Separate introductory copy from the title and theme choices. */
+  margin: var(--space-2) 0 var(--space-6);
+  /* Use muted ink for secondary explanatory content. */
+  color: var(--color-ink-muted);
+  /* Close the dialog introduction after defining its rhythm and tone. */
+}
+
+/* Remove inconsistent native fieldset styling around segmented theme choices. */
+.segmented {
+  /* Remove the browser fieldset border because the inner track owns the visual group. */
+  border: 0;
+  /* Remove native fieldset margins that vary between browsers. */
+  margin: 0 0 var(--space-5);
+  /* Remove native fieldset padding so it aligns with other modal content. */
+  padding: 0;
+  /* Close the segmented semantic group reset after preserving its native meaning. */
+}
+
+/* Keep the segmented group's visible legend readable and close to its options. */
+.segmented__legend {
+  /* Add only the lower spacing needed before the shared option track. */
+  padding: 0 0 var(--space-2);
+  /* Use primary ink because the legend is the control group's accessible name. */
+  color: var(--color-ink);
+  /* Strengthen the label enough to distinguish it from explanatory copy. */
+  font-weight: 750;
+  /* Close the segmented legend treatment after defining essential label hierarchy. */
+}
+
+/* Arrange mutually exclusive options inside one responsive shared track. */
+.segmented__track {
+  /* Use grid so every available theme receives equal target width. */
+  display: grid;
+  /* Divide the track into three equal columns for System, Light, and Dark. */
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  /* Leave a narrow gap so every focused option has a distinct outline. */
+  gap: var(--space-1);
+  /* Use the muted surface as the shared control background. */
+  background: var(--color-surface-muted);
+  /* Draw one outer boundary around the complete related control. */
+  border: 1px solid var(--color-border);
+  /* Match the shared medium radius used by grouped surfaces. */
+  border-radius: var(--radius-md);
+  /* Leave a compact inset around individual selectable segments. */
+  padding: var(--space-1);
+  /* Close the segmented track after defining equal-width responsive options. */
+}
+
+/* Make each native radio label a complete touch-friendly selectable segment. */
+.segmented__option {
+  /* Establish a containing block for the transparent native radio target. */
+  position: relative;
+  /* Place the native radio and text at the center of the full option target. */
+  display: grid;
+  /* Keep the visually hidden radio and visible label in the same grid area. */
+  place-items: center;
+  /* Preserve at least the common 44-pixel touch target height. */
+  min-height: 2.75rem;
+  /* Round individual selection surfaces inside the shared track. */
+  border-radius: calc(var(--radius-md) - var(--space-1));
+  /* Keep option labels readable before and after selection. */
+  color: var(--color-ink-muted);
+  /* Signal radio availability to pointer users. */
+  cursor: pointer;
+  /* Prevent short option names from wrapping inside equal columns. */
+  white-space: nowrap;
+  /* Close the segmented option target after defining its size and alignment. */
+}
+
+/* Stretch each transparent native radio across its full visible label target. */
+.segmented__option input {
+  /* Position the native radio relative to the complete segmented option. */
+  position: absolute;
+  /* Cover the full visible segment so pointer and touch activation never miss the input. */
+  inset: 0;
+  /* Fill the complete segment width rather than the browser's small radio-circle width. */
+  width: 100%;
+  /* Fill the complete touch target height while preserving native radio behavior. */
+  height: 100%;
+  /* Remove native margins that could shift the transparent target away from its label. */
+  margin: 0;
+  /* Keep the native input interactive while hiding only its browser-specific circle. */
+  opacity: 0;
+  /* Match the visible label's pointer affordance across the complete target. */
+  cursor: pointer;
+  /* Close the transparent native radio target after preserving full-size interaction. */
+}
+
+/* Give visible option text consistent readable control emphasis. */
+.segmented__option span {
+  /* Let pointer events reach the full-size native input beneath the visible text. */
+  pointer-events: none;
+  /* Strengthen short control labels for quick scanning. */
+  font-weight: 750;
+  /* Close the segmented text treatment after defining readable emphasis. */
+}
+
+/* Paint the selected native radio's complete label surface. */
+.segmented__option:has(input:checked) {
+  /* Use the primary raised surface to lift the selected option from its track. */
+  background: var(--color-surface);
+  /* Use primary ink rather than color alone to strengthen selection. */
+  color: var(--color-ink);
+  /* Add restrained depth as a second non-color selection cue. */
+  box-shadow: var(--shadow-sm);
+  /* Close the selected segment state after applying surface, text, and depth. */
+}
+
+/* Align the modal's completion action with the logical end of the content. */
+.dialog__actions {
+  /* Use flex so additional future actions can join without rewriting layout. */
+  display: flex;
+  /* Place the current primary completion action at the logical end. */
+  justify-content: flex-end;
+  /* Separate the notice and action group with the shared comfortable rhythm. */
+  margin-top: var(--space-6);
+  /* Close the dialog action layout after defining alignment and spacing. */
+}
+
+/* Reflow the shell into one content column before either region becomes cramped. */
+@media (max-width: 58rem) {
+  /* Keep the header simple when the full desktop navigation no longer fits comfortably. */
+  .app-header {
+    /* Let identity expand while settings stays anchored at the opposite edge. */
+    grid-template-columns: minmax(0, 1fr) auto;
+    /* Close the compact header grid after removing the middle navigation column. */
   }
 
-  /* Open the dark-mode focus override so keyboard focus remains visible. */
-  button:focus-visible {
-    /* Switch the outline to ivory because plum would disappear on the dark canvas. */
-    outline-color: #fff8ef;
-    /* Close the dark focus override after protecting its contrast. */
+  /* Remove duplicated desktop destinations once compact navigation becomes available. */
+  .desktop-navigation {
+    /* Hide the wide navigation to avoid duplicate keyboard stops. */
+    display: none;
+    /* Close the hidden desktop navigation state at the responsive breakpoint. */
   }
-  /* Close the dark-system media query after adapting background, text, and focus. */
+
+  /* Stack timer and support content into the natural document order. */
+  .workspace {
+    /* Replace the two-column desktop grid with one overflow-safe content column. */
+    grid-template-columns: minmax(0, 1fr);
+    /* Add bottom room so sticky compact navigation never covers the last card. */
+    padding-bottom: 6rem;
+    /* Close the single-column workspace after protecting compact navigation space. */
+  }
+
+  /* Present mobile navigation as a persistent reachable destination bar. */
+  .mobile-navigation {
+    /* Keep navigation visible near the viewport bottom while content scrolls. */
+    position: sticky;
+    /* Anchor the compact navigation at the bottom edge. */
+    bottom: 0;
+    /* Keep the bar above scrolling cards but below modal settings. */
+    z-index: var(--layer-navigation);
+    /* Use grid so all three destinations receive equal target width. */
+    display: grid;
+    /* Divide the available width evenly between primary destinations. */
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    /* Preserve narrow gaps between independent keyboard targets. */
+    gap: var(--space-1);
+    /* Paint an opaque raised surface so content never lowers label contrast beneath it. */
+    background: var(--color-surface);
+    /* Separate the persistent navigation from scrolling content. */
+    border-top: 1px solid var(--color-border);
+    /* Respect device safe areas while maintaining touch-friendly internal room. */
+    padding: var(--space-2) var(--space-3) max(var(--space-2), env(safe-area-inset-bottom));
+    /* Add restrained upward depth to distinguish the persistent navigation plane. */
+    box-shadow: 0 -0.5rem 1.5rem rgb(50 27 59 / 8%);
+    /* Close the compact navigation bar after defining sticky responsive behavior. */
+  }
+  /* Close the tablet breakpoint after reflowing header, workspace, and navigation. */
+}
+
+/* Tighten surface geometry and controls for the narrowest supported mobile widths. */
+@media (max-width: 36rem) {
+  /* Preserve the header hierarchy while reducing unused edge space. */
+  .app-header {
+    /* Use compact spacing so logo and settings remain on one row at 320 pixels. */
+    padding: var(--space-3) var(--space-4);
+    /* Reduce the gap before the settings action without merging targets. */
+    gap: var(--space-3);
+    /* Close the narrow header adjustment after protecting its one-row layout. */
+  }
+
+  /* Keep the approved identity readable without crowding settings. */
+  .app-header__logo {
+    /* Limit the compact wordmark to the width available beside settings. */
+    width: 9.5rem;
+    /* Close the narrow identity adjustment after setting its stable width. */
+  }
+
+  /* Reduce the settings action's horizontal space while preserving target height. */
+  .settings-button {
+    /* Keep the label comfortably padded without consuming central workspace width. */
+    padding-inline: var(--space-4);
+    /* Close the compact settings adjustment after preserving touch height. */
+  }
+
+  /* Use compact page edges while keeping every surface away from the viewport boundary. */
+  .workspace {
+    /* Reduce outer whitespace rather than internal target dimensions. */
+    padding: var(--space-4) var(--space-3) 5.5rem;
+    /* Keep stacked cards close enough to feel like one focus workspace. */
+    gap: var(--space-4);
+    /* Close the narrow workspace adjustment after preserving overflow-safe edges. */
+  }
+
+  /* Use a slightly tighter central surface on the narrowest phones. */
+  .timer-card {
+    /* Reduce only card padding while preserving interactive target sizes. */
+    padding: var(--space-5) var(--space-4);
+    /* Keep the vertical flow comfortable at compact widths. */
+    gap: var(--space-5);
+    /* Close the compact timer card after preserving content hierarchy. */
+  }
+
+  /* Let contextual session labels wrap rather than squeeze or overflow. */
+  .timer-card__eyebrow {
+    /* Permit mode and sequence labels to form another line under text zoom. */
+    flex-wrap: wrap;
+    /* Close the compact timer context adjustment after allowing safe wrapping. */
+  }
+
+  /* Reduce only the display scale enough to fit the minimum supported viewport. */
+  .timer-display__time {
+    /* Preserve a strong focal size while preventing digit overflow at 320 pixels. */
+    font-size: clamp(4rem, 23vw, 6rem);
+    /* Close the compact countdown scale after protecting minimum-width layout. */
+  }
+
+  /* Let timer actions distribute naturally across one or two compact rows. */
+  .timer-actions .button {
+    /* Allow each action to grow so wrapped rows remain balanced. */
+    flex: 1 1 7rem;
+    /* Close the narrow timer action adjustment after enabling balanced wrapping. */
+  }
+
+  /* Stack support card title and count if increased text no longer fits one row. */
+  .card__heading-row {
+    /* Permit both concise elements to wrap before they cause overflow. */
+    flex-wrap: wrap;
+    /* Close the compact support heading adjustment after allowing safe wrapping. */
+  }
+
+  /* Keep theme options readable when translated labels or zoom require extra room. */
+  .segmented__track {
+    /* Stack options into one column instead of compressing label text. */
+    grid-template-columns: 1fr;
+    /* Close the narrow segmented adjustment after protecting readable targets. */
+  }
+  /* Close the mobile breakpoint after protecting narrow controls and surfaces. */
+}
+
+/* Remove non-essential motion when the visitor requests reduced animation. */
+@media (prefers-reduced-motion: reduce) {
+  /* Disable smooth anchor movement because it is not required for navigation. */
+  html {
+    /* Move directly to the requested focus destination. */
+    scroll-behavior: auto;
+    /* Close the reduced-motion document behavior after disabling smooth travel. */
+  }
+
+  /* Remove visual transitions from all elements without changing interaction results. */
+  *,
+  /* Continue the reduced-motion selector for generated content before elements. */
+  *::before,
+  /* Continue the reduced-motion selector for generated content after elements. */
+  *::after {
+    /* Make any future animation effectively immediate without hiding final state. */
+    animation-duration: 0.01ms !important;
+    /* Prevent future decorative animations from repeating. */
+    animation-iteration-count: 1 !important;
+    /* Make interaction transitions effectively immediate. */
+    transition-duration: 0.01ms !important;
+    /* Close the reduced-motion universal treatment after neutralizing motion timing. */
+  }
+  /* Close the reduced-motion query after preserving every interaction without animation. */
 }

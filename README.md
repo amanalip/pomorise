@@ -5,8 +5,8 @@ Rise one session at a time.
 | Document information | Value |
 | --- | --- |
 | Created | August 15, 2026 at 10:14:39 PM EDT |
-| Last updated | August 20, 2026 at 1:45:43 PM EDT |
-| ISO 8601 last updated | `2026-08-20T13:45:43-04:00` |
+| Last updated | August 20, 2026 at 2:10:50 PM EDT |
+| ISO 8601 last updated | `2026-08-20T14:10:50-04:00` |
 | Timezone | America/Toronto (UTC−04:00) |
 | Estimated reading time | 3 minutes |
 | Verification status | Fact-checked and sanity-checked against the linked primary documentation |
@@ -28,7 +28,7 @@ The goal is simple: make it easier to choose one meaningful task, give it your f
 
 ## Project status
 
-Phase 1 is implementation-ready, and Pomorise now has a reproducible React, TypeScript, and Vite foundation for [GitHub Pages](https://docs.github.com/en/pages). The visible page is intentionally a minimal proof while Phase 2 owns the final design system and application shell. The first complete public release is named **Pomorise 1.0: First Light**. The product direction lives in [`project_plan.md`](project_plan.md), the seven-phase sequence lives in [`implementation_plan.md`](implementation_plan.md), and the Phase 1 technical narrative lives in [`development_docs/phase-01-foundation/doc.md`](development_docs/phase-01-foundation/doc.md).
+Phases 1 and 2 are implementation-ready. Pomorise now has a reproducible React, TypeScript, and Vite foundation plus a responsive light and dark application shell with project-owned accessible components. Timer behavior remains Phase 3 work. The first complete public release is named **Pomorise 1.0: First Light**. The product direction lives in [`project_plan.md`](project_plan.md), the seven-phase sequence lives in [`implementation_plan.md`](implementation_plan.md), and the latest technical narrative lives in [`development_docs/phase-02-design-system-shell/doc.md`](development_docs/phase-02-design-system-shell/doc.md).
 
 After all implementation phases are ready, one comprehensive Phase 7 report will preserve commands, raw logs, screenshots, failures, retests, and the evidence-based release conclusion. It is indexed in [`testreports/README.md`](testreports/README.md).
 

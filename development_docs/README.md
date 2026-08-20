@@ -3,8 +3,8 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 16, 2026 at 2:42:00 AM EDT |
-| Last updated | August 20, 2026 at 1:45:43 PM EDT |
-| ISO 8601 last updated | `2026-08-20T13:45:43-04:00` |
+| Last updated | August 20, 2026 at 2:10:50 PM EDT |
+| ISO 8601 last updated | `2026-08-20T14:10:50-04:00` |
 | Timezone | America/Toronto (UTC−04:00) |
 | Estimated reading time | 11 minutes |
 | Verification status | Fact-checked and sanity-checked against the implementation plan, documentation system, and linked primary references |
@@ -33,10 +33,11 @@ This directory explains Pomorise development in the order it happens. Each docum
 
 ## Development document navigation
 
-Phase 1 is the first implementation-ready application step. Add each future development document to the top of this table.
+Phases 1 and 2 are implementation-ready. Add each future development document to the top of this table.
 
 | Date | Identifier | Phase or step | Commit | Main change | Test evidence | Development document |
 | --- | --- | --- | --- | --- | --- | --- |
+| August 20, 2026 | `phase-02-design-system-shell` | Phase 2 | Pending owner commit | Responsive themed shell, persistent appearance, accessible primitives, and reusable interface states | Targeted diagnostics recorded; final evidence remains Phase 7 | [`phase-02-design-system-shell/doc.md`](phase-02-design-system-shell/doc.md) |
 | August 20, 2026 | `phase-01-foundation` | Phase 1 | Pending owner commit | Reproducible React, TypeScript, Vite, quality, test, privacy, and Pages foundation | Targeted diagnostics recorded; final evidence remains Phase 7 | [`phase-01-foundation/doc.md`](phase-01-foundation/doc.md) |
 | Not run | `_template` | Reusable structure only | Not applicable | Template instructions | Not applicable | [`_template/doc.md`](_template/doc.md) |
 

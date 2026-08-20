@@ -3,8 +3,8 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 15, 2026 at 10:36 PM EDT |
-| Last updated | August 20, 2026 at 1:45:43 PM EDT |
-| ISO 8601 last updated | `2026-08-20T13:45:43-04:00` |
+| Last updated | August 20, 2026 at 2:10:50 PM EDT |
+| ISO 8601 last updated | `2026-08-20T14:10:50-04:00` |
 | Timezone | America/Toronto (UTC−04:00) |
 | Estimated reading time | 42 minutes |
 | Verification status | Commit facts checked against local Git history; technical claims checked against linked primary documentation |
@@ -17,7 +17,8 @@ The newest commit should be added at the top of the **Commit history** section.
 
 - [Entry template](#entry-template)
 - [Commit history](#commit-history)
-  - [Pending: Establish Phase 1 foundation and guardrails](#pending-establish-phase-1-foundation-and-guardrails)
+  - [Pending: Establish Phase 2 design system and application shell](#pending-establish-phase-2-design-system-and-application-shell)
+  - [`cd5cbde`: Establish Phase 1 foundation and guardrails](#cd5cbde-establish-phase-1-foundation-and-guardrails)
   - [Pending: Consolidate verification into one final suite](#pending-consolidate-verification-into-one-final-suite)
   - [Pending: Establish beginner-focused development documentation](#pending-establish-beginner-focused-development-documentation)
   - [`00c4ec9`: Establish screenshot-backed test reporting](#00c4ec9-establish-screenshot-backed-test-reporting)
@@ -98,13 +99,104 @@ Describe what a visitor or maintainer will notice. Write “None” when the cha
 
 ## Commit history
 
-### `Pending`: Establish Phase 1 foundation and guardrails
+### `Pending`: Establish Phase 2 design system and application shell
 
-- **Status:** Prepared for the next commit
-- **Prepared:** 2026-08-20 13:45 EDT
+- **Status:** Prepared for the next owner commit
+- **Prepared:** 2026-08-20 14:10 EDT
 - **Author:** Aman Ali with Codex collaboration
 - **Full commit:** Assigned after the commit is created
-- **Expected files:** Application scaffold, quality configuration, tests, workflow annotations, dependency and quality reviews, development narrative, and synchronized project documentation
+- **Expected files:** Theme provider, project-owned UI primitives, responsive shell, design tokens, appearance and writing-style tests, and synchronized phase documentation
+
+#### Purpose
+
+Turn the approved Pomorise identity into a calm, reusable, responsive interface foundation before reliable timer behavior and focus-loop features arrive.
+
+#### Decision context
+
+Phase 1 closed with Phase 2 as the next eligible phase. The implementation plan required approved light and dark identity, project-owned accessible controls, explicit local theme preference, responsive desktop and mobile layout, reduced-motion behavior, clear interaction states, and acceptance cases queued for Phase 7. During the work, the project owner also clarified that website text and source code must contain no em dashes.
+
+#### Changes
+
+- Added system, light, and dark theme state with safe localStorage validation and persistence.
+- Added semantic button, card, field, segmented-control, notice, and native-dialog primitives.
+- Replaced the foundation proof with a timer-first application shell, supporting panels, mobile navigation, settings, and honest future-feature boundaries.
+- Defined semantic light and dark color tokens plus spacing, radius, shadow, motion, focus, disabled, status, and layer tokens.
+- Added reduced-motion handling, keyboard focus, touch-sized targets, hover and active states, empty states, and permission guidance.
+- Added component and browser acceptance cases for theme choice, reload persistence, network boundaries, axe findings, and 320 pixel reflow.
+- Removed the requested punctuation from website source and added a Unicode code-point guard to prevent its return.
+- Corrected a real-browser mobile overflow caused by a root minimum width and expanded native radio hit targets to cover their complete visible segments.
+- Added the Phase 2 development narrative and updated phase status records.
+
+#### Files affected
+
+- `src/components/ThemeProvider.tsx`: New appearance preference, system detection, resolved theme, and safe local persistence boundary.
+- `src/components/ui.tsx`: New project-owned semantic component primitives.
+- `src/app/App.tsx`: New responsive shell and truthful shell-stage interactions.
+- `src/styles/global.css`: Complete theme tokens, component states, responsive layout, focus, and motion system.
+- `src/main.tsx`: Wraps the application in the shared theme provider.
+- `src/tests/setup.ts`: Adds deterministic jsdom shims for media queries and native dialog methods.
+- `src/tests/component/App.test.tsx`: Covers identity, empty states, boundary feedback, settings, persistence, and logo selection.
+- `src/tests/browser/network-boundary.spec.ts`: Adds real-browser theme and compact-layout cases while retaining privacy and axe checks.
+- `src/tests/unit/writing-style.test.ts`: Guards project-owned website source and code from forbidden punctuation.
+- `index.html`: Adds a temporary local browser icon from the approved identity assets.
+- `README.md`, `implementation_plan.md`, `src/components/README.md`, `development_docs/README.md`, and `development_docs/phase-02-design-system-shell/doc.md`: Record the Phase 2 architecture, status, and continuation path.
+
+#### User-visible impact
+
+Visitors now see a refined Pomorise workspace instead of a foundation proof. They can choose system, light, or dark appearance in an accessible settings dialog, reload without losing an explicit choice, use the shell at compact mobile widths, and understand which controls are not available until later phases.
+
+#### Decisions and tradeoffs
+
+- Native HTML behavior was retained beneath bespoke visual styling.
+- Semantic color tokens were chosen instead of component-specific light and dark values.
+- A system font stack was chosen instead of a remote or newly bundled display font.
+- Theme preference uses localStorage because it is a small non-sensitive preference; structured personal records still wait for Dexie in Phase 5.
+- Incomplete timer and task behavior remains disabled or explanatory instead of being simulated.
+- The approved full-size PNG serves as a temporary local icon; final icon geometry remains Phase 6 hardening.
+
+#### Risks and limitations
+
+- The timer display is static until Phase 3.
+- Intention text, tasks, and progress are not persisted or calculated.
+- The source logo PNGs are large and require later release-asset hardening.
+- Targeted checks support implementation but do not replace the comprehensive Phase 7 evidence record.
+
+#### Validation
+
+- Formatting, strict TypeScript, and zero-warning lint checks succeeded.
+- Two unit cases and three component cases succeeded.
+- The production build succeeded under the repository base path.
+- Four Chromium browser cases succeeded, including same-origin loading, axe analysis, theme reload persistence, and 320 pixel overflow detection.
+- Manual browser inspection covered desktop hierarchy, mobile reflow, the settings dialog, dark theme selection, and native radio target behavior.
+- A repository search found no em dashes outside ignored generated and dependency paths.
+
+#### Lessons learned by the agent
+
+- A minimum width on the root element can create horizontal scrolling when a classic vertical scrollbar reduces the layout viewport. Future responsive checks should compare client and scroll widths at the smallest supported size.
+- A visually hidden native input must retain a reliable full-label hit target. Semantic markup alone does not guarantee that a browser automation pointer can activate the intended control surface.
+
+#### Lessons learned by the user
+
+- The project owner explicitly clarified that em dashes are unwanted in website text and source code and asked for that preference to be checked now or in Phase 7. The implementation now enforces it immediately and maps it forward.
+
+#### Related references
+
+- Phase plan: `implementation_plan.md`
+- Technical narrative: `development_docs/phase-02-design-system-shell/doc.md`
+- Product direction: `project_plan.md`
+
+#### Follow-up
+
+- Begin Phase 3 with the reliable timestamp-based timer engine.
+- Retain the no-em-dash guard and include it in the final comprehensive suite.
+- Optimize final icon and application asset geometry during Phase 6.
+
+### `cd5cbde`: Establish Phase 1 foundation and guardrails
+
+- **Date:** 2026-08-20 13:53 EDT
+- **Author:** Aman Ali with Codex collaboration
+- **Full commit:** `cd5cbdefde128a9e457bde0e7741982b6e7016d0`
+- **Change size:** Recorded in local Git history
 
 #### Purpose
 

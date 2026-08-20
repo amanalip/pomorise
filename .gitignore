@@ -51,6 +51,8 @@ tmp/
 
 # Ignore local Playwright browser state if a developer creates it for diagnostics.
 .playwright/
+# Ignore Playwright CLI snapshots and screenshots created during local visual diagnostics.
+.playwright-cli/
 # Ignore saved Playwright authentication state because it may contain reusable session secrets.
 playwright/.auth/
 
