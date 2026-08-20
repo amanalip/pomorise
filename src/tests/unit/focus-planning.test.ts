@@ -78,6 +78,16 @@ describe("focus planning", () => {
     // Keep the completed task readable while removing it from the current focus position.
     expect(completed.tasks[0]?.completed).toBe(true);
     expect(completed.activeTaskId).toBeNull();
+    // Add new work after completion to prove history does not consume active-plan capacity.
+    const next = reduceFocusPlan(completed, {
+      type: "ADD_TASK",
+      title: "Prepare summary",
+      estimatedSessions: 2,
+    });
+    // Retain the completed record while selecting the newly added unfinished task.
+    expect(next.tasks).toHaveLength(2);
+    expect(next.tasks[0]?.completed).toBe(true);
+    expect(next.activeTaskId).toBe(2);
   });
   // Close the focus-planning group after protecting its initial vertical slice.
 });

@@ -120,7 +120,11 @@ describe("App", () => {
     // Complete the current task and return to the calm optional empty state.
     await user.click(screen.getByRole("button", { name: "Mark complete" }));
     expect(screen.getByText("No task is selected. That is completely fine.")).toBeVisible();
-    expect(screen.getByText("Complete")).toBeVisible();
+    // Keep completed work in a dedicated, expandable audit trail.
+    expect(screen.getByText("1 completed")).toBeVisible();
+    await user.click(screen.getByText("Task history"));
+    expect(screen.getByRole("list", { name: "Completed task history" })).toBeVisible();
+    expect(screen.getByText("0 completed of 1 estimated focus session")).toBeVisible();
     // Keep the intention available because task completion is an independent planning action.
     expect(screen.getByRole("textbox", { name: "What will you move forward?" })).toHaveValue(
       "Shape the project brief",

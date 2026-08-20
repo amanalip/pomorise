@@ -201,7 +201,9 @@ export function App() {
     // Send validated form data through the pure planning boundary.
     updateFocusPlan({ type: "ADD_TASK", title: taskDraft, estimatedSessions: taskEstimate });
     // Clear the draft after a successful capacity-aware addition.
-    if (focusPlan.tasks.length < MAX_FOCUS_TASKS) setTaskDraft("");
+    if (focusPlan.tasks.filter((task) => !task.completed).length < MAX_FOCUS_TASKS) {
+      setTaskDraft("");
+    }
     // Close the add-task action after preserving the visitor's compact plan.
   }
 
@@ -211,6 +213,10 @@ export function App() {
     (task) => task.id === focusPlan.activeTaskId,
     // Close the current-task lookup after checking every planned task.
   );
+  // Keep actionable work separate from completed records so each has a clear purpose.
+  const pendingTasks = focusPlan.tasks.filter((task) => !task.completed);
+  // Preserve completed work as a local audit trail instead of removing it from the plan.
+  const completedTasks = focusPlan.tasks.filter((task) => task.completed);
   // Derive pending review items without hiding kept or converted history from state.
   const pendingDistractions = focusJourney.distractions.filter(
     // Present only thoughts that still need one explicit post-session choice.
@@ -932,7 +938,7 @@ export function App() {
             <form className="task-form" onSubmit={addTask}>
               {/* Reuse the accessible field primitive for the visitor's plain-text task wording. */}
               <Field
-                disabled={localDataState === "loading" || focusPlan.tasks.length >= MAX_FOCUS_TASKS}
+                disabled={localDataState === "loading" || pendingTasks.length >= MAX_FOCUS_TASKS}
                 id="new-focus-task"
                 label="Add a small task"
                 maxLength={100}
@@ -944,9 +950,7 @@ export function App() {
               <label className="task-estimate" htmlFor="task-estimate">
                 <span>Estimated sessions</span>
                 <select
-                  disabled={
-                    localDataState === "loading" || focusPlan.tasks.length >= MAX_FOCUS_TASKS
-                  }
+                  disabled={localDataState === "loading" || pendingTasks.length >= MAX_FOCUS_TASKS}
                   id="task-estimate"
                   onChange={(event) => setTaskEstimate(Number(event.currentTarget.value))}
                   value={taskEstimate}
@@ -968,7 +972,7 @@ export function App() {
                 disabled={
                   localDataState === "loading" ||
                   !taskDraft.trim() ||
-                  focusPlan.tasks.length >= MAX_FOCUS_TASKS
+                  pendingTasks.length >= MAX_FOCUS_TASKS
                 }
                 type="submit"
               >
@@ -976,21 +980,14 @@ export function App() {
               </Button>
             </form>
 
-            {/* Keep pending and completed work understandable without hiding either state. */}
-            {focusPlan.tasks.length > 0 && (
-              // Give the task collection a concise accessible name independent of its card heading.
-              <ul className="task-list" aria-label="Focus tasks">
-                {/* Render each visitor-created task as text with its available next action. */}
-                {focusPlan.tasks.map((task) => (
+            {/* Keep unfinished work immediately actionable above the separate history. */}
+            {pendingTasks.length > 0 && (
+              // Give the active collection a concise accessible name independent of its card heading.
+              <ul className="task-list" aria-label="Unfinished tasks">
+                {/* Render each unfinished task as text with its available next action. */}
+                {pendingTasks.map((task) => (
                   // Preserve task identity across selection and completion updates.
-                  <li
-                    className={
-                      task.completed
-                        ? "task-list__item task-list__item--complete"
-                        : "task-list__item"
-                    }
-                    key={task.id}
-                  >
+                  <li className="task-list__item" key={task.id}>
                     {/* Keep title and estimate together before the relevant action. */}
                     <span>
                       <strong>{task.title}</strong>
@@ -999,10 +996,8 @@ export function App() {
                         {task.estimatedSessions === 1 ? "session" : "sessions"}
                       </small>
                     </span>
-                    {/* Label completed work without presenting another unavailable control. */}
-                    {task.completed ? (
-                      <span className="badge">Complete</span>
-                    ) : task.id === focusPlan.activeTaskId ? (
+                    {/* Distinguish the current task from other selectable unfinished work. */}
+                    {task.id === focusPlan.activeTaskId ? (
                       <span className="badge">Current</span>
                     ) : (
                       <Button
@@ -1018,8 +1013,37 @@ export function App() {
             )}
             {/* Explain the active durable local boundary in direct user-facing language. */}
             <p className="field__hint">
-              Up to {MAX_FOCUS_TASKS} tasks. Saved privately in this browser.
+              Up to {MAX_FOCUS_TASKS} unfinished tasks. Saved privately in this browser.
             </p>
+            {/* Keep previous work available for review without crowding the active plan. */}
+            <details className="task-history">
+              {/* Summarize both the purpose and record count before the history is expanded. */}
+              <summary>
+                <span>Task history</span>
+                <span className="badge">{completedTasks.length} completed</span>
+              </summary>
+              {/* Explain the empty audit trail before any work has been completed. */}
+              {completedTasks.length === 0 ? (
+                <p className="muted-copy">Completed tasks will appear here.</p>
+              ) : (
+                // Give completed records their own semantic list for assistive navigation.
+                <ul className="task-list task-history__list" aria-label="Completed task history">
+                  {/* Preserve each completed task's wording, estimate, and credited sessions. */}
+                  {completedTasks.map((task) => (
+                    <li className="task-list__item task-list__item--complete" key={task.id}>
+                      <span>
+                        <strong>{task.title}</strong>
+                        <small>
+                          {task.completedSessions} completed of {task.estimatedSessions} estimated{" "}
+                          focus {task.estimatedSessions === 1 ? "session" : "sessions"}
+                        </small>
+                      </span>
+                      <span className="badge">Complete</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </details>
             {/* Keep deliberately retained distractions reachable after their review choice. */}
             {focusJourney.distractions.some((item) => item.resolution === "kept") && (
               // Group kept thoughts separately from actionable focus tasks.

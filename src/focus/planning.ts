@@ -76,7 +76,7 @@ export function reduceFocusPlan(state: FocusPlanState, action: FocusPlanAction):
         !Number.isInteger(action.estimatedSessions) ||
         action.estimatedSessions < 1 ||
         action.estimatedSessions > MAX_ESTIMATED_SESSIONS ||
-        state.tasks.length >= MAX_FOCUS_TASKS
+        state.tasks.filter((task) => !task.completed).length >= MAX_FOCUS_TASKS
       ) {
         return state;
       }

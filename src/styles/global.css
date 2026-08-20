@@ -1069,6 +1069,41 @@ img {
   /* Close the completed task wording after its non-color state indicator. */
 }
 
+/* Separate completed task records from the active planning controls above them. */
+.task-history {
+  /* Create a quiet boundary before the audit trail without adding another card. */
+  margin-top: var(--space-4);
+  /* Align the history disclosure with the task rows and supporting copy. */
+  padding-top: var(--space-4);
+  /* Use the existing theme-aware divider for consistent grouping. */
+  border-top: 1px solid var(--color-border);
+  /* Close the history container after establishing its visual boundary. */
+}
+
+/* Make the native history disclosure read like an intentional section heading. */
+.task-history summary {
+  /* Keep the heading and completed count on one balanced row. */
+  display: flex;
+  /* Align the native disclosure marker, label, and count comfortably. */
+  align-items: center;
+  /* Place the count at the opposite edge while preserving the native marker. */
+  justify-content: space-between;
+  /* Maintain readable separation when the card becomes narrow. */
+  gap: var(--space-3);
+  /* Signal the native disclosure interaction consistently. */
+  cursor: pointer;
+  /* Match subordinate card headings without competing with the main task title. */
+  font-weight: 750;
+  /* Close the summary treatment after preserving native disclosure behavior. */
+}
+
+/* Keep the completed audit list close to its disclosure heading. */
+.task-history__list {
+  /* Use a smaller separation than the primary form-to-list transition. */
+  margin-top: var(--space-3);
+  /* Close the history list adjustment after refining its local rhythm. */
+}
+
 /* Separate retained thoughts from actionable tasks without making another heavy card. */
 .kept-thoughts {
   margin-top: var(--space-5);
