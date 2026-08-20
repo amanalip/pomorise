@@ -3,8 +3,8 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 16, 2026 at 2:42:00 AM EDT |
-| Last updated | August 20, 2026 at 12:52:35 PM EDT |
-| ISO 8601 last updated | `2026-08-20T12:52:35-04:00` |
+| Last updated | August 16, 2026 at 2:50:30 AM EDT |
+| ISO 8601 last updated | `2026-08-16T02:50:30-04:00` |
 | Timezone | America/Toronto (UTC−04:00) |
 | Estimated reading time | 11 minutes |
 | Verification status | Fact-checked and sanity-checked against the implementation plan, documentation system, and linked primary references |
@@ -69,11 +69,11 @@ Each document type has a separate job:
 | `project_plan.md` | What product are we building and why? | Product-wide direction |
 | `implementation_plan.md` | In which order will we build it, and what gates must pass? | Seven-phase execution plan |
 | `development_docs/<identifier>/doc.md` | What was built in this step, how was it designed, and how does it work? | Deep technical and educational narrative |
-| `testreports/final-release-verification/test_report.md` | What evidence shows the complete release works or fails? | Detailed final validation with logs and screenshots |
+| `testreports/<identifier>/test_report.md` | What evidence shows the step works or fails? | Detailed validation evidence with logs and screenshots |
 | `changelog.md` | What did each commit change in the repository history? | Detailed chronological summary |
 | `meta_thinking.md` | Which user requests and confirmed decisions shaped the work? | Conversation and decision history |
 
-Development documents record focused checks during Phases 1 through 6. The single Phase 7 final report links all relevant development narratives and preserves complete release evidence.
+The development document and test report should share the same identifier whenever they describe the same unit of work. This creates a direct pair between explanation and evidence.
 
 ## Required path
 
@@ -91,10 +91,12 @@ development_docs/step-timer-state-machine/doc.md
 development_docs/run-2026-08-16-storage-migration/doc.md
 ```
 
-Focused-check results stay inside the development document. The comprehensive evidence uses one final path:
+The corresponding evidence should use the same identifier:
 
 ```text
-testreports/final-release-verification/test_report.md
+testreports/phase-01-foundation/test_report.md
+testreports/step-timer-state-machine/test_report.md
+testreports/run-2026-08-16-storage-migration/test_report.md
 ```
 
 ## Identifier rules
@@ -143,7 +145,7 @@ Every real `doc.md` must include, when relevant:
 - Performance choices and measurable budgets where applicable.
 - Dependencies introduced, retained, rejected, or removed.
 - The line-by-line comment strategy and companion annotations used for non-commentable files.
-- Focused-check strategy, commands, outcomes, and a link to the final report after Phase 7.
+- Testing strategy and a direct link to the paired test report.
 - Screenshots or diagrams when they materially improve understanding.
 - Known limitations, technical debt, deferred work, and revisit triggers.
 - A guided reading path and exercises for beginners.
@@ -196,14 +198,16 @@ When one development step spans multiple commits, list them chronologically and 
 
 ## Relationship to test reports
 
-The development document explains the intended system and records focused checks performed near the change. The single final report records comprehensive integrated and deployed evidence.
+The development document explains the intended system. The test report records observed evidence.
+
+Each pair must cross-link:
 
 ```text
 development_docs/<identifier>/doc.md
-testreports/final-release-verification/test_report.md
+testreports/<identifier>/test_report.md
 ```
 
-Before Phase 7, a development document may state that a focused check passed, but it must not claim that the whole release passed. After the final suite, each phase document links to the final report. If testing exposes a defect, changed assumption, or design correction, update the affected narrative and final report without erasing earlier reasoning or failure history.
+The development document must not claim that behavior passed unless the paired report supports that result. If a test exposes a defect, changed assumption, or design correction, update both documents without erasing the earlier reasoning or failure history.
 
 ## Document lifecycle
 
@@ -211,7 +215,7 @@ Before Phase 7, a development document may state that a focused check passed, bu
 2. Record the requirement, starting point, assumptions, constraints, and intended design.
 3. Update the architecture, decisions, files, and flows as implementation becomes concrete.
 4. Keep the document synchronized with code and line-by-line comments.
-5. Record focused checks and link the final test report after Phase 7 creates it.
+5. Link the paired test report when testing begins.
 6. Incorporate defects, corrections, retests, and revised assumptions.
 7. Complete the documentation checklist.
 8. Add the document to this navigation table.
@@ -226,14 +230,14 @@ Development documents are public repository artifacts.
 - Do not paste private environment output without reviewing it.
 - Redact sensitive material before committing and explain the redaction.
 - Describe security and privacy boundaries without publishing exploitable secrets.
-- Link final test screenshots from the release report rather than duplicating large evidence files unnecessarily.
+- Link local screenshots from the paired test report rather than duplicating large evidence files unnecessarily.
 
 ## Fact-check and sanity-check record
 
 | Verification information | Value |
 | --- | --- |
-| Last verified | August 20, 2026 at 12:52:35 PM EDT |
-| Verification scope | Required development-document path, focused phase checks, final-suite traceability, design decisions, assumption tracking, architecture views, beginner learning needs, accessibility references, metadata, and document navigation |
+| Last verified | August 16, 2026 at 2:50:30 AM EDT |
+| Verification scope | Required development-document path, explanation-and-evidence pairing, design decisions, assumption tracking, architecture views, beginner learning needs, accessibility references, metadata, and document navigation |
 | Primary sources | C4, ADR, arc42, Diátaxis, W3C, and the confirmed Pomorise project documents linked below |
 | Result | The structure provides a coherent beginner-focused narrative without duplicating the separate roles of source code, test evidence, changelog history, or product planning |
 
@@ -242,7 +246,7 @@ The structure passed these sanity checks:
 - **Purpose fit:** It explains what changed, why, and how rather than repeating a diff.
 - **Learning fit:** It introduces prerequisites, examples, reading order, mistakes, exercises, and next learning.
 - **Architecture fit:** It covers context, building blocks, runtime, data, state, deployment, decisions, risks, and glossary terms.
-- **Evidence fit:** It records focused results without claiming full-release success and links the comprehensive final report after Phase 7.
+- **Evidence fit:** It links the matching test report and does not claim success without observed evidence.
 - **Traceability fit:** Requirements connect to decisions, files, commits, tests, and reports.
 - **Privacy fit:** Only synthetic examples and reviewed public-safe artifacts are allowed.
 
@@ -271,7 +275,7 @@ The structure passed these sanity checks:
 ## Maintenance rules
 
 1. Add every real development document to the navigation table.
-2. Record focused phase checks in each development document and link the one final report after it exists.
+2. Use the same identifier as the paired test report whenever both describe the same work.
 3. Preserve decisions, rejected alternatives, assumptions, and changed reasoning.
 4. Keep file and commit references accurate.
 5. Update the document alongside the implementation rather than reconstructing it later from memory.
@@ -279,4 +283,4 @@ The structure passed these sanity checks:
 7. Include human-readable and ISO timestamps, timezone, and estimated reading time.
 8. Keep the table of contents, glossary, further reading, and verification record current.
 9. Keep the writing detailed, engaging, beginner-friendly, and free of em dashes.
-10. Do not close a phase until its focused checks agree with the code, and do not call the release complete until the final report agrees with every relevant development document.
+10. Do not call work complete until the development document and paired test report agree with the code and evidence.

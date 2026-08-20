@@ -5,8 +5,8 @@ Rise one session at a time.
 | Document information | Value |
 | --- | --- |
 | Created | August 15, 2026 at 10:14:39 PM EDT |
-| Last updated | August 20, 2026 at 12:52:35 PM EDT |
-| ISO 8601 last updated | `2026-08-20T12:52:35-04:00` |
+| Last updated | August 16, 2026 at 2:50:30 AM EDT |
+| ISO 8601 last updated | `2026-08-16T02:50:30-04:00` |
 | Timezone | America/Toronto (UTC−04:00) |
 | Estimated reading time | 3 minutes |
 | Verification status | Fact-checked and sanity-checked against the linked primary documentation |
@@ -29,7 +29,7 @@ The goal is simple: make it easier to choose one meaningful task, give it your f
 
 Pomorise is ready for the first implementation phase when the project owner requests it. The first complete public release is named **Pomorise 1.0: First Light**. The approved foundation is React, TypeScript, and Vite, producing a static website for [GitHub Pages](https://docs.github.com/en/pages). The product direction lives in [`project_plan.md`](project_plan.md), while the seven-phase development sequence and mandatory line-by-line commenting standard live in [`implementation_plan.md`](implementation_plan.md).
 
-Phases 1 through 6 will use focused checks recorded in their development documents. Phase 7 will run one comprehensive suite and produce the detailed final report with commands, raw logs, screenshots, failures, retests, and an evidence-based conclusion. The reporting policy lives in [`testreports/README.md`](testreports/README.md).
+Every meaningful phase, run, or independently verified step will produce a detailed report with commands, raw logs, screenshots, failures, retests, and an evidence-based conclusion. Reports are indexed in [`testreports/README.md`](testreports/README.md).
 
 Every meaningful development unit will also produce a beginner-focused technical narrative explaining its design method, system design, decisions, assumptions, architecture, files, flows, tradeoffs, and learning path. These documents are indexed in [`development_docs/README.md`](development_docs/README.md).
 
@@ -48,8 +48,7 @@ Browser storage is device-local and can be cleared or evicted, so Pomorise will 
 - **Local-first:** A product approach that keeps personal information on the user’s device by default.
 - **Pomodoro:** A focus interval followed by a restorative break, traditionally using 25-minute focus sessions.
 - **Progressive web app (PWA):** A website enhanced with installable and offline-capable behavior.
-- **Final test report:** The comprehensive evidence record produced during Phase 7.
-- **Focused phase check:** A small verification selected for behavior changed in the current phase.
+- **Test report:** The permanent evidence record for one implementation phase, run, or verified step.
 - **Vite:** The development and build tool selected to produce Pomorise’s static website files.
 
 ## Further reading
