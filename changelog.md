@@ -3,8 +3,8 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 15, 2026 at 10:36 PM EDT |
-| Last updated | August 20, 2026 at 2:10:50 PM EDT |
-| ISO 8601 last updated | `2026-08-20T14:10:50-04:00` |
+| Last updated | August 20, 2026 at 4:50:39 PM EDT |
+| ISO 8601 last updated | `2026-08-20T16:50:39-04:00` |
 | Timezone | America/Toronto (UTC−04:00) |
 | Estimated reading time | 42 minutes |
 | Verification status | Commit facts checked against local Git history; technical claims checked against linked primary documentation |
@@ -17,6 +17,7 @@ The newest commit should be added at the top of the **Commit history** section.
 
 - [Entry template](#entry-template)
 - [Commit history](#commit-history)
+  - [Pending: Establish Phase 3 reliable timer engine](#pending-establish-phase-3-reliable-timer-engine)
   - [Pending: Establish Phase 2 design system and application shell](#pending-establish-phase-2-design-system-and-application-shell)
   - [`cd5cbde`: Establish Phase 1 foundation and guardrails](#cd5cbde-establish-phase-1-foundation-and-guardrails)
   - [Pending: Consolidate verification into one final suite](#pending-consolidate-verification-into-one-final-suite)
@@ -98,6 +99,60 @@ Describe what a visitor or maintainer will notice. Write “None” when the cha
 ```
 
 ## Commit history
+
+### `Pending`: Establish Phase 3 reliable timer engine
+
+- **Status:** Prepared for the next owner commit
+- **Prepared:** 2026-08-20 16:50 EDT
+- **Author:** Aman Ali with Codex collaboration
+- **Full commit:** Assigned after the commit is created
+
+#### Purpose
+
+Turn Pomorise's static timer surface into a deterministic, recoverable, accessible timer whose elapsed seconds remain tied to real timestamps rather than callback frequency.
+
+#### Changes
+
+- Added focus, short-break, and long-break modes with 25, 5, and 15 minute defaults.
+- Added idle, running, paused, completed, skipped, and overtime states with explicit legal events and rejected invalid transitions.
+- Derived remaining and overtime values from timestamps while using a 250-millisecond interval only to refresh the visible display.
+- Added meaningful-transition local persistence, Zod restoration checks, refresh recovery, immediate visibility refresh, and device-clock discontinuity choices.
+- Added reset, start, pause, resume, add-time, skip, overtime, and next-session controls with restrained accessible announcements.
+- Added 1-to-180-minute custom durations, optional automatic transitions, locally synthesized sound, and contextual notification permission.
+- Added deterministic timer and storage tests plus a real-browser exact-second and refresh-recovery case.
+- Derived tightly cropped header assets from the approved logos and restated the tagline at readable interface size after the owner identified its small presentation.
+- Added the Phase 3 technical narrative and synchronized the implementation status.
+
+#### User-visible impact
+
+Visitors can now run and recover real focus and break timers, customize durations, add time, pause, skip, continue in overtime, choose manual or automatic flow, and opt into local completion alerts. The Pomorise tagline is clearer in desktop and mobile headers.
+
+#### Decisions and tradeoffs
+
+- Timestamp subtraction is authoritative; interval callbacks only request paint updates.
+- Manual advancement remains the default because exact automatic flow remained an open product choice.
+- Custom duration bounds are centralized at 1 to 180 whole minutes so they can be revised without changing transition logic.
+- Active timer state uses small versioned localStorage data in Phase 3; structured session history remains Phase 5 work.
+- A monotonic comparison detects clock changes while ordinary browser throttling catches up from the wall-clock target.
+
+#### Risks and limitations
+
+- Browser sound and notifications remain subject to browser and operating-system policies.
+- A closed browser cannot guarantee completion delivery.
+- Session history and reflection records are not created until later phases.
+- Device sleep and simulated clock changes remain mapped to the comprehensive Phase 7 manual suite.
+
+#### Validation
+
+- Fourteen Vitest unit and component tests passed.
+- Five Chromium browser cases passed, including the exact one-second assertion, reload recovery, privacy boundary, axe scan, and 320-pixel layout.
+- Strict TypeScript and the Vite production build passed.
+- Desktop and mobile header presentation were inspected in real-browser screenshots.
+
+#### Follow-up
+
+- Begin Phase 4 with the complete focus loop on the stable timer boundary.
+- Repeat the full timer matrix and manual sleep and clock-change cases in Phase 7.
 
 ### `Pending`: Establish Phase 2 design system and application shell
 

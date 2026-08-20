@@ -75,6 +75,28 @@ test("persists an explicit theme locally", async ({ page }) => {
   // Close the theme persistence browser case after reload and visible-state verification.
 });
 
+// Verify one real second advances exactly one countdown second and recovery survives a reload.
+test("keeps timestamp-accurate time and restores a running session after refresh", async ({
+  page,
+}) => {
+  // Begin from a clean production-style page with the familiar 25-minute focus default.
+  await page.goto("./");
+  // Start through the same accessible control used by keyboard and touch visitors.
+  await page.getByRole("button", { name: "Start focus" }).click();
+  // Wait slightly beyond one real second so the four-hertz paint loop observes the boundary.
+  await page.waitForTimeout(1_150);
+  // Prove the display lost one second, not four seconds for four 250-millisecond refreshes.
+  await expect(page.locator(".timer-display__time")).toHaveText("24:59");
+  // Reload the complete React application while the target timestamp remains active.
+  await page.reload();
+  // Verify restoration returns the legal running controls rather than resetting the attempt.
+  await expect(page.getByRole("button", { name: "Pause" })).toBeVisible();
+  // Pause immediately and require the restored clock to remain near the real elapsed duration.
+  await page.getByRole("button", { name: "Pause" }).click();
+  await expect(page.locator(".timer-display__time")).toHaveText(/24:5[7-9]/);
+  // Close the timestamp and refresh-recovery test after validating visible browser behavior.
+});
+
 // Verify the compact shell reflows without page-level horizontal scrolling.
 test("reflows at the supported mobile width", async ({ page }) => {
   // Use the smallest planned viewport width and a common compact phone height.

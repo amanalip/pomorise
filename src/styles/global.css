@@ -224,7 +224,7 @@ img {
   /* Use a three-column grid so identity and settings stay anchored around navigation. */
   display: grid;
   /* Let the logo use natural width while navigation expands between edge controls. */
-  grid-template-columns: minmax(10rem, 15rem) 1fr auto;
+  grid-template-columns: minmax(13rem, 19rem) 1fr auto;
   /* Align every header control vertically despite differing content height. */
   align-items: center;
   /* Separate logo, navigation, and settings without wasting compact width. */
@@ -240,17 +240,36 @@ img {
   /* Close the header layout after anchoring its three primary regions. */
 }
 
-/* Crop the oversized approved source artwork into a useful header wordmark. */
+/* Anchor a readable tagline over the tiny text baked into the approved raster source. */
+.app-header__brand {
+  position: relative;
+  /* Give the complete mark, name, and tagline enough width to remain recognizable. */
+  width: clamp(13rem, 23vw, 18rem);
+}
+
+/* Present the tightly derived approved header artwork without distortion. */
 .app-header__logo {
-  /* Use a compact header width while preserving the approved logo's proportions. */
-  width: clamp(9.5rem, 18vw, 13rem);
-  /* Crop the large blank source canvas around the centered approved artwork. */
-  aspect-ratio: 3.5 / 1;
-  /* Preserve the logo artwork while hiding only its baked-in surrounding canvas. */
-  object-fit: cover;
-  /* Center the approved mark and wordmark inside the cropped header frame. */
-  object-position: center;
-  /* Close the header identity rule after adapting the source PNG non-destructively. */
+  width: 100%;
+  /* Preserve the derived crop's natural proportions without stretching or clipping text. */
+  height: auto;
+  /* Remove the small inline-image baseline gap from the header grid. */
+  display: block;
+  /* Close the header identity rule after preserving every part of the approved logo. */
+}
+
+/* Restate the raster's tagline at a reliably legible interface size. */
+.app-header__tagline {
+  position: absolute;
+  inset-inline: 29% 0;
+  bottom: 4%;
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-size: clamp(0.55rem, 0.82vw, 0.72rem);
+  font-weight: 650;
+  letter-spacing: 0.1em;
+  line-height: 1.25;
+  text-align: center;
+  white-space: nowrap;
 }
 
 /* Center the desktop destinations inside the available header space. */
@@ -620,6 +639,28 @@ img {
   /* Close the timer-specific status alignment after its one local override. */
 }
 
+/* Give a detected device-clock change a clearly bounded recovery surface. */
+.clock-recovery {
+  display: grid;
+  gap: var(--space-3);
+  background: var(--color-surface-muted);
+  border: 1px solid var(--color-warning);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+}
+
+/* Keep recovery explanations readable without competing with the clock. */
+.clock-recovery span {
+  color: var(--color-ink-muted);
+}
+
+/* Allow recovery choices to wrap safely under zoom and on compact screens. */
+.clock-recovery__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
 /* Stack supporting surfaces while preserving the main timer's visual quiet. */
 .supporting-panels {
   /* Use grid so support cards share one predictable vertical rhythm. */
@@ -934,6 +975,72 @@ img {
   /* Close the dialog action layout after defining alignment and spacing. */
 }
 
+/* Group duration fields under one native legend without browser-specific spacing. */
+.settings-group {
+  border: 0;
+  margin: 0 0 var(--space-5);
+  padding: 0;
+}
+
+/* Treat the duration legend as an essential settings label. */
+.settings-group legend {
+  padding: 0 0 var(--space-2);
+  font-weight: 750;
+}
+
+/* Keep three duration choices compact while allowing the dialog to reflow. */
+.duration-settings {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+/* Keep every duration label visibly connected to its number input. */
+.duration-settings label {
+  display: grid;
+  gap: var(--space-2);
+  color: var(--color-ink-muted);
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+/* Present optional timer preferences as full-width native checkbox targets. */
+.setting-toggle {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+  cursor: pointer;
+}
+
+/* Preserve a generous native checkbox target without replacing its semantics. */
+.setting-toggle input {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin: 0.15rem 0 0;
+  accent-color: var(--color-accent-strong);
+}
+
+/* Stack each preference name and its contextual consequence. */
+.setting-toggle span {
+  display: grid;
+  gap: var(--space-1);
+}
+
+/* Keep optional setting explanations readable and visually secondary. */
+.setting-toggle small {
+  color: var(--color-ink-muted);
+  line-height: 1.4;
+}
+
+/* Give native checkboxes the same high-contrast keyboard focus treatment. */
+.setting-toggle input:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
 /* Reflow the shell into one content column before either region becomes cramped. */
 @media (max-width: 58rem) {
   /* Keep the header simple when the full desktop navigation no longer fits comfortably. */
@@ -998,10 +1105,16 @@ img {
   }
 
   /* Keep the approved identity readable without crowding settings. */
-  .app-header__logo {
-    /* Limit the compact wordmark to the width available beside settings. */
-    width: 9.5rem;
+  .app-header__brand {
+    /* Use all safe width beside settings so the tagline remains as legible as mobile allows. */
+    width: 12rem;
     /* Close the narrow identity adjustment after setting its stable width. */
+  }
+
+  /* Reduce tracking before shrinking the tagline itself on the narrowest header. */
+  .app-header__tagline {
+    font-size: 0.55rem;
+    letter-spacing: 0.04em;
   }
 
   /* Reduce the settings action's horizontal space while preserving target height. */
@@ -1062,6 +1175,11 @@ img {
     /* Stack options into one column instead of compressing label text. */
     grid-template-columns: 1fr;
     /* Close the narrow segmented adjustment after protecting readable targets. */
+  }
+
+  /* Stack duration choices before their labels become cramped. */
+  .duration-settings {
+    grid-template-columns: 1fr;
   }
   /* Close the mobile breakpoint after protecting narrow controls and surfaces. */
 }

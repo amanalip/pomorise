@@ -192,7 +192,7 @@ Build the core promise as a deterministic state machine before tasks or progress
 
 Phase 3 is implementation-complete when the timestamp-based countdown, recovery paths, accessible controls, and corresponding automated coverage are ready for the comprehensive Phase 7 suite.
 
-- [ ] **Phase 3 completion:** Implementation gate satisfied; acceptance criteria are queued for the Phase 7 comprehensive suite.
+- [x] **Phase 3 completion:** Implementation gate satisfied on August 20, 2026; acceptance criteria are queued for the Phase 7 comprehensive suite and mapped in `development_docs/phase-03-reliable-timer-engine/doc.md`.
 
 ## Phase 4: Complete focus loop
 

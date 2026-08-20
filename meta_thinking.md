@@ -481,7 +481,7 @@ These are the firm foundations beneath Pomorise:
 - **Document metadata:** Every Markdown document requires dated human-readable timestamps, timezone, and estimated reading time, plus ISO 8601 timestamps where exact values are known
 - **Development documentation:** Every meaningful implementation phase, run, step, or commit requires an in-depth beginner-focused narrative under `development_docs/`
 - **Explanation and evidence pairing:** Phase and step development documents keep individual identifiers and cross-link to the shared comprehensive final report
-- **Current implementation state:** Phases 1 and 2 are implementation-ready; Phase 3 is the next eligible phase
+- **Current implementation state:** Phases 1 through 3 are implementation-ready; Phase 4 is the next eligible phase
 
 ## Open decisions
 

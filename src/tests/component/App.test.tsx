@@ -45,17 +45,20 @@ describe("App", () => {
     // Close the branded shell test after checking identity, purpose, field, and empty state.
   });
 
-  // Verify the shell-only primary action reports its implementation boundary politely.
-  it("explains the timer boundary without pretending to run a session", async () => {
+  // Verify the primary action starts a real timestamp-based session with legal controls.
+  it("starts and pauses a focus session through accessible timer controls", async () => {
     // Create a realistic interaction controller that waits for full browser event sequences.
     const user = userEvent.setup();
     // Render the shell before activating the future timer action.
     renderApp();
-    // Activate the only available timer action through its accessible button name.
+    // Activate the idle timer through its accessible action name.
     await user.click(screen.getByRole("button", { name: "Start focus" }));
-    // Protect the honest Phase 3 handoff inside the polite status region.
-    expect(screen.getByRole("status")).toHaveTextContent("Timer controls arrive in Phase 3");
-    // Close the implementation-boundary test after proving feedback is visible and truthful.
+    // Protect the meaningful live announcement without exposing second-by-second ticks.
+    expect(screen.getByRole("status")).toHaveTextContent("Focus session started");
+    expect(screen.getByRole("button", { name: "Pause" })).toBeEnabled();
+    expect(screen.getByRole("button", { name: "Add 1 minute" })).toBeEnabled();
+    await user.click(screen.getByRole("button", { name: "Pause" }));
+    expect(screen.getByRole("button", { name: "Resume" })).toBeEnabled();
   });
 
   // Verify explicit theme choices update the palette, approved logo, and local preference.
