@@ -13,7 +13,7 @@
 
 Phase 5 is implementation-ready. Pomorise now opens a versioned IndexedDB database, validates records at the storage boundary, restores durable planning and journey state into the existing reducers, and saves coherent snapshots in local transactions. Settings includes a dedicated Data & privacy destination with local counts, JSON backup, session CSV, import preview, storage-protection request, diagnostics, exact-scope deletion controls, and a preference-only reset.
 
-The final implementation slice added a real version-one to version-two task migration and cross-engine browser cases for migration, page-instance restart, malformed and valid import, history-only deletion, focus-data deletion, preference reset, and declined persistent storage. Firefox exposed a queued-save race that could restore a task after deletion. The application now increments a persistence epoch before higher-priority storage mutations, preventing an older delayed snapshot from starting after import or deletion.
+The final implementation slice added a real version-one to version-two task migration and cross-engine browser cases for migration, page-instance restart, malformed and valid import, history-only deletion, focus-data deletion, preference reset, and declined persistent storage. Firefox exposed a queued-save race that could restore a task after deletion. The application now increments a persistence epoch before higher-priority storage mutations, preventing an older delayed snapshot from starting after import or deletion. The first comprehensive browser run also showed that very fast typing could occur before startup hydration and then be overwritten. Structured planning inputs now remain briefly disabled until hydration completes, making the readiness boundary visible to both visitors and automation.
 
 ## User-visible design correction
 
@@ -61,6 +61,7 @@ These are targeted development checks, not the final Phase 5 acceptance claim.
 - Formatting, strict TypeScript, and ESLint passed after the completed data-control slice.
 - Ten production-path storage cases passed across Chromium and Firefox.
 - The first cross-engine deletion run failed in Firefox because an older queued save could race with deletion. A persistence epoch invalidation boundary corrected the product defect, and the complete ten-case rerun passed.
+- The first comprehensive 34-case run failed one Chromium import case because startup hydration overwrote an immediately entered intention. Planning controls now wait for hydration, and the focused Chromium and Firefox retest passed.
 - A WebKit launch was attempted but this local CachyOS host lacks Ubuntu compatibility libraries that require administrator installation. The Phase 7 report retains that limitation without implying Safari coverage.
 
 ## Remaining release work

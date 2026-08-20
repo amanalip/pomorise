@@ -486,7 +486,7 @@ export function App() {
               label="What will you move forward?"
               // Offer a realistic prompt without inserting saved or synthetic personal data.
               placeholder="For example, outline the project brief"
-              disabled={timer.state.phase !== "idle"}
+              disabled={timer.state.phase !== "idle" || localDataState === "loading"}
               maxLength={120}
               onChange={(event) =>
                 updateFocusPlan({ type: "SET_INTENTION", intention: event.currentTarget.value })
@@ -919,7 +919,7 @@ export function App() {
             <form className="task-form" onSubmit={addTask}>
               {/* Reuse the accessible field primitive for the visitor's plain-text task wording. */}
               <Field
-                disabled={focusPlan.tasks.length >= MAX_FOCUS_TASKS}
+                disabled={localDataState === "loading" || focusPlan.tasks.length >= MAX_FOCUS_TASKS}
                 id="new-focus-task"
                 label="Add a small task"
                 maxLength={100}
@@ -931,7 +931,9 @@ export function App() {
               <label className="task-estimate" htmlFor="task-estimate">
                 <span>Estimated sessions</span>
                 <select
-                  disabled={focusPlan.tasks.length >= MAX_FOCUS_TASKS}
+                  disabled={
+                    localDataState === "loading" || focusPlan.tasks.length >= MAX_FOCUS_TASKS
+                  }
                   id="task-estimate"
                   onChange={(event) => setTaskEstimate(Number(event.currentTarget.value))}
                   value={taskEstimate}
@@ -950,7 +952,11 @@ export function App() {
               </label>
               {/* Add the draft only while the intentionally small task list has room. */}
               <Button
-                disabled={!taskDraft.trim() || focusPlan.tasks.length >= MAX_FOCUS_TASKS}
+                disabled={
+                  localDataState === "loading" ||
+                  !taskDraft.trim() ||
+                  focusPlan.tasks.length >= MAX_FOCUS_TASKS
+                }
                 type="submit"
               >
                 Add task

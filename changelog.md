@@ -121,6 +121,7 @@ Close the remaining Phase 5 implementation gap, fix issues exposed by cross-brow
 - Added exact-scope preference reset while preserving focus data.
 - Added production-browser coverage for migration, restart persistence, safe import, derived restoration, deletion scopes, declined persistent storage, and first-screen action visibility.
 - Prevented delayed workspace saves from racing with import and deletion through a synchronous persistence epoch.
+- Prevented startup hydration from overwriting immediately entered planning text by keeping structured inputs disabled until local loading completes.
 - Improved desktop and mobile first-screen hierarchy so the timer action remains visible at release viewports.
 - Removed the non-actionable offline-ready toast that obscured core controls while preserving offline and update guidance.
 - Expanded the Pages workflow to gate deployment on formatting, linting, unit/component tests, and Chromium/Firefox browser tests.
