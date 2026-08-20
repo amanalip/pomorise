@@ -3,8 +3,8 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 16, 2026 at 2:18 AM EDT |
-| Last updated | August 20, 2026 at 1:21:33 PM EDT |
-| ISO 8601 last updated | `2026-08-20T13:21:33-04:00` |
+| Last updated | August 20, 2026 at 1:45:43 PM EDT |
+| ISO 8601 last updated | `2026-08-20T13:45:43-04:00` |
 | Timezone | America/Toronto (UTC−04:00) |
 | Estimated reading time | 29 minutes |
 | Verification status | Fact-checked and sanity-checked against the linked primary documentation and the confirmed project plan |
@@ -123,7 +123,7 @@ Create the smallest trustworthy project foundation before feature code begins. T
 
 Phase 1 is implementation-complete when the scaffold, documented commands, Pomorise shell, quality configuration, and GitHub Pages build path are ready for the comprehensive Phase 7 suite.
 
-- [ ] **Phase 1 completion:** Implementation gate satisfied; acceptance criteria are queued for the Phase 7 comprehensive suite.
+- [x] **Phase 1 completion:** Implementation gate satisfied on August 20, 2026; acceptance criteria are queued for the Phase 7 comprehensive suite and mapped in `development_docs/phase-01-foundation/doc.md`.
 
 ## Phase 2: Design system and application shell
 

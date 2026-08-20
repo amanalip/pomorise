@@ -3,8 +3,8 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 15, 2026 at 10:36 PM EDT |
-| Last updated | August 20, 2026 at 1:21:33 PM EDT |
-| ISO 8601 last updated | `2026-08-20T13:21:33-04:00` |
+| Last updated | August 20, 2026 at 1:45:43 PM EDT |
+| ISO 8601 last updated | `2026-08-20T13:45:43-04:00` |
 | Timezone | America/Toronto (UTC−04:00) |
 | Estimated reading time | 42 minutes |
 | Verification status | Commit facts checked against local Git history; technical claims checked against linked primary documentation |
@@ -17,6 +17,7 @@ The newest commit should be added at the top of the **Commit history** section.
 
 - [Entry template](#entry-template)
 - [Commit history](#commit-history)
+  - [Pending: Establish Phase 1 foundation and guardrails](#pending-establish-phase-1-foundation-and-guardrails)
   - [Pending: Consolidate verification into one final suite](#pending-consolidate-verification-into-one-final-suite)
   - [Pending: Establish beginner-focused development documentation](#pending-establish-beginner-focused-development-documentation)
   - [`00c4ec9`: Establish screenshot-backed test reporting](#00c4ec9-establish-screenshot-backed-test-reporting)
@@ -96,6 +97,82 @@ Describe what a visitor or maintainer will notice. Write “None” when the cha
 ```
 
 ## Commit history
+
+### `Pending`: Establish Phase 1 foundation and guardrails
+
+- **Status:** Prepared for the next commit
+- **Prepared:** 2026-08-20 13:45 EDT
+- **Author:** Aman Ali with Codex collaboration
+- **Full commit:** Assigned after the commit is created
+- **Expected files:** Application scaffold, quality configuration, tests, workflow annotations, dependency and quality reviews, development narrative, and synchronized project documentation
+
+#### Purpose
+
+Turn the approved documentation-only direction into the smallest trustworthy application foundation that later Pomorise features can build upon.
+
+#### Decision context
+
+The project owner explicitly requested that Phase 1 begin and added a requirement to ignore unnecessary local files so they are not uploaded. The existing seven-phase plan already fixed React, TypeScript, Vite, GitHub Pages, strict quality tools, local-only runtime behavior, exact dependencies, and line-by-line beginner comments.
+
+#### Changes
+
+- Added exact runtime and development dependencies with a generated npm lockfile and compatible license review.
+- Added strict TypeScript, typed ESLint, scoped Prettier, Vitest, Testing Library, user-event, Playwright, and axe configuration.
+- Added reproducible development, formatting, lint, type, unit, component, browser, build, and preview commands.
+- Added a minimal semantic Pomorise React shell using the approved light and dark logo assets and local CSS.
+- Added unit, component, browser-origin, and automated accessibility specifications.
+- Reserved clear source boundaries for components, timer logic, local data, schemas, styles, assets, and test layers.
+- Configured Vite for the `/pomorise/` GitHub Pages path while preserving the existing guarded deployment workflow.
+- Added `.gitignore` coverage for dependencies, builds, generated test artifacts, local environment variants, logs, caches, editor state, and operating-system noise.
+- Added package and TypeScript companion annotations, dependency review, browser targets, and performance budgets.
+- Added the complete Phase 1 development narrative and synchronized project status documents.
+
+#### User-visible impact
+
+Visitors can see a deliberately minimal branded foundation page and reveal a short Phase 1 status message. It is not the final application shell or timer.
+
+#### Decisions and tradeoffs
+
+- Installed the complete confirmed direct toolset at exact versions but deferred Dexie, Zod, and PWA activation to their owning phases.
+- Preserved the existing GitHub Pages workflow instead of replacing a compatible deployment boundary.
+- Scoped Prettier to application and Phase 1 technical files so implementation does not rewrite long-form project history mechanically.
+- Began Playwright with Chromium while documenting the cross-browser and manual matrix for later comprehensive verification.
+
+#### Risks and limitations
+
+- The approved source logos are large and need measured delivery review before release.
+- npm currently reports a transitive `glob` deprecation warning even though the dependency audit reports zero known vulnerabilities.
+- The public Pages site, additional browsers, assistive technologies, and release performance profile remain Phase 7 evidence work.
+
+#### Validation
+
+- `npm ci` recreated 508 packages from the committed lockfile.
+- Formatting, ESLint with zero warnings, and strict TypeScript diagnostics completed.
+- Two Vitest files with three total assertions completed.
+- Vite created `dist` with a 60.30 kB gzip JavaScript bundle and fingerprinted local assets.
+- Two Chromium diagnostics completed against `/pomorise/`, finding no unexpected origin and no serious or critical axe violation.
+- `git status --ignored` confirmed `node_modules`, `dist`, Playwright reports, and browser results remain untracked.
+
+#### Lessons learned by the agent
+
+- Test runner discovery must be explicit when multiple frameworks share one source tree. Vitest's include rules now prevent it from importing Playwright fixtures.
+- Localhost browser tests may require explicit workspace permission even when the application server itself starts successfully.
+
+#### Lessons learned by the user
+
+- The project owner emphasized that unnecessary generated and machine-local files must not be uploaded.
+
+#### Related references
+
+- `implementation_plan.md`: Phase 1 scope and exit gate
+- `development_docs/phase-01-foundation/doc.md`: beginner-focused system explanation and acceptance mapping
+- `dependency_review.md`: exact versions, roles, and licenses
+- `quality_baseline.md`: browser and performance release targets
+
+#### Follow-up
+
+- Begin Phase 2 only after accepting this implementation-ready closeout.
+- Re-audit the transitive warning and measure image delivery before the release gate.
 
 ### `Pending`: Consolidate verification into one final suite
 

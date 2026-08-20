@@ -1,0 +1,71 @@
+# Keep installed packages local because npm can reproduce them from the lockfile.
+node_modules/
+
+# Keep generated production files out of Git because GitHub Actions rebuilds them.
+dist/
+
+# Ignore unit-test coverage output while preserving intentionally authored test evidence.
+coverage/
+
+# Ignore Playwright's generated HTML report, screenshots, traces, and transient results.
+playwright-report/
+# Ignore Playwright's transient per-test screenshots, traces, videos, and attachments.
+test-results/
+# Ignore Playwright's optional mergeable blob reporter output.
+blob-report/
+
+# Ignore local environment variants because they may contain machine-specific or secret values.
+.env
+# Ignore every named environment variant for the same privacy boundary.
+.env.*
+
+# Allow a deliberately safe example environment file if one is added later.
+!.env.example
+
+# Ignore debug logs created by supported JavaScript package managers and Node processes.
+npm-debug.log*
+# Ignore Yarn's local diagnostic logs if a contributor invokes Yarn accidentally.
+yarn-debug.log*
+# Ignore Yarn's local error logs for the same package-manager-noise boundary.
+yarn-error.log*
+# Ignore pnpm's local diagnostic logs if a contributor invokes pnpm accidentally.
+pnpm-debug.log*
+# Ignore other generic local logs so machine diagnostics do not enter normal commits.
+*.log
+
+# Allow curated logs under the final comprehensive test-report directory in Phase 7.
+!testreports/final-comprehensive-suite/logs/*.log
+
+# Ignore temporary caches created by Vite, ESLint, TypeScript, and local tooling.
+.vite/
+# Ignore ESLint's optional local result cache.
+.eslintcache
+# Ignore TypeScript's incremental metadata if a future command enables it locally.
+*.tsbuildinfo
+# Ignore conventional tool caches that can always be regenerated.
+.cache/
+# Ignore conventional hidden temporary working files.
+.tmp/
+# Ignore conventional visible temporary working files.
+tmp/
+
+# Ignore local Playwright browser state if a developer creates it for diagnostics.
+.playwright/
+# Ignore saved Playwright authentication state because it may contain reusable session secrets.
+playwright/.auth/
+
+# Ignore editor settings and swap files that do not define shared project behavior.
+.idea/
+# Ignore Visual Studio Code workspace personalization until shared settings are explicitly approved.
+.vscode/
+# Ignore Vim's active swap files.
+*.swp
+# Ignore Vim's secondary swap files.
+*.swo
+# Ignore common editor backup files ending in a tilde.
+*~
+
+# Ignore operating-system metadata that has no application meaning.
+.DS_Store
+# Ignore Windows Explorer thumbnail metadata.
+Thumbs.db

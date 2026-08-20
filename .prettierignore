@@ -1,0 +1,19 @@
+# Skip installed dependencies because the repository does not own their formatting.
+node_modules/
+
+# Skip generated build and test artifacts because their producing tools own their structure.
+dist/
+# Skip generated coverage output because Vitest owns its report formatting.
+coverage/
+# Skip Playwright's generated interactive HTML report.
+playwright-report/
+# Skip Playwright's transient screenshots, traces, videos, and attachments.
+test-results/
+# Skip Playwright's optional mergeable blob reporter output.
+blob-report/
+
+# Preserve approved binary assets because Prettier cannot meaningfully format images.
+assets/
+
+# Preserve generated dependency resolution because npm alone owns the lockfile format.
+package-lock.json

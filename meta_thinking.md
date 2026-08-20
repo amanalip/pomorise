@@ -3,8 +3,8 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 15, 2026 at 10:36 PM EDT |
-| Last updated | August 20, 2026 at 1:21:33 PM EDT |
-| ISO 8601 last updated | `2026-08-20T13:21:33-04:00` |
+| Last updated | August 20, 2026 at 1:45:43 PM EDT |
+| ISO 8601 last updated | `2026-08-20T13:45:43-04:00` |
 | Timezone | America/Toronto (UTC−04:00) |
 | Estimated reading time | 24 minutes |
 | Verification status | Fact-checked and sanity-checked against the primary sources in **Further reading** |
@@ -38,6 +38,7 @@ This is Pomorise's shared memory. It captures the conversations, requests, decis
   - [Screenshot-backed test reporting required](#2026-08-16-screenshot-backed-test-reporting-required)
   - [Beginner-focused development documents required](#2026-08-16-beginner-focused-development-documents-required)
   - [Final testing consolidated](#2026-08-20-final-testing-consolidated)
+  - [Phase 1 implementation completed](#2026-08-20-phase-1-implementation-completed)
 - [Confirmed decisions](#confirmed-decisions)
 - [Open decisions](#open-decisions)
 - [Documentation verification standard](#documentation-verification-standard)
@@ -412,6 +413,23 @@ The project owner proposed replacing a complete test run at the end of every pha
 
 Phases 1 through 6 now close on implementation readiness, authored test coverage, documented manual checks, and lightweight diagnostics only when needed to unblock work. Phase 7 runs the complete static, unit, component, browser, accessibility, privacy, storage, offline, responsive, performance, build, deployment, and public-site verification suite. One report at `testreports/final-comprehensive-suite/test_report.md` preserves the integrated evidence. Earlier discussion entries remain unchanged as history, but this decision supersedes their per-phase report policy.
 
+### 2026-08-20: Phase 1 implementation completed
+
+| Conversation details | Value |
+| --- | --- |
+| Conversation date | August 20, 2026 |
+| Conversation timestamp | Exact send time was not retained |
+| Entry recorded | August 20, 2026 at 1:45:43 PM EDT |
+| ISO 8601 entry timestamp | `2026-08-20T13:45:43-04:00` |
+| Timezone | America/Toronto (UTC−04:00) |
+| Entry reading time | 1 minute |
+
+The project owner requested that Phase 1 begin and specifically asked for unnecessary local files to be covered appropriately by `.gitignore`.
+
+Phase 1 created the exact React, TypeScript, and Vite dependency foundation, strict quality commands, source boundaries, the minimal approved-logo shell, test layers, a runtime network-boundary check, browser and performance targets, dependency and JSON annotations, and an expanded line-by-line-commented Pages workflow. The ignore policy excludes dependencies, builds, generated browser artifacts, local environment variants, logs, caches, editor state, and operating-system noise while retaining the lockfile and future curated final-suite evidence.
+
+Targeted diagnostics corrected Vitest discovering a Playwright specification. Clean installation, formatting, linting, strict types, three Vitest assertions, production building, and two Chromium checks then completed. The browser checks required explicit localhost permission because the managed workspace sandbox rejected loopback connections; the unchanged test passed after permission. These diagnostics establish implementation readiness but do not replace the Phase 7 comprehensive report.
+
 ## Confirmed decisions
 
 These are the firm foundations beneath Pomorise:
@@ -445,6 +463,7 @@ These are the firm foundations beneath Pomorise:
 - **Document metadata:** Every Markdown document requires dated human-readable timestamps, timezone, and estimated reading time, plus ISO 8601 timestamps where exact values are known
 - **Development documentation:** Every meaningful implementation phase, run, step, or commit requires an in-depth beginner-focused narrative under `development_docs/`
 - **Explanation and evidence pairing:** Phase and step development documents keep individual identifiers and cross-link to the shared comprehensive final report
+- **Current implementation state:** Phase 1 foundation and guardrails are implementation-ready; Phase 2 is the next eligible phase
 
 ## Open decisions
 

@@ -3,8 +3,8 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 15, 2026 at 11:12 PM EDT |
-| Last updated | August 20, 2026 at 1:21:33 PM EDT |
-| ISO 8601 last updated | `2026-08-20T13:21:33-04:00` |
+| Last updated | August 20, 2026 at 1:45:43 PM EDT |
+| ISO 8601 last updated | `2026-08-20T13:45:43-04:00` |
 | Timezone | America/Toronto (UTC−04:00) |
 | Estimated reading time | 34 minutes |
 
@@ -657,6 +657,8 @@ Development will proceed through **seven phases**. The detailed tasks, validatio
 ### 1. Foundation and guardrails
 
 Create the reproducible React, TypeScript, and Vite scaffold, quality commands, test layers, Pages base path, source structure, and code-commenting review rule.
+
+**Status:** Implementation-ready as of August 20, 2026. Exact dependencies, strict quality configuration, the minimal branded proof, source boundaries, test harnesses, network guard, ignore policy, and Phase 7 acceptance mapping are documented in [`development_docs/phase-01-foundation/doc.md`](development_docs/phase-01-foundation/doc.md).
 
 ### 2. Design system and application shell
 

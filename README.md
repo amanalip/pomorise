@@ -5,8 +5,8 @@ Rise one session at a time.
 | Document information | Value |
 | --- | --- |
 | Created | August 15, 2026 at 10:14:39 PM EDT |
-| Last updated | August 20, 2026 at 1:21:33 PM EDT |
-| ISO 8601 last updated | `2026-08-20T13:21:33-04:00` |
+| Last updated | August 20, 2026 at 1:45:43 PM EDT |
+| ISO 8601 last updated | `2026-08-20T13:45:43-04:00` |
 | Timezone | America/Toronto (UTC−04:00) |
 | Estimated reading time | 3 minutes |
 | Verification status | Fact-checked and sanity-checked against the linked primary documentation |
@@ -15,6 +15,7 @@ Rise one session at a time.
 
 - [Overview](#overview)
 - [Project status](#project-status)
+- [Development commands](#development-commands)
 - [Privacy direction](#privacy-direction)
 - [Glossary](#glossary)
 - [Further reading](#further-reading)
@@ -27,11 +28,28 @@ The goal is simple: make it easier to choose one meaningful task, give it your f
 
 ## Project status
 
-Pomorise is ready for the first implementation phase when the project owner requests it. The first complete public release is named **Pomorise 1.0: First Light**. The approved foundation is React, TypeScript, and Vite, producing a static website for [GitHub Pages](https://docs.github.com/en/pages). The product direction lives in [`project_plan.md`](project_plan.md), while the seven-phase development sequence and mandatory line-by-line commenting standard live in [`implementation_plan.md`](implementation_plan.md).
+Phase 1 is implementation-ready, and Pomorise now has a reproducible React, TypeScript, and Vite foundation for [GitHub Pages](https://docs.github.com/en/pages). The visible page is intentionally a minimal proof while Phase 2 owns the final design system and application shell. The first complete public release is named **Pomorise 1.0: First Light**. The product direction lives in [`project_plan.md`](project_plan.md), the seven-phase sequence lives in [`implementation_plan.md`](implementation_plan.md), and the Phase 1 technical narrative lives in [`development_docs/phase-01-foundation/doc.md`](development_docs/phase-01-foundation/doc.md).
 
 After all implementation phases are ready, one comprehensive Phase 7 report will preserve commands, raw logs, screenshots, failures, retests, and the evidence-based release conclusion. It is indexed in [`testreports/README.md`](testreports/README.md).
 
 Every meaningful development unit will also produce a beginner-focused technical narrative explaining its design method, system design, decisions, assumptions, architecture, files, flows, tradeoffs, and learning path. These documents are indexed in [`development_docs/README.md`](development_docs/README.md).
+
+## Development commands
+
+Use Node.js 24 and the committed npm lockfile.
+
+| Command | Purpose |
+| --- | --- |
+| `npm ci` | Recreate the exact reviewed dependency graph |
+| `npm run dev` | Start the local Vite development server |
+| `npm run format:check` | Detect formatting drift in Phase 1-owned files |
+| `npm run lint` | Run strict static analysis with zero warnings allowed |
+| `npm run typecheck` | Run TypeScript without generating files |
+| `npm run test:unit` | Run deterministic unit tests |
+| `npm run test:component` | Run React behavior tests |
+| `npm run test:browser` | Build and run Playwright against `/pomorise/` |
+| `npm run build` | Type-check and generate the static `dist` directory |
+| `npm run preview` | Serve the generated production site locally |
 
 ## Privacy direction
 

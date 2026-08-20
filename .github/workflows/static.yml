@@ -1,75 +1,139 @@
+# Give the automation a clear name in the GitHub Actions interface.
 name: Build and deploy Pomorise to Pages
 
+# Define the repository events that are allowed to start deployment automation.
 on:
+  # Build and deploy every accepted change to the public release branch.
   push:
+    # Limit automatic publication to main so feature branches cannot overwrite the public site.
     branches: ["main"]
+  # Allow an authorized maintainer to rerun the same reproducible workflow manually.
   workflow_dispatch:
 
+# Grant only the repository and GitHub Pages capabilities required by this workflow.
 permissions:
+  # Read source, assets, manifest files, and the committed dependency lockfile.
   contents: read
+  # Permit the deploy job to publish the built static artifact to GitHub Pages.
   pages: write
+  # Permit GitHub's Pages deployment action to exchange its short-lived identity token.
   id-token: write
 
+# Prevent two deployments from racing while allowing an active publication to finish safely.
 concurrency:
+  # Put every Pomorise Pages run into one deployment queue.
   group: "pages"
+  # Preserve an active deployment rather than cancelling it midway through publication.
   cancel-in-progress: false
 
+# Define the isolated build and deployment responsibilities for the static site.
 jobs:
+  # Build the repository into the only artifact that the deployment job may publish.
   build:
+    # Label the job clearly in GitHub's build interface and evidence logs.
     name: Build website
+    # Use GitHub's maintained Linux environment for deterministic Node and npm commands.
     runs-on: ubuntu-latest
+    # Publish readiness so the deploy job remains skipped until an application scaffold exists.
     outputs:
+      # Forward only the explicit readiness result from the guard step.
       app_ready: ${{ steps.app.outputs.ready }}
+    # Run source checkout, readiness validation, exact installation, build, and artifact upload.
     steps:
+      # Retrieve the exact commit that triggered this workflow.
       - name: Checkout repository
+        # Use GitHub's official checkout action at the reviewed major version.
         uses: actions/checkout@v6
 
+      # Preserve the pre-scaffold guard so documentation-only history remains buildable.
       - name: Check whether the application is ready
+        # Give the guard an identifier so its readiness output can control later steps.
         id: app
+        # Use Bash because the guard relies on its explicit conditional syntax.
         shell: bash
+        # Check only for the two files needed by a reproducible npm application install.
         run: |
+          # Treat the scaffold as ready only when both the manifest and generated lockfile exist.
           if [[ -f package.json && -f package-lock.json ]]; then
+            # Expose the positive result through GitHub's supported step-output channel.
             echo "ready=true" >> "$GITHUB_OUTPUT"
+            # Leave a human-readable explanation in the automation log.
             echo "The application is ready to build."
+          # Handle documentation-only commits that predate the application scaffold.
           else
+            # Expose the negative result so install, build, upload, and deploy stay skipped.
             echo "ready=false" >> "$GITHUB_OUTPUT"
+            # Explain the safe skip in the automation log for future maintainers.
             echo "Deployment skipped until the application scaffold and lockfile are committed."
+          # Close the readiness condition after both repository states have explicit behavior.
           fi
 
+      # Install the same confirmed Node.js major version used by local Phase 1 development.
       - name: Set up Node.js
+        # Skip runtime setup when the scaffold guard reports a documentation-only revision.
         if: steps.app.outputs.ready == 'true'
+        # Use GitHub's official Node setup action at the reviewed major version.
         uses: actions/setup-node@v6
+        # Configure the exact runtime family and npm's safe dependency download cache.
         with:
+          # Match the Node 24 engine declared in package.json and reviewed dependencies.
           node-version: 24
+          # Cache downloaded npm archives without caching or reusing node_modules itself.
           cache: npm
 
+      # Prepare GitHub Pages metadata before packaging the generated static site.
       - name: Configure GitHub Pages
+        # Skip Pages setup when there is no reproducible application scaffold.
         if: steps.app.outputs.ready == 'true'
+        # Use GitHub's official Pages configuration action at the reviewed major version.
         uses: actions/configure-pages@v5
 
+      # Recreate the exact reviewed dependency graph from package-lock.json.
       - name: Install dependencies
+        # Skip installation when the scaffold guard reports that required files are absent.
         if: steps.app.outputs.ready == 'true'
+        # Use the same clean-install command documented for local comprehensive verification.
         run: npm ci
 
+      # Require strict types and create the Vite production directory through the local script.
       - name: Build production website
+        # Skip the build when a reproducible installation was not possible.
         if: steps.app.outputs.ready == 'true'
+        # Use the same production command developers run before inspecting dist locally.
         run: npm run build
 
+      # Upload only generated public files, never source, local records, or repository metadata.
       - name: Upload production website
+        # Skip artifact creation when no application build was attempted.
         if: steps.app.outputs.ready == 'true'
+        # Use GitHub's official Pages artifact action at the reviewed major version.
         uses: actions/upload-pages-artifact@v4
+        # Restrict publication input to Vite's generated static output directory.
         with:
+          # Point the action at the one reviewed deployment boundary.
           path: ./dist
 
+  # Publish the reviewed build artifact only after its producing job succeeds.
   deploy:
+    # Label the publication job clearly in GitHub's deployment and evidence views.
     name: Deploy website
+    # Suppress deployment for historical documentation-only revisions.
     if: needs.build.outputs.app_ready == 'true'
+    # Require the complete build job and its artifact before publication begins.
     needs: build
+    # Use GitHub's maintained Linux runner for the official Pages deploy action.
     runs-on: ubuntu-latest
+    # Attach the publication to GitHub's protected Pages deployment environment.
     environment:
+      # Use the conventional protected environment managed by GitHub Pages.
       name: github-pages
+      # Surface the official address returned by the deployment action.
       url: ${{ steps.deployment.outputs.page_url }}
+    # Run the single authorized Pages publication step.
     steps:
+      # Send the previously uploaded dist artifact to GitHub Pages.
       - name: Deploy to GitHub Pages
+        # Identify the step so its returned public URL can populate the environment record.
         id: deployment
+        # Use GitHub's official Pages deployment action at the reviewed major version.
         uses: actions/deploy-pages@v5
