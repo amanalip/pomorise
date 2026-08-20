@@ -3,205 +3,206 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 16, 2026 at 2:28 AM EDT |
-| Last updated | August 16, 2026 at 2:50:30 AM EDT |
-| ISO 8601 last updated | `2026-08-16T02:50:30-04:00` |
+| Last updated | August 20, 2026 at 12:52:35 PM EDT |
+| ISO 8601 last updated | `2026-08-20T12:52:35-04:00` |
 | Timezone | America/Toronto (UTC−04:00) |
 | Estimated reading time | 8 minutes |
 | Verification status | Fact-checked and sanity-checked against the implementation plan and linked primary testing documentation |
 
-This directory is the permanent evidence library for Pomorise testing. Every meaningful phase, test run, or independently verified step receives its own folder, detailed Markdown report, raw logs, screenshots, and supporting artifacts.
+This directory will contain one comprehensive, permanent test report for Pomorise 1.0: First Light. Focused checks still run during Phases 1 through 6, but their concise results live in the relevant development documents. Phase 7 runs the complete suite and preserves its detailed logs, screenshots, failures, retests, and conclusion here.
 
 ## Table of contents
 
 - [Report navigation](#report-navigation)
+- [Two-level verification model](#two-level-verification-model)
 - [Required directory structure](#required-directory-structure)
-- [Identifier rules](#identifier-rules)
-- [When a report is required](#when-a-report-is-required)
-- [Required evidence](#required-evidence)
-- [Paired development documents](#paired-development-documents)
+- [When the final report is created](#when-the-final-report-is-created)
+- [Required final evidence](#required-final-evidence)
+- [Development-document traceability](#development-document-traceability)
 - [Screenshot rules](#screenshot-rules)
 - [Logging rules](#logging-rules)
-- [Report lifecycle](#report-lifecycle)
-- [Navigation maintenance](#navigation-maintenance)
+- [Final report lifecycle](#final-report-lifecycle)
 - [Privacy and security](#privacy-and-security)
+- [Fact-check and sanity-check record](#fact-check-and-sanity-check-record)
 - [Glossary](#glossary)
 - [Further reading](#further-reading)
 - [Maintenance rules](#maintenance-rules)
 
 ## Report navigation
 
-No implementation test run has been completed yet. Add every future report to the top of this table when its directory is created.
+No implementation or final release test has run yet.
 
-| Date | Identifier | Scope | Environment | Result | Screenshots | Development narrative | Report |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| Not run | `_template` | Reusable report structure only | Not applicable | Template | Instructions only | [`development_docs/_template/doc.md`](../development_docs/_template/doc.md) | [`_template/test_report.md`](_template/test_report.md) |
+| Date | Identifier | Scope | Result | Screenshots | Development narratives | Report |
+| --- | --- | --- | --- | --- | --- | --- |
+| Not run | `_template` | Reusable final-suite structure | Template | Instructions only | Link during Phase 7 | [`_template/test_report.md`](_template/test_report.md) |
+| Not run | `final-release-verification` | Complete First Light suite | Not run | Not captured | Not linked yet | Create during Phase 7 |
 
-Result values are `Passed`, `Failed`, `Blocked`, `Incomplete`, or `Template`. A report that includes any unexplained failure, missing required screenshot, missing command log, or unchecked closeout item cannot be marked `Passed`.
+The final result must be `Passed`, `Failed`, `Blocked`, or `Incomplete`. Any unexplained failure, missing required evidence, or unchecked final closeout item prevents a `Passed` result.
+
+## Two-level verification model
+
+Pomorise uses two levels of testing:
+
+| Level | Timing | Purpose | Record |
+| --- | --- | --- | --- |
+| Focused phase checks | During Phases 1 through 6 | Catch defects close to the code that introduced them | Concise command, outcome, failure, and correction notes in the related `development_docs/<identifier>/doc.md` |
+| Comprehensive final suite | During Phase 7 | Test the integrated application and deployed release as one complete product | Detailed `testreports/final-release-verification/test_report.md` with logs, screenshots, artifacts, and conclusion |
+
+Focused checks are not optional. They are deliberately smaller than the final suite. A phase cannot close with a known unresolved failure merely because the comprehensive suite is scheduled later.
 
 ## Required directory structure
 
-Every report must use the structure requested for the project:
+The final evidence must use this stable structure:
 
 ```text
-testreports/<phase_or_run_or_step>/test_report.md
-```
-
-Supporting evidence stays inside that same report directory:
-
-```text
-testreports/<phase_or_run_or_step>/
+testreports/final-release-verification/
 |-- test_report.md
 |-- screenshots/
 |   |-- 001-initial-state.png
-|   |-- 002-tested-result.png
-|   `-- 003-runner-summary.png
+|   |-- 002-complete-focus-loop.png
+|   `-- 003-test-runner-summary.png
 |-- logs/
-|   |-- 001-install.txt
-|   |-- 002-tests.txt
-|   `-- 003-build.txt
+|   |-- 001-clean-install.txt
+|   |-- 002-complete-suite.txt
+|   `-- 003-production-build.txt
 `-- artifacts/
     |-- results.json
     `-- trace.zip
 ```
 
-Only create evidence subdirectories that the run uses. The report itself and `screenshots/` evidence are mandatory for every real report. Command-only runs use a terminal or test-reporter screenshot.
+Only create artifact types that the final run produces. The report, screenshots, and applicable raw command logs are mandatory.
 
-## Identifier rules
+## When the final report is created
 
-The `<phase_or_run_or_step>` directory name must be lowercase, stable, readable, and safe in links.
+Create the final report only during Phase 7, after Phases 1 through 6 have completed their focused checks and development documentation.
 
-Use one of these patterns:
+The final report covers:
 
-- `phase-01-foundation`
-- `phase-03-timer-engine`
-- `run-2026-08-16-timer-recovery`
-- `step-light-theme-keyboard-review`
-- `step-import-validation-retest`
+- Clean dependency installation.
+- Formatting, linting, and strict TypeScript checks.
+- The complete unit and component suites.
+- Integration and regression behavior.
+- End-to-end focus-loop behavior in real browsers.
+- Timer accuracy, recovery, pause, reset, skip, completion, and overtime behavior.
+- Local persistence, migration, import, export, and deletion.
+- Keyboard, screen-reader, zoom, contrast, reduced-motion, and automated accessibility checks.
+- Light, dark, mobile, tablet, and desktop presentation.
+- Privacy, runtime network activity, browser storage, and cache boundaries.
+- Offline loading, application updates, and service-worker behavior.
+- Performance and production bundle budgets.
+- Production build and GitHub Pages repository-path handling.
+- Smoke verification on the deployed GitHub Pages URL.
+- Line-by-line code-comment coverage and companion annotations.
 
-Do not use spaces, personal names, temporary numbers without meaning, or result words such as `passed` in the directory name. A later retest stays in the original report when it addresses the same run. A genuinely separate run receives a new identifier.
+## Required final evidence
 
-## When a report is required
+The completed report must contain:
 
-Create a report for:
+- Human-readable creation and update timestamps, ISO 8601 timestamps, timezone, and estimated reading time.
+- Exact test start and finish times and measured duration.
+- Full commit hash, branch, build mode, URL, operating system, browsers, viewport sizes, locale, timezone, and tool versions.
+- Synthetic test-data description.
+- Every command with start time, end time, duration, exit code, expected result, actual result, and raw log path.
+- Every manual procedure in reproducible order.
+- Individual case identifiers, expected results, actual results, status, and evidence.
+- Pass, fail, blocked, skipped, and flaky totals.
+- Failure symptoms, reproduction steps, likely cause, correction or deferral decision, and retest history.
+- Accessibility, responsive, privacy, network, storage, offline, performance, deployment, and comment-coverage findings.
+- Embedded screenshots with descriptive captions and a screenshot index.
+- Links to retained logs, traces, videos, coverage, and machine-readable results.
+- Known limitations, residual risks, deferred checks, and follow-up actions.
+- A checked final release closeout list.
+- An evidence-based conclusion.
 
-- Every one of the seven implementation phases.
-- Every continuous-integration or release-candidate run used as completion evidence.
-- Every focused browser, accessibility, privacy, storage, migration, offline, responsive, or performance run that informs a decision.
-- Every failure investigation that changes implementation or acceptance status.
-- Every retest that cannot be understood clearly inside the original report.
-- Every deployed-site verification run.
+## Development-document traceability
 
-Tiny exploratory commands that do not support a decision may be recorded inside the active report rather than receiving a separate directory. When uncertain, preserve the evidence.
+The final report must link the development documents that explain all seven phases. Each development document must link forward to the final report after it exists.
 
-## Required evidence
+This relationship separates two questions:
 
-Every real `test_report.md` must contain:
+- Development documents explain what changed, why it changed, how it was designed, and which focused checks ran.
+- The final report proves how the integrated release behaved at the end.
 
-- Human-readable document timestamps, matching ISO 8601 timestamps, timezone, and estimated reading time.
-- Exact test start and finish timestamps with dates, timezone, and measured duration.
-- Scope, exclusions, requirements, and acceptance criteria.
-- Commit hash, branch, build mode, URL, operating system, browser, viewport, locale, timezone, and relevant dependency versions.
-- Test-data description proving that only synthetic data was used.
-- Every command with its start time, end time, duration, exit code, and raw log path.
-- Every manual action in reproducible order.
-- Individual case IDs, expected results, actual results, status, evidence, and notes.
-- Complete pass, fail, blocked, skipped, and flaky totals.
-- Failure symptoms, reproduction steps, suspected cause, decision, fix, and retest history.
-- Accessibility, responsive, privacy, network, storage, offline, performance, and comment-coverage results when relevant.
-- Embedded screenshots with captions and an index.
-- Links to logs, traces, videos, coverage, JSON, HTML, and other artifacts that were retained.
-- Known limitations, residual risks, deferred tests, and follow-up actions.
-- The mandatory phase closeout checklist when the report closes a phase.
-- An evidence-based final conclusion.
-
-The reusable structure lives in [`_template/test_report.md`](_template/test_report.md).
-
-## Paired development documents
-
-The test report answers whether the work behaved correctly. The development document explains what was built, why it was designed that way, how the system works, and what a beginner should understand.
-
-Use the same stable identifier for both:
-
-```text
-development_docs/<identifier>/doc.md
-testreports/<identifier>/test_report.md
-```
-
-Each real test report must link its paired development document. Each development document must link back to the report. When testing changes a design decision or invalidates an assumption, update both records without removing the original failure or reasoning history.
+The documents no longer require matching identifiers because many phase narratives lead into one final release report.
 
 ## Screenshot rules
 
-Screenshots are mandatory in every real report.
+Screenshots are mandatory in the final report.
 
-1. Store screenshots under the report’s own `screenshots/` directory.
-2. Use ordered filenames such as `001-light-theme-desktop.png`.
-3. Capture the relevant interface or terminal surface only.
+1. Store them under `testreports/final-release-verification/screenshots/`.
+2. Use ordered, descriptive filenames.
+3. Capture only the relevant application, browser, terminal, or test-reporter surface.
 4. Use synthetic tasks, notes, history, and settings.
-5. Inspect every image for personal data, tokens, private tabs, notifications, usernames, unrelated applications, and sensitive paths.
-6. Record the capture timestamp, case ID, viewport, theme, expected state, observed state, and result in the screenshot index.
-7. Embed every screenshot with meaningful alternative text and a relative path.
-8. Capture both the successful state and any important failure state.
-9. For responsive or themed behavior, capture each representative viewport or theme needed to prove the claim.
-10. For command-only testing, capture readable terminal or test-reporter output after the run completes.
+5. Inspect every image for tokens, personal data, notifications, unrelated tabs, usernames, and sensitive paths.
+6. Record the capture timestamp, case identifier, viewport, theme, expected state, observed state, and result.
+7. Embed every retained screenshot with meaningful alternative text.
+8. Capture successful primary states and diagnostically important failures.
+9. Include representative light, dark, mobile, desktop, offline, and deployed states.
+10. Include a readable command or test-runner summary.
 
-A screenshot is supporting evidence, not proof by itself. The report must also retain the command output, assertions, and observed behavior that explain what the image means.
+A screenshot supports a conclusion but does not replace assertions, logs, or manual observations.
 
 ## Logging rules
 
-Every test command and manual check must be traceable.
+- Preserve raw output for every final-suite command that affects the conclusion.
+- Record commands exactly without exposing secrets.
+- Preserve nonzero exit codes even when a later retry passes.
+- Add retest entries instead of erasing earlier failures.
+- Preserve machine-readable results when the tools provide them.
+- Explain warnings, skipped cases, blocked cases, timeouts, retries, and flaky results.
+- Keep focused phase results concise inside their development documents rather than creating extra report directories.
 
-- Preserve raw command output under `logs/` when the command affects a reported conclusion.
-- Record commands exactly without including secrets.
-- Record nonzero exit codes even when a later retry passes.
-- Append a retest entry instead of rewriting the original failure out of history.
-- Preserve machine-readable reporter output under `artifacts/` when available.
-- Link each log and artifact from the command table or test-case table.
-- Explain warnings rather than treating a zero exit code as proof that every warning is acceptable.
-- Mark skipped, blocked, timed-out, retried, and flaky cases explicitly.
-- Record manual observations in the same detail as automated output.
+## Final report lifecycle
 
-## Report lifecycle
-
-1. Copy `_template/` to the new stable identifier before testing starts.
-2. Fill the scope, environment, acceptance criteria, and planned cases.
-3. Create `screenshots/`, `logs/`, and `artifacts/` as evidence appears.
-4. Record results during the run rather than reconstructing them from memory.
-5. Preserve failures and add retests below them.
-6. Complete the closeout checklist.
-7. Set the final status from the evidence.
-8. Add or update the navigation table in this README.
-9. Confirm that the paired development document reflects the tested implementation and links back to the report.
-10. Synchronize the development-document index, project plan, implementation plan, discussion record, and changelog.
-
-## Navigation maintenance
-
-The newest report appears directly below the template row. Each navigation row must link to its report and state whether screenshots are included. Never delete a failed report merely because a later run passes. Link the later run from the failure report and the failure report from the later run.
-
-If reports become numerous, add phase subsections below the main table without removing the master chronological navigation.
+1. Finish focused checks and development documents for Phases 1 through 6.
+2. Copy `_template/` to `final-release-verification/` at the start of Phase 7 verification.
+3. Fill the environment, scope, acceptance criteria, and planned cases.
+4. Run the complete suite and record evidence as it appears.
+5. Preserve failures and append retests.
+6. Deploy only the approved production artifact.
+7. Run deployed-site smoke checks and add their evidence.
+8. Complete the final closeout checklist and conclusion.
+9. Add the report link to this index and every relevant development document.
+10. Synchronize the plans, discussion record, changelog, and release notes.
 
 ## Privacy and security
 
-Test evidence is committed to the repository, so it must be safe for public viewing.
+All evidence is intended for a public repository.
 
 - Use synthetic data only.
 - Never record passwords, tokens, cookies, authorization headers, private keys, email addresses, real tasks, personal reflections, or browser-profile data.
-- Avoid screenshots of the full desktop when the application or terminal window is enough.
-- Remove or redact sensitive material before committing, while explaining the redaction in the report.
-- Do not upload reports, logs, traces, or screenshots to an external reporting service.
+- Do not upload evidence to an external reporting service.
+- Capture the smallest relevant surface.
+- Redact sensitive material before committing and explain any redaction.
 - Keep application diagnostics local and user-controlled.
+
+## Fact-check and sanity-check record
+
+| Verification information | Value |
+| --- | --- |
+| Last verified | August 20, 2026 at 12:52:35 PM EDT |
+| Verification scope | Seven-phase verification model, focused checks, final-suite coverage, report path, evidence, screenshots, privacy, and development-document traceability |
+| Primary sources | Confirmed Pomorise plans plus Playwright and Vitest documentation linked below |
+| Result | One final report reduces repeated documentation while focused phase checks preserve early defect detection |
+
+The model passed these sanity checks:
+
+- **Timing fit:** Small checks run near each change, and complete integration testing runs once at the end.
+- **Evidence fit:** The final report retains detailed logs and screenshots without duplicating them seven times.
+- **Debugging fit:** Phase documents retain enough focused results to locate where a defect first appeared.
+- **Privacy fit:** Only synthetic and reviewed evidence enters the repository.
+- **Traceability fit:** The final report links back to all phase narratives.
 
 ## Glossary
 
 - **Artifact:** A retained machine-generated output such as a JSON result, browser trace, coverage file, or HTML report.
-- **Closeout checklist:** The evidence list that must be completed before a phase is marked finished.
-- **Development document:** The deep beginner-focused narrative explaining the design, architecture, decisions, assumptions, files, and learning path behind the tested work.
-- **Flaky test:** A test that produces different results without an intentional code or environment change.
-- **Raw log:** The unabridged output captured from a test or build command.
-- **Residual risk:** A known risk that remains after current controls and testing.
-- **Screenshot index:** The table connecting every image to its test case, environment, expected state, and observed state.
-- **Synthetic data:** Invented test information that contains no real visitor or contributor data.
-- **Test report:** The permanent evidence record for a phase, run, or independently verified step.
-- **Trace:** A browser-test artifact that can preserve actions, timing, network information, console output, and page state for debugging.
+- **Comprehensive final suite:** The complete Phase 7 verification of the integrated local and deployed application.
+- **Focused phase check:** A small test or review selected because it directly protects behavior changed in the current phase.
+- **Regression test:** A repeated test that protects behavior known to work before a later change.
+- **Residual risk:** A known uncertainty remaining after current controls and testing.
+- **Synthetic data:** Invented test information containing no real visitor or contributor data.
+- **Test report:** The permanent evidence record for the comprehensive final suite.
+- **Trace:** A browser artifact that preserves actions and diagnostic state for debugging.
 
 ## Further reading
 
@@ -215,12 +216,11 @@ Test evidence is committed to the repository, so it must be safe for public view
 
 ## Maintenance rules
 
-1. Add every real report to the navigation table.
-2. Keep report identifiers stable after they are committed.
-3. Preserve failed and superseded evidence for history.
-4. Require screenshots and raw logs for every real report.
-5. Use only synthetic data and inspect every retained artifact for sensitive information.
-6. Keep paths relative so reports render on GitHub Pages and in repository viewers.
-7. Update the timestamp, reading time, table of contents, glossary, and references whenever this README changes substantially.
-8. Keep the writing precise, detailed, beginner-friendly, and free of em dashes.
-9. Pair every real report with the matching development document identifier and maintain links in both directions.
+1. Keep one detailed release report unless the project owner explicitly changes this policy.
+2. Keep focused phase results in development documents.
+3. Never defer a known phase failure solely because final testing happens later.
+4. Preserve failed and superseded evidence in the final report.
+5. Use synthetic data and inspect every retained artifact.
+6. Keep paths relative so documents render in repository viewers.
+7. Update timestamps, reading time, table of contents, glossary, references, and verification records after substantial changes.
+8. Keep the writing detailed, engaging, beginner-friendly, and free of em dashes.

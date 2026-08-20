@@ -3,13 +3,13 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 16, 2026 at 2:18 AM EDT |
-| Last updated | August 16, 2026 at 2:50:30 AM EDT |
-| ISO 8601 last updated | `2026-08-16T02:50:30-04:00` |
+| Last updated | August 20, 2026 at 12:52:35 PM EDT |
+| ISO 8601 last updated | `2026-08-20T12:52:35-04:00` |
 | Timezone | America/Toronto (UTC−04:00) |
 | Estimated reading time | 29 minutes |
 | Verification status | Fact-checked and sanity-checked against the linked primary documentation and the confirmed project plan |
 
-This plan turns Pomorise 1.0: First Light from an approved direction into a dependable public website. Development will proceed through **seven phases**. Each phase produces something usable, has a clear completion gate, and protects the local-first privacy promise.
+This plan turns Pomorise 1.0: First Light from an approved direction into a dependable public website. Development will proceed through **seven phases**. Each phase produces something usable, receives focused verification, has a clear completion gate, and protects the local-first privacy promise. One comprehensive suite and one detailed screenshot-backed report provide final release evidence in Phase 7.
 
 ## Table of contents
 
@@ -26,7 +26,7 @@ This plan turns Pomorise 1.0: First Light from an approved direction into a depe
 - [Phase 7: Release verification and publication](#phase-7-release-verification-and-publication)
 - [Line-by-line commenting standard](#line-by-line-commenting-standard)
 - [Testing strategy](#testing-strategy)
-- [Test report standard](#test-report-standard)
+- [Final test report standard](#final-test-report-standard)
 - [Development documentation standard](#development-documentation-standard)
 - [Mandatory phase closeout checklist](#mandatory-phase-closeout-checklist)
 - [Phase completion protocol](#phase-completion-protocol)
@@ -74,6 +74,9 @@ The following decisions apply to every phase:
 - Preserve the approved light and dark Pomorise logos.
 - Apply the mandatory line-by-line commenting standard to every human-authored code file.
 - Create a deep beginner-focused development document for every meaningful phase, run, step, or implementation commit.
+- Run focused checks during each phase so defects are found near the change that caused them.
+- Run the complete unit, component, integration, browser, regression, accessibility, privacy, offline, responsive, performance, build, and deployed-site suite once during Phase 7.
+- Produce one detailed final test report instead of a separate screenshot-backed report after every phase.
 
 Exact package versions will be selected during Phase 1 after compatibility and license checks. The committed lockfile will preserve the reviewed dependency graph.
 
@@ -123,7 +126,7 @@ Create the smallest trustworthy project foundation before feature code begins. T
 
 Phase 1 is complete when a new contributor can clone the repository, run the documented commands, see the Pomorise shell, execute all quality checks, and build the exact artifact expected by GitHub Pages.
 
-- [ ] **Phase 1 completion:** Exit gate satisfied and linked test report status is `Passed`.
+- [ ] **Phase 1 completion:** Exit gate satisfied and focused checks recorded in the phase development document.
 
 ## Phase 2: Design system and application shell
 
@@ -157,7 +160,7 @@ Turn the approved identity into a calm, readable, and reusable interface foundat
 
 Phase 2 is complete when the application looks recognizably Pomorise on desktop and mobile, the approved logos are integrated correctly, and every later feature has accessible project-owned components to build upon.
 
-- [ ] **Phase 2 completion:** Exit gate satisfied and linked test report status is `Passed`.
+- [ ] **Phase 2 completion:** Exit gate satisfied and focused checks recorded in the phase development document.
 
 ## Phase 3: Reliable timer engine
 
@@ -192,7 +195,7 @@ Build the core promise as a deterministic state machine before tasks or progress
 
 Phase 3 is complete when the countdown is accurate, recoverable, keyboard-accessible, touch-accessible, and independent of browser interval precision.
 
-- [ ] **Phase 3 completion:** Exit gate satisfied and linked test report status is `Passed`.
+- [ ] **Phase 3 completion:** Exit gate satisfied and focused checks recorded in the phase development document.
 
 ## Phase 4: Complete focus loop
 
@@ -228,7 +231,7 @@ Build the experience that makes Pomorise more useful than an isolated 25-minute 
 
 Phase 4 is complete when a visitor can plan a session, focus, capture a distraction, take a break, reflect, and understand personal progress without leaving Pomorise or creating an account.
 
-- [ ] **Phase 4 completion:** Exit gate satisfied and linked test report status is `Passed`.
+- [ ] **Phase 4 completion:** Exit gate satisfied and focused checks recorded in the phase development document.
 
 ## Phase 5: Local data and privacy controls
 
@@ -266,7 +269,7 @@ Make browser-only data ownership dependable, transparent, and recoverable.
 
 Phase 5 is complete when visitors can understand, back up, restore, inspect, and delete their Pomorise data without sending that data to Pomorise or another application service.
 
-- [ ] **Phase 5 completion:** Exit gate satisfied and linked test report status is `Passed`.
+- [ ] **Phase 5 completion:** Exit gate satisfied and focused checks recorded in the phase development document.
 
 ## Phase 6: Offline experience and quality hardening
 
@@ -302,7 +305,7 @@ Make the integrated product resilient across browsers, screen sizes, permissions
 
 Phase 6 is complete when Pomorise remains understandable and useful through offline use, denied permissions, viewport changes, browser throttling, refreshes, and ordinary update conditions.
 
-- [ ] **Phase 6 completion:** Exit gate satisfied and linked test report status is `Passed`.
+- [ ] **Phase 6 completion:** Exit gate satisfied and focused checks recorded in the phase development document.
 
 ## Phase 7: Release verification and publication
 
@@ -430,28 +433,28 @@ The test layers divide responsibility instead of repeating the same checks every
 
 | Layer | Confirmed tool | Main responsibility | Runs when |
 | --- | --- | --- | --- |
-| Static | TypeScript, ESLint, and typescript-eslint | Type safety, unsafe patterns, and project rules | During local review and every continuous-integration build |
-| Unit | Vitest | Timer transitions, calculations, schemas, migrations, and progress derivation | During development and every continuous-integration build |
-| Component | React Testing Library and user-event | Accessible names, visible behavior, keyboard interaction, and component states | During feature work and every continuous-integration build |
-| Browser | Playwright | Refresh recovery, IndexedDB, offline behavior, responsive flows, and deployment paths | At phase gates and every release candidate |
-| Automated accessibility | axe with Playwright | Detect a useful subset of structural, labeling, and contrast issues | At phase gates and every release candidate |
-| Manual accessibility | Human review | Keyboard order, screen-reader experience, zoom, motion, sound alternatives, and comprehension | Phases 2, 3, 4, 6, and 7 |
-| Privacy | Network and storage inspection | Confirm personal data remains local and caches contain only application assets | Phases 1, 5, 6, and 7 |
+| Static | TypeScript, ESLint, and typescript-eslint | Type safety, unsafe patterns, and project rules | Focused phase checks and the final suite |
+| Unit | Vitest | Timer transitions, calculations, schemas, migrations, and progress derivation | After affected logic changes and in the final suite |
+| Component | React Testing Library and user-event | Accessible names, visible behavior, keyboard interaction, and component states | After affected interface changes and in the final suite |
+| Browser | Playwright | Refresh recovery, IndexedDB, offline behavior, responsive flows, and deployment paths | Targeted checks for high-risk changes and the complete final suite |
+| Automated accessibility | axe with Playwright | Detect a useful subset of structural, labeling, and contrast issues | Targeted interface checks and the complete final suite |
+| Manual accessibility | Human review | Keyboard order, screen-reader experience, zoom, motion, sound alternatives, and comprehension | Focused review while building, then complete review in Phase 7 |
+| Privacy | Network and storage inspection | Confirm personal data remains local and caches contain only application assets | Focused boundary checks while building, then complete review in Phase 7 |
 
 Tests use synthetic records only. No real visitor data is copied into fixtures, screenshots, logs, or continuous-integration artifacts.
 
-## Test report standard
+## Final test report standard
 
-Every meaningful test phase, run, or independently verified step must create a detailed permanent report at:
+Phase 7 must create one comprehensive permanent report at:
 
 ```text
-testreports/<phase_or_run_or_step>/test_report.md
+testreports/final-release-verification/test_report.md
 ```
 
-The directory name must be a stable lowercase identifier such as `phase-01-foundation`, `run-2026-08-16-timer-recovery`, or `step-dark-theme-keyboard-review`. Each report keeps its supporting evidence beside it:
+Its supporting evidence stays beside it:
 
 ```text
-testreports/<phase_or_run_or_step>/
+testreports/final-release-verification/
 |-- test_report.md
 |-- screenshots/
 |   |-- 001-initial-state.png
@@ -463,10 +466,10 @@ testreports/<phase_or_run_or_step>/
     `-- optional-machine-report.json
 ```
 
-Every report must include:
+The final report must include:
 
 - Human-readable creation and last-updated timestamps, ISO 8601 timestamps where exact values are known, timezone, and estimated reading time.
-- The phase, run, or step identifier and its purpose.
+- All seven phases, the final release scope, and the purpose of the suite.
 - The exact commit, branch, application URL, build mode, operating system, browser engines, viewport sizes, locale, timezone, and relevant tool versions.
 - The start time, end time, duration, command, exit code, expected result, actual result, and log path for every automated command.
 - A numbered record for every automated and manual test case.
@@ -482,7 +485,9 @@ Every report must include:
 
 Every timestamp must include its date and timezone. Every completed report must show a realistic estimated reading time near the top so reviewers know its length before beginning.
 
-Screenshots are mandatory for every report. A browser-visible run must show the tested interface states, including relevant light, dark, desktop, and mobile evidence. A command-only run must include a readable terminal or test-reporter screenshot. Screenshots supplement logs and assertions; they never replace them.
+Screenshots are mandatory in the final report. The browser-visible suite must show the tested interface states, including relevant light, dark, desktop, and mobile evidence. Command evidence must include a readable terminal or test-reporter screenshot. Screenshots supplement logs and assertions; they never replace them.
+
+Phases 1 through 6 do not create separate test-report directories. Their development documents briefly record the focused commands or manual checks performed, their outcomes, and any failure that changed the implementation. This keeps defects close to their source without repeating the full reporting ceremony. Any unresolved failure blocks the phase even though a standalone report is not required.
 
 Playwright may capture page, full-page, or element screenshots and may retain traces for failed or diagnostically important browser cases. Vitest and other command runs must retain text output in `logs/` in addition to the report summary. Secret values, personal data, access tokens, private file paths, unrelated browser tabs, and real user records must be removed before any evidence is committed.
 
@@ -496,14 +501,7 @@ Every meaningful implementation phase, run, step, or commit must have a deep tec
 development_docs/<phase_or_run_or_step>/doc.md
 ```
 
-The development document explains what changed, why it changed, how it was designed, how the system works, which assumptions and alternatives shaped it, and what a beginner should learn. The paired test report records whether the implementation behaved as intended.
-
-Whenever both describe the same work, they use the same stable identifier:
-
-```text
-development_docs/<identifier>/doc.md
-testreports/<identifier>/test_report.md
-```
+The development document explains what changed, why it changed, how it was designed, how the system works, which assumptions and alternatives shaped it, what focused checks ran, and what a beginner should learn. Phase documents link to the single final report after it exists. The final report links back to the relevant development documents for traceability.
 
 Every development document must cover the relevant requirements, design method, system context, architecture, runtime flow, data flow, state model, decisions, assumptions, component responsibilities, file changes, types, interface behavior, accessibility, privacy, storage, offline behavior, errors, performance, dependencies, deployment, comments, tests, alternatives, limitations, and beginner learning path. A section that does not apply remains present with a concise reason.
 
@@ -513,46 +511,39 @@ The canonical template is [`development_docs/_template/doc.md`](development_docs
 
 ## Mandatory phase closeout checklist
 
-This checklist must be copied into the phase report and checked with direct evidence. An unchecked item prevents the phase from being marked complete.
+This checklist must be completed in the phase development document. An unchecked item prevents the phase from being marked complete.
 
 - [ ] The approved phase scope is implemented, and any deviation is documented.
 - [ ] Every phase-specific **Required validation** checkbox is checked and linked to evidence.
 - [ ] Every human-authored code line satisfies the line-by-line commenting standard.
 - [ ] Companion annotations cover every human-maintained format that cannot contain comments.
-- [ ] Formatting, linting, type checking, unit tests, component tests, browser tests, and builds required by this phase have recorded commands and exit codes.
+- [ ] The smallest relevant formatting, linting, type, unit, component, browser, or build checks were run and their outcomes were recorded.
 - [ ] Manual keyboard, accessibility, responsive, permission, privacy, and recovery checks required by this phase are recorded.
 - [ ] Runtime network and browser-storage findings are recorded where the phase can affect them.
-- [ ] Every failure, retry, skipped case, flaky result, and blocked check has an explanation.
-- [ ] Raw logs and available machine-readable reports are stored beside the report.
-- [ ] Screenshots are stored locally, embedded in the report, captioned, and tied to test cases.
-- [ ] Screenshots and logs contain only synthetic data and no secrets or personal records.
+- [ ] Every failure, retry, skipped case, flaky result, and blocked check has a concise explanation.
+- [ ] Phase evidence contains only synthetic data and no secrets or personal records.
 - [ ] Known limitations and residual risks are explicit.
 - [ ] The development document explains the design method, system design, decisions, assumptions, flows, files, tradeoffs, and beginner learning path in depth.
-- [ ] The development document and test report share the same identifier and cross-link where both exist.
 - [ ] `development_docs/README.md` links to the completed development document.
-- [ ] The report conclusion matches the recorded evidence.
-- [ ] `testreports/README.md` links to the completed report.
 - [ ] Project documentation and the commit tracker are synchronized.
-- [ ] The phase exit gate is checked only after the complete report passes review.
+- [ ] The phase exit gate is checked only after the focused checks and development-document checklist pass review.
 
 ## Phase completion protocol
 
-Every phase follows the same evidence-driven closeout sequence:
+Phases 1 through 6 follow the same focused closeout sequence:
 
 1. Create the development document directory from its canonical template when the implementation unit begins.
 2. Record the starting requirement, system state, constraints, assumptions, and intended design.
-3. Create the paired report directory from the canonical test template before testing begins.
-4. Record the test environment, scope, commit, commands, and planned cases.
-5. Complete only the approved work while updating the development narrative alongside the code.
-6. Confirm every authored code line satisfies the commenting standard.
-7. Run the phase’s required automated checks while preserving raw logs.
-8. Perform the listed manual checks and capture screenshots during testing.
-9. Record runtime network activity and local-data behavior where applicable.
-10. Document failures, design corrections, changed assumptions, and retests without deleting earlier history.
-11. Complete the mandatory phase closeout checklist with links to explanation and evidence.
-12. Add the documents to `development_docs/README.md` and `testreports/README.md`.
-13. Update `implementation_plan.md`, `project_plan.md`, `meta_thinking.md`, and `changelog.md` in sync.
-14. Commit a coherent phase result only after its exit gate, development-document checklist, and report conclusion all pass.
+3. Complete only the approved work while updating the development narrative alongside the code.
+4. Confirm every authored code line satisfies the commenting standard.
+5. Run the smallest relevant automated and manual checks for the changed behavior.
+6. Record commands, outcomes, failures, corrections, changed assumptions, and retests briefly in the development document.
+7. Complete the mandatory phase closeout checklist.
+8. Add the development document to `development_docs/README.md`.
+9. Update `implementation_plan.md`, `project_plan.md`, `meta_thinking.md`, and `changelog.md` in sync.
+10. Commit a coherent phase result only after its exit gate and development-document checklist pass.
+
+Phase 7 runs the comprehensive final suite, creates `testreports/final-release-verification/test_report.md`, captures the required logs and screenshots, links all seven phase documents, deploys the approved artifact, performs deployed-site verification, and closes only when the final report status is `Passed`.
 
 If a phase reveals a requirement that materially changes privacy, hosting, or product scope, development pauses at that boundary for an explicit project-owner decision.
 
@@ -569,15 +560,15 @@ If a phase reveals a requirement that materially changes privacy, hosting, or pr
 | Automated accessibility tests miss human experience | Tools cannot judge every screen-reader, keyboard, motion, or comprehension issue | Require manual accessibility gates in multiple phases |
 | Dependencies introduce unexpected code or requests | Privacy and performance could change without a visible feature change | Lock versions, audit the production graph, bundle locally, and inspect runtime requests |
 | Screenshots expose private or irrelevant information | Evidence may accidentally retain secrets, personal data, or unrelated windows | Use synthetic data, capture only the relevant application or terminal surface, inspect every image, and redact before committing |
-| Reports become summaries instead of evidence | A pass label without commands, logs, and screenshots cannot be independently reviewed | Require the canonical template, raw artifacts, screenshot index, and closeout checklist for every phase or run |
-| Development reasoning is lost inside code and commits | A beginner may see final lines without understanding the design method, assumptions, architecture, or tradeoffs | Require a paired development document with decisions, flows, file walkthroughs, learning guidance, and commit traceability |
+| Final evidence becomes too broad to diagnose | One large suite can hide which phase introduced a defect | Keep focused phase checks and record failures beside the related development narrative, then preserve complete evidence in the final report |
+| Development reasoning is lost inside code and commits | A beginner may see final lines without understanding the design method, assumptions, architecture, or tradeoffs | Require a development document with decisions, flows, file walkthroughs, learning guidance, focused checks, and commit traceability |
 
 ## Fact-check and sanity-check record
 
 | Verification information | Value |
 | --- | --- |
-| Last verified | August 16, 2026 at 2:50:30 AM EDT |
-| Verification scope | Seven-phase sequence, Vite static output, GitHub Pages artifact deployment, React component model, confirmed test layers, local-first boundaries, comment-format limitations, screenshot capture, evidence reports, and beginner-focused development documentation |
+| Last verified | August 20, 2026 at 12:52:35 PM EDT |
+| Verification scope | Seven-phase sequence, focused phase checks, one comprehensive final suite, Vite static output, GitHub Pages artifact deployment, React component model, confirmed test layers, local-first boundaries, comment-format limitations, screenshot capture, final evidence reporting, and beginner-focused development documentation |
 | Primary sources | React, TypeScript, Vite, GitHub Pages, Vitest, Testing Library, Playwright, MDN, Dexie, Zod, Vite PWA, C4, ADR, arc42, Diátaxis, and W3C documentation linked below |
 | Result | The sequence is compatible with the confirmed static, browser-only architecture and can begin without selecting another framework or service |
 
@@ -588,7 +579,7 @@ The plan passed these sanity checks:
 - **Hosting fit:** Vite’s default production output is `dist`, and GitHub Pages custom workflows can publish a built artifact.
 - **Privacy fit:** No phase requires an account, application backend, analytics service, or remote personal-data store.
 - **Testing fit:** Unit, component, browser, accessibility, and manual checks protect different risks.
-- **Evidence fit:** Each completed phase or meaningful run requires commands, raw logs, screenshots, case results, failures, retests, and a final evidence-based conclusion.
+- **Evidence fit:** Focused phase checks catch nearby defects, while one comprehensive final report preserves commands, raw logs, screenshots, cases, failures, retests, and the release conclusion.
 - **Learning fit:** Each implementation unit requires a deep narrative connecting user value, design method, architecture, decisions, assumptions, files, comments, tests, and next steps.
 - **Commenting fit:** The project-specific every-line rule remains valid without corrupting strict JSON, lockfiles, generated output, or binary assets.
 - **Scope fit:** The plan defines implementation order without inventing additional product versions.
@@ -604,7 +595,8 @@ Package versions, browser-support targets, performance budgets, and exact access
 - **Exit gate:** The complete set of observable conditions that must pass before a phase closes.
 - **Focus loop:** The Pomorise sequence of plan, focus, capture, recover, reflect, and rise.
 - **Line-by-line commenting:** The Pomorise requirement that every human-authored code line has an adjacent beginner-friendly explanation.
-- **Test report:** The permanent Markdown record that connects a test scope to its environment, commands, cases, logs, screenshots, failures, retests, and conclusion.
+- **Final test report:** The permanent Phase 7 Markdown record that connects the comprehensive release suite to its environment, commands, cases, logs, screenshots, failures, retests, and conclusion.
+- **Focused phase check:** A small verification selected because it directly protects behavior changed in the current phase.
 - **Local-first:** A product model in which personal data stays on the visitor’s device by default.
 - **Migration:** A versioned transformation that moves stored records safely from an older schema to a newer schema.
 - **Production build:** The optimized static application output created for public hosting.
@@ -650,7 +642,7 @@ Package versions, browser-support targets, performance budgets, and exact access
 8. Update the timestamp, reading time, table of contents, glossary, sources, and verification record whenever this document changes substantially.
 9. Keep the prose engaging, precise, beginner-friendly, and free of em dashes.
 10. Record phase completion and meaningful deviations in `meta_thinking.md` and `changelog.md`.
-11. Create and index a detailed screenshot-backed report for every meaningful phase, run, or independently verified step.
-12. Never check a phase exit gate without a passing report and complete closeout checklist.
-13. Require a current development document and paired test report for every meaningful implementation unit.
+11. Create and index one detailed screenshot-backed final report during Phase 7.
+12. Never check a phase exit gate without completed focused checks and a complete development-document closeout checklist.
+13. Require a current development document for every meaningful implementation unit and link those documents from the final report.
 14. Preserve changed decisions and assumptions instead of rewriting the narrative to show only the final outcome.
