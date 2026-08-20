@@ -39,6 +39,8 @@
   --radius-pill: 999px;
   /* Keep content transitions restrained and fast enough not to delay interaction. */
   --motion-fast: 140ms;
+  /* Give meaningful visual progress enough time to remain calm and understandable. */
+  --motion-slow: 320ms;
   /* Use a smooth non-bouncy curve for quiet state changes. */
   --motion-curve: cubic-bezier(0.2, 0.8, 0.2, 1);
   /* Set the approved soft ivory direction as the outer page canvas. */
@@ -242,9 +244,27 @@ img {
 
 /* Anchor a readable tagline over the tiny text baked into the approved raster source. */
 .app-header__brand {
+  /* Create the positioning boundary for the mask and clean text tagline. */
   position: relative;
   /* Give the complete mark, name, and tagline enough width to remain recognizable. */
   width: clamp(13rem, 23vw, 18rem);
+}
+
+/* Cover the small raster tagline completely without hiding the logo mark's descending stem. */
+.app-header__brand::after {
+  /* Add a theme-matched patch only beneath the wordmark portion of the image. */
+  content: "";
+  /* Position the patch above the raster and below the replacement text. */
+  position: absolute;
+  /* Begin beyond the symbol so the full lowercase p shape remains untouched. */
+  inset-inline: 29% 0;
+  /* Cover the complete height occupied by the baked-in tagline fragments. */
+  inset-block: 66% 0;
+  /* Match the header canvas in either resolved theme. */
+  background: var(--color-canvas);
+  /* Keep the mask between the image and the accessible replacement text. */
+  z-index: 1;
+  /* Close the raster-tagline mask after fully covering its wordmark region. */
 }
 
 /* Present the tightly derived approved header artwork without distortion. */
@@ -270,6 +290,8 @@ img {
   line-height: 1.25;
   text-align: center;
   white-space: nowrap;
+  /* Paint the readable replacement above the dedicated raster mask. */
+  z-index: 2;
 }
 
 /* Center the desktop destinations inside the available header space. */
@@ -377,8 +399,13 @@ img {
 .button:focus-visible,
 /* Continue the shared keyboard focus selector for native text fields. */
 .field__control:focus-visible,
+/* Continue the shared keyboard focus selector for native selects and reflection notes. */
+.task-estimate select:focus-visible,
+.reflection-notes textarea:focus-visible,
 /* Continue the shared keyboard focus selector for segmented radio options. */
-.segmented__option:has(input:focus-visible) {
+.segmented__option:has(input:focus-visible),
+/* Continue the shared keyboard focus selector for optional rating controls. */
+.rating-control label:has(input:focus-visible) {
   /* Draw a high-contrast ring chosen separately from action colors. */
   outline: 3px solid var(--color-focus);
   /* Separate the ring from component edges so it remains visually distinct. */
@@ -661,6 +688,186 @@ img {
   gap: var(--space-2);
 }
 
+/* Bound quick capture without competing with the primary timer display. */
+.capture-panel {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--color-surface-muted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+/* Keep the quick-capture explanation concise and vertically connected. */
+.capture-panel > div:first-child {
+  display: grid;
+  gap: var(--space-1);
+}
+
+/* Present capture guidance as readable secondary copy. */
+.capture-panel > div:first-child span {
+  color: var(--color-ink-muted);
+  font-size: 0.875rem;
+}
+
+/* Share a calm nested surface across post-session review, reflection, and breaks. */
+.review-panel,
+.reflection-panel,
+.break-panel {
+  display: grid;
+  gap: var(--space-4);
+  padding: clamp(var(--space-4), 3vw, var(--space-6));
+  background: var(--color-surface-muted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+/* Normalize nested journey headings so the timer card keeps one visual hierarchy. */
+.review-panel h2,
+.reflection-panel h2,
+.break-panel h2 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+/* Keep nested journey explanations readable but secondary. */
+.review-panel > p,
+.reflection-panel > p,
+.break-prompt {
+  margin: 0;
+  color: var(--color-ink-muted);
+}
+
+/* Stack pending captured thoughts without decorative browser bullets. */
+.review-list {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Give each captured thought its own readable action boundary. */
+.review-list li {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+/* Let review actions wrap safely under zoom and on compact screens. */
+.review-list li > div,
+.reflection-actions,
+.reflection-task > div,
+.guide-choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* Present optional ratings as native touch-friendly compact choices. */
+.rating-control {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* Strengthen the rating legend as an essential visible label. */
+.rating-control legend,
+.reflection-notes > span {
+  margin-bottom: var(--space-2);
+  color: var(--color-ink);
+  font-weight: 750;
+}
+
+/* Keep the five rating choices in one adaptable row. */
+.rating-control > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* Turn each native rating option into a complete visible target. */
+.rating-control label {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  min-height: 3rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+}
+
+/* Preserve native semantics while the visible number carries presentation. */
+.rating-control input {
+  position: absolute;
+  opacity: 0;
+}
+
+/* Mark the chosen rating with a persistent non-motion treatment. */
+.rating-control label:has(input:checked) {
+  background: var(--color-accent-soft);
+  border-color: var(--color-accent);
+}
+
+/* Keep the optional notes label and textarea visibly connected. */
+.reflection-notes {
+  display: grid;
+  gap: var(--space-2);
+}
+
+/* Match private reflection notes to the established native field treatment. */
+.reflection-notes textarea {
+  min-height: 7rem;
+  resize: vertical;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-ink);
+  padding: var(--space-3) var(--space-4);
+  font: inherit;
+}
+
+/* Keep the task outcome close to the completed session reflection. */
+.reflection-task {
+  display: grid;
+  gap: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border);
+}
+
+/* Separate selected guided support from its calm instruction. */
+.guided-break {
+  display: grid;
+  gap: var(--space-4);
+}
+
+/* Communicate the selected local break guide independently of hover. */
+.guide-choices .button[aria-pressed="true"] {
+  background: var(--color-accent-soft);
+  color: var(--color-ink);
+}
+
+/* Give the selected break instruction a relaxed readable measure. */
+.guided-break__instruction {
+  margin: 0;
+  padding: var(--space-5);
+  background: var(--color-surface);
+  border-left: 4px solid var(--color-accent);
+  border-radius: var(--radius-sm);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+/* Keep focus-loop feedback aligned with the nested action that produced it. */
+.journey-status {
+  text-align: center;
+}
+
 /* Stack supporting surfaces while preserving the main timer's visual quiet. */
 .supporting-panels {
   /* Use grid so support cards share one predictable vertical rhythm. */
@@ -729,6 +936,223 @@ img {
   /* Use readable muted ink rather than reducing the entire element's opacity. */
   color: var(--color-ink-muted);
   /* Close the secondary-copy treatment after defining its spacing and tone. */
+}
+
+/* Group the selected task's wording, estimate, and completion action without crowding the card. */
+.current-task {
+  /* Use a small vertical rhythm so the selected work reads as one unit. */
+  display: grid;
+  /* Separate the task details and action with comfortable compact space. */
+  gap: var(--space-2);
+  /* Give the selected task a calm bounded surface distinct from the entry form. */
+  padding: var(--space-4);
+  /* Use the grouped surface token in both themes. */
+  background: var(--color-surface-muted);
+  /* Draw a quiet boundary that does not imply urgency or completion. */
+  border: 1px solid var(--color-border);
+  /* Reuse the small project radius for this nested planning group. */
+  border-radius: var(--radius-sm);
+  /* Close the current-task group after defining its calm hierarchy. */
+}
+
+/* Keep the current estimate visibly secondary to the visitor's task wording. */
+.current-task > span {
+  /* Use readable muted ink rather than opacity for supporting information. */
+  color: var(--color-ink-muted);
+  /* Keep the estimate concise beside other supporting interface copy. */
+  font-size: 0.875rem;
+  /* Close the current estimate treatment after defining its hierarchy. */
+}
+
+/* Arrange the small task form as a clear sequence inside the supporting card. */
+.task-form {
+  /* Use grid so labels remain attached to their native controls under zoom. */
+  display: grid;
+  /* Keep each planning input visually connected without merging targets. */
+  gap: var(--space-3);
+  /* Separate entry from the selected task or empty-state explanation above it. */
+  margin-top: var(--space-5);
+  /* Close the task form after establishing its compact vertical flow. */
+}
+
+/* Keep the session estimate label and native select relationship visible. */
+.task-estimate {
+  /* Use grid to place the readable label directly above its select. */
+  display: grid;
+  /* Keep label and control close enough to scan as one relationship. */
+  gap: var(--space-2);
+  /* Strengthen the essential control label consistently with text fields. */
+  font-weight: 750;
+  /* Close the task-estimate label after matching the field hierarchy. */
+}
+
+/* Give the native estimate select the same readable control treatment as text fields. */
+.task-estimate select {
+  /* Preserve a comfortable pointer and touch target. */
+  min-height: 3.25rem;
+  /* Use the main surface so the selected number remains readable. */
+  background: var(--color-surface);
+  /* Draw a visible theme-aware boundary around the native control. */
+  border: 1px solid var(--color-border);
+  /* Reuse the small field radius for consistent form geometry. */
+  border-radius: var(--radius-sm);
+  /* Keep the selected estimate in the active theme's primary ink. */
+  color: var(--color-ink);
+  /* Add comfortable room around the native option text. */
+  padding-inline: var(--space-4);
+  /* Close the estimate-select treatment after size, color, and boundary. */
+}
+
+/* Present the compact task collection without browser list decoration. */
+.task-list {
+  /* Use grid so each task remains a distinct readable row. */
+  display: grid;
+  /* Separate rows enough for their independent action targets. */
+  gap: var(--space-2);
+  /* Remove browser bullets because row boundaries communicate collection structure visually. */
+  list-style: none;
+  /* Keep the list aligned with the card's content edges. */
+  margin: var(--space-5) 0 0;
+  /* Remove browser indentation while preserving semantic list behavior. */
+  padding: 0;
+  /* Close the task-list layout after establishing its compact stack. */
+}
+
+/* Balance task wording and its current next action inside one bounded row. */
+.task-list__item {
+  /* Use flex so text receives available width before the action. */
+  display: flex;
+  /* Keep the wording and state aligned around their visual center. */
+  align-items: center;
+  /* Place the task action at the opposite logical edge. */
+  justify-content: space-between;
+  /* Preserve separation when visitor text grows. */
+  gap: var(--space-3);
+  /* Draw a quiet divider without creating a stack of heavy cards. */
+  border-top: 1px solid var(--color-border);
+  /* Give each row comfortable internal height. */
+  padding-block: var(--space-3);
+  /* Close the task row after defining its readable relationship. */
+}
+
+/* Stack a task title and estimate as one flexible text group. */
+.task-list__item > span:first-child {
+  /* Allow long visitor text to wrap instead of forcing horizontal overflow. */
+  min-width: 0;
+  /* Use grid so the estimate stays directly beneath its task title. */
+  display: grid;
+  /* Keep the two related lines close together. */
+  gap: var(--space-1);
+  /* Close the task text group after protecting its wrapping behavior. */
+}
+
+/* Present task estimates as supporting information inside each row. */
+.task-list__item small {
+  /* Use muted ink while keeping the estimate fully readable. */
+  color: var(--color-ink-muted);
+  /* Close the list estimate treatment after applying its secondary hierarchy. */
+}
+
+/* Distinguish finished work without removing it from the visitor's immediate context. */
+.task-list__item--complete strong {
+  /* Use muted ink to reduce emphasis after completion. */
+  color: var(--color-ink-muted);
+  /* Add a familiar completion mark that does not depend on color. */
+  text-decoration: line-through;
+  /* Close the completed task wording after its non-color state indicator. */
+}
+
+/* Separate retained thoughts from actionable tasks without making another heavy card. */
+.kept-thoughts {
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+}
+
+/* Keep the retained-thought heading subordinate to the task card heading. */
+.kept-thoughts h3 {
+  margin: 0 0 var(--space-2);
+  font-size: 0.95rem;
+}
+
+/* Present kept thoughts as a readable plain list. */
+.kept-thoughts ul {
+  margin: 0;
+  padding-inline-start: var(--space-5);
+  color: var(--color-ink-muted);
+}
+
+/* Create the approved calm horizon for the semantic rise-progress treatment. */
+.progress-rise {
+  position: relative;
+  height: 5rem;
+  margin-block: var(--space-3);
+  overflow: hidden;
+  background: linear-gradient(to top, var(--color-accent-soft), transparent 72%);
+  border-bottom: 3px solid var(--color-ink);
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+
+/* Paint one sun whose height reflects only the accompanying semantic session count. */
+.progress-rise span {
+  position: absolute;
+  inset-inline-start: 50%;
+  bottom: -3rem;
+  width: 4.5rem;
+  aspect-ratio: 1;
+  background: linear-gradient(to top, var(--color-accent-strong), var(--color-accent));
+  border-radius: 50%;
+  transform: translate(-50%, 0);
+  transition: transform var(--motion-slow) var(--motion-curve);
+}
+
+/* Lift the sun gently after one completed session. */
+.progress-rise--1 span {
+  transform: translate(-50%, -1rem);
+}
+
+/* Continue the visual rise after two completed sessions. */
+.progress-rise--2 span {
+  transform: translate(-50%, -2rem);
+}
+
+/* Bring most of the sun above the horizon after three completed sessions. */
+.progress-rise--3 span {
+  transform: translate(-50%, -3rem);
+}
+
+/* Complete the bounded visual rise at four or more sessions. */
+.progress-rise--4 span {
+  transform: translate(-50%, -4rem);
+}
+
+/* Present exact progress values as a compact semantic definition list. */
+.progress-data {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0 0 var(--space-5);
+}
+
+/* Balance each progress label with its exact derived value. */
+.progress-data > div {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-block: var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Keep definition labels readable but secondary to their values. */
+.progress-data dt {
+  color: var(--color-ink-muted);
+}
+
+/* Strengthen exact progress values and keep changing digits stable. */
+.progress-data dd {
+  margin: 0;
+  color: var(--color-ink);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
 }
 
 /* Group a large progress value with its plain-language explanation. */

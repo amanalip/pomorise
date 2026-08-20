@@ -200,6 +200,10 @@ Phase 3 is implementation-complete when the timestamp-based countdown, recovery 
 
 Build the experience that makes Pomorise more useful than an isolated 25-minute countdown.
 
+### Development status
+
+Phase 4 was completed on August 20, 2026. The implemented journey now connects optional intention, deliberately small tasks, uninterrupted distraction capture and review, quiet and guided breaks, skippable reflection, private transient summaries, and semantic rise progress. Durable journey persistence remains correctly assigned to Phase 5.
+
 ### Work
 
 - Add a concise focus intention before a session.
@@ -228,7 +232,7 @@ Build the experience that makes Pomorise more useful than an isolated 25-minute 
 
 Phase 4 is implementation-complete when the full plan, focus, capture, break, reflection, and progress journey and its corresponding coverage are ready for the comprehensive Phase 7 suite.
 
-- [ ] **Phase 4 completion:** Implementation gate satisfied; acceptance criteria are queued for the Phase 7 comprehensive suite.
+- [x] **Phase 4 completion:** Implementation gate satisfied on August 20, 2026; acceptance criteria are queued for the Phase 7 comprehensive suite and mapped in `development_docs/phase-04-complete-focus-loop/doc.md`.
 
 ## Phase 5: Local data and privacy controls
 

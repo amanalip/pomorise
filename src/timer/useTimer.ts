@@ -143,7 +143,8 @@ export function useTimer() {
       }
     }
     previousPhaseRef.current = state.phase;
-    if (state.phase !== "completed" || !preferences.automaticTransitions) return undefined;
+    if (state.phase !== "completed" || !preferences.automaticTransitions || state.mode === "focus")
+      return undefined;
     const timeoutId = window.setTimeout(() => {
       send(
         {

@@ -3,8 +3,8 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 15, 2026 at 10:36 PM EDT |
-| Last updated | August 20, 2026 at 4:50:39 PM EDT |
-| ISO 8601 last updated | `2026-08-20T16:50:39-04:00` |
+| Last updated | August 20, 2026 at 5:20:44 PM EDT |
+| ISO 8601 last updated | `2026-08-20T17:20:44-04:00` |
 | Timezone | America/Toronto (UTC−04:00) |
 | Estimated reading time | 42 minutes |
 | Verification status | Commit facts checked against local Git history; technical claims checked against linked primary documentation |
@@ -17,6 +17,7 @@ The newest commit should be added at the top of the **Commit history** section.
 
 - [Entry template](#entry-template)
 - [Commit history](#commit-history)
+  - [Pending: Establish Phase 4 complete focus loop](#pending-establish-phase-4-complete-focus-loop)
   - [Pending: Establish Phase 3 reliable timer engine](#pending-establish-phase-3-reliable-timer-engine)
   - [Pending: Establish Phase 2 design system and application shell](#pending-establish-phase-2-design-system-and-application-shell)
   - [`cd5cbde`: Establish Phase 1 foundation and guardrails](#cd5cbde-establish-phase-1-foundation-and-guardrails)
@@ -99,6 +100,68 @@ Describe what a visitor or maintainer will notice. Write “None” when the cha
 ```
 
 ## Commit history
+
+### `Pending`: Establish Phase 4 complete focus loop
+
+- **Status:** Prepared for the next owner commit
+- **Prepared:** 2026-08-20 17:17 EDT
+- **Author:** Aman Ali with Codex collaboration
+- **Full commit:** Assigned after the commit is created
+
+#### Purpose
+
+Complete the journey around Pomorise's reliable timer by connecting planning, uninterrupted capture, post-session review, breaks, reflection, and private progress, while correcting the header identity issues identified by the project owner.
+
+#### Changes
+
+- Replaced the loose intention placeholder with controlled, bounded planning state that remains optional before a session.
+- Added a pure focus-plan reducer for up to five tasks, one-to-eight-session estimates, current-task selection, and completion.
+- Added accessible native task entry, estimate, selection, and completion controls beside the timer.
+- Rendered visitor-authored task wording through React text interpolation and never through raw HTML.
+- Added deterministic reducer coverage and a component journey for intention, task creation, automatic first selection, and completion.
+- Added a theme-aware mask beneath the wordmark so the raster tagline is fully hidden before the readable text replacement is painted.
+- Added coordinated light and dark header assets with a dominant continuous bowl-to-stem silhouette so the left symbol reads clearly as a lowercase `p` at compact size.
+- Added one-step distraction capture during focus and post-session convert, keep, and dismiss review choices.
+- Added task completion and idempotent carry-forward credit at the reflection boundary.
+- Added quiet breaks and local guided breathing, stretching, hydration, eye-rest, and movement prompts.
+- Added a fully skippable reflection with completed minutes, next step, optional rating, and optional notes.
+- Added unique in-memory session records, deterministic daily and trailing-week summaries, and a semantic rise-progress treatment.
+- Connected Timer, Tasks, and Progress navigation to real focus destinations without adding a wizard.
+- Preserved post-focus review when automatic flow is enabled, then starts the break after reflection is saved or skipped.
+- Marked Phase 4 implementation-complete while keeping durable journey persistence assigned to Phase 5.
+
+#### User-visible impact
+
+Visitors can now move through the complete focus loop from optional planning to capture, review, reflection, guided or quiet break, and private progress. The header shows exactly one clean tagline and an unmistakable lowercase `p` symbol in both themes.
+
+#### Decisions and tradeoffs
+
+- Planning and timer transitions remain separate pure boundaries so task changes cannot affect timestamp accuracy.
+- The list is capped at five tasks and estimates at eight sessions to preserve a focused aid rather than introduce project-management weight.
+- The first task becomes current automatically, while later task selection stays explicit.
+- Journey data remains transient because versioned browser storage, migrations, and privacy controls belong to Phase 5.
+- A CSS mask preserves the approved raster asset and its descending symbol geometry while fully covering only the baked-in wordmark tagline.
+- The refined header assets preserve the established wordmark, tagline, sunrise, timer segments, and palette while making the requested `p` recognition explicit.
+- Completion timestamps uniquely identify session records, making repeated effect requests safe and progress calculations deterministic.
+- Quiet break behavior is the default, every reflection field is optional, and no summary uses streak or punishment language.
+
+#### Risks and limitations
+
+- Refreshing or closing the page clears Phase 4 journey data until Phase 5 adds durable local records.
+- Comprehensive keyboard, touch, completion-variant, and accessibility evidence remains queued for Phase 7.
+
+#### Validation
+
+- Prettier formatting checks and ESLint passed.
+- Strict TypeScript and the Vite production build passed.
+- Twenty-two Vitest unit and component tests passed.
+- Five Chromium cases passed, including the same-origin privacy boundary, automated accessibility scan, timer recovery, theme persistence, and 320-pixel reflow.
+- Real-browser light and dark 390-pixel screenshots confirmed one clean tagline, a clear `p`, and responsive focus controls.
+
+#### Follow-up
+
+- Begin Phase 5 with versioned local data, migrations, validation, export, import, and deletion.
+- Repeat the complete focus journey through the comprehensive Phase 7 browser and accessibility suite.
 
 ### `Pending`: Establish Phase 3 reliable timer engine
 

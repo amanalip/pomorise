@@ -1,13 +1,28 @@
 // Import React reference and state tools for the settings dialog and shell-only demonstrations.
-import { useRef, useState } from "react";
+import { useEffect, useReducer, useRef, useState, type FormEvent } from "react";
 // Import the approved dark logo as a locally bundled identity for the dark palette.
-import darkLogoUrl from "../../assets/logos/header_dark_mode.png";
+import darkLogoUrl from "../../assets/logos/header_dark_mode_v2.png";
 // Import the approved light logo as a locally bundled identity for the light palette.
-import lightLogoUrl from "../../assets/logos/header_light_mode.png";
+import lightLogoUrl from "../../assets/logos/header_light_mode_v2.png";
 // Import theme state so the logo and appearance settings follow one resolved preference.
 import { useTheme } from "../components/ThemeProvider";
 // Import project-owned primitives that establish Phase 2 interaction and surface patterns.
 import { Button, Card, Dialog, Field, Notice, SegmentedControl } from "../components/ui";
+// Import the bounded Phase 4 planning model without coupling it to timer accuracy.
+import {
+  createInitialFocusPlan,
+  MAX_ESTIMATED_SESSIONS,
+  MAX_FOCUS_TASKS,
+  reduceFocusPlan,
+} from "../focus/planning";
+// Import complete-loop capture, reflection, break, and progress operations.
+import {
+  BREAK_GUIDES,
+  createInitialFocusJourney,
+  reduceFocusJourney,
+  summarizeProgress,
+  type DistractionResolution,
+} from "../focus/journey";
 // Import the timestamp-based timer interface and pure display helpers.
 import { formatDuration, type TimerMode } from "../timer/engine";
 import { modeLabel, useTimer } from "../timer/useTimer";
@@ -37,6 +52,34 @@ export function App() {
   );
   // Coordinate timestamp-derived timing, recovery, settings, and completion alerts.
   const timer = useTimer();
+  // Coordinate the optional intention and deliberately small task plan through pure transitions.
+  const [focusPlan, updateFocusPlan] = useReducer(
+    reduceFocusPlan,
+    undefined,
+    createInitialFocusPlan,
+  );
+  // Hold the pending task title separately so incomplete form text is not treated as planned work.
+  const [taskDraft, setTaskDraft] = useState("");
+  // Start each new task with one approachable estimated focus session.
+  const [taskEstimate, setTaskEstimate] = useState(1);
+  // Coordinate captured thoughts, completed sessions, reflections, and derived progress.
+  const [focusJourney, updateFocusJourney] = useReducer(
+    reduceFocusJourney,
+    undefined,
+    createInitialFocusJourney,
+  );
+  // Keep unfinished distraction wording outside the reviewed journey collection.
+  const [distractionDraft, setDistractionDraft] = useState("");
+  // Let breaks remain quiet by default while making guidance an explicit choice.
+  const [breakStyle, setBreakStyle] = useState<"quiet" | "guided">("quiet");
+  // Begin guided breaks with the gentlest local breathing prompt.
+  const [breakGuideId, setBreakGuideId] = useState<(typeof BREAK_GUIDES)[number]["id"]>("breathe");
+  // Hold optional reflection fields until the visitor saves or skips them.
+  const [reflectionNextStep, setReflectionNextStep] = useState("");
+  const [reflectionRating, setReflectionRating] = useState<number | null>(null);
+  const [reflectionNotes, setReflectionNotes] = useState("");
+  // Provide restrained feedback for capture and review actions outside timer announcements.
+  const [journeyStatus, setJourneyStatus] = useState("");
   // Report notification support and permission results beside the explicit setting.
   const [notificationStatus, setNotificationStatus] = useState("");
   // Hold the native dialog element so settings can use its modal browser behavior.
@@ -59,6 +102,146 @@ export function App() {
   // Switch modes only while idle so active session history never changes meaning.
   function selectMode(mode: TimerMode) {
     timer.send({ type: "SELECT_MODE", mode, seconds: timer.preferences.durations[mode] });
+  }
+
+  // Turn a valid pending title and estimate into one small local task.
+  function addTask(event: FormEvent<HTMLFormElement>) {
+    // Prevent the native form submission from navigating away from the running application.
+    event.preventDefault();
+    // Leave whitespace-only drafts in the editable field for immediate correction.
+    if (!taskDraft.trim()) return;
+    // Send validated form data through the pure planning boundary.
+    updateFocusPlan({ type: "ADD_TASK", title: taskDraft, estimatedSessions: taskEstimate });
+    // Clear the draft after a successful capacity-aware addition.
+    if (focusPlan.tasks.length < MAX_FOCUS_TASKS) setTaskDraft("");
+    // Close the add-task action after preserving the visitor's compact plan.
+  }
+
+  // Derive the current unfinished task from its stable selected identity.
+  const activeTask = focusPlan.tasks.find(
+    // Match only the selected task because completed tasks automatically release selection.
+    (task) => task.id === focusPlan.activeTaskId,
+    // Close the current-task lookup after checking every planned task.
+  );
+  // Derive pending review items without hiding kept or converted history from state.
+  const pendingDistractions = focusJourney.distractions.filter(
+    // Present only thoughts that still need one explicit post-session choice.
+    (item) => item.resolution === "pending",
+    // Close the pending-review derivation after checking each captured thought.
+  );
+  // Derive private summaries from session records rather than storing duplicate totals.
+  const progressSummary = summarizeProgress(focusJourney.sessions, Date.now());
+  // Choose the active local guide only when the visitor requests guided break support.
+  const activeBreakGuide = BREAK_GUIDES.find((guide) => guide.id === breakGuideId);
+
+  // Snapshot each unique completed focus boundary into the Phase 4 journey.
+  useEffect(() => {
+    // Ignore non-focus sessions and timer states without a real completion timestamp.
+    if (timer.state.mode !== "focus" || timer.state.completedAt === null) return;
+    // Record immutable planning context without coupling it back into timer transitions.
+    updateFocusJourney({
+      type: "RECORD_SESSION",
+      completedAt: timer.state.completedAt,
+      plannedSeconds: timer.state.plannedSeconds,
+      intention: focusPlan.intention,
+      taskTitle: activeTask?.title ?? null,
+    });
+    // Close the completion effect after its idempotent journey action.
+  }, [
+    activeTask?.title,
+    focusPlan.intention,
+    timer.state.completedAt,
+    timer.state.mode,
+    timer.state.plannedSeconds,
+  ]);
+
+  // Move keyboard focus to a selected first-level destination without trapping the visitor.
+  function navigateTo(item: (typeof navigationItems)[number]) {
+    // Synchronize the selected visual state across desktop and compact navigation.
+    setActiveNavigation(item);
+    // Focus the existing destination so keyboard and touch users receive the same movement.
+    document
+      .getElementById(item === "Timer" ? "workspace" : `${item.toLowerCase()}-panel`)
+      ?.focus();
+    // Close navigation after moving focus to the requested existing section.
+  }
+
+  // Capture one thought through a single step while leaving the timer untouched.
+  function captureDistraction(event: FormEvent<HTMLFormElement>) {
+    // Prevent form submission from navigating away from the current focus session.
+    event.preventDefault();
+    // Leave empty text available for correction without creating an invalid record.
+    if (!distractionDraft.trim()) return;
+    // Add the plain-text thought to the explicit post-session review queue.
+    updateFocusJourney({ type: "CAPTURE_DISTRACTION", text: distractionDraft });
+    // Clear the field immediately so another thought can be captured in one step.
+    setDistractionDraft("");
+    // Confirm capture without interrupting or speaking the changing timer.
+    setJourneyStatus("Distraction captured. Your timer kept running.");
+    // Close the capture action after preserving focus continuity.
+  }
+
+  // Apply one convert, keep, or dismiss choice to a pending distraction.
+  function resolveDistraction(
+    distractionId: number,
+    resolution: Exclude<DistractionResolution, "pending">,
+  ) {
+    // Find the pending plain-text thought before optionally converting it into a task.
+    const distraction = focusJourney.distractions.find((item) => item.id === distractionId);
+    // Refuse stale review requests that no longer point to a pending thought.
+    if (!distraction || distraction.resolution !== "pending") return;
+    // Convert only when the deliberately small task list still has capacity.
+    if (resolution === "task") {
+      if (focusPlan.tasks.length >= MAX_FOCUS_TASKS) {
+        setJourneyStatus("The task list is full. Keep or dismiss this thought instead.");
+        return;
+      }
+      updateFocusPlan({ type: "ADD_TASK", title: distraction.text, estimatedSessions: 1 });
+    }
+    // Preserve the visitor's explicit review outcome in the transient journey.
+    updateFocusJourney({ type: "RESOLVE_DISTRACTION", distractionId, resolution });
+    // Confirm the completed choice in calm plain language.
+    setJourneyStatus(
+      resolution === "task"
+        ? "Distraction converted to a task."
+        : resolution === "kept"
+          ? "Distraction kept for later."
+          : "Distraction dismissed.",
+    );
+    // Close the review action after applying its optional task conversion.
+  }
+
+  // Finish optional reflection and move to the break chosen by the timer cycle.
+  function finishReflection(skip: boolean) {
+    // Require the exact completion boundary that owns this reflection.
+    if (timer.state.completedAt === null) return;
+    // Save the optional fields or record the visitor's deliberate skip.
+    updateFocusJourney(
+      skip
+        ? { type: "SKIP_REFLECTION", completedAt: timer.state.completedAt }
+        : {
+            type: "SAVE_REFLECTION",
+            completedAt: timer.state.completedAt,
+            nextStep: reflectionNextStep,
+            focusRating: reflectionRating,
+            notes: reflectionNotes,
+          },
+    );
+    // Advance from either normal completion or overtime into the next cycle stage.
+    timer.send(
+      {
+        type: "ADVANCE",
+        now: Date.now(),
+        durations: timer.preferences.durations,
+        startImmediately: timer.preferences.automaticTransitions,
+      },
+      skip ? "Reflection skipped. Your break is ready." : "Reflection saved. Your break is ready.",
+    );
+    // Clear drafts so the next completed session starts with an uncluttered reflection.
+    setReflectionNextStep("");
+    setReflectionRating(null);
+    setReflectionNotes("");
+    // Close the reflection boundary after continuing the timer cycle.
   }
 
   // Update one bounded duration and synchronize the idle clock for the selected mode.
@@ -133,7 +316,7 @@ export function App() {
               // Preserve the stable destination name as React's list key.
               key={item}
               // Switch the highlighted shell destination without pretending to load future content.
-              onClick={() => setActiveNavigation(item)}
+              onClick={() => navigateTo(item)}
               // Keep every desktop destination visually quiet beside the timer workspace.
               variant="quiet"
             >
@@ -169,10 +352,14 @@ export function App() {
           </div>
 
           {/* Give the page one clear heading that describes the user's immediate purpose. */}
-          <h1 id="timer-title">Make space for one thing.</h1>
-          {/* Explain the empty intention state without requiring input before a timer can start. */}
+          <h1 id="timer-title">
+            {timer.state.mode === "focus" ? "Make space for one thing." : "Take a real pause."}
+          </h1>
+          {/* Explain the current mode without requiring optional planning or guidance. */}
           <p className="timer-card__intro">
-            Add an intention when you are ready, or begin with a clear desk and an open mind.
+            {timer.state.mode === "focus"
+              ? "Add an intention when you are ready, or begin with a clear desk and an open mind."
+              : "Choose a quiet break or one gentle guide. You can always do nothing here."}
           </p>
 
           {/* Let a visitor choose a timer purpose before starting, using native radio behavior. */}
@@ -189,18 +376,25 @@ export function App() {
             value={timer.state.mode}
           />
 
-          {/* Preserve the optional Phase 4 intention boundary without affecting timer accuracy. */}
-          <Field
-            // Give the visible and programmatic field relationship a stable identifier.
-            id="focus-intention"
-            // Explain that the optional field does not block starting a future session.
-            hint="Optional. You can change this before the session starts."
-            // Label the outcome rather than the implementation detail of a text input.
-            label="What will you move forward?"
-            // Offer a realistic prompt without inserting saved or synthetic personal data.
-            placeholder="For example, outline the project brief"
-            disabled={timer.state.phase !== "idle"}
-          />
+          {/* Keep focus intention available only when it belongs to the selected session mode. */}
+          {timer.state.mode === "focus" && (
+            <Field
+              // Give the visible and programmatic field relationship a stable identifier.
+              id="focus-intention"
+              // Explain that the optional field does not block starting a future session.
+              hint="Optional. You can change this before the session starts."
+              // Label the outcome rather than the implementation detail of a text input.
+              label="What will you move forward?"
+              // Offer a realistic prompt without inserting saved or synthetic personal data.
+              placeholder="For example, outline the project brief"
+              disabled={timer.state.phase !== "idle"}
+              maxLength={120}
+              onChange={(event) =>
+                updateFocusPlan({ type: "SET_INTENTION", intention: event.currentTarget.value })
+              }
+              value={focusPlan.intention}
+            />
+          )}
 
           {/* Keep the timestamp-derived clock outside a live region to avoid second-by-second speech. */}
           <div
@@ -270,16 +464,23 @@ export function App() {
                 >
                   Keep working
                 </Button>
-                <Button
-                  onClick={() =>
-                    timer.send(
-                      { type: "ADVANCE", now: Date.now(), durations: timer.preferences.durations },
-                      "Next session is ready.",
-                    )
-                  }
-                >
-                  Next session
-                </Button>
+                {/* Let completed breaks advance directly while focus completion enters reflection below. */}
+                {timer.state.mode !== "focus" && (
+                  <Button
+                    onClick={() =>
+                      timer.send(
+                        {
+                          type: "ADVANCE",
+                          now: Date.now(),
+                          durations: timer.preferences.durations,
+                        },
+                        "Next session is ready.",
+                      )
+                    }
+                  >
+                    Next session
+                  </Button>
+                )}
               </>
             )}
             {timer.state.phase === "skipped" && (
@@ -294,7 +495,7 @@ export function App() {
                 Next session
               </Button>
             )}
-            {timer.state.phase === "overtime" && (
+            {timer.state.phase === "overtime" && timer.state.mode !== "focus" && (
               <Button
                 onClick={() =>
                   timer.send(
@@ -332,6 +533,225 @@ export function App() {
             )}
           </div>
 
+          {/* Offer one-step capture only while an active focus session can be interrupted. */}
+          {timer.state.mode === "focus" &&
+            (timer.state.phase === "running" ||
+              timer.state.phase === "paused" ||
+              timer.state.phase === "overtime") && (
+              // Keep capture in one compact native form that never sends a timer event.
+              <form className="capture-panel" onSubmit={captureDistraction}>
+                {/* Explain the low-interruption purpose before the editable field. */}
+                <div>
+                  <strong>Something else on your mind?</strong>
+                  <span>Capture it without stopping this session.</span>
+                </div>
+                {/* Keep visitor wording bounded and rendered only as plain text later. */}
+                <Field
+                  id="distraction-capture"
+                  label="Quick capture"
+                  maxLength={160}
+                  onChange={(event) => setDistractionDraft(event.currentTarget.value)}
+                  placeholder="Write it down and return to focus"
+                  value={distractionDraft}
+                />
+                {/* Disable empty capture while preserving the visible one-step action. */}
+                <Button disabled={!distractionDraft.trim()} type="submit" variant="secondary">
+                  Capture and continue
+                </Button>
+              </form>
+            )}
+
+          {/* Review every pending thought after focus without forcing a choice during the timer. */}
+          {timer.state.mode === "focus" &&
+            (timer.state.phase === "completed" || timer.state.phase === "overtime") &&
+            pendingDistractions.length > 0 && (
+              // Give the review collection a clear heading and list relationship.
+              <section className="review-panel" aria-labelledby="distraction-review-title">
+                {/* Name the boundary in calm post-session language. */}
+                <h2 id="distraction-review-title">Review captured thoughts</h2>
+                {/* Explain that each item can leave the queue through one optional choice. */}
+                <p>Convert each thought into a task, keep it for later, or dismiss it.</p>
+                {/* Preserve capture order while presenting independent review actions. */}
+                <ul className="review-list">
+                  {pendingDistractions.map((distraction) => (
+                    // Use the stable transient identity across review updates.
+                    <li key={distraction.id}>
+                      {/* Render visitor-authored capture strictly as text. */}
+                      <strong>{distraction.text}</strong>
+                      {/* Allow actions to wrap without changing their logical order. */}
+                      <div>
+                        <Button
+                          disabled={focusPlan.tasks.length >= MAX_FOCUS_TASKS}
+                          onClick={() => resolveDistraction(distraction.id, "task")}
+                          variant="secondary"
+                        >
+                          Convert to task
+                        </Button>
+                        <Button
+                          onClick={() => resolveDistraction(distraction.id, "kept")}
+                          variant="quiet"
+                        >
+                          Keep for later
+                        </Button>
+                        <Button
+                          onClick={() => resolveDistraction(distraction.id, "dismissed")}
+                          variant="quiet"
+                        >
+                          Dismiss
+                        </Button>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
+          {/* Complete or skip reflection after each focus completion, including overtime. */}
+          {timer.state.mode === "focus" &&
+            timer.state.completedAt !== null &&
+            (timer.state.phase === "completed" || timer.state.phase === "overtime") && (
+              // Keep optional reflection visible in the flow without trapping visitors in a wizard.
+              <section className="reflection-panel" aria-labelledby="reflection-title">
+                {/* Name the short transition between focus and break. */}
+                <h2 id="reflection-title">Close this session gently</h2>
+                {/* Summarize the completed progress before asking for optional detail. */}
+                <p>
+                  You completed {Math.round(timer.state.plannedSeconds / 60)} focus minutes.
+                  Everything below is optional.
+                </p>
+                {/* Keep the next return point concise and directly editable. */}
+                <Field
+                  id="reflection-next-step"
+                  label="What is the next small step?"
+                  maxLength={120}
+                  onChange={(event) => setReflectionNextStep(event.currentTarget.value)}
+                  placeholder="For example, revise the opening paragraph"
+                  value={reflectionNextStep}
+                />
+                {/* Use native radios for the optional focus rating. */}
+                <fieldset className="rating-control">
+                  <legend>Focus rating, optional</legend>
+                  <div>
+                    {[1, 2, 3, 4, 5].map((rating) => (
+                      // Give each bounded numeric option a native label and stable identity.
+                      <label key={rating}>
+                        <input
+                          checked={reflectionRating === rating}
+                          name="focus-rating"
+                          onChange={() => setReflectionRating(rating)}
+                          type="radio"
+                          value={rating}
+                        />
+                        <span>{rating}</span>
+                      </label>
+                    ))}
+                  </div>
+                </fieldset>
+                {/* Link private notes to a visible native textarea label. */}
+                <label className="reflection-notes" htmlFor="reflection-notes">
+                  <span>Notes, optional</span>
+                  <textarea
+                    id="reflection-notes"
+                    maxLength={500}
+                    onChange={(event) => setReflectionNotes(event.currentTarget.value)}
+                    placeholder="Keep any useful context for yourself"
+                    value={reflectionNotes}
+                  />
+                </label>
+                {/* Offer explicit completion or carry-forward treatment for selected work. */}
+                {activeTask && (
+                  // Keep task outcomes adjacent to reflection rather than hidden in another page.
+                  <div className="reflection-task">
+                    <span>
+                      Current task: <strong>{activeTask.title}</strong>
+                    </span>
+                    <div>
+                      <Button
+                        onClick={() =>
+                          updateFocusPlan({ type: "COMPLETE_TASK", taskId: activeTask.id })
+                        }
+                        variant="secondary"
+                      >
+                        Mark task complete
+                      </Button>
+                      <Button
+                        disabled={activeTask.lastCarriedAt === timer.state.completedAt}
+                        onClick={() => {
+                          updateFocusPlan({
+                            type: "CARRY_TASK",
+                            taskId: activeTask.id,
+                            completedAt: timer.state.completedAt ?? 0,
+                          });
+                          setJourneyStatus("Task carried forward to the next focus session.");
+                        }}
+                        variant="quiet"
+                      >
+                        Carry forward
+                      </Button>
+                    </div>
+                  </div>
+                )}
+                {/* Save optional detail or continue immediately through an explicit skip. */}
+                <div className="reflection-actions">
+                  <Button onClick={() => finishReflection(false)}>Save and continue</Button>
+                  <Button onClick={() => finishReflection(true)} variant="quiet">
+                    Skip reflection
+                  </Button>
+                </div>
+              </section>
+            )}
+
+          {/* Offer quiet or locally guided support whenever the selected mode is a break. */}
+          {timer.state.mode !== "focus" && (
+            // Keep break guidance inside the same understandable timer surface.
+            <section className="break-panel" aria-labelledby="break-title">
+              <h2 id="break-title">How would you like to pause?</h2>
+              {/* Let quiet remain the default while guidance is always one choice away. */}
+              <SegmentedControl
+                label="Break experience"
+                name="break-style"
+                onChange={setBreakStyle}
+                options={[
+                  { value: "quiet", label: "Quiet" },
+                  { value: "guided", label: "Guided" },
+                ]}
+                value={breakStyle}
+              />
+              {breakStyle === "quiet" ? (
+                // Avoid filling quiet breaks with instructions or achievement pressure.
+                <p className="break-prompt">
+                  Step away if you can. Nothing needs your attention here.
+                </p>
+              ) : (
+                // Present every approved guide locally without media or network requests.
+                <div className="guided-break">
+                  <div className="guide-choices" aria-label="Guided break options">
+                    {BREAK_GUIDES.map((guide) => (
+                      // Select one short prompt through a native project button.
+                      <Button
+                        aria-pressed={breakGuideId === guide.id}
+                        key={guide.id}
+                        onClick={() => setBreakGuideId(guide.id)}
+                        variant="quiet"
+                      >
+                        {guide.label}
+                      </Button>
+                    ))}
+                  </div>
+                  {/* Show the selected instruction as ordinary readable text. */}
+                  <p className="guided-break__instruction">{activeBreakGuide?.instruction}</p>
+                </div>
+              )}
+            </section>
+          )}
+
+          {/* Announce focus-loop actions separately from timestamp transition announcements. */}
+          {journeyStatus && (
+            <Notice className="journey-status" role="status">
+              {journeyStatus}
+            </Notice>
+          )}
+
           {/* Ask for an explicit recovery choice instead of silently trusting a changed clock. */}
           {timer.clockRecovery && (
             <div className="clock-recovery" role="alert" aria-labelledby="clock-recovery-title">
@@ -359,42 +779,183 @@ export function App() {
 
         {/* Keep supporting planning and privacy context visible without crowding the central timer. */}
         <aside className="supporting-panels" aria-label="Session support">
-          {/* Explain the deliberately empty task state that Phase 4 will later replace. */}
-          <Card aria-labelledby="task-title">
+          {/* Keep a deliberately small Phase 4 task plan beside the quiet timer surface. */}
+          <Card aria-labelledby="task-title" id="tasks-panel" tabIndex={-1}>
             {/* Group the card heading and small neutral count on one readable line. */}
             <div className="card__heading-row">
               {/* Name the support panel for screen readers and visual readers alike. */}
               <h2 id="task-title">Current task</h2>
-              {/* Show a compact empty count without implying stored task data exists. */}
-              <span className="badge">0 selected</span>
+              {/* Show whether one unfinished task currently anchors the next focus session. */}
+              <span className="badge">{activeTask ? "1 selected" : "0 selected"}</span>
               {/* Close the supporting card heading after title and state. */}
             </div>
-            {/* Describe the empty state in calm, non-judgmental language. */}
-            <p className="muted-copy">No task is selected. That is completely fine.</p>
-            {/* Keep the unavailable future action visible as a reusable disabled pattern. */}
-            <Button disabled variant="secondary">
-              {/* Name the task action that becomes available when Phase 4 adds task state. */}
-              Choose a task
-              {/* Close the disabled task control after its label. */}
-            </Button>
-            {/* Close the task support surface after its complete empty state. */}
+            {/* Describe the selection calmly or show the current task in plain visitor-authored text. */}
+            {activeTask ? (
+              // Group the active wording, estimate, and completion action as one readable unit.
+              <div className="current-task">
+                {/* Render visitor content through React text interpolation and never as raw HTML. */}
+                <strong>{activeTask.title}</strong>
+                {/* Explain the lightweight estimate without presenting it as a deadline. */}
+                <span>
+                  Estimated {activeTask.estimatedSessions} focus{" "}
+                  {activeTask.estimatedSessions === 1 ? "session" : "sessions"}
+                  {activeTask.completedSessions > 0
+                    ? `, ${activeTask.completedSessions} completed`
+                    : ""}
+                </span>
+                {/* Let visitors finish the task without requiring a timer session first. */}
+                <Button
+                  onClick={() => updateFocusPlan({ type: "COMPLETE_TASK", taskId: activeTask.id })}
+                  variant="secondary"
+                >
+                  Mark complete
+                </Button>
+              </div>
+            ) : (
+              // Keep the no-selection state permissive because a task is always optional.
+              <p className="muted-copy">No task is selected. That is completely fine.</p>
+            )}
+
+            {/* Add concise work through native form behavior and bounded inputs. */}
+            <form className="task-form" onSubmit={addTask}>
+              {/* Reuse the accessible field primitive for the visitor's plain-text task wording. */}
+              <Field
+                disabled={focusPlan.tasks.length >= MAX_FOCUS_TASKS}
+                id="new-focus-task"
+                label="Add a small task"
+                maxLength={100}
+                onChange={(event) => setTaskDraft(event.currentTarget.value)}
+                placeholder="For example, review the first draft"
+                value={taskDraft}
+              />
+              {/* Keep the compact estimate associated with a visible native label. */}
+              <label className="task-estimate" htmlFor="task-estimate">
+                <span>Estimated sessions</span>
+                <select
+                  disabled={focusPlan.tasks.length >= MAX_FOCUS_TASKS}
+                  id="task-estimate"
+                  onChange={(event) => setTaskEstimate(Number(event.currentTarget.value))}
+                  value={taskEstimate}
+                >
+                  {/* Offer a small fixed range that avoids false precision. */}
+                  {Array.from({ length: MAX_ESTIMATED_SESSIONS }, (_, index) => index + 1).map(
+                    (estimate) => (
+                      // Use the estimate itself as the stable option identity and stored value.
+                      <option key={estimate} value={estimate}>
+                        {estimate}
+                      </option>
+                      // Close this estimate option after its concise numeric label.
+                    ),
+                  )}
+                </select>
+              </label>
+              {/* Add the draft only while the intentionally small task list has room. */}
+              <Button
+                disabled={!taskDraft.trim() || focusPlan.tasks.length >= MAX_FOCUS_TASKS}
+                type="submit"
+              >
+                Add task
+              </Button>
+            </form>
+
+            {/* Keep pending and completed work understandable without hiding either state. */}
+            {focusPlan.tasks.length > 0 && (
+              // Give the task collection a concise accessible name independent of its card heading.
+              <ul className="task-list" aria-label="Focus tasks">
+                {/* Render each visitor-created task as text with its available next action. */}
+                {focusPlan.tasks.map((task) => (
+                  // Preserve task identity across selection and completion updates.
+                  <li
+                    className={
+                      task.completed
+                        ? "task-list__item task-list__item--complete"
+                        : "task-list__item"
+                    }
+                    key={task.id}
+                  >
+                    {/* Keep title and estimate together before the relevant action. */}
+                    <span>
+                      <strong>{task.title}</strong>
+                      <small>
+                        {task.completedSessions} of {task.estimatedSessions}{" "}
+                        {task.estimatedSessions === 1 ? "session" : "sessions"}
+                      </small>
+                    </span>
+                    {/* Label completed work without presenting another unavailable control. */}
+                    {task.completed ? (
+                      <span className="badge">Complete</span>
+                    ) : task.id === focusPlan.activeTaskId ? (
+                      <span className="badge">Current</span>
+                    ) : (
+                      <Button
+                        onClick={() => updateFocusPlan({ type: "SELECT_TASK", taskId: task.id })}
+                        variant="quiet"
+                      >
+                        Choose
+                      </Button>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
+            {/* Explain the temporary boundary honestly before Phase 5 adds browser persistence. */}
+            <p className="field__hint">
+              Up to {MAX_FOCUS_TASKS} tasks. Planning data stays only until this page is refreshed
+              or closed for now.
+            </p>
+            {/* Keep deliberately retained distractions reachable after their review choice. */}
+            {focusJourney.distractions.some((item) => item.resolution === "kept") && (
+              // Group kept thoughts separately from actionable focus tasks.
+              <div className="kept-thoughts">
+                <h3>Kept for later</h3>
+                <ul>
+                  {focusJourney.distractions
+                    .filter((item) => item.resolution === "kept")
+                    .map((item) => (
+                      // Render retained visitor wording as plain text under its stable identity.
+                      <li key={item.id}>{item.text}</li>
+                    ))}
+                </ul>
+              </div>
+            )}
+            {/* Close the task support surface after selection, entry, and list states. */}
           </Card>
 
-          {/* Preserve one low-pressure summary area for later private progress data. */}
-          <Card aria-labelledby="today-title">
-            {/* Name the supporting summary without introducing synthetic achievement pressure. */}
-            <h2 id="today-title">A gentle start</h2>
-            {/* Provide an encouraging empty-state value that reads well in both themes. */}
+          {/* Present private progress derived from completed in-memory session records. */}
+          <Card aria-labelledby="today-title" id="progress-panel" tabIndex={-1}>
+            {/* Name the supporting summary without introducing streak pressure. */}
+            <h2 id="today-title">Your rise</h2>
+            {/* Pair the visual sunrise treatment with a complete semantic data alternative. */}
+            <div
+              aria-hidden="true"
+              className={`progress-rise progress-rise--${Math.min(4, progressSummary.todaySessions)}`}
+            >
+              <span />
+            </div>
+            {/* Provide a clear primary daily value without relying on the visual treatment. */}
             <p className="supporting-stat">
-              {/* Highlight the current local session count in a tabular number style. */}
-              <strong>0</strong>
+              {/* Highlight the current transient local session count in tabular numerals. */}
+              <strong>{progressSummary.todaySessions}</strong>
               {/* Explain the number immediately so it never depends on color or layout. */}
               <span>focus sessions today</span>
               {/* Close the supporting statistic after value and label. */}
             </p>
-            {/* Explain the local-first boundary without claiming persistence before Phase 5. */}
-            <Notice>Your future progress will stay private in this browser.</Notice>
-            {/* Close the daily support surface after its empty state and privacy explanation. */}
+            {/* Expose every visual progress value as concise semantic data. */}
+            <dl className="progress-data">
+              <div>
+                <dt>Focus minutes today</dt>
+                <dd>{progressSummary.todayMinutes}</dd>
+              </div>
+              <div>
+                <dt>Sessions in the last 7 days</dt>
+                <dd>{progressSummary.weekSessions}</dd>
+              </div>
+            </dl>
+            {/* Explain the current transient privacy boundary before Phase 5 persistence. */}
+            <Notice>
+              This progress is private and temporary until local history arrives in Phase 5.
+            </Notice>
+            {/* Close the progress surface after visual, semantic, and privacy context. */}
           </Card>
 
           {/* Demonstrate a recoverable permission explanation for later notification controls. */}
@@ -423,7 +984,7 @@ export function App() {
             // Preserve the stable destination name as React's list key.
             key={item}
             // Synchronize mobile and desktop selections through one shared state value.
-            onClick={() => setActiveNavigation(item)}
+            onClick={() => navigateTo(item)}
             // Use the quiet visual treatment inside the persistent mobile bar.
             variant="quiet"
           >
@@ -502,7 +1063,7 @@ export function App() {
           />
           <span>
             <strong>Start the next session automatically</strong>
-            <small>Manual transitions are the default.</small>
+            <small>Focus review stays available before an automatic break begins.</small>
           </span>
         </label>
         <label className="setting-toggle">
