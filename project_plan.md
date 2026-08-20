@@ -3,8 +3,8 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 15, 2026 at 11:12 PM EDT |
-| Last updated | August 16, 2026 at 2:50:30 AM EDT |
-| ISO 8601 last updated | `2026-08-16T02:50:30-04:00` |
+| Last updated | August 20, 2026 at 1:21:33 PM EDT |
+| ISO 8601 last updated | `2026-08-20T13:21:33-04:00` |
 | Timezone | America/Toronto (UTC−04:00) |
 | Estimated reading time | 34 minutes |
 
@@ -645,8 +645,8 @@ Pomorise will earn trust through details:
 - Plain-language privacy explanations
 - No network requests beyond loading the static application itself
 - Beginner-friendly adjacent comments for every human-authored code line, with companion annotations for formats that cannot contain comments
-- A detailed report for every meaningful phase, run, or verified step, stored under `testreports/<phase_or_run_or_step>/test_report.md`
-- Local screenshot evidence, raw command logs, failures, and retest history in every real test report
+- One detailed comprehensive test report after all implementation phases, stored under `testreports/final-comprehensive-suite/test_report.md`
+- Local screenshot evidence, raw command logs, failures, and retest history for the final suite
 - A deep beginner-focused development narrative under `development_docs/<phase_or_run_or_step>/doc.md` for every meaningful implementation unit
 - Traceable design methods, system views, decisions, assumptions, files, flows, alternatives, limitations, and learning guidance paired with test evidence
 
@@ -680,7 +680,7 @@ Add the manifest, service worker, caching rules, update experience, accessibilit
 
 ### 7. Release verification and publication
 
-Run every clean-install quality gate, deploy through GitHub Actions, and verify Pomorise 1.0: First Light on its public GitHub Pages URL.
+After Phases 1 through 6 are implemented, run one comprehensive clean-install suite covering every quality gate, deploy through GitHub Actions, and verify Pomorise 1.0: First Light on its public GitHub Pages URL.
 
 ## Out of scope
 
@@ -730,7 +730,7 @@ The plan passed the following sanity checks:
 - **Deployment fit:** Vite can produce the `dist` artifact expected by the GitHub Pages workflow.
 - **Tooling fit:** Every confirmed tool has a defined purpose, an official source, and no required runtime data service.
 - **Rejection fit:** Every rejected tool has a confirmed replacement and an explicit condition for reconsideration.
-- **Documentation fit:** Development narratives explain intent, architecture, decisions, and assumptions, while paired test reports preserve observed evidence, screenshots, failures, and retests.
+- **Documentation fit:** Development narratives explain intent, architecture, decisions, and assumptions, while the comprehensive final report preserves integrated evidence, screenshots, failures, and retests.
 - **Data-flow fit:** Personal records remain inside browser-controlled storage or explicit user-created export files.
 
 Fact-checking is continuous. Before implementation, dependency choices and browser-support targets must be verified again. Before release, the built application must be checked for unexpected network requests, storage behavior, accessibility, offline behavior, and accurate privacy wording.
@@ -758,7 +758,7 @@ Fact-checking is continuous. Before implementation, dependency choices and brows
 - **State machine:** A model that limits the timer to defined states and valid transitions, such as idle, running, paused, completed, and skipped.
 - **Static hosting:** Hosting that serves prebuilt files without running a private application server for each request.
 - **Telemetry:** Data sent from an application to its operator about usage, performance, or behavior. Pomorise will not add application telemetry.
-- **Test report:** The timestamped evidence record containing scope, environment, commands, cases, logs, screenshots, failures, retests, risks, and conclusion for one phase or run.
+- **Test report:** The timestamped evidence record containing scope, environment, commands, cases, logs, screenshots, failures, retests, risks, and the conclusion for the comprehensive Phase 7 suite.
 - **Transaction:** A group of database operations that succeeds or fails as one unit where the storage engine supports it.
 - **Validation:** Checking unknown data against explicit rules before the application trusts or stores it.
 - **Wordmark:** A brand name drawn or typeset as a recognizable part of its visual identity.
@@ -808,5 +808,5 @@ Fact-checking is continuous. Before implementation, dependency choices and brows
 11. Keep every intended tool in a table with its category, status, role, selection reason, privacy review, and official link.
 12. Update the data-flow section whenever storage, networking, export, deletion, offline, or deployment behavior changes.
 13. Keep rejected tools in the audit with a reason, confirmed replacement, and evidence-based reconsideration condition.
-14. Require a timestamped, screenshot-backed test report before checking off any implementation phase exit gate.
-15. Require a current beginner-focused development document paired with the corresponding test report for every meaningful implementation unit.
+14. Require one timestamped, screenshot-backed comprehensive test report before checking off the Phase 7 release gate; Phases 1 through 6 close on implementation readiness and final-suite coverage review.
+15. Require a current beginner-focused development document for every meaningful implementation unit and link each one to the relevant final-suite acceptance criteria.

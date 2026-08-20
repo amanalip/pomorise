@@ -3,10 +3,10 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 15, 2026 at 10:36 PM EDT |
-| Last updated | August 16, 2026 at 2:50:30 AM EDT |
-| ISO 8601 last updated | `2026-08-16T02:50:30-04:00` |
+| Last updated | August 20, 2026 at 1:21:33 PM EDT |
+| ISO 8601 last updated | `2026-08-20T13:21:33-04:00` |
 | Timezone | America/Toronto (UTC−04:00) |
-| Estimated reading time | 40 minutes |
+| Estimated reading time | 42 minutes |
 | Verification status | Commit facts checked against local Git history; technical claims checked against linked primary documentation |
 
 Every commit moves Pomorise somewhere. This changelog tells that story in chronological detail, capturing the purpose, files, behavior, implementation choices, validation, and follow-up behind each step.
@@ -17,6 +17,7 @@ The newest commit should be added at the top of the **Commit history** section.
 
 - [Entry template](#entry-template)
 - [Commit history](#commit-history)
+  - [Pending: Consolidate verification into one final suite](#pending-consolidate-verification-into-one-final-suite)
   - [Pending: Establish beginner-focused development documentation](#pending-establish-beginner-focused-development-documentation)
   - [`00c4ec9`: Establish screenshot-backed test reporting](#00c4ec9-establish-screenshot-backed-test-reporting)
   - [`554be76`: Define seven-phase implementation plan](#554be76-define-seven-phase-implementation-plan)
@@ -95,6 +96,53 @@ Describe what a visitor or maintainer will notice. Write “None” when the cha
 ```
 
 ## Commit history
+
+### `Pending`: Consolidate verification into one final suite
+
+- **Status:** Prepared for the next commit
+- **Prepared:** 2026-08-20 13:21 EDT
+- **Author:** Aman Ali with Codex collaboration
+- **Full commit:** Assigned after the commit is created
+- **Expected files:** Every project Markdown document
+
+#### Purpose
+
+Reduce repeated execution and reporting overhead by implementing all seven phases first and running one comprehensive verification suite in Phase 7.
+
+#### Decision context
+
+The project owner observed that separate full suites after every phase would repeat integrated checks and consume additional time and tokens. They approved one final suite, while retaining authored test coverage during development and allowing lightweight targeted diagnostics when needed to unblock implementation.
+
+#### Changes
+
+- Changed Phases 1 through 6 from separate evidence gates to implementation-readiness gates.
+- Kept phase-specific acceptance criteria and required their coverage to be ready for the final suite.
+- Assigned static, unit, component, browser, accessibility, privacy, storage, offline, responsive, performance, build, deployment, and public-site checks to Phase 7.
+- Replaced per-phase test-report directories with `testreports/final-comprehensive-suite/test_report.md`.
+- Updated the report and development-document templates for many-to-one traceability between phase narratives and final evidence.
+- Preserved earlier discussion and changelog entries as historical decisions and recorded this policy as their explicit successor.
+- Synchronized all Markdown instructions, indexes, definitions, timestamps, and current decision summaries.
+
+#### User-visible impact
+
+There is no application interface change. The implementation workflow now performs one complete verification and reporting pass at release time, reducing repeated work while keeping final coverage requirements intact.
+
+#### Risks and controls
+
+- Defects may be discovered later because full suites no longer run at every phase boundary. Tests are still authored with each implementation unit, and targeted diagnostics remain available for blockers or uncertain behavior.
+- A single suite can produce a large report. Cases remain grouped by phase and requirement so failures are traceable to the responsible development document.
+- Integration failures may affect several phases. The final report preserves failures, fixes, and retests without erasing history.
+
+#### Validation
+
+- Confirmed there is one formal implementation-plan file containing seven phases.
+- Checked every Markdown file for active per-phase report instructions and replaced them with the final-suite policy.
+- Preserved historical descriptions of superseded requirements in dated decision and commit records.
+- Checked Markdown changes for whitespace errors and consistent `final-comprehensive-suite` paths.
+
+#### Follow-up
+
+- Create the comprehensive report directory from the updated template when Phase 7 verification begins.
 
 ### `Pending`: Establish beginner-focused development documentation
 

@@ -3,8 +3,8 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 16, 2026 at 2:42:00 AM EDT |
-| Last updated | August 16, 2026 at 2:50:30 AM EDT |
-| ISO 8601 last updated | `2026-08-16T02:50:30-04:00` |
+| Last updated | August 20, 2026 at 1:21:33 PM EDT |
+| ISO 8601 last updated | `2026-08-20T13:21:33-04:00` |
 | Timezone | America/Toronto (UTC−04:00) |
 | Estimated reading time | 11 minutes |
 | Verification status | Fact-checked and sanity-checked against the implementation plan, documentation system, and linked primary references |
@@ -69,11 +69,11 @@ Each document type has a separate job:
 | `project_plan.md` | What product are we building and why? | Product-wide direction |
 | `implementation_plan.md` | In which order will we build it, and what gates must pass? | Seven-phase execution plan |
 | `development_docs/<identifier>/doc.md` | What was built in this step, how was it designed, and how does it work? | Deep technical and educational narrative |
-| `testreports/<identifier>/test_report.md` | What evidence shows the step works or fails? | Detailed validation evidence with logs and screenshots |
+| `testreports/final-comprehensive-suite/test_report.md` | What evidence shows the integrated release works or fails? | Release-wide validation evidence with logs and screenshots |
 | `changelog.md` | What did each commit change in the repository history? | Detailed chronological summary |
 | `meta_thinking.md` | Which user requests and confirmed decisions shaped the work? | Conversation and decision history |
 
-The development document and test report should share the same identifier whenever they describe the same unit of work. This creates a direct pair between explanation and evidence.
+Each development document keeps its own implementation identifier. The single final report traces its cases back to all relevant development documents, creating a many-to-one connection between implementation explanation and integrated evidence.
 
 ## Required path
 
@@ -91,12 +91,10 @@ development_docs/step-timer-state-machine/doc.md
 development_docs/run-2026-08-16-storage-migration/doc.md
 ```
 
-The corresponding evidence should use the same identifier:
+The corresponding integrated evidence is collected once after implementation:
 
 ```text
-testreports/phase-01-foundation/test_report.md
-testreports/step-timer-state-machine/test_report.md
-testreports/run-2026-08-16-storage-migration/test_report.md
+testreports/final-comprehensive-suite/test_report.md
 ```
 
 ## Identifier rules
@@ -145,7 +143,7 @@ Every real `doc.md` must include, when relevant:
 - Performance choices and measurable budgets where applicable.
 - Dependencies introduced, retained, rejected, or removed.
 - The line-by-line comment strategy and companion annotations used for non-commentable files.
-- Testing strategy and a direct link to the paired test report.
+- Testing strategy and a direct link to the comprehensive final report once it exists.
 - Screenshots or diagrams when they materially improve understanding.
 - Known limitations, technical debt, deferred work, and revisit triggers.
 - A guided reading path and exercises for beginners.
@@ -200,14 +198,14 @@ When one development step spans multiple commits, list them chronologically and 
 
 The development document explains the intended system. The test report records observed evidence.
 
-Each pair must cross-link:
+The implementation narratives and comprehensive evidence must cross-link:
 
 ```text
-development_docs/<identifier>/doc.md
-testreports/<identifier>/test_report.md
+development_docs/<phase_or_step_identifier>/doc.md
+testreports/final-comprehensive-suite/test_report.md
 ```
 
-The development document must not claim that behavior passed unless the paired report supports that result. If a test exposes a defect, changed assumption, or design correction, update both documents without erasing the earlier reasoning or failure history.
+Before Phase 7, a development document may state that implementation is ready for final verification, but it must not claim that behavior passed. A passing claim requires support from the comprehensive final report. If the suite exposes a defect, changed assumption, or design correction, update the affected development document and final report without erasing earlier reasoning or failure history.
 
 ## Document lifecycle
 
@@ -215,7 +213,7 @@ The development document must not claim that behavior passed unless the paired r
 2. Record the requirement, starting point, assumptions, constraints, and intended design.
 3. Update the architecture, decisions, files, and flows as implementation becomes concrete.
 4. Keep the document synchronized with code and line-by-line comments.
-5. Link the paired test report when testing begins.
+5. Link the comprehensive final report when Phase 7 testing begins.
 6. Incorporate defects, corrections, retests, and revised assumptions.
 7. Complete the documentation checklist.
 8. Add the document to this navigation table.
@@ -230,7 +228,7 @@ Development documents are public repository artifacts.
 - Do not paste private environment output without reviewing it.
 - Redact sensitive material before committing and explain the redaction.
 - Describe security and privacy boundaries without publishing exploitable secrets.
-- Link local screenshots from the paired test report rather than duplicating large evidence files unnecessarily.
+- Link local screenshots from the comprehensive final report rather than duplicating large evidence files unnecessarily.
 
 ## Fact-check and sanity-check record
 
@@ -246,7 +244,7 @@ The structure passed these sanity checks:
 - **Purpose fit:** It explains what changed, why, and how rather than repeating a diff.
 - **Learning fit:** It introduces prerequisites, examples, reading order, mistakes, exercises, and next learning.
 - **Architecture fit:** It covers context, building blocks, runtime, data, state, deployment, decisions, risks, and glossary terms.
-- **Evidence fit:** It links the matching test report and does not claim success without observed evidence.
+- **Evidence fit:** It links the comprehensive final report and does not claim success without observed evidence.
 - **Traceability fit:** Requirements connect to decisions, files, commits, tests, and reports.
 - **Privacy fit:** Only synthetic examples and reviewed public-safe artifacts are allowed.
 
@@ -275,7 +273,7 @@ The structure passed these sanity checks:
 ## Maintenance rules
 
 1. Add every real development document to the navigation table.
-2. Use the same identifier as the paired test report whenever both describe the same work.
+2. Keep development identifiers stable and ensure the comprehensive final report links back to every covered document.
 3. Preserve decisions, rejected alternatives, assumptions, and changed reasoning.
 4. Keep file and commit references accurate.
 5. Update the document alongside the implementation rather than reconstructing it later from memory.
@@ -283,4 +281,4 @@ The structure passed these sanity checks:
 7. Include human-readable and ISO timestamps, timezone, and estimated reading time.
 8. Keep the table of contents, glossary, further reading, and verification record current.
 9. Keep the writing detailed, engaging, beginner-friendly, and free of em dashes.
-10. Do not call work complete until the development document and paired test report agree with the code and evidence.
+10. Call Phases 1 through 6 implementation-ready only after their documentation and planned coverage agree with the code; call the release complete only after the comprehensive final report agrees with all affected documents.

@@ -3,10 +3,10 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 15, 2026 at 10:36 PM EDT |
-| Last updated | August 16, 2026 at 2:50:30 AM EDT |
-| ISO 8601 last updated | `2026-08-16T02:50:30-04:00` |
+| Last updated | August 20, 2026 at 1:21:33 PM EDT |
+| ISO 8601 last updated | `2026-08-20T13:21:33-04:00` |
 | Timezone | America/Toronto (UTC−04:00) |
-| Estimated reading time | 23 minutes |
+| Estimated reading time | 24 minutes |
 | Verification status | Fact-checked and sanity-checked against the primary sources in **Further reading** |
 
 This is Pomorise's shared memory. It captures the conversations, requests, decisions, and working agreements that shape the product. It does not contain private internal reasoning.
@@ -37,6 +37,7 @@ This is Pomorise's shared memory. It captures the conversations, requests, decis
   - [Seven-phase implementation planning activated](#2026-08-16-seven-phase-implementation-planning-activated)
   - [Screenshot-backed test reporting required](#2026-08-16-screenshot-backed-test-reporting-required)
   - [Beginner-focused development documents required](#2026-08-16-beginner-focused-development-documents-required)
+  - [Final testing consolidated](#2026-08-20-final-testing-consolidated)
 - [Confirmed decisions](#confirmed-decisions)
 - [Open decisions](#open-decisions)
 - [Documentation verification standard](#documentation-verification-standard)
@@ -396,6 +397,21 @@ The requested depth goes beyond a changed-file summary. Each document records th
 
 Development documents and test reports will use the same identifier when they describe the same unit of work. The development document explains intent and implementation, while the report provides observable evidence. Both remain connected to the changelog, project direction, implementation phase, and conversation record.
 
+### 2026-08-20: Final testing consolidated
+
+| Conversation details | Value |
+| --- | --- |
+| Conversation date | August 20, 2026 |
+| Conversation timestamp | Exact send time was not retained |
+| Entry recorded | August 20, 2026 at 1:21:33 PM EDT |
+| ISO 8601 entry timestamp | `2026-08-20T13:21:33-04:00` |
+| Timezone | America/Toronto (UTC−04:00) |
+| Entry reading time | 1 minute |
+
+The project owner proposed replacing a complete test run at the end of every phase with one comprehensive test suite after implementation is finished. They confirmed the approach and asked for every Markdown document to be synchronized.
+
+Phases 1 through 6 now close on implementation readiness, authored test coverage, documented manual checks, and lightweight diagnostics only when needed to unblock work. Phase 7 runs the complete static, unit, component, browser, accessibility, privacy, storage, offline, responsive, performance, build, deployment, and public-site verification suite. One report at `testreports/final-comprehensive-suite/test_report.md` preserves the integrated evidence. Earlier discussion entries remain unchanged as history, but this decision supersedes their per-phase report policy.
+
 ## Confirmed decisions
 
 These are the firm foundations beneath Pomorise:
@@ -424,11 +440,11 @@ These are the firm foundations beneath Pomorise:
 - **Logo direction:** Segmented timer ring, rising sun, and subtle lowercase `p`, with coordinated approved light and dark variants
 - **Implementation sequence:** Seven phases with an observable exit gate for each phase
 - **Code readability:** Every human-authored code line requires an adjacent beginner-friendly explanation, with companion annotations for non-commentable formats
-- **Phase checklists:** Every phase has checkable validation items and a mandatory evidence-based closeout checklist
-- **Test reporting:** Every meaningful phase, run, or independently verified step requires a detailed report under `testreports/` with raw logs and embedded screenshots
+- **Phase checklists:** Phases 1 through 6 use implementation-readiness checklists; Phase 7 uses the comprehensive evidence-based release checklist
+- **Test reporting:** One detailed report at `testreports/final-comprehensive-suite/test_report.md` records the complete Phase 7 suite with raw logs and embedded screenshots
 - **Document metadata:** Every Markdown document requires dated human-readable timestamps, timezone, and estimated reading time, plus ISO 8601 timestamps where exact values are known
 - **Development documentation:** Every meaningful implementation phase, run, step, or commit requires an in-depth beginner-focused narrative under `development_docs/`
-- **Explanation and evidence pairing:** Matching development documents and test reports share one identifier and cross-link
+- **Explanation and evidence pairing:** Phase and step development documents keep individual identifiers and cross-link to the shared comprehensive final report
 
 ## Open decisions
 

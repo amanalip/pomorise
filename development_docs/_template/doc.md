@@ -5,9 +5,9 @@
 | Document identifier | `_template` |
 | Document status | Template, replace with `Draft`, `Current`, `Superseded`, or `Blocked` in a copied document |
 | Created | August 16, 2026 at 2:42:00 AM EDT |
-| Last updated | August 16, 2026 at 2:50:30 AM EDT |
+| Last updated | August 20, 2026 at 1:21:33 PM EDT |
 | ISO 8601 created | `2026-08-16T02:42:00-04:00` |
-| ISO 8601 last updated | `2026-08-16T02:50:30-04:00` |
+| ISO 8601 last updated | `2026-08-20T13:21:33-04:00` |
 | Timezone | America/Toronto (UTC−04:00) |
 | Estimated reading time | 22 minutes for this blank template; recalculate after completing a copied document |
 | Intended audience | Beginners, new contributors, maintainers, reviewers, and the project owner |
@@ -86,7 +86,7 @@ Include:
 - What a visitor or contributor can now do.
 - The central design idea.
 - The most important limitation.
-- Whether the paired test report passed, failed, or remains incomplete.
+- Whether this work is implementation-ready for Phase 7, or whether the comprehensive final report later passed, failed, or remains incomplete.
 
 ## Document and commit identity
 
@@ -104,7 +104,7 @@ Include:
 | Branch | Replace |
 | Starting commit | Replace with full hash |
 | Pull request or issue | Replace with link or `None` |
-| Paired test report | Replace with a relative link after `testreports/<same-identifier>/test_report.md` exists |
+| Comprehensive final report | Link `testreports/final-comprehensive-suite/test_report.md` after Phase 7 testing begins, or write `Not created yet` |
 | Related changelog entry | Link or describe the heading |
 | Related conversation entry | Link or describe the heading |
 
@@ -180,13 +180,13 @@ Explain each arrow, boundary, store, process, and abbreviation directly below th
 
 ### Acceptance boundary
 
-State what must be true for this development work to be considered implemented. Testing success belongs in the paired report, while this section states the intended boundary.
+State what must be true for this development work to be considered implementation-ready. Testing success belongs in the comprehensive final report, while this section states the intended boundary.
 
 ## Requirements traceability
 
 | Requirement ID | Requirement | Source | Design element | Code location | Test case |
 | --- | --- | --- | --- | --- | --- |
-| REQ-001 | Replace | Link plan or request | Explain solution part | Link file and symbol | Link paired report case |
+| REQ-001 | Replace | Link plan or request | Explain solution part | Link file and symbol | Link final-suite case |
 
 Every important behavior and quality requirement should connect to a design choice, implementation location, and test case.
 
@@ -421,7 +421,7 @@ Explain important labels, instructions, warnings, empty states, confirmations, a
 
 | Accessibility area | Design requirement | Implementation | Manual check | Automated evidence |
 | --- | --- | --- | --- | --- |
-| Semantics, names, keyboard, focus, contrast, zoom, motion, sound, or screen reader | Explain | Link code | Link case | Link paired report |
+| Semantics, names, keyboard, focus, contrast, zoom, motion, sound, or screen reader | Explain | Link code | Link final-suite case | Link comprehensive report |
 
 Explain:
 
@@ -548,12 +548,12 @@ Explain the comment strategy used in this step. Include examples of comments tha
 
 ## Testing and evidence
 
-### Paired report
+### Comprehensive final report
 
-Use the same identifier and link the report when it exists:
+Link the shared Phase 7 report when it exists:
 
 ```text
-testreports/<same-identifier>/test_report.md
+testreports/final-comprehensive-suite/test_report.md
 ```
 
 ### Evidence summary
@@ -564,9 +564,9 @@ testreports/<same-identifier>/test_report.md
 
 ### Screenshots
 
-Link to the paired report’s screenshot index rather than duplicating the same image files. Embed a screenshot here only when it teaches architecture or design better than the test report caption.
+Link to the comprehensive report’s screenshot index rather than duplicating the same image files. Embed a screenshot here only when it teaches architecture or design better than the test report caption.
 
-Never change this document’s design claims to `Passed` without matching evidence in the paired report.
+Before Phase 7, use `Implementation-ready`, `Incomplete`, or `Blocked` rather than `Passed`. Never change a behavior claim to `Passed` without matching evidence in the comprehensive final report.
 
 ## Rejected alternatives
 
@@ -646,7 +646,7 @@ Link follow-up work to the project plan, implementation plan, issue, or next dev
 - [ ] Line-by-line comments and companion annotations are reviewed.
 - [ ] Rejected alternatives and known limitations are preserved.
 - [ ] The beginner reading path, example, mistakes, and exercises are complete.
-- [ ] The paired test report is linked and agrees with the development claims.
+- [ ] The comprehensive final report is linked when it exists and agrees with the development claims; before Phase 7, planned final-suite cases are identified.
 - [ ] Glossary terms and authoritative further reading are current.
 - [ ] `development_docs/README.md` links to this document.
 - [ ] `changelog.md` and `meta_thinking.md` are synchronized.
@@ -663,7 +663,7 @@ Link follow-up work to the project plan, implementation plan, issue, or next dev
 
 List each important claim, its source, the date checked, and whether it is fact, inference, project decision, or unverified assumption. Record contradictions and corrections.
 
-Sanity-check the finished narrative for internal contradictions, impossible browser promises, mismatched file paths, stale decisions, unsupported success claims, missing privacy boundaries, missing accessibility behavior, and disagreement with the paired test report.
+Sanity-check the finished narrative for internal contradictions, impossible browser promises, mismatched file paths, stale decisions, unsupported success claims, missing privacy boundaries, missing accessibility behavior, and disagreement with the comprehensive final report when it exists.
 
 ## Glossary
 
@@ -700,6 +700,7 @@ Sanity-check the finished narrative for internal contradictions, impossible brow
 | --- | --- | --- | --- | --- |
 | August 16, 2026 at 2:42:00 AM EDT | `2026-08-16T02:42:00-04:00` | Codex with Aman Ali’s direction | Created reusable template | Establish deep beginner-focused documentation before development starts |
 | August 16, 2026 at 2:50:30 AM EDT | `2026-08-16T02:50:30-04:00` | Codex | Synchronized template with implementation and test-report requirements | Keep explanation, evidence, and phase closeout connected |
+| August 20, 2026 at 1:21:33 PM EDT | `2026-08-20T13:21:33-04:00` | Codex | Consolidated verification into one Phase 7 suite | Keep phase narratives separate while sharing integrated release evidence |
 
 Keep earlier rows. Add a new row for every substantial revision instead of rewriting history.
 
@@ -709,7 +710,7 @@ Keep earlier rows. Add a new row for every substantial revision instead of rewri
 2. Update the document during development, not only after the code is finished.
 3. Keep facts, assumptions, decisions, alternatives, and test evidence visibly distinct.
 4. Preserve superseded decisions and explain what replaced them.
-5. Use the same identifier as the paired test report.
+5. Keep the development identifier stable and link its acceptance criteria to the shared comprehensive final report.
 6. Keep file, symbol, commit, requirement, and evidence links accurate.
 7. Use synthetic examples and review every artifact for sensitive information.
 8. Recalculate timestamps and estimated reading time after substantial edits.
