@@ -352,7 +352,7 @@ test("resets only preferences and continues when storage protection is declined"
   // Apply the reset through its explicit confirmation action.
   await page.getByRole("button", { name: "Yes, reset preferences" }).click();
   // Exercise the optional persistent-storage request after its plain-language explanation.
-  await page.getByRole("button", { name: "Ask browser to protect data" }).click();
+  await page.getByRole("button", { name: "Ask browser to keep Pomorise data" }).click();
   // Require an honest best-effort result without disabling backup or timer behavior.
   await expect(page.getByText(/browser kept best-effort storage/)).toBeVisible();
   // Return to preferences to inspect both default owners visibly.

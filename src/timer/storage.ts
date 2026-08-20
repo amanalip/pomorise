@@ -33,7 +33,7 @@ export interface TimerPreferences {
 export const DEFAULT_TIMER_PREFERENCES: TimerPreferences = {
   durations: { ...DEFAULT_DURATIONS },
   automaticTransitions: false,
-  soundEnabled: true,
+  soundEnabled: false,
   notificationsEnabled: false,
 };
 

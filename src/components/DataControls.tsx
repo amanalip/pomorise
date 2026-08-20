@@ -21,7 +21,7 @@ import {
 } from "../data/database";
 
 // Keep the application version visible without introducing a runtime network check.
-const APPLICATION_VERSION = "1.0.0";
+const APPLICATION_VERSION = "1.0.1";
 
 // Describe the callback used to synchronize React after transactional database changes.
 interface DataControlsProps {
@@ -258,8 +258,9 @@ export function DataControls({
           <div>
             <h2 id="storage-title">Storage protection</h2>
             <p>
-              Browsers can clear site data or evict it when space is low. Private browsing is not
-              suitable for durable history.
+              Pomorise saves tasks and history in this browser. If device storage runs low, the
+              browser may remove that data automatically. This request asks the browser to keep it,
+              but protection is not guaranteed. Private-browsing data remains temporary.
             </p>
           </div>
           <span className={`storage-state storage-state--${persistentState}`}>
@@ -268,7 +269,7 @@ export function DataControls({
         </div>
         {persistentState !== "granted" && (
           <Button onClick={() => void requestPersistentStorage()} variant="secondary">
-            Ask browser to protect data
+            Ask browser to keep Pomorise data
           </Button>
         )}
       </section>

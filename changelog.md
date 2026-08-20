@@ -1,13 +1,13 @@
 # Pomorise Commit Changelog
 
-| Document information | Value |
-| --- | --- |
-| Created | August 15, 2026 at 10:36 PM EDT |
-| Last updated | August 20, 2026 at 7:04:00 PM EDT |
-| ISO 8601 last updated | `2026-08-20T19:04:00-04:00` |
-| Timezone | America/Toronto (UTC−04:00) |
-| Estimated reading time | 42 minutes |
-| Verification status | Commit facts checked against local Git history; technical claims checked against linked primary documentation |
+| Document information   | Value                                                                                                         |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------- |
+| Created                | August 15, 2026 at 10:36 PM EDT                                                                               |
+| Last updated           | August 20, 2026 at 7:04:00 PM EDT                                                                             |
+| ISO 8601 last updated  | `2026-08-20T19:04:00-04:00`                                                                                   |
+| Timezone               | America/Toronto (UTC−04:00)                                                                                   |
+| Estimated reading time | 42 minutes                                                                                                    |
+| Verification status    | Commit facts checked against local Git history; technical claims checked against linked primary documentation |
 
 Every commit moves Pomorise somewhere. This changelog tells that story in chronological detail, capturing the purpose, files, behavior, implementation choices, validation, and follow-up behind each step.
 
@@ -108,6 +108,24 @@ Describe what a visitor or maintainer will notice. Write “None” when the cha
 ```
 
 ## Commit history
+
+### `Pending`: Prepare Pomorise 1.0.1 usability fixes
+
+- **Status:** Implemented with focused regression coverage
+- **Date:** August 20, 2026
+
+#### Changes
+
+- Connected the timer session indicator to the selected task's estimated and completed sessions.
+- Improved desktop Settings sizing, scrolling, duration-field alignment, and data-card containment.
+- Made completion sound opt-in with an explicit browser confirmation and retained native notification permission requests.
+- Rewrote storage protection in plain language and renamed its action for clarity.
+- Added the completed-task history view and changed the task limit to count unfinished work only.
+- Updated application and package metadata to version 1.0.1.
+
+#### Validation
+
+- Focused TypeScript, unit, component, formatting, and lint checks only. No broad end-to-end suite was run.
 
 ### `Pending`: Publish First Light evidence and release notes
 

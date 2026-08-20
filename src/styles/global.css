@@ -1330,7 +1330,11 @@ img {
   /* Keep settings above the shell and its compact sticky navigation. */
   z-index: var(--layer-dialog);
   /* Limit the modal to a readable compact measure on wide screens. */
-  width: min(calc(100% - 2rem), 33rem);
+  width: min(calc(100% - 2rem), 42rem);
+  /* Keep every setting and the completion action within the visible desktop viewport. */
+  max-height: calc(100dvh - 2rem);
+  /* Scroll only the dialog when a short viewport cannot contain all settings. */
+  overflow: auto;
   /* Remove inconsistent browser dialog margins inside the centered modal algorithm. */
   margin: auto;
   /* Paint the dialog with the active raised surface. */
@@ -1356,7 +1360,7 @@ img {
 }
 
 /* Keep the completion action reachable while a longer data view scrolls beneath it. */
-.dialog--wide .dialog__actions {
+.dialog__actions {
   position: sticky;
   bottom: calc(-1 * clamp(var(--space-6), 5vw, var(--space-8)));
   z-index: 1;
@@ -1391,13 +1395,19 @@ img {
 /* Use a soft editorial hero to communicate the privacy promise before technical controls. */
 .data-overview {
   display: grid;
-  grid-template-columns: minmax(0, 1.5fr) minmax(12rem, 0.8fr);
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-5);
-  align-items: end;
+  align-items: start;
   padding: clamp(var(--space-5), 4vw, var(--space-7));
   background: linear-gradient(135deg, var(--color-accent-soft), var(--color-surface-muted));
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
+}
+
+/* Prevent long privacy copy from escaping its rounded overview surface. */
+.data-overview > * {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 /* Keep ownership headings and explanations in a compact readable rhythm. */
@@ -1428,6 +1438,7 @@ img {
 /* Present aggregate counts as calm facts instead of performance targets. */
 .data-counts {
   display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--space-2);
 }
 
@@ -1719,10 +1730,17 @@ img {
 /* Keep every duration label visibly connected to its number input. */
 .duration-settings label {
   display: grid;
+  grid-template-rows: 2.5rem 3.25rem;
   gap: var(--space-2);
   color: var(--color-ink-muted);
   font-size: 0.875rem;
   font-weight: 700;
+}
+
+/* Give every duration box the same complete grid-cell dimensions. */
+.duration-settings .field__control {
+  width: 100%;
+  height: 3.25rem;
 }
 
 /* Present optional timer preferences as full-width native checkbox targets. */
@@ -1861,6 +1879,11 @@ img {
     grid-template-columns: minmax(0, 1fr);
   }
 
+  /* Stack record counts so each label remains contained at narrow widths. */
+  .data-counts {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   /* Let status labels move below longer ownership explanations when necessary. */
   .data-section__heading {
     flex-direction: column;
@@ -1929,6 +1952,11 @@ img {
   /* Stack duration choices before their labels become cramped. */
   .duration-settings {
     grid-template-columns: 1fr;
+  }
+
+  /* Let stacked duration labels use their natural height above equal-sized inputs. */
+  .duration-settings label {
+    grid-template-rows: auto 3.25rem;
   }
   /* Close the mobile breakpoint after protecting narrow controls and surfaces. */
 }

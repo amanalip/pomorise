@@ -2,14 +2,14 @@
 
 Rise one session at a time.
 
-| Document information | Value |
-| --- | --- |
-| Created | August 15, 2026 at 10:14:39 PM EDT |
-| Last updated | August 20, 2026 at 7:04:00 PM EDT |
-| ISO 8601 last updated | `2026-08-20T19:04:00-04:00` |
-| Timezone | America/Toronto (UTC−04:00) |
-| Estimated reading time | 3 minutes |
-| Verification status | Pomorise 1.0 published; Phase 7 comprehensive report passed |
+| Document information   | Value                                                     |
+| ---------------------- | --------------------------------------------------------- |
+| Created                | August 15, 2026 at 10:14:39 PM EDT                        |
+| Last updated           | August 20, 2026 at 7:04:00 PM EDT                         |
+| ISO 8601 last updated  | `2026-08-20T19:04:00-04:00`                               |
+| Timezone               | America/Toronto (UTC−04:00)                               |
+| Estimated reading time | 3 minutes                                                 |
+| Verification status    | Pomorise 1.0.1 prepared; focused regression checks passed |
 
 ## Table of contents
 
@@ -38,18 +38,18 @@ Every meaningful development unit has a beginner-focused technical narrative exp
 
 Use Node.js 24 and the committed npm lockfile.
 
-| Command | Purpose |
-| --- | --- |
-| `npm ci` | Recreate the exact reviewed dependency graph |
-| `npm run dev` | Start the local Vite development server |
-| `npm run format:check` | Detect formatting drift in Phase 1-owned files |
-| `npm run lint` | Run strict static analysis with zero warnings allowed |
-| `npm run typecheck` | Run TypeScript without generating files |
-| `npm run test:unit` | Run deterministic unit tests |
-| `npm run test:component` | Run React behavior tests |
-| `npm run test:browser` | Build and run Playwright against `/pomorise/` |
-| `npm run build` | Type-check and generate the static `dist` directory |
-| `npm run preview` | Serve the generated production site locally |
+| Command                  | Purpose                                               |
+| ------------------------ | ----------------------------------------------------- |
+| `npm ci`                 | Recreate the exact reviewed dependency graph          |
+| `npm run dev`            | Start the local Vite development server               |
+| `npm run format:check`   | Detect formatting drift in Phase 1-owned files        |
+| `npm run lint`           | Run strict static analysis with zero warnings allowed |
+| `npm run typecheck`      | Run TypeScript without generating files               |
+| `npm run test:unit`      | Run deterministic unit tests                          |
+| `npm run test:component` | Run React behavior tests                              |
+| `npm run test:browser`   | Build and run Playwright against `/pomorise/`         |
+| `npm run build`          | Type-check and generate the static `dist` directory   |
+| `npm run preview`        | Serve the generated production site locally           |
 
 ## Privacy direction
 

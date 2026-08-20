@@ -95,6 +95,8 @@ export function App() {
   const [journeyStatus, setJourneyStatus] = useState("");
   // Report notification support and permission results beside the explicit setting.
   const [notificationStatus, setNotificationStatus] = useState("");
+  // Report the result of the explicit local-sound confirmation beside its setting.
+  const [soundStatus, setSoundStatus] = useState("");
   // Hold the native dialog element so settings can use its modal browser behavior.
   const settingsDialogRef = useRef<HTMLDialogElement>(null);
   // Keep preferences and data ownership as two calm, discoverable settings destinations.
@@ -217,6 +219,11 @@ export function App() {
   const pendingTasks = focusPlan.tasks.filter((task) => !task.completed);
   // Preserve completed work as a local audit trail instead of removing it from the plan.
   const completedTasks = focusPlan.tasks.filter((task) => task.completed);
+  // Relate focus-session progress to the selected task instead of always showing the four-part cycle.
+  const sessionSequence =
+    timer.state.mode === "focus" && activeTask
+      ? `Session ${Math.min(activeTask.completedSessions + 1, activeTask.estimatedSessions)} of ${activeTask.estimatedSessions}`
+      : `Session ${timer.state.sessionNumber} of 4`;
   // Derive pending review items without hiding kept or converted history from state.
   const pendingDistractions = focusJourney.distractions.filter(
     // Present only thoughts that still need one explicit post-session choice.
@@ -378,6 +385,24 @@ export function App() {
     }
   }
 
+  // Ask for explicit browser-level confirmation before enabling locally generated sound.
+  function changeSound(enabled: boolean) {
+    if (!enabled) {
+      timer.setPreferences({ ...timer.preferences, soundEnabled: false });
+      setSoundStatus("Local completion sound is off.");
+      return;
+    }
+    const confirmed = window.confirm(
+      "Allow Pomorise to play a locally generated sound when a session finishes?",
+    );
+    timer.setPreferences({ ...timer.preferences, soundEnabled: confirmed });
+    setSoundStatus(
+      confirmed
+        ? "Local completion sound is on."
+        : "Sound permission was not granted. The timer remains silent.",
+    );
+  }
+
   // Render the complete branded shell, responsive workspace, and appearance dialog.
   return (
     // Group header, main workspace, and mobile navigation inside the full-height application frame.
@@ -463,8 +488,8 @@ export function App() {
           <div className="timer-card__eyebrow">
             {/* Name the current timer mode in a short high-contrast label. */}
             <span>{modeLabel(timer.state.mode)}</span>
-            {/* Provide lightweight sequence context for the future long-break cycle. */}
-            <span>Session {timer.state.sessionNumber} of 4</span>
+            {/* Show selected-task progress during focus and the four-part cycle otherwise. */}
+            <span>{sessionSequence}</span>
             {/* Close the timer context row after both concise labels. */}
           </div>
 
@@ -1240,12 +1265,7 @@ export function App() {
             <label className="setting-toggle">
               <input
                 checked={timer.preferences.soundEnabled}
-                onChange={(event) =>
-                  timer.setPreferences({
-                    ...timer.preferences,
-                    soundEnabled: event.currentTarget.checked,
-                  })
-                }
+                onChange={(event) => changeSound(event.currentTarget.checked)}
                 type="checkbox"
               />
               <span>
@@ -1253,6 +1273,7 @@ export function App() {
                 <small>The tone is generated on this device and never streamed.</small>
               </span>
             </label>
+            {soundStatus && <Notice>{soundStatus}</Notice>}
             <label className="setting-toggle">
               <input
                 checked={timer.preferences.notificationsEnabled}
@@ -1268,12 +1289,8 @@ export function App() {
 
             {/* Explain the privacy and persistence behavior of all local settings. */}
             <Notice>
-              Timer and appearance settings are saved only in this browser. Changing them sends no
-              network request.
-            </Notice>
-            <Notice>
-              After one complete online visit, Pomorise can reopen offline. Updates wait for your
-              permission before reloading, so an active session is never replaced automatically.
+              Settings stay in this browser and send no network request. After one online visit,
+              Pomorise can reopen offline. Updates never replace an active session automatically.
             </Notice>
           </div>
         ) : (

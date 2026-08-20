@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 // Import accessible render and query helpers that avoid React implementation details.
 import { render, screen, waitFor } from "@testing-library/react";
 // Import Vitest's grouping, assertion, and test functions for shell behavior.
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 // Import the real Phase 2 shell so tests protect visitor-visible product behavior.
 import { App } from "../../app/App";
 // Import the shared provider so component tests use the production theme boundary.
@@ -112,11 +112,14 @@ describe("App", () => {
     await user.type(intentionField, "Shape the project brief");
     // Enter one concise task into the bounded planning form.
     await user.type(screen.getByRole("textbox", { name: "Add a small task" }), "Outline goals");
+    // Give the task three sessions so the timer heading reflects task progress instead of a fixed cycle.
+    await user.selectOptions(screen.getByRole("combobox", { name: "Estimated sessions" }), "3");
     // Submit the task through its native form action.
     await user.click(screen.getByRole("button", { name: "Add task" }));
     // The first task becomes current without an extra selection step.
     expect(screen.getAllByText("Outline goals")).toHaveLength(2);
     expect(screen.getByText("1 selected")).toBeVisible();
+    expect(screen.getByText("Session 1 of 3")).toBeVisible();
     // Complete the current task and return to the calm optional empty state.
     await user.click(screen.getByRole("button", { name: "Mark complete" }));
     expect(screen.getByText("No task is selected. That is completely fine.")).toBeVisible();
@@ -124,7 +127,7 @@ describe("App", () => {
     expect(screen.getByText("1 completed")).toBeVisible();
     await user.click(screen.getByText("Task history"));
     expect(screen.getByRole("list", { name: "Completed task history" })).toBeVisible();
-    expect(screen.getByText("0 completed of 1 estimated focus session")).toBeVisible();
+    expect(screen.getByText("0 completed of 3 estimated focus sessions")).toBeVisible();
     // Keep the intention available because task completion is an independent planning action.
     expect(screen.getByRole("textbox", { name: "What will you move forward?" })).toHaveValue(
       "Shape the project brief",
@@ -153,6 +156,12 @@ describe("App", () => {
       "src",
       expect.stringContaining("dark_mode_phase6.png"),
     );
+    // Require an explicit browser confirmation before local completion sound becomes active.
+    const confirmSound = vi.spyOn(window, "confirm").mockReturnValue(true);
+    await user.click(screen.getByRole("checkbox", { name: /Play a local completion sound/ }));
+    expect(confirmSound).toHaveBeenCalledOnce();
+    expect(screen.getByRole("checkbox", { name: /Play a local completion sound/ })).toBeChecked();
+    confirmSound.mockRestore();
     // Close settings through the dialog's explicit completion control.
     await user.click(screen.getByRole("button", { name: "Done" }));
     // Verify dismissal removes the modal from role-based navigation.
