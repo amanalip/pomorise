@@ -37,8 +37,8 @@ describe("App", () => {
     expect(
       screen.getByRole("heading", { level: 1, name: "Make space for one thing." }),
     ).toBeVisible();
-    // Protect the approved local logo's concise accessible product name.
-    expect(screen.getByRole("img", { name: "Pomorise" })).toBeVisible();
+    // Protect the crisp live product name that replaced the fragile raster wordmark.
+    expect(screen.getByText("pomorise")).toBeVisible();
     // Protect the optional intention field through its visible accessible label.
     expect(screen.getByRole("textbox", { name: "What will you move forward?" })).toBeVisible();
     // Protect the plain-language empty task state used before Phase 4 adds stored tasks.
@@ -143,8 +143,8 @@ describe("App", () => {
     expect(document.documentElement).toHaveAttribute("data-theme", "dark");
     // Verify only the non-sensitive explicit choice is written to local browser storage.
     expect(window.localStorage.getItem("pomorise.theme")).toBe("dark");
-    // Verify the displayed identity switches to the approved locally bundled dark asset.
-    expect(screen.getByRole("img", { name: "Pomorise" })).toHaveAttribute(
+    // Verify the decorative approved symbol switches to its locally bundled dark asset.
+    expect(document.querySelector(".app-header__mark img")).toHaveAttribute(
       "src",
       expect.stringContaining("dark_mode_v2.png"),
     );

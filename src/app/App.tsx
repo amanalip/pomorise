@@ -8,6 +8,14 @@ import lightLogoUrl from "../../assets/logos/header_light_mode_v2.png";
 import { useTheme } from "../components/ThemeProvider";
 // Import project-owned primitives that establish Phase 2 interaction and surface patterns.
 import { Button, Card, Dialog, Field, Notice, SegmentedControl } from "../components/ui";
+// Import the Phase 5 ownership center without mixing storage operations into timer controls.
+import { DataControls } from "../components/DataControls";
+// Import the typed local workspace boundary for durable tasks, history, and reflections.
+import {
+  loadLocalWorkspace,
+  saveLocalWorkspace,
+  type LocalWorkspaceSnapshot,
+} from "../data/database";
 // Import the bounded Phase 4 planning model without coupling it to timer accuracy.
 import {
   createInitialFocusPlan,
@@ -84,6 +92,10 @@ export function App() {
   const [notificationStatus, setNotificationStatus] = useState("");
   // Hold the native dialog element so settings can use its modal browser behavior.
   const settingsDialogRef = useRef<HTMLDialogElement>(null);
+  // Keep preferences and data ownership as two calm, discoverable settings destinations.
+  const [settingsView, setSettingsView] = useState<"preferences" | "data">("preferences");
+  // Prevent an empty first render from overwriting IndexedDB before hydration completes.
+  const [localDataState, setLocalDataState] = useState<"loading" | "ready" | "error">("loading");
 
   // Open settings as a modal without adding a custom focus-trap implementation.
   function openSettings() {
@@ -91,6 +103,40 @@ export function App() {
     settingsDialogRef.current?.showModal();
     // Close the open-settings action after requesting native modal behavior.
   }
+
+  // Synchronize both reducers after a validated import, deletion, or initial database read.
+  function restoreWorkspace(snapshot: LocalWorkspaceSnapshot) {
+    updateFocusPlan({ type: "RESTORE_PLAN", state: snapshot.plan });
+    updateFocusJourney({ type: "RESTORE_JOURNEY", state: snapshot.journey });
+  }
+
+  // Hydrate structured personal records once without delaying the reliable timer shell.
+  useEffect(() => {
+    let active = true;
+    void loadLocalWorkspace()
+      .then((snapshot) => {
+        if (!active) return;
+        restoreWorkspace(snapshot);
+        setLocalDataState("ready");
+      })
+      .catch(() => {
+        if (active) setLocalDataState("error");
+      });
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  // Persist coherent snapshots shortly after meaningful planning or journey changes.
+  useEffect(() => {
+    if (localDataState !== "ready") return;
+    const saveDelay = window.setTimeout(() => {
+      void saveLocalWorkspace({ plan: focusPlan, journey: focusJourney }).catch(() =>
+        setLocalDataState("error"),
+      );
+    }, 250);
+    return () => window.clearTimeout(saveDelay);
+  }, [focusJourney, focusPlan, localDataState]);
 
   // Close the current settings dialog from its explicit Done control.
   function closeSettings() {
@@ -290,19 +336,17 @@ export function App() {
 
       {/* Keep product identity, desktop navigation, and settings in one responsive header. */}
       <header className="app-header">
-        {/* Keep the approved mark together with a text-sized rendition of its small tagline. */}
+        {/* Keep the approved symbol beside crisp live text at every responsive size. */}
         <div className="app-header__brand">
-          {/* Use the resolved theme directly so an explicit choice selects the matching logo. */}
-          <img
-            // Keep the complete local logo compact enough to behave as a header identity.
-            className="app-header__logo"
-            // Choose the approved asset that belongs to the currently painted palette.
-            src={resolvedTheme === "dark" ? darkLogoUrl : lightLogoUrl}
-            // Expose the product name once while the visible tagline remains readable text.
-            alt="Pomorise"
-          />
-          {/* Cover and faithfully restate the baked-in tiny tagline at interface text size. */}
-          <span className="app-header__tagline">rise one session at a time</span>
+          {/* Crop only the approved symbol so raster tagline fragments can never enter the header. */}
+          <span className="app-header__mark" aria-hidden="true">
+            <img src={resolvedTheme === "dark" ? darkLogoUrl : lightLogoUrl} alt="" />
+          </span>
+          {/* Render identity wording as real text for clean scaling and accessibility. */}
+          <span className="app-header__identity">
+            <strong>pomorise</strong>
+            <span>rise one session at a time</span>
+          </span>
         </div>
 
         {/* Expose the main destinations at desktop widths without claiming later feature completion. */}
@@ -340,6 +384,13 @@ export function App() {
 
       {/* Place the timer workspace first and secondary context beside it on wider viewports. */}
       <main className="workspace" id="workspace" tabIndex={-1}>
+        {/* Explain a failed local-storage boundary instead of silently implying persistence. */}
+        {localDataState === "error" && (
+          <Notice className="storage-warning" role="alert" tone="warning">
+            Local saving is unavailable in this browser session. The timer still works, but export
+            anything you want to keep before closing the page.
+          </Notice>
+        )}
         {/* Keep the reliable timer as the calm central application surface. */}
         <Card className="timer-card" elevated aria-labelledby="timer-title">
           {/* Show session type and sequence without competing with the countdown. */}
@@ -898,10 +949,9 @@ export function App() {
                 ))}
               </ul>
             )}
-            {/* Explain the temporary boundary honestly before Phase 5 adds browser persistence. */}
+            {/* Explain the active durable local boundary in direct user-facing language. */}
             <p className="field__hint">
-              Up to {MAX_FOCUS_TASKS} tasks. Planning data stays only until this page is refreshed
-              or closed for now.
+              Up to {MAX_FOCUS_TASKS} tasks. Saved privately in this browser.
             </p>
             {/* Keep deliberately retained distractions reachable after their review choice. */}
             {focusJourney.distractions.some((item) => item.resolution === "kept") && (
@@ -951,9 +1001,9 @@ export function App() {
                 <dd>{progressSummary.weekSessions}</dd>
               </div>
             </dl>
-            {/* Explain the current transient privacy boundary before Phase 5 persistence. */}
+            {/* Explain the current device-local privacy boundary without implying cloud sync. */}
             <Notice>
-              This progress is private and temporary until local history arrives in Phase 5.
+              Private progress is saved on this device. No account or upload is involved.
             </Notice>
             {/* Close the progress surface after visual, semantic, and privacy context. */}
           </Card>
@@ -998,108 +1048,144 @@ export function App() {
       </nav>
 
       {/* Keep appearance settings inside a native modal with project-owned visual treatment. */}
-      <Dialog ref={settingsDialogRef} title="Settings">
-        {/* Introduce appearance and timer choices that remain local to this browser. */}
-        <p className="dialog__intro">Choose how Pomorise looks and behaves on this device.</p>
-        {/* Present the three exclusive theme choices as accessible native radio inputs. */}
-        <SegmentedControl
-          // Give the radio group a concise visible legend.
-          label="Appearance"
-          // Use one shared name so native radio behavior remains intact.
-          name="theme-preference"
-          // Update and persist the selected theme through the shared provider.
-          onChange={setPreference}
-          // List the approved explicit and system-following appearance options.
-          options={[
-            // Let the browser follow operating-system appearance changes.
-            { value: "system", label: "System" },
-            // Allow a visitor to keep the approved light palette explicitly.
-            { value: "light", label: "Light" },
-            // Allow a visitor to keep the approved dark palette explicitly.
-            { value: "dark", label: "Dark" },
-          ]}
-          // Reflect the visitor's stored choice rather than only the resolved palette.
-          value={preference}
-        />
+      <Dialog
+        className={settingsView === "data" ? "dialog--wide" : undefined}
+        ref={settingsDialogRef}
+        title="Settings"
+      >
+        {/* Separate everyday preferences from higher-stakes data ownership controls. */}
+        <div className="settings-tabs" role="tablist" aria-label="Settings sections">
+          <Button
+            aria-controls="preferences-panel"
+            aria-selected={settingsView === "preferences"}
+            id="preferences-tab"
+            onClick={() => setSettingsView("preferences")}
+            role="tab"
+            variant={settingsView === "preferences" ? "secondary" : "quiet"}
+          >
+            Preferences
+          </Button>
+          <Button
+            aria-controls="data-panel"
+            aria-selected={settingsView === "data"}
+            id="data-tab"
+            onClick={() => setSettingsView("data")}
+            role="tab"
+            variant={settingsView === "data" ? "secondary" : "quiet"}
+          >
+            Data &amp; privacy
+          </Button>
+        </div>
 
-        {/* Let visitors tune each mode within the centrally approved safety bounds. */}
-        <fieldset className="settings-group">
-          <legend>Session durations</legend>
-          <div className="duration-settings">
-            {(
-              [
-                ["focus", "Focus"],
-                ["shortBreak", "Short break"],
-                ["longBreak", "Long break"],
-              ] as const
-            ).map(([mode, label]) => (
-              <label key={mode}>
-                <span>{label} minutes</span>
-                <input
-                  className="field__control"
-                  max={180}
-                  min={1}
-                  onChange={(event) => updateDuration(mode, event.currentTarget.valueAsNumber)}
-                  type="number"
-                  value={timer.preferences.durations[mode] / 60}
-                />
-              </label>
-            ))}
+        {settingsView === "preferences" ? (
+          <div aria-labelledby="preferences-tab" id="preferences-panel" role="tabpanel">
+            {/* Introduce appearance and timer choices that remain local to this browser. */}
+            <p className="dialog__intro">Choose how Pomorise looks and behaves on this device.</p>
+            {/* Present the three exclusive theme choices as accessible native radio inputs. */}
+            <SegmentedControl
+              // Give the radio group a concise visible legend.
+              label="Appearance"
+              // Use one shared name so native radio behavior remains intact.
+              name="theme-preference"
+              // Update and persist the selected theme through the shared provider.
+              onChange={setPreference}
+              // List the approved explicit and system-following appearance options.
+              options={[
+                // Let the browser follow operating-system appearance changes.
+                { value: "system", label: "System" },
+                // Allow a visitor to keep the approved light palette explicitly.
+                { value: "light", label: "Light" },
+                // Allow a visitor to keep the approved dark palette explicitly.
+                { value: "dark", label: "Dark" },
+              ]}
+              // Reflect the visitor's stored choice rather than only the resolved palette.
+              value={preference}
+            />
+
+            {/* Let visitors tune each mode within the centrally approved safety bounds. */}
+            <fieldset className="settings-group">
+              <legend>Session durations</legend>
+              <div className="duration-settings">
+                {(
+                  [
+                    ["focus", "Focus"],
+                    ["shortBreak", "Short break"],
+                    ["longBreak", "Long break"],
+                  ] as const
+                ).map(([mode, label]) => (
+                  <label key={mode}>
+                    <span>{label} minutes</span>
+                    <input
+                      className="field__control"
+                      max={180}
+                      min={1}
+                      onChange={(event) => updateDuration(mode, event.currentTarget.valueAsNumber)}
+                      type="number"
+                      value={timer.preferences.durations[mode] / 60}
+                    />
+                  </label>
+                ))}
+              </div>
+              <span className="field__hint">Choose 1 to 180 whole minutes.</span>
+            </fieldset>
+
+            {/* Keep automatic flow optional until its final product behavior is approved. */}
+            <label className="setting-toggle">
+              <input
+                checked={timer.preferences.automaticTransitions}
+                onChange={(event) =>
+                  timer.setPreferences({
+                    ...timer.preferences,
+                    automaticTransitions: event.currentTarget.checked,
+                  })
+                }
+                type="checkbox"
+              />
+              <span>
+                <strong>Start the next session automatically</strong>
+                <small>Focus review stays available before an automatic break begins.</small>
+              </span>
+            </label>
+            <label className="setting-toggle">
+              <input
+                checked={timer.preferences.soundEnabled}
+                onChange={(event) =>
+                  timer.setPreferences({
+                    ...timer.preferences,
+                    soundEnabled: event.currentTarget.checked,
+                  })
+                }
+                type="checkbox"
+              />
+              <span>
+                <strong>Play a local completion sound</strong>
+                <small>The tone is generated on this device and never streamed.</small>
+              </span>
+            </label>
+            <label className="setting-toggle">
+              <input
+                checked={timer.preferences.notificationsEnabled}
+                onChange={(event) => void changeNotifications(event.currentTarget.checked)}
+                type="checkbox"
+              />
+              <span>
+                <strong>Show browser notifications</strong>
+                <small>Permission is requested only when you turn this on.</small>
+              </span>
+            </label>
+            {notificationStatus && <Notice tone="warning">{notificationStatus}</Notice>}
+
+            {/* Explain the privacy and persistence behavior of all local settings. */}
+            <Notice>
+              Timer and appearance settings are saved only in this browser. Changing them sends no
+              network request.
+            </Notice>
           </div>
-          <span className="field__hint">Choose 1 to 180 whole minutes.</span>
-        </fieldset>
-
-        {/* Keep automatic flow optional until its final product behavior is approved. */}
-        <label className="setting-toggle">
-          <input
-            checked={timer.preferences.automaticTransitions}
-            onChange={(event) =>
-              timer.setPreferences({
-                ...timer.preferences,
-                automaticTransitions: event.currentTarget.checked,
-              })
-            }
-            type="checkbox"
-          />
-          <span>
-            <strong>Start the next session automatically</strong>
-            <small>Focus review stays available before an automatic break begins.</small>
-          </span>
-        </label>
-        <label className="setting-toggle">
-          <input
-            checked={timer.preferences.soundEnabled}
-            onChange={(event) =>
-              timer.setPreferences({
-                ...timer.preferences,
-                soundEnabled: event.currentTarget.checked,
-              })
-            }
-            type="checkbox"
-          />
-          <span>
-            <strong>Play a local completion sound</strong>
-            <small>The tone is generated on this device and never streamed.</small>
-          </span>
-        </label>
-        <label className="setting-toggle">
-          <input
-            checked={timer.preferences.notificationsEnabled}
-            onChange={(event) => void changeNotifications(event.currentTarget.checked)}
-            type="checkbox"
-          />
-          <span>
-            <strong>Show browser notifications</strong>
-            <small>Permission is requested only when you turn this on.</small>
-          </span>
-        </label>
-        {notificationStatus && <Notice tone="warning">{notificationStatus}</Notice>}
-
-        {/* Explain the privacy and persistence behavior of all local settings. */}
-        <Notice>
-          Timer and appearance settings are saved only in this browser. Changing them sends no
-          network request.
-        </Notice>
+        ) : (
+          <div aria-labelledby="data-tab" id="data-panel" role="tabpanel">
+            <DataControls onWorkspaceChange={restoreWorkspace} />
+          </div>
+        )}
         {/* Keep the primary dismiss action aligned with the dialog's reading direction. */}
         <div className="dialog__actions">
           {/* Close settings explicitly and return focus to the header trigger. */}

@@ -46,6 +46,8 @@ export interface FocusJourneyState {
 
 // Describe every legal focus-journey transition as explicit plain data.
 export type FocusJourneyAction =
+  // Restore validated sessions and captured thoughts after local storage opens.
+  | { type: "RESTORE_JOURNEY"; state: FocusJourneyState }
   // Capture one thought without touching timer state.
   | { type: "CAPTURE_DISTRACTION"; text: string }
   // Resolve one pending distraction through a visitor-selected outcome.
@@ -87,6 +89,9 @@ export function reduceFocusJourney(
 ): FocusJourneyState {
   // Route each explicit action to its validated immutable update.
   switch (action.type) {
+    // Replace the empty startup journey with the validated device-local snapshot.
+    case "RESTORE_JOURNEY":
+      return action.state;
     // Add one concise thought to the post-session review queue.
     case "CAPTURE_DISTRACTION": {
       // Remove accidental outer whitespace while preserving visitor wording.

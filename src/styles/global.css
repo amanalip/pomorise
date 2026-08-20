@@ -242,56 +242,58 @@ img {
   /* Close the header layout after anchoring its three primary regions. */
 }
 
-/* Anchor a readable tagline over the tiny text baked into the approved raster source. */
+/* Build a compact brand lockup from the approved symbol and crisp live text. */
 .app-header__brand {
-  /* Create the positioning boundary for the mask and clean text tagline. */
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+/* Crop the symbol directly from the approved wide artwork without a fragile overlay mask. */
+.app-header__mark {
   position: relative;
-  /* Give the complete mark, name, and tagline enough width to remain recognizable. */
-  width: clamp(13rem, 23vw, 18rem);
+  flex: 0 0 auto;
+  width: 2.9rem;
+  height: 3.9rem;
+  overflow: hidden;
 }
 
-/* Cover the small raster tagline completely without hiding the logo mark's descending stem. */
-.app-header__brand::after {
-  /* Add a theme-matched patch only beneath the wordmark portion of the image. */
-  content: "";
-  /* Position the patch above the raster and below the replacement text. */
-  position: absolute;
-  /* Begin beyond the symbol so the full lowercase p shape remains untouched. */
-  inset-inline: 29% 0;
-  /* Cover the complete height occupied by the baked-in tagline fragments. */
-  inset-block: 66% 0;
-  /* Match the header canvas in either resolved theme. */
-  background: var(--color-canvas);
-  /* Keep the mask between the image and the accessible replacement text. */
-  z-index: 1;
-  /* Close the raster-tagline mask after fully covering its wordmark region. */
-}
-
-/* Present the tightly derived approved header artwork without distortion. */
-.app-header__logo {
-  width: 100%;
-  /* Preserve the derived crop's natural proportions without stretching or clipping text. */
-  height: auto;
-  /* Remove the small inline-image baseline gap from the header grid. */
+/* Scale the full source by height so its leftmost symbol occupies the crop predictably. */
+.app-header__mark img {
+  width: auto;
+  max-width: none;
+  height: 100%;
   display: block;
-  /* Close the header identity rule after preserving every part of the approved logo. */
+  transform: translateX(-0.2rem);
 }
 
-/* Restate the raster's tagline at a reliably legible interface size. */
-.app-header__tagline {
-  position: absolute;
-  inset-inline: 29% 0;
-  bottom: 4%;
-  background: var(--color-canvas);
+/* Stack the readable product name and promise as one responsive text identity. */
+.app-header__identity {
+  display: grid;
+  gap: 0.08rem;
+  min-width: 0;
+}
+
+/* Echo the approved rounded lowercase wordmark without embedding unreadable raster text. */
+.app-header__identity strong {
   color: var(--color-ink);
-  font-size: clamp(0.55rem, 0.82vw, 0.72rem);
+  font-size: clamp(1.25rem, 2.2vw, 1.65rem);
+  font-weight: 850;
+  letter-spacing: -0.055em;
+  line-height: 1;
+}
+
+/* Keep the promise legible at real interface size instead of miniature image pixels. */
+.app-header__identity span {
+  overflow: hidden;
+  color: var(--color-ink-muted);
+  font-size: 0.7rem;
   font-weight: 650;
-  letter-spacing: 0.1em;
-  line-height: 1.25;
-  text-align: center;
+  letter-spacing: 0.045em;
+  line-height: 1.2;
+  text-overflow: ellipsis;
   white-space: nowrap;
-  /* Paint the readable replacement above the dedicated raster mask. */
-  z-index: 2;
 }
 
 /* Center the desktop destinations inside the available header space. */
@@ -457,6 +459,11 @@ img {
   /* Create responsive edge space and room above compact sticky navigation. */
   padding: clamp(var(--space-6), 4vw, var(--space-10));
   /* Close the main workspace layout after defining its hierarchy and bounds. */
+}
+
+/* Span both desktop columns when the local-first promise needs a recovery explanation. */
+.storage-warning {
+  grid-column: 1 / -1;
 }
 
 /* Establish the shared project-owned surface used by current and future panels. */
@@ -1260,6 +1267,214 @@ img {
   /* Close the native dialog treatment after applying size, theme, and elevation. */
 }
 
+/* Allow the data ownership view to breathe without making everyday settings oversized. */
+.dialog--wide {
+  width: min(calc(100% - 2rem), 48rem);
+  max-height: min(90dvh, 54rem);
+  overflow: auto;
+}
+
+/* Keep the completion action reachable while a longer data view scrolls beneath it. */
+.dialog--wide .dialog__actions {
+  position: sticky;
+  bottom: calc(-1 * clamp(var(--space-6), 5vw, var(--space-8)));
+  z-index: 1;
+  margin-inline: calc(-1 * clamp(var(--space-6), 5vw, var(--space-8)));
+  padding: var(--space-4) clamp(var(--space-6), 5vw, var(--space-8));
+  background: linear-gradient(to top, var(--color-surface) 76%, transparent);
+}
+
+/* Keep the two settings destinations visible and balanced at the top of the modal. */
+.settings-tabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+  margin: var(--space-4) 0 var(--space-6);
+  padding: var(--space-1);
+  background: var(--color-surface-muted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+}
+
+/* Fill each tab track cell so selection reads as navigation rather than loose actions. */
+.settings-tabs .button {
+  width: 100%;
+}
+
+/* Stack ownership controls with generous separators and no dashboard clutter. */
+.data-controls {
+  display: grid;
+  gap: var(--space-5);
+}
+
+/* Use a soft editorial hero to communicate the privacy promise before technical controls. */
+.data-overview {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(12rem, 0.8fr);
+  gap: var(--space-5);
+  align-items: end;
+  padding: clamp(var(--space-5), 4vw, var(--space-7));
+  background: linear-gradient(135deg, var(--color-accent-soft), var(--color-surface-muted));
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+/* Keep ownership headings and explanations in a compact readable rhythm. */
+.data-overview h2,
+.data-section h2,
+.danger-zone h2 {
+  margin: 0;
+}
+
+.data-overview p,
+.data-section p,
+.danger-zone p {
+  margin: var(--space-2) 0 0;
+  color: var(--color-ink-muted);
+}
+
+/* Introduce the local-only promise with quiet editorial metadata. */
+.data-kicker {
+  display: block;
+  margin-bottom: var(--space-2);
+  color: var(--color-accent-strong);
+  font-size: 0.75rem;
+  font-weight: 850;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+/* Present aggregate counts as calm facts instead of performance targets. */
+.data-counts {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.data-counts span {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-ink-muted);
+  font-size: 0.875rem;
+}
+
+.data-counts strong {
+  color: var(--color-ink);
+  font-size: 1.2rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Separate each ownership task with space and a quiet top boundary. */
+.data-section,
+.danger-zone {
+  display: grid;
+  gap: var(--space-4);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-border);
+}
+
+/* Balance explanations with concise trust or browser-status labels. */
+.data-section__heading {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+/* Use compact persistent labels without suggesting gamified achievement. */
+.privacy-chip,
+.storage-state {
+  flex: 0 0 auto;
+  padding: var(--space-1) var(--space-3);
+  background: var(--color-surface-muted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  color: var(--color-ink-muted);
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.storage-state--granted {
+  border-color: var(--color-success);
+  color: var(--color-ink);
+}
+
+/* Let backup and deletion choices wrap before labels or touch targets become cramped. */
+.data-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* Hide the native file field visually while retaining its programmatic input behavior. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Give validated import details a clear intermediate state before replacement. */
+.import-preview,
+.delete-confirmation {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--color-surface-muted);
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-md);
+}
+
+.import-preview > div:first-child {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.import-preview span {
+  color: var(--color-ink-muted);
+}
+
+/* Keep diagnostics available on demand instead of crowding the default privacy view. */
+.data-details {
+  padding: var(--space-4);
+  background: var(--color-surface-muted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.data-details summary {
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.data-details dl {
+  display: grid;
+  gap: var(--space-2);
+  margin: var(--space-4) 0 0;
+}
+
+.data-details dl > div {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.data-details dd {
+  margin: 0;
+  font-weight: 750;
+}
+
+/* Distinguish irreversible controls with structure and language, not alarming red fill. */
+.danger-zone {
+  border-top-color: var(--color-error);
+}
+
 /* Dim the application behind settings without making the modal edge ambiguous. */
 .dialog::backdrop {
   /* Use translucent midnight plum so both light and dark shells recede consistently. */
@@ -1530,15 +1745,28 @@ img {
 
   /* Keep the approved identity readable without crowding settings. */
   .app-header__brand {
-    /* Use all safe width beside settings so the tagline remains as legible as mobile allows. */
-    width: 12rem;
-    /* Close the narrow identity adjustment after setting its stable width. */
+    gap: var(--space-2);
   }
 
-  /* Reduce tracking before shrinking the tagline itself on the narrowest header. */
-  .app-header__tagline {
-    font-size: 0.55rem;
-    letter-spacing: 0.04em;
+  /* Keep the approved mark compact enough to leave a full settings target. */
+  .app-header__mark {
+    width: 2.25rem;
+    height: 3rem;
+  }
+
+  /* Remove only the supporting promise when the phone width cannot hold it cleanly. */
+  .app-header__identity span {
+    display: none;
+  }
+
+  /* Stack privacy overview facts below the promise on compact screens. */
+  .data-overview {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Let status labels move below longer ownership explanations when necessary. */
+  .data-section__heading {
+    flex-direction: column;
   }
 
   /* Reduce the settings action's horizontal space while preserving target height. */

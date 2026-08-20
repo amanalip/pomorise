@@ -3,8 +3,8 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 15, 2026 at 10:36 PM EDT |
-| Last updated | August 20, 2026 at 5:20:44 PM EDT |
-| ISO 8601 last updated | `2026-08-20T17:20:44-04:00` |
+| Last updated | August 20, 2026 at 5:33:36 PM EDT |
+| ISO 8601 last updated | `2026-08-20T17:33:36-04:00` |
 | Timezone | America/Toronto (UTC−04:00) |
 | Estimated reading time | 42 minutes |
 | Verification status | Commit facts checked against local Git history; technical claims checked against linked primary documentation |
@@ -17,6 +17,7 @@ The newest commit should be added at the top of the **Commit history** section.
 
 - [Entry template](#entry-template)
 - [Commit history](#commit-history)
+  - [Pending: Begin Phase 5 local data and privacy controls](#pending-begin-phase-5-local-data-and-privacy-controls)
   - [Pending: Establish Phase 4 complete focus loop](#pending-establish-phase-4-complete-focus-loop)
   - [Pending: Establish Phase 3 reliable timer engine](#pending-establish-phase-3-reliable-timer-engine)
   - [Pending: Establish Phase 2 design system and application shell](#pending-establish-phase-2-design-system-and-application-shell)
@@ -100,6 +101,29 @@ Describe what a visitor or maintainer will notice. Write “None” when the cha
 ```
 
 ## Commit history
+
+### `Pending`: Begin Phase 5 local data and privacy controls
+
+- **Status:** In progress for the next owner commit
+- **Prepared:** 2026-08-20 17:33 EDT
+- **Author:** Aman Ali with Codex collaboration
+- **Full commit:** Assigned after the commit is created
+
+#### Purpose
+
+Replace fragile transient data and header presentation with a durable local-first foundation and a clearer user-controlled privacy experience.
+
+#### Changes
+
+- Rebuilt the header lockup from an approved cropped symbol and responsive live text.
+- Added a versioned Dexie database with separate task, session, distraction, reflection, and metadata stores.
+- Added Zod validation, transactional hydration and persistence, JSON backup, CSV export, import preview and replacement, verified deletion, diagnostics, and persistent-storage explanation.
+- Added a two-destination Settings experience for preferences and Data & privacy.
+- Added pure backup validation and CSV escaping tests plus targeted real-browser visual inspection.
+
+#### Follow-up
+
+Phase 5 remains in progress. Migration coverage, preference reset, and comprehensive browser scenarios are still required.
 
 ### `Pending`: Establish Phase 4 complete focus loop
 

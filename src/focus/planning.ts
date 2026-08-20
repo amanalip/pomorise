@@ -30,6 +30,8 @@ export interface FocusPlanState {
 
 // Describe every legal planning change as a small explicit action.
 export type FocusPlanAction =
+  // Restore one validated browser-owned plan after the local database opens.
+  | { type: "RESTORE_PLAN"; state: FocusPlanState }
   // Replace the optional intention while the application still allows editing.
   | { type: "SET_INTENTION"; intention: string }
   // Add one validated task with its compact session estimate.
@@ -57,6 +59,9 @@ export function createInitialFocusPlan(): FocusPlanState {
 export function reduceFocusPlan(state: FocusPlanState, action: FocusPlanAction): FocusPlanState {
   // Route each explicit action to its bounded state transition.
   switch (action.type) {
+    // Replace the empty startup plan only with a snapshot validated by the data layer.
+    case "RESTORE_PLAN":
+      return action.state;
     // Keep an optional intention concise even when input arrives outside the rendered field.
     case "SET_INTENTION":
       return { ...state, intention: action.intention.slice(0, 120) };
