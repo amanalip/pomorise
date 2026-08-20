@@ -106,7 +106,10 @@ export function DataControls({
 
   // Read a selected backup locally and show counts before any record is changed.
   async function previewImport(event: ChangeEvent<HTMLInputElement>) {
-    const file = event.currentTarget.files?.[0];
+    // Retain the element because React clears currentTarget after this async handler yields.
+    const input = event.currentTarget;
+    // Read the visitor-selected local file from the retained element before awaiting its contents.
+    const file = input.files?.[0];
     if (!file) return;
     try {
       const backup = parseBackupText(await file.text());
@@ -116,7 +119,8 @@ export function DataControls({
       setPendingBackup(null);
       setStatus(error instanceof Error ? error.message : "This backup could not be read.");
     } finally {
-      event.currentTarget.value = "";
+      // Clear the retained element so choosing the same backup again triggers another change event.
+      input.value = "";
     }
   }
 

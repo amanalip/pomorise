@@ -259,6 +259,8 @@ test("previews valid backup replacement and rejects malformed input without part
     mimeType: "application/json",
     buffer: Buffer.from(JSON.stringify(syntheticBackup())),
   });
+  // Require the native file control to clear without an asynchronous React currentTarget error.
+  await expect(page.locator('input[type="file"]')).toHaveValue("");
   // Require preview counts before the test is allowed to confirm replacement.
   await expect(page.getByText(/1 tasks · 1 sessions · 1 captured thoughts/)).toBeVisible();
   // Confirm the explicit replacement action after validation and preview.
