@@ -139,3 +139,44 @@ for (const viewport of [
   });
   // Close the responsive case generator after defining its phone and desktop coverage.
 }
+
+// Bound one deterministic interaction-to-paint proxy when field data and timer state are ready.
+test("paints primary timer feedback within the interaction budget", async ({ page }) => {
+  // Load the production timer before measuring a representative state-changing action.
+  await page.goto("./");
+  // Wait until local hydration makes the neighboring planning field editable and startup is complete.
+  await expect(page.getByRole("textbox", { name: "What will you move forward?" })).toBeEnabled();
+  // Measure from a browser-side click through the next paint without terminal round-trip latency.
+  const interactionToPaintMs = await page.evaluate(async () => {
+    // Find the primary native button through its stable visible label.
+    const startButton = Array.from(document.querySelectorAll("button")).find(
+      // Match exact visitor-facing text so the measurement cannot target a hidden unrelated action.
+      (button) => button.textContent?.trim() === "Start focus",
+      // Close the primary-action lookup after checking the rendered native buttons.
+    );
+    // Reject a broken measurement setup instead of returning a misleading fast duration.
+    if (!startButton) throw new Error("The primary timer action was not available to measure.");
+    // Schedule the action at a paint boundary and resolve after its resulting frame is presented.
+    return await new Promise<number>((resolve) => {
+      // Begin from one animation frame so the start time has a stable rendering boundary.
+      requestAnimationFrame(() => {
+        // Capture the high-resolution monotonic start immediately before the state-changing click.
+        const startedAt = performance.now();
+        // Use the native action path so React handles the same click behavior as a visitor.
+        startButton.click();
+        // Observe the first frame after React has processed and painted the running state.
+        requestAnimationFrame(() => resolve(performance.now() - startedAt));
+        // Close the measured animation frame after scheduling its visible result.
+      });
+      // Close the browser-side measurement promise after defining both paint boundaries.
+    });
+    // Close the page evaluation after returning the deterministic local duration.
+  });
+  // Preserve the measured value in the raw runner log for release-report traceability.
+  console.info(`[performance] interaction-to-paint=${interactionToPaintMs.toFixed(2)}ms`);
+  // Keep this interaction-to-paint proxy within the approved 200-millisecond INP ceiling.
+  expect(interactionToPaintMs).toBeLessThanOrEqual(200);
+  // Require the visible Pause action to prove the measured click produced the intended state.
+  await expect(page.getByRole("button", { name: "Pause" })).toBeVisible();
+  // Close the responsiveness case after checking both duration and visible behavior.
+});

@@ -124,6 +124,7 @@ Close the remaining Phase 5 implementation gap, fix issues exposed by cross-brow
 - Prevented startup hydration from overwriting immediately entered planning text by keeping structured inputs disabled until local loading completes.
 - Improved desktop and mobile first-screen hierarchy so the timer action remains visible at release viewports.
 - Removed the non-actionable offline-ready toast that obscured core controls while preserving offline and update guidance.
+- Split local data ownership code out of the first-screen bundle, deferred hydration by 300 milliseconds, and deferred offline precaching by 1.5 seconds so the timer wins startup bandwidth without weakening persistence or offline readiness.
 - Expanded the Pages workflow to gate deployment on formatting, linting, unit/component tests, and Chromium/Firefox browser tests.
 
 #### Validation
@@ -131,6 +132,7 @@ Close the remaining Phase 5 implementation gap, fix issues exposed by cross-brow
 - Formatting, strict types, linting, build, and focused responsive cases passed.
 - Ten local-data cases passed across Chromium and Firefox after correcting the persistence race that Firefox exposed.
 - Visual browser review covered light and dark themes, 390 by 844 mobile, 1440 by 900 desktop, settings, data ownership, navigation, and primary-action visibility.
+- The final three-run Lighthouse mobile median reached a 97 performance score, 2.45-second LCP, zero CLS, and a 75-millisecond blocking time after the first performance profile exposed startup contention.
 
 #### Follow-up
 

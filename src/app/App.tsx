@@ -1,5 +1,5 @@
 // Import React reference and state tools for the settings dialog and shell-only demonstrations.
-import { useEffect, useReducer, useRef, useState, type FormEvent } from "react";
+import { lazy, Suspense, useEffect, useReducer, useRef, useState, type FormEvent } from "react";
 // Import the approved dark logo as a locally bundled identity for the dark palette.
 import darkLogoUrl from "../../assets/logos/header_dark_mode_phase6.png";
 // Import the approved light logo as a locally bundled identity for the light palette.
@@ -8,14 +8,8 @@ import lightLogoUrl from "../../assets/logos/header_light_mode_phase6.png";
 import { useTheme } from "../components/ThemeProvider";
 // Import project-owned primitives that establish Phase 2 interaction and surface patterns.
 import { Button, Card, Dialog, Field, Notice, SegmentedControl } from "../components/ui";
-// Import the Phase 5 ownership center without mixing storage operations into timer controls.
-import { DataControls } from "../components/DataControls";
-// Import the typed local workspace boundary for durable tasks, history, and reflections.
-import {
-  loadLocalWorkspace,
-  saveLocalWorkspace,
-  type LocalWorkspaceSnapshot,
-} from "../data/database";
+// Import only the workspace type so Dexie and Zod stay outside the first-screen bundle.
+import type { LocalWorkspaceSnapshot } from "../data/database";
 // Import the bounded Phase 4 planning model without coupling it to timer accuracy.
 import {
   createInitialFocusPlan,
@@ -36,6 +30,15 @@ import { formatDuration, type TimerMode } from "../timer/engine";
 import { modeLabel, useTimer } from "../timer/useTimer";
 // Import the reviewed defaults so preference reset has one shared source of truth.
 import { DEFAULT_TIMER_PREFERENCES } from "../timer/storage";
+
+// Load higher-cost ownership controls only after a visitor opens their settings destination.
+const DataControls = lazy(async () => {
+  // Fetch the local module as another same-origin application chunk without any remote request.
+  const module = await import("../components/DataControls");
+  // Adapt its named export to the default shape React lazy expects.
+  return { default: module.DataControls };
+  // Close the lazy module boundary after preserving the public component contract.
+});
 
 // Define the small navigation destinations established by the application shell.
 const navigationItems = ["Timer", "Tasks", "Progress"] as const;
@@ -140,17 +143,25 @@ export function App() {
   // Hydrate structured personal records once without delaying the reliable timer shell.
   useEffect(() => {
     let active = true;
-    void loadLocalWorkspace()
-      .then((snapshot) => {
-        if (!active) return;
-        restoreWorkspace(snapshot);
-        setLocalDataState("ready");
-      })
-      .catch(() => {
-        if (active) setLocalDataState("error");
-      });
+    // Let the primary timer paint before local data code competes for throttled startup bandwidth.
+    const hydrationDelay = window.setTimeout(() => {
+      // Load the same-origin database chunk only after the first-screen rendering opportunity.
+      void import("../data/database")
+        .then(({ loadLocalWorkspace }) => loadLocalWorkspace())
+        .then((snapshot) => {
+          if (!active) return;
+          restoreWorkspace(snapshot);
+          setLocalDataState("ready");
+        })
+        .catch(() => {
+          if (active) setLocalDataState("error");
+        });
+      // Close the delayed hydration callback after defining success and recovery behavior.
+    }, 300);
     return () => {
       active = false;
+      // Prevent a discarded application instance from starting a new database import.
+      window.clearTimeout(hydrationDelay);
     };
   }, [storageLoadAttempt]);
 
@@ -160,9 +171,11 @@ export function App() {
     const scheduledEpoch = workspacePersistenceEpoch.current;
     const saveDelay = window.setTimeout(() => {
       if (scheduledEpoch !== workspacePersistenceEpoch.current) return;
-      void saveLocalWorkspace({ plan: focusPlan, journey: focusJourney }).catch(() =>
-        setLocalDataState("error"),
-      );
+      void import("../data/database")
+        .then(({ saveLocalWorkspace }) =>
+          saveLocalWorkspace({ plan: focusPlan, journey: focusJourney }),
+        )
+        .catch(() => setLocalDataState("error"));
     }, 250);
     return () => window.clearTimeout(saveDelay);
   }, [focusJourney, focusPlan, localDataState]);
@@ -1241,11 +1254,19 @@ export function App() {
           </div>
         ) : (
           <div aria-labelledby="data-tab" id="data-panel" role="tabpanel">
-            <DataControls
-              onResetPreferences={resetPreferences}
-              onWorkspaceChange={restoreWorkspace}
-              onWorkspaceMutationStart={beginWorkspaceMutation}
-            />
+            <Suspense
+              fallback={
+                <p className="dialog__intro" role="status">
+                  Loading local data controls...
+                </p>
+              }
+            >
+              <DataControls
+                onResetPreferences={resetPreferences}
+                onWorkspaceChange={restoreWorkspace}
+                onWorkspaceMutationStart={beginWorkspaceMutation}
+              />
+            </Suspense>
           </div>
         )}
         {/* Keep the primary dismiss action aligned with the dialog's reading direction. */}

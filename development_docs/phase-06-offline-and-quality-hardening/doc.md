@@ -92,7 +92,7 @@ The following development checks passed after the implementation:
 - `npm run build`
 - `npm run test:browser`: 10 Chromium production-style browser tests passed
 
-The browser suite covers offline reload, manifest identity, cache privacy, denied notifications, same-origin runtime requests, axe analysis, session refresh recovery, and representative viewport overflow. Phase 7 will retain comprehensive logs, screenshots, exact browser versions, performance profiles, and deployed GitHub Pages evidence.
+The browser suite covers offline reload, manifest identity, cache privacy, denied notifications, same-origin runtime requests, axe analysis, session refresh recovery, and representative viewport overflow. Phase 7 performance profiling found that immediate service-worker precaching competed with the timer's first paint. Registration now begins 1.5 seconds after mount, preserving offline installation while allowing the first screen to win startup bandwidth. The final report retains comprehensive logs, screenshots, exact browser versions, performance profiles, and deployed GitHub Pages evidence.
 
 ## Decisions, limitations, and follow-up
 

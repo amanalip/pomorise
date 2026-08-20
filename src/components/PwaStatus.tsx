@@ -14,16 +14,23 @@ export function PwaStatus() {
 
   // The generated registration only precaches versioned app assets; it defines no data routes.
   useEffect(() => {
-    applyUpdateRef.current = registerSW({
-      immediate: true,
-      onNeedRefresh: () => setMessage("update"),
-      onOfflineReady: () => {
-        // Settings already explains offline readiness, so installation needs no obstructive toast.
-      },
-      onRegisterError: () => {
-        // Online use remains fully functional, so a failed install is intentionally non-blocking.
-      },
-    });
+    // Let the timer paint before the offline shell begins fetching its complete precache graph.
+    const registrationDelay = window.setTimeout(() => {
+      // Register from the same generated module after first-screen bandwidth is no longer critical.
+      applyUpdateRef.current = registerSW({
+        immediate: true,
+        onNeedRefresh: () => setMessage("update"),
+        onOfflineReady: () => {
+          // Settings already explains offline readiness, so installation needs no obstructive toast.
+        },
+        onRegisterError: () => {
+          // Online use remains fully functional, so a failed install is intentionally non-blocking.
+        },
+      });
+      // Close delayed registration after preserving every update and failure callback.
+    }, 1_500);
+    // Avoid registering after an application instance has already unmounted.
+    return () => window.clearTimeout(registrationDelay);
   }, []);
 
   // Report real connectivity changes without implying that a first uncached visit can load offline.
