@@ -1,7 +1,7 @@
 // Import user-event so component tests exercise realistic pointer and keyboard sequences.
 import userEvent from "@testing-library/user-event";
 // Import accessible render and query helpers that avoid React implementation details.
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 // Import Vitest's grouping, assertion, and test functions for shell behavior.
 import { describe, expect, it } from "vitest";
 // Import the real Phase 2 shell so tests protect visitor-visible product behavior.
@@ -104,11 +104,12 @@ describe("App", () => {
     const user = userEvent.setup();
     // Render a fresh transient plan inside the production theme boundary.
     renderApp();
+    // Identify the planning field whose enabled state now signals completed startup hydration.
+    const intentionField = screen.getByRole("textbox", { name: "What will you move forward?" });
+    // Wait for the same readiness boundary a real visitor receives before editing local data.
+    await waitFor(() => expect(intentionField).toBeEnabled());
     // Enter an optional intention without making timer start depend on it.
-    await user.type(
-      screen.getByRole("textbox", { name: "What will you move forward?" }),
-      "Shape the project brief",
-    );
+    await user.type(intentionField, "Shape the project brief");
     // Enter one concise task into the bounded planning form.
     await user.type(screen.getByRole("textbox", { name: "Add a small task" }), "Outline goals");
     // Submit the task through its native form action.
