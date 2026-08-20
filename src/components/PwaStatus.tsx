@@ -3,7 +3,7 @@ import { registerSW } from "virtual:pwa-register";
 import { Button, Notice } from "./ui";
 
 // Describe the small set of service-worker and connectivity messages that need visitor action.
-type PwaMessage = "offline" | "ready" | "update" | null;
+type PwaMessage = "offline" | "update" | null;
 
 // Register production offline support and keep every disruptive update behind explicit consent.
 export function PwaStatus() {
@@ -17,7 +17,9 @@ export function PwaStatus() {
     applyUpdateRef.current = registerSW({
       immediate: true,
       onNeedRefresh: () => setMessage("update"),
-      onOfflineReady: () => setMessage("ready"),
+      onOfflineReady: () => {
+        // Settings already explains offline readiness, so installation needs no obstructive toast.
+      },
       onRegisterError: () => {
         // Online use remains fully functional, so a failed install is intentionally non-blocking.
       },
@@ -45,9 +47,7 @@ export function PwaStatus() {
           <span>
             {message === "update"
               ? "A Pomorise update is ready. Your current session will not reload unless you choose it."
-              : message === "ready"
-                ? "Pomorise is ready to open offline on this device."
-                : "You are offline. Previously loaded Pomorise features and local data remain available."}
+              : "You are offline. Previously loaded Pomorise features and local data remain available."}
           </span>
           <div className="pwa-status__actions">
             {message === "update" && (

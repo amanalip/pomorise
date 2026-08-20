@@ -270,7 +270,7 @@ Make browser-only data ownership dependable, transparent, and recoverable.
 
 Phase 5 is implementation-complete when local persistence, backup, restore, inspection, deletion, privacy explanations, and corresponding coverage are ready for the comprehensive Phase 7 suite.
 
-- [ ] **Phase 5 completion:** Implementation gate satisfied; acceptance criteria are queued for the Phase 7 comprehensive suite.
+- [x] **Phase 5 completion:** Implementation gate satisfied on August 20, 2026; migration, preference reset, restart, import, deletion, and declined-persistence coverage are queued for the Phase 7 comprehensive suite.
 
 ## Phase 6: Offline experience and quality hardening
 

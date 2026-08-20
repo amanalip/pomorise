@@ -34,6 +34,8 @@ import {
 // Import the timestamp-based timer interface and pure display helpers.
 import { formatDuration, type TimerMode } from "../timer/engine";
 import { modeLabel, useTimer } from "../timer/useTimer";
+// Import the reviewed defaults so preference reset has one shared source of truth.
+import { DEFAULT_TIMER_PREFERENCES } from "../timer/storage";
 
 // Define the small navigation destinations established by the application shell.
 const navigationItems = ["Timer", "Tasks", "Progress"] as const;
@@ -98,6 +100,8 @@ export function App() {
   const [localDataState, setLocalDataState] = useState<"loading" | "ready" | "error">("loading");
   // Count explicit recovery attempts so a transient IndexedDB failure can be retried in place.
   const [storageLoadAttempt, setStorageLoadAttempt] = useState(0);
+  // Version queued saves so imports and deletion can invalidate older pending snapshots safely.
+  const workspacePersistenceEpoch = useRef(0);
 
   // Open settings as a modal without adding a custom focus-trap implementation.
   function openSettings() {
@@ -110,6 +114,27 @@ export function App() {
   function restoreWorkspace(snapshot: LocalWorkspaceSnapshot) {
     updateFocusPlan({ type: "RESTORE_PLAN", state: snapshot.plan });
     updateFocusJourney({ type: "RESTORE_JOURNEY", state: snapshot.journey });
+  }
+
+  // Invalidate any delayed save captured before a higher-priority local data transaction begins.
+  function beginWorkspaceMutation() {
+    // Advance the epoch synchronously before import or deletion touches IndexedDB.
+    workspacePersistenceEpoch.current += 1;
+    // Close the mutation boundary after preventing an older snapshot from starting later.
+  }
+
+  // Reset only non-personal interface choices while leaving the timer and focus records intact.
+  function resetPreferences() {
+    // Follow the operating system appearance again through the provider's guarded persistence path.
+    setPreference("system");
+    // Copy nested durations so later edits cannot mutate the exported default object accidentally.
+    timer.setPreferences({
+      ...DEFAULT_TIMER_PREFERENCES,
+      durations: { ...DEFAULT_TIMER_PREFERENCES.durations },
+    });
+    // Clear permission feedback because notifications return to their disabled default.
+    setNotificationStatus("");
+    // Close the exact-scope reset after coordinating both preference owners.
   }
 
   // Hydrate structured personal records once without delaying the reliable timer shell.
@@ -132,7 +157,9 @@ export function App() {
   // Persist coherent snapshots shortly after meaningful planning or journey changes.
   useEffect(() => {
     if (localDataState !== "ready") return;
+    const scheduledEpoch = workspacePersistenceEpoch.current;
     const saveDelay = window.setTimeout(() => {
+      if (scheduledEpoch !== workspacePersistenceEpoch.current) return;
       void saveLocalWorkspace({ plan: focusPlan, journey: focusJourney }).catch(() =>
         setLocalDataState("error"),
       );
@@ -429,12 +456,13 @@ export function App() {
           {/* Explain the current mode without requiring optional planning or guidance. */}
           <p className="timer-card__intro">
             {timer.state.mode === "focus"
-              ? "Add an intention when you are ready, or begin with a clear desk and an open mind."
+              ? "Set an intention when you are ready, or begin without one."
               : "Choose a quiet break or one gentle guide. You can always do nothing here."}
           </p>
 
           {/* Let a visitor choose a timer purpose before starting, using native radio behavior. */}
           <SegmentedControl
+            className="timer-mode-control"
             disabled={timer.state.phase !== "idle"}
             label="Timer mode"
             name="timer-mode"
@@ -1207,7 +1235,11 @@ export function App() {
           </div>
         ) : (
           <div aria-labelledby="data-tab" id="data-panel" role="tabpanel">
-            <DataControls onWorkspaceChange={restoreWorkspace} />
+            <DataControls
+              onResetPreferences={resetPreferences}
+              onWorkspaceChange={restoreWorkspace}
+              onWorkspaceMutationStart={beginWorkspaceMutation}
+            />
           </div>
         )}
         {/* Keep the primary dismiss action aligned with the dialog's reading direction. */}

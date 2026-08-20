@@ -495,9 +495,9 @@ img {
   /* Use grid so spacing remains consistent between varied semantic elements. */
   display: grid;
   /* Separate each timer section with the shared comfortable rhythm. */
-  gap: var(--space-6);
+  gap: var(--space-4);
   /* Give the central surface extra desktop room around its primary content. */
-  padding: clamp(var(--space-6), 5vw, 3.5rem);
+  padding: clamp(var(--space-5), 3vw, var(--space-8));
   /* Close the timer card layout after establishing its vertical flow. */
 }
 
@@ -527,7 +527,7 @@ img {
   /* Remove browser margins so grid gap owns the vertical rhythm. */
   margin: 0;
   /* Scale smoothly from mobile to desktop without overwhelming 200-percent zoom. */
-  font-size: clamp(1.8rem, 4vw, 3.15rem);
+  font-size: clamp(1.8rem, 3.5vw, 2.85rem);
   /* Keep the heading compact and calm across wrapped lines. */
   line-height: 1.08;
   /* Use slightly tightened tracking at large system-font sizes. */
@@ -621,7 +621,7 @@ img {
   /* Keep state text close to the duration it describes. */
   gap: var(--space-1);
   /* Create generous vertical rest around the clock without hard-coded height. */
-  padding-block: clamp(var(--space-4), 4vw, var(--space-8));
+  padding-block: var(--space-3);
   /* Close the timer display group after centering its two semantic values. */
 }
 
@@ -1228,13 +1228,12 @@ img {
   /* Close the error notice modifier after applying its semantic boundary. */
 }
 
-/* Keep offline and update choices visible without covering the running timer workspace. */
+/* Keep offline and update choices visible in a corner without covering primary navigation. */
 .pwa-status {
   position: fixed;
   z-index: calc(var(--layer-dialog) - 1);
-  inset: var(--space-3) var(--space-3) auto;
-  width: min(42rem, calc(100% - (2 * var(--space-3))));
-  margin-inline: auto;
+  inset: auto var(--space-4) var(--space-4) auto;
+  width: min(30rem, calc(100% - (2 * var(--space-4))));
   filter: drop-shadow(var(--shadow-lg));
 }
 
@@ -1781,6 +1780,13 @@ img {
 
 /* Tighten surface geometry and controls for the narrowest supported mobile widths. */
 @media (max-width: 36rem) {
+  /* Lift transient status above the persistent mobile destination bar. */
+  .pwa-status {
+    /* Preserve access to all three mobile navigation targets beneath the toast. */
+    bottom: 5.5rem;
+    /* Close the mobile status position after protecting persistent navigation. */
+  }
+
   /* Stack transient status actions so enlarged text cannot force horizontal overflow. */
   .pwa-status__content {
     align-items: stretch;
@@ -1846,7 +1852,7 @@ img {
     /* Reduce only card padding while preserving interactive target sizes. */
     padding: var(--space-5) var(--space-4);
     /* Keep the vertical flow comfortable at compact widths. */
-    gap: var(--space-5);
+    gap: var(--space-3);
     /* Close the compact timer card after preserving content hierarchy. */
   }
 
@@ -1860,7 +1866,7 @@ img {
   /* Reduce only the display scale enough to fit the minimum supported viewport. */
   .timer-display__time {
     /* Preserve a strong focal size while preventing digit overflow at 320 pixels. */
-    font-size: clamp(4rem, 23vw, 6rem);
+    font-size: clamp(4rem, 20vw, 5rem);
     /* Close the compact countdown scale after protecting minimum-width layout. */
   }
 
@@ -1879,7 +1885,7 @@ img {
   }
 
   /* Keep theme options readable when translated labels or zoom require extra room. */
-  .segmented__track {
+  .segmented:not(.timer-mode-control) .segmented__track {
     /* Stack options into one column instead of compressing label text. */
     grid-template-columns: 1fr;
     /* Close the narrow segmented adjustment after protecting readable targets. */

@@ -117,3 +117,25 @@ test("reflows at the supported mobile width", async ({ page }) => {
   await expect(page.getByRole("navigation", { name: "Primary mobile navigation" })).toBeVisible();
   // Close the responsive browser case after checking purpose, overflow, and navigation.
 });
+
+// Protect the most important first-screen action at representative phone and desktop sizes.
+for (const viewport of [
+  // Use a common modern phone viewport for the compact touch layout.
+  { label: "mobile", width: 390, height: 844 },
+  // Use the documented release desktop viewport for the two-column workspace.
+  { label: "desktop", width: 1440, height: 900 },
+]) {
+  // Name each case with its visual profile so failures identify the affected layout immediately.
+  test(`keeps the start action visible initially at the ${viewport.label} viewport`, async ({
+    page,
+  }) => {
+    // Apply the release viewport before navigation so responsive layout never paints at another size.
+    await page.setViewportSize(viewport);
+    // Load the fresh timer workspace at the production repository path.
+    await page.goto("./");
+    // Require the primary action to be fully available without an initial page scroll.
+    await expect(page.getByRole("button", { name: "Start focus" })).toBeInViewport({ ratio: 1 });
+    // Close the viewport case after protecting the first-session call to action.
+  });
+  // Close the responsive case generator after defining its phone and desktop coverage.
+}

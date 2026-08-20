@@ -3,8 +3,8 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 15, 2026 at 10:36 PM EDT |
-| Last updated | August 20, 2026 at 6:00 PM EDT |
-| ISO 8601 last updated | `2026-08-20T18:00:00-04:00` |
+| Last updated | August 20, 2026 at 6:15:50 PM EDT |
+| ISO 8601 last updated | `2026-08-20T18:15:50-04:00` |
 | Timezone | America/Toronto (UTC−04:00) |
 | Estimated reading time | 42 minutes |
 | Verification status | Commit facts checked against local Git history; technical claims checked against linked primary documentation |
@@ -17,6 +17,7 @@ The newest commit should be added at the top of the **Commit history** section.
 
 - [Entry template](#entry-template)
 - [Commit history](#commit-history)
+  - [Pending: Prepare First Light release verification](#pending-prepare-first-light-release-verification)
   - [Pending: Establish Phase 6 offline experience and quality hardening](#pending-establish-phase-6-offline-experience-and-quality-hardening)
   - [Pending: Begin Phase 5 local data and privacy controls](#pending-begin-phase-5-local-data-and-privacy-controls)
   - [Pending: Establish Phase 4 complete focus loop](#pending-establish-phase-4-complete-focus-loop)
@@ -102,6 +103,37 @@ Describe what a visitor or maintainer will notice. Write “None” when the cha
 ```
 
 ## Commit history
+
+### `Pending`: Prepare First Light release verification
+
+- **Status:** Release-candidate implementation prepared for the Phase 7 evidence run
+- **Prepared:** 2026-08-20 18:15 EDT
+- **Author:** Aman Ali with Codex collaboration
+- **Full commit:** Assigned after the release-candidate commit is created
+
+#### Purpose
+
+Close the remaining Phase 5 implementation gap, fix issues exposed by cross-browser and visual review, and make the Pages workflow enforce release quality before publication.
+
+#### Changes
+
+- Added an atomic IndexedDB version-one to version-two migration that preserves older task wording and fills newly required fields.
+- Added exact-scope preference reset while preserving focus data.
+- Added production-browser coverage for migration, restart persistence, safe import, derived restoration, deletion scopes, declined persistent storage, and first-screen action visibility.
+- Prevented delayed workspace saves from racing with import and deletion through a synchronous persistence epoch.
+- Improved desktop and mobile first-screen hierarchy so the timer action remains visible at release viewports.
+- Removed the non-actionable offline-ready toast that obscured core controls while preserving offline and update guidance.
+- Expanded the Pages workflow to gate deployment on formatting, linting, unit/component tests, and Chromium/Firefox browser tests.
+
+#### Validation
+
+- Formatting, strict types, linting, build, and focused responsive cases passed.
+- Ten local-data cases passed across Chromium and Firefox after correcting the persistence race that Firefox exposed.
+- Visual browser review covered light and dark themes, 390 by 844 mobile, 1440 by 900 desktop, settings, data ownership, navigation, and primary-action visibility.
+
+#### Follow-up
+
+Run the clean comprehensive suite, publish through the strengthened workflow, verify the public URL, retain the report and screenshots, and publish First Light release notes.
 
 ### `Pending`: Establish Phase 6 offline experience and quality hardening
 

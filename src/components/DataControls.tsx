@@ -26,6 +26,8 @@ const APPLICATION_VERSION = "0.1.0";
 // Describe the callback used to synchronize React after transactional database changes.
 interface DataControlsProps {
   onWorkspaceChange: (snapshot: LocalWorkspaceSnapshot) => void;
+  onResetPreferences: () => void;
+  onWorkspaceMutationStart: () => void;
 }
 
 // Download one locally-created file and revoke its temporary browser URL immediately afterward.
@@ -39,11 +41,17 @@ function downloadLocalFile(contents: string, type: string, filename: string) {
 }
 
 // Present understandable data ownership controls without turning settings into a technical console.
-export function DataControls({ onWorkspaceChange }: DataControlsProps) {
+export function DataControls({
+  onResetPreferences,
+  onWorkspaceChange,
+  onWorkspaceMutationStart,
+}: DataControlsProps) {
   const [counts, setCounts] = useState({ tasks: 0, sessions: 0, distractions: 0, reflections: 0 });
   const [status, setStatus] = useState("");
   const [pendingBackup, setPendingBackup] = useState<PomoriseBackup | null>(null);
-  const [confirmation, setConfirmation] = useState<"history" | "everything" | null>(null);
+  const [confirmation, setConfirmation] = useState<"history" | "preferences" | "everything" | null>(
+    null,
+  );
   const [persistentState, setPersistentState] = useState<"unknown" | "granted" | "best-effort">(
     "unknown",
   );
@@ -116,6 +124,7 @@ export function DataControls({ onWorkspaceChange }: DataControlsProps) {
   async function confirmImport() {
     if (!pendingBackup) return;
     try {
+      onWorkspaceMutationStart();
       await replaceFromBackup(pendingBackup);
       const snapshot = await loadLocalWorkspace();
       onWorkspaceChange(snapshot);
@@ -144,6 +153,7 @@ export function DataControls({ onWorkspaceChange }: DataControlsProps) {
 
   // Remove completed history after an inline confirmation while preserving tasks and preferences.
   async function confirmClearHistory() {
+    onWorkspaceMutationStart();
     await clearLocalHistory();
     const snapshot = await loadLocalWorkspace();
     onWorkspaceChange(snapshot);
@@ -154,8 +164,16 @@ export function DataControls({ onWorkspaceChange }: DataControlsProps) {
     );
   }
 
+  // Restore non-personal appearance and timer choices without changing tasks or completed history.
+  function confirmResetPreferences() {
+    onResetPreferences();
+    setConfirmation(null);
+    setStatus("Appearance and timer preferences were reset. Focus data remains on this device.");
+  }
+
   // Remove all structured personal data only after a separate exact-scope confirmation.
   async function confirmDeleteEverything() {
+    onWorkspaceMutationStart();
     await deleteAllLocalData();
     const snapshot = await loadLocalWorkspace();
     onWorkspaceChange(snapshot);
@@ -288,26 +306,41 @@ export function DataControls({ onWorkspaceChange }: DataControlsProps) {
             <Button onClick={() => setConfirmation("everything")} variant="quiet">
               Delete all focus data
             </Button>
+            <Button onClick={() => setConfirmation("preferences")} variant="quiet">
+              Reset preferences
+            </Button>
           </div>
         ) : (
           <div className="delete-confirmation" role="alert">
             <strong>
-              {confirmation === "history" ? "Delete history?" : "Delete all focus data?"}
+              {confirmation === "history"
+                ? "Delete history?"
+                : confirmation === "preferences"
+                  ? "Reset preferences?"
+                  : "Delete all focus data?"}
             </strong>
             <p>
               {confirmation === "history"
                 ? "Sessions, reflections, and captured thoughts will be removed. Tasks and preferences stay."
-                : "Tasks, sessions, reflections, and captured thoughts will be removed. This cannot be undone."}
+                : confirmation === "preferences"
+                  ? "Appearance and timer choices return to their defaults. Tasks and history stay."
+                  : "Tasks, sessions, reflections, and captured thoughts will be removed. This cannot be undone."}
             </p>
             <div className="data-actions">
               <Button
                 onClick={() =>
-                  void (confirmation === "history"
-                    ? confirmClearHistory()
-                    : confirmDeleteEverything())
+                  confirmation === "preferences"
+                    ? confirmResetPreferences()
+                    : void (confirmation === "history"
+                        ? confirmClearHistory()
+                        : confirmDeleteEverything())
                 }
               >
-                {confirmation === "history" ? "Yes, clear history" : "Yes, delete focus data"}
+                {confirmation === "history"
+                  ? "Yes, clear history"
+                  : confirmation === "preferences"
+                    ? "Yes, reset preferences"
+                    : "Yes, delete focus data"}
               </Button>
               <Button onClick={() => setConfirmation(null)} variant="quiet">
                 Cancel

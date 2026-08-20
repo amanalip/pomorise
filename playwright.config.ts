@@ -21,11 +21,17 @@ export default defineConfig({
     trace: "on-first-retry",
     // Close the shared browser options after defining the deployed-style base address.
   },
-  // Begin with Chromium while leaving the configuration ready for later browser expansion.
+  // Exercise every browser engine that this host can launch reliably in release automation.
   projects: [
-    // Name the project so browser evidence identifies the engine and desktop profile clearly.
+    // Represent Chromium browsers through Playwright's maintained desktop Chrome profile.
     { name: "chromium", use: { ...devices["Desktop Chrome"] } },
-    // Close the browser-project list after the initial supported verification target.
+    // Represent current Firefox behavior through Playwright's maintained desktop profile.
+    { name: "firefox", use: { ...devices["Desktop Firefox"] } },
+    // Add WebKit explicitly on hosts with its required native libraries installed.
+    ...(process.env.POMORISE_INCLUDE_WEBKIT === "true"
+      ? [{ name: "webkit", use: { ...devices["Desktop Safari"] } }]
+      : []),
+    // Close the release browser-project list after all locally available engine families.
   ],
   // Start Vite's production preview server automatically around the browser suite.
   webServer: {

@@ -7,7 +7,7 @@ import type { FocusJourneyState, SessionRecord, Distraction } from "../focus/jou
 import type { FocusPlanState, FocusTask } from "../focus/planning";
 
 // Keep the public storage version explicit for backups, diagnostics, and future migrations.
-export const DATA_SCHEMA_VERSION = 1;
+export const DATA_SCHEMA_VERSION = 2;
 // Name the local database clearly so browser storage panels are understandable.
 export const DATABASE_NAME = "pomorise-first-light";
 
@@ -91,16 +91,49 @@ export class PomoriseDatabase extends Dexie {
   reflections!: EntityTable<StoredReflection, "sessionId">;
   meta!: EntityTable<StoredMeta, "key">;
 
-  // Register the first durable schema as an intentional migration boundary.
+  // Register every durable schema in order so Dexie can upgrade older browser profiles safely.
   constructor() {
     super(DATABASE_NAME);
-    this.version(DATA_SCHEMA_VERSION).stores({
+    // Preserve the First Light version-one store layout as the migration starting point.
+    this.version(1).stores({
       tasks: "id, completed, updatedAt",
       sessions: "id, completedAt",
       distractions: "id, resolution, capturedAt",
       reflections: "sessionId, status",
       meta: "key",
     });
+    // Introduce version two without changing indexes so existing records remain addressable.
+    this.version(DATA_SCHEMA_VERSION)
+      .stores({
+        tasks: "id, completed, updatedAt",
+        sessions: "id, completedAt",
+        distractions: "id, resolution, capturedAt",
+        reflections: "sessionId, status",
+        meta: "key",
+      })
+      // Fill fields absent from early synthetic records before current validation reads them.
+      .upgrade(async (transaction) => {
+        // Modify records in the upgrade transaction so a failure rolls back the whole migration.
+        await transaction
+          .table("tasks")
+          .toCollection()
+          .modify((task: Record<string, unknown>) => {
+            // Older tasks had no completed-session counter, so begin their preserved count at zero.
+            if (typeof task.completedSessions !== "number") task.completedSessions = 0;
+            // Older tasks had no carry-forward timestamp, so represent that history honestly as absent.
+            if (!("lastCarriedAt" in task)) task.lastCarriedAt = null;
+            // Recover a missing creation time from the older update time when it is trustworthy.
+            if (typeof task.createdAt !== "number") {
+              // Use the old update timestamp or zero rather than inventing the time of migration.
+              task.createdAt = typeof task.updatedAt === "number" ? task.updatedAt : 0;
+              // Close the creation-time recovery after assigning a deterministic finite value.
+            }
+            // Recover a missing update time from the normalized creation time for validation safety.
+            if (typeof task.updatedAt !== "number") task.updatedAt = task.createdAt;
+            // Close the per-task migration after preserving identity and visitor-authored wording.
+          });
+        // Close the atomic version-two upgrade after every legacy task is normalized.
+      });
   }
 }
 

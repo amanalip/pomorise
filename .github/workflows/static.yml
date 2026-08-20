@@ -95,6 +95,41 @@ jobs:
         # Use the same clean-install command documented for local comprehensive verification.
         run: npm ci
 
+      # Confirm formatting before slower validation so accidental source drift fails clearly.
+      - name: Check formatting
+        # Skip validation when the historical scaffold guard reports no application.
+        if: steps.app.outputs.ready == 'true'
+        # Compare every maintained source group with the committed Prettier result.
+        run: npm run format:check
+
+      # Enforce project rules and unsafe-pattern checks across source and test code.
+      - name: Lint source and tests
+        # Skip validation when the historical scaffold guard reports no application.
+        if: steps.app.outputs.ready == 'true'
+        # Treat every warning as a release-blocking automation failure.
+        run: npm run lint
+
+      # Run deterministic unit and component behavior before starting real browsers.
+      - name: Test units and components
+        # Skip validation when the historical scaffold guard reports no application.
+        if: steps.app.outputs.ready == 'true'
+        # Exercise the complete Vitest collection without watch mode or ignored failures.
+        run: npm test
+
+      # Install only the two browser engines supported by this Linux release runner.
+      - name: Install release browsers
+        # Skip browser setup when the historical scaffold guard reports no application.
+        if: steps.app.outputs.ready == 'true'
+        # Include reviewed native libraries so Chromium and Firefox launch reproducibly.
+        run: npx playwright install --with-deps chromium firefox
+
+      # Exercise production-path, storage, accessibility, offline, and responsive behavior.
+      - name: Test production browsers
+        # Skip browser validation when the historical scaffold guard reports no application.
+        if: steps.app.outputs.ready == 'true'
+        # Build and test the release path through the same script used by local verification.
+        run: npm run test:browser
+
       # Require strict types and create the Vite production directory through the local script.
       - name: Build production website
         # Skip the build when a reproducible installation was not possible.

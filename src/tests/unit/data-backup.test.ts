@@ -9,7 +9,7 @@ function validBackup() {
     product: "Pomorise",
     formatVersion: 1,
     exportedAt: 1_800_000_000_000,
-    dataSchemaVersion: 1,
+    dataSchemaVersion: 2,
     records: {
       tasks: [],
       sessions: [
@@ -33,7 +33,7 @@ describe("Phase 5 local backup boundary", () => {
   it("validates a compatible versioned backup", () => {
     const parsed = parseBackupText(JSON.stringify(validBackup()));
     expect(parsed.records.sessions).toHaveLength(1);
-    expect(parsed.dataSchemaVersion).toBe(1);
+    expect(parsed.dataSchemaVersion).toBe(2);
   });
 
   // Reject unknown formats before any database transaction can begin.

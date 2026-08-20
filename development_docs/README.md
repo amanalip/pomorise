@@ -3,8 +3,8 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 16, 2026 at 2:42:00 AM EDT |
-| Last updated | August 20, 2026 at 5:33:36 PM EDT |
-| ISO 8601 last updated | `2026-08-20T17:33:36-04:00` |
+| Last updated | August 20, 2026 at 6:15:50 PM EDT |
+| ISO 8601 last updated | `2026-08-20T18:15:50-04:00` |
 | Timezone | America/Toronto (UTC−04:00) |
 | Estimated reading time | 11 minutes |
 | Verification status | Fact-checked and sanity-checked against the implementation plan, documentation system, and linked primary references |
@@ -33,11 +33,12 @@ This directory explains Pomorise development in the order it happens. Each docum
 
 ## Development document navigation
 
-Phases 1 through 4 are implementation-ready. Phase 5 is in progress. Add each future development document to the top of this table.
+Phases 1 through 6 are implementation-ready. Phase 7 comprehensive verification is in progress. Add each future development document to the top of this table.
 
 | Date | Identifier | Phase or step | Commit | Main change | Test evidence | Development document |
 | --- | --- | --- | --- | --- | --- | --- |
-| August 20, 2026 | `phase-05-local-data-and-privacy-controls` | Phase 5 in progress | Pending owner commit | Versioned IndexedDB, validation, backup and restore foundation, data ownership UI, and rebuilt header identity | Targeted diagnostics recorded; final evidence remains Phase 7 | [`phase-05-local-data-and-privacy-controls/doc.md`](phase-05-local-data-and-privacy-controls/doc.md) |
+| August 20, 2026 | `phase-06-offline-and-quality-hardening` | Phase 6 | `6bd3702` | Installable offline shell, consentful updates, recovery, permissions, asset optimization, and quality coverage | Targeted diagnostics recorded; final evidence remains Phase 7 | [`phase-06-offline-and-quality-hardening/doc.md`](phase-06-offline-and-quality-hardening/doc.md) |
+| August 20, 2026 | `phase-05-local-data-and-privacy-controls` | Phase 5 implementation-ready | `83b901c` plus release-candidate completion | Versioned migration, validated backup and restore, exact deletion, preference reset, and persistence-race protection | Cross-engine diagnostics recorded; final evidence remains Phase 7 | [`phase-05-local-data-and-privacy-controls/doc.md`](phase-05-local-data-and-privacy-controls/doc.md) |
 | August 20, 2026 | `phase-04-complete-focus-loop` | Phase 4 | Pending owner commit | Intention, small tasks, uninterrupted capture, reflection, breaks, and private progress | Targeted diagnostics recorded; final evidence remains Phase 7 | [`phase-04-complete-focus-loop/doc.md`](phase-04-complete-focus-loop/doc.md) |
 | August 20, 2026 | `phase-03-reliable-timer-engine` | Phase 3 | Pending owner commit | Timestamp-based state machine, refresh recovery, clock-change choice, completion paths, and accurate controls | Targeted diagnostics recorded; final evidence remains Phase 7 | [`phase-03-reliable-timer-engine/doc.md`](phase-03-reliable-timer-engine/doc.md) |
 | August 20, 2026 | `phase-02-design-system-shell` | Phase 2 | Pending owner commit | Responsive themed shell, persistent appearance, accessible primitives, and reusable interface states | Targeted diagnostics recorded; final evidence remains Phase 7 | [`phase-02-design-system-shell/doc.md`](phase-02-design-system-shell/doc.md) |
