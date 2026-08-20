@@ -1,0 +1,9 @@
+Script started on 2026-08-20 18:20:49-04:00 [COMMAND="npm ci" <not executed on terminal>]
+npm warn deprecated glob@11.1.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+
+added 508 packages in 4s
+
+150 packages are looking for funding
+  run `npm fund` for details
+
+Script done on 2026-08-20 18:20:54-04:00 [COMMAND_EXIT_CODE="0"]

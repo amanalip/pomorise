@@ -1,0 +1,36 @@
+Script started on 2026-08-20 18:21:02-04:00 [COMMAND="npm run test:component" <not executed on terminal>]
+npm notice run pomorise@0.1.0 test:component
+npm notice run vitest run src/tests/component
+[?25l
+ RUN  v4.1.11 /home/amanap/Documents/GitHub/pomorise
+
+ ❯ src/tests/component/App.test.tsx (5 tests | 1 failed) 1380ms
+     × adds, selects, and completes a small focus task 271ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/tests/component/App.test.tsx > App > adds, selects, and completes a small focus task
+Error: expect(element).toHaveValue(Shape the project brief)
+
+Expected the element to have value:
+  Shape the project brief
+Received:
+
+ ❯ src/tests/component/App.test.tsx:124:82
+    122|     expect(screen.getByText("Complete")).toBeVisible();
+    123|     // Keep the intention available because task completion is an inde…
+    124|     expect(screen.getByRole("textbox", { name: "What will you move for…
+       |                                                                                  ^
+    125|       "Shape the project brief",
+    126|     );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 5 passed (6)
+   Start at  18:21:03
+   Duration  4.99s (transform 287ms, setup 618ms, import 563ms, tests 1.94s, environment 4.11s)
+
+[?25h
+Script done on 2026-08-20 18:21:08-04:00 [COMMAND_EXIT_CODE="1"]

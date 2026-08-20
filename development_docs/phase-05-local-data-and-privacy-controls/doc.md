@@ -3,11 +3,11 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 20, 2026 at 5:33:36 PM EDT |
-| Last updated | August 20, 2026 at 6:15:50 PM EDT |
-| ISO 8601 last updated | `2026-08-20T18:15:50-04:00` |
+| Last updated | August 20, 2026 at 7:04:00 PM EDT |
+| ISO 8601 last updated | `2026-08-20T19:04:00-04:00` |
 | Timezone | America/Toronto (UTC−04:00) |
 | Estimated reading time | 6 minutes |
-| Verification status | Phase 5 implementation-ready; comprehensive release evidence remains in Phase 7 |
+| Verification status | Complete; migration, backup, restore, deletion, and privacy evidence passed in Phase 7 |
 
 ## Current status
 
@@ -75,3 +75,7 @@ These are targeted development checks, not the final Phase 5 acceptance claim.
 - [Implementation plan](../../implementation_plan.md)
 - [Product plan](../../project_plan.md)
 - [Phase 4 complete focus loop](../phase-04-complete-focus-loop/doc.md)
+
+## Final evidence
+
+The integrated migration, backup, restore, and deletion evidence passed in the [Phase 7 final comprehensive report](../../testreports/final-comprehensive-suite/test_report.md).

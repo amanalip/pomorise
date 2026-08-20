@@ -1,0 +1,4 @@
+Script started on 2026-08-20 19:04:26-04:00 [COMMAND="node -e 'const fs=require("fs"),p=require("path"); const files=["README.md","project_plan.md","implementation_plan.md","development_docs/README.md","development_docs/phase-07-release-verification-publication/doc.md","testreports/README.md","testreports/final-comprehensive-suite/test_report.md"]; const bad=[]; for(const f of files){const s=fs.readFileSync(f,"utf8"); for(const m of s.matchAll(/\]\(([^)]+)\)/g)){let t=m[1].replace(/^<|>$/g,"").split("#")[0]; if(!t||/^(https?:|mailto:)/.test(t))continue; const target=p.resolve(p.dirname(f),t); if(!fs.existsSync(target))bad.push(f+" -> "+t);}} if(bad.length){console.error(bad.join("\n"));process.exit(1)} console.log("All local Markdown targets exist across "+files.length+" release documents.")'" <not executed on terminal>]
+All local Markdown targets exist across 7 release documents.
+
+Script done on 2026-08-20 19:04:26-04:00 [COMMAND_EXIT_CODE="0"]

@@ -3,11 +3,11 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 16, 2026 at 2:28 AM EDT |
-| Last updated | August 20, 2026 at 1:21:33 PM EDT |
-| ISO 8601 last updated | `2026-08-20T13:21:33-04:00` |
+| Last updated | August 20, 2026 at 7:04:00 PM EDT |
+| ISO 8601 last updated | `2026-08-20T19:04:00-04:00` |
 | Timezone | America/Toronto (UTC−04:00) |
 | Estimated reading time | 8 minutes |
-| Verification status | Fact-checked and sanity-checked against the implementation plan and linked primary testing documentation |
+| Verification status | First Light final comprehensive suite passed and indexed |
 
 This directory is the permanent evidence library for Pomorise testing. After Phases 1 through 6 are implementation-ready, one comprehensive Phase 7 suite receives a detailed Markdown report, raw logs, screenshots, and supporting artifacts.
 
@@ -30,10 +30,11 @@ This directory is the permanent evidence library for Pomorise testing. After Pha
 
 ## Report navigation
 
-No comprehensive implementation test suite has been completed yet. Add the Phase 7 final report when its directory is created.
+Pomorise 1.0: First Light completed its comprehensive Phase 7 suite on August 20, 2026. The report preserves successful evidence, original failures, fixes, retests, public deployment checks, and explicit residual risks.
 
 | Date | Identifier | Scope | Environment | Result | Screenshots | Development narrative | Report |
 | --- | --- | --- | --- | --- | --- | --- | --- |
+| August 20, 2026 | `final-comprehensive-suite` | First Light integrated release and public GitHub Pages deployment | CachyOS, GitHub Actions Ubuntu, Chromium, Firefox, mobile and desktop | **Passed** | 10 retained | [`phase-07-release-verification-publication/doc.md`](../development_docs/phase-07-release-verification-publication/doc.md) | [`final-comprehensive-suite/test_report.md`](final-comprehensive-suite/test_report.md) |
 | Not run | `_template` | Reusable report structure only | Not applicable | Template | Instructions only | [`development_docs/_template/doc.md`](../development_docs/_template/doc.md) | [`_template/test_report.md`](_template/test_report.md) |
 
 Result values are `Passed`, `Failed`, `Blocked`, `Incomplete`, or `Template`. A report that includes any unexplained failure, missing required screenshot, missing command log, or unchecked closeout item cannot be marked `Passed`.

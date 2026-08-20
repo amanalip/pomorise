@@ -3,8 +3,8 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 16, 2026 at 2:42:00 AM EDT |
-| Last updated | August 20, 2026 at 6:15:50 PM EDT |
-| ISO 8601 last updated | `2026-08-20T18:15:50-04:00` |
+| Last updated | August 20, 2026 at 7:04:00 PM EDT |
+| ISO 8601 last updated | `2026-08-20T19:04:00-04:00` |
 | Timezone | America/Toronto (UTC−04:00) |
 | Estimated reading time | 11 minutes |
 | Verification status | Fact-checked and sanity-checked against the implementation plan, documentation system, and linked primary references |
@@ -33,10 +33,11 @@ This directory explains Pomorise development in the order it happens. Each docum
 
 ## Development document navigation
 
-Phases 1 through 6 are implementation-ready. Phase 7 comprehensive verification is in progress. Add each future development document to the top of this table.
+All seven First Light phases are complete. Phase 7 passed its comprehensive suite and published Pomorise 1.0 to GitHub Pages. Add each future development document to the top of this table.
 
 | Date | Identifier | Phase or step | Commit | Main change | Test evidence | Development document |
 | --- | --- | --- | --- | --- | --- | --- |
+| August 20, 2026 | `phase-07-release-verification-publication` | Phase 7 | `303bcca` plus closeout documentation | Clean verification, final UX correction, performance budgets, public deployment, deployed backup fix, and First Light publication | [Comprehensive report passed](../testreports/final-comprehensive-suite/test_report.md) | [`phase-07-release-verification-publication/doc.md`](phase-07-release-verification-publication/doc.md) |
 | August 20, 2026 | `phase-06-offline-and-quality-hardening` | Phase 6 | `6bd3702` | Installable offline shell, consentful updates, recovery, permissions, asset optimization, and quality coverage | Targeted diagnostics recorded; final evidence remains Phase 7 | [`phase-06-offline-and-quality-hardening/doc.md`](phase-06-offline-and-quality-hardening/doc.md) |
 | August 20, 2026 | `phase-05-local-data-and-privacy-controls` | Phase 5 implementation-ready | `83b901c` plus release-candidate completion | Versioned migration, validated backup and restore, exact deletion, preference reset, and persistence-race protection | Cross-engine diagnostics recorded; final evidence remains Phase 7 | [`phase-05-local-data-and-privacy-controls/doc.md`](phase-05-local-data-and-privacy-controls/doc.md) |
 | August 20, 2026 | `phase-04-complete-focus-loop` | Phase 4 | Pending owner commit | Intention, small tasks, uninterrupted capture, reflection, breaks, and private progress | Targeted diagnostics recorded; final evidence remains Phase 7 | [`phase-04-complete-focus-loop/doc.md`](phase-04-complete-focus-loop/doc.md) |

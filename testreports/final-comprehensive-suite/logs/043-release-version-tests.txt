@@ -1,0 +1,12 @@
+Script started on 2026-08-20 18:38:46-04:00 [COMMAND="npm run test:run" <not executed on terminal>]
+npm error Missing script: "test:run"
+npm error
+npm error Did you mean this?
+npm error   npm run test:unit # run the "test:unit" package script
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error Log files were not written due to an error writing to the directory: /home/amanap/.npm/_logs
+npm error You can rerun the command with `--loglevel=verbose` to see the logs in your terminal
+
+Script done on 2026-08-20 18:38:46-04:00 [COMMAND_EXIT_CODE="1"]

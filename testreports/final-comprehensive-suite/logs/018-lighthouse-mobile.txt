@@ -1,0 +1,8 @@
+Script started on 2026-08-20 18:22:55-04:00 [COMMAND="npx --yes lighthouse@13.4.1 http://127.0.0.1:4173/pomorise/ --only-categories=performance --output=json --output-path=testreports/final-comprehensive-suite/artifacts/lighthouse-mobile.json --chrome-flags='--headless --no-sandbox' --quiet" <not executed on terminal>]
+npm notice run pomorise@0.1.0 npx
+npm notice run 'lighthouse' http://127.0.0.1:4173/pomorise/ --only-categories=performance --output=json --output-path=testreports/final-comprehensive-suite/artifacts/lighthouse-mobile.json --chrome-flags=--headless --no-sandbox --quiet
+[?25l[36m?[39m [0mWe're constantly trying to improve Lighthouse and its reliability.
+  [0mLearn more: https://github.com/GoogleChrome/lighthouse/blob/main/docs/error-reporting.md 
+  [1mMay we anonymously report runtime exceptions to improve the tool over time?[0m
+  We'll remember your choice, but you can also use the flag --[no-]enable-error-reporting [2m(y/N)[22m [2m‣[22m [36mfalse[39m[3A[69G[5D[3B[?25h
+Script done on 2026-08-20 18:23:35-04:00 [COMMAND_EXIT_CODE="0"]

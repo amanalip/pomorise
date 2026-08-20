@@ -1,0 +1,953 @@
+Script started on 2026-08-20 18:52:55-04:00 [COMMAND="gh run view 32425974118 --log" <not executed on terminal>]
+[?25l[K⣾[K⣽[?25h[K[?25l[K⣾[K⣽[K⣻[?25h[K[?25l[K⣾[K⣽[K⣻[K⢿[K⡿[K⣟[K⣯[?25h[KBuild website	Set up job	﻿2026-08-20T22:49:23.0340150Z Current runner version: '2.336.0'
+Build website	Set up job	2026-08-20T22:49:23.0361361Z ##[group]Runner Image Provisioner
+Build website	Set up job	2026-08-20T22:49:23.0362271Z Hosted Compute Agent
+Build website	Set up job	2026-08-20T22:49:23.0362787Z Version: 20260729.566
+Build website	Set up job	2026-08-20T22:49:23.0363343Z Commit: cf7153fe6e25b664e8693c24944bf2b00355d109
+Build website	Set up job	2026-08-20T22:49:23.0364038Z Build Date: 2026-07-29T19:17:02Z
+Build website	Set up job	2026-08-20T22:49:23.0364670Z Worker ID: {798f20c7-c80d-4569-8513-92a4eab76086}
+Build website	Set up job	2026-08-20T22:49:23.0365297Z Azure Region: centralus
+Build website	Set up job	2026-08-20T22:49:23.0365839Z ##[endgroup]
+Build website	Set up job	2026-08-20T22:49:23.0367079Z ##[group]Operating System
+Build website	Set up job	2026-08-20T22:49:23.0367619Z Ubuntu
+Build website	Set up job	2026-08-20T22:49:23.0368068Z 24.04.4
+Build website	Set up job	2026-08-20T22:49:23.0368805Z LTS
+Build website	Set up job	2026-08-20T22:49:23.0369264Z ##[endgroup]
+Build website	Set up job	2026-08-20T22:49:23.0369749Z ##[group]Runner Image
+Build website	Set up job	2026-08-20T22:49:23.0370283Z Image: ubuntu-24.04
+Build website	Set up job	2026-08-20T22:49:23.0370902Z Version: 20260816.277.1
+Build website	Set up job	2026-08-20T22:49:23.0371832Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260816.277/images/ubuntu/Ubuntu2404-Readme.md
+Build website	Set up job	2026-08-20T22:49:23.0373315Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260816.277
+Build website	Set up job	2026-08-20T22:49:23.0374159Z ##[endgroup]
+Build website	Set up job	2026-08-20T22:49:23.0375159Z ##[group]GITHUB_TOKEN Permissions
+Build website	Set up job	2026-08-20T22:49:23.0377106Z Contents: read
+Build website	Set up job	2026-08-20T22:49:23.0377623Z Metadata: read
+Build website	Set up job	2026-08-20T22:49:23.0378205Z Pages: write
+Build website	Set up job	2026-08-20T22:49:23.0378708Z ##[endgroup]
+Build website	Set up job	2026-08-20T22:49:23.0380375Z Secret source: Actions
+Build website	Set up job	2026-08-20T22:49:23.0381446Z Prepare workflow directory
+Build website	Set up job	2026-08-20T22:49:23.1462415Z Prepare all required actions
+Build website	Set up job	2026-08-20T22:49:23.1520079Z Getting action download info
+Build website	Set up job	2026-08-20T22:49:23.3577614Z Download action repository 'actions/checkout@v6' (SHA:d23441a48e516b6c34aea4fa41551a30e30af803)
+Build website	Set up job	2026-08-20T22:49:23.4667268Z Download action repository 'actions/setup-node@v6' (SHA:249970729cb0ef3589644e2896645e5dc5ba9c38)
+Build website	Set up job	2026-08-20T22:49:23.5303365Z Download action repository 'actions/configure-pages@v5' (SHA:983d7736d9b0ae728b81ab479565c72886d7745b)
+Build website	Set up job	2026-08-20T22:49:23.9110579Z Download action repository 'actions/upload-pages-artifact@v4' (SHA:7b1f4a764d45c48632c6b24a0339c27f5614fb0b)
+Build website	Set up job	2026-08-20T22:49:24.2455687Z Getting action download info
+Build website	Set up job	2026-08-20T22:49:24.3229092Z Download action repository 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+Build website	Set up job	2026-08-20T22:49:24.6170579Z Complete job name: Build website
+Build website	Checkout repository	﻿2026-08-20T22:49:24.7924387Z ##[group]Run actions/checkout@v6
+Build website	Checkout repository	2026-08-20T22:49:24.7925039Z with:
+Build website	Checkout repository	2026-08-20T22:49:24.7925405Z   repository: amanalip/pomorise
+Build website	Checkout repository	2026-08-20T22:49:24.7928718Z   token: ***
+Build website	Checkout repository	2026-08-20T22:49:24.7929074Z   ssh-strict: true
+Build website	Checkout repository	2026-08-20T22:49:24.7929424Z   ssh-user: git
+Build website	Checkout repository	2026-08-20T22:49:24.7929775Z   persist-credentials: true
+Build website	Checkout repository	2026-08-20T22:49:24.7930161Z   clean: true
+Build website	Checkout repository	2026-08-20T22:49:24.7930511Z   sparse-checkout-cone-mode: true
+Build website	Checkout repository	2026-08-20T22:49:24.7931096Z   fetch-depth: 1
+Build website	Checkout repository	2026-08-20T22:49:24.7931456Z   fetch-tags: false
+Build website	Checkout repository	2026-08-20T22:49:24.7931822Z   show-progress: true
+Build website	Checkout repository	2026-08-20T22:49:24.7932221Z   lfs: false
+Build website	Checkout repository	2026-08-20T22:49:24.7932567Z   submodules: false
+Build website	Checkout repository	2026-08-20T22:49:24.7932945Z   set-safe-directory: true
+Build website	Checkout repository	2026-08-20T22:49:24.7933345Z   allow-unsafe-pr-checkout: false
+Build website	Checkout repository	2026-08-20T22:49:24.7933921Z ##[endgroup]
+Build website	Checkout repository	2026-08-20T22:49:24.8817781Z Syncing repository: amanalip/pomorise
+Build website	Checkout repository	2026-08-20T22:49:24.8820195Z ##[group]Getting Git version info
+Build website	Checkout repository	2026-08-20T22:49:24.8821314Z Working directory is '/home/runner/work/pomorise/pomorise'
+Build website	Checkout repository	2026-08-20T22:49:24.8822711Z [command]/usr/bin/git version
+Build website	Checkout repository	2026-08-20T22:49:24.9244679Z git version 2.55.0
+Build website	Checkout repository	2026-08-20T22:49:24.9268846Z ##[endgroup]
+Build website	Checkout repository	2026-08-20T22:49:24.9285274Z Temporarily overriding HOME='/home/runner/work/_temp/d484aebb-8379-497d-b238-f669b1dcc99b' before making global git config changes
+Build website	Checkout repository	2026-08-20T22:49:24.9287081Z Adding repository directory to the temporary git global config as a safe directory
+Build website	Checkout repository	2026-08-20T22:49:24.9290270Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/pomorise/pomorise
+Build website	Checkout repository	2026-08-20T22:49:24.9434492Z Deleting the contents of '/home/runner/work/pomorise/pomorise'
+Build website	Checkout repository	2026-08-20T22:49:24.9439868Z ##[group]Determining repository object format
+Build website	Checkout repository	2026-08-20T22:49:24.9443719Z ##[endgroup]
+Build website	Checkout repository	2026-08-20T22:49:24.9444733Z ##[group]Initializing the repository
+Build website	Checkout repository	2026-08-20T22:49:24.9449561Z [command]/usr/bin/git init /home/runner/work/pomorise/pomorise
+Build website	Checkout repository	2026-08-20T22:49:24.9550577Z hint: Using 'master' as the name for the initial branch. This default branch name
+Build website	Checkout repository	2026-08-20T22:49:24.9552133Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+Build website	Checkout repository	2026-08-20T22:49:24.9553267Z hint: to use in all of your new repositories, which will suppress this warning,
+Build website	Checkout repository	2026-08-20T22:49:24.9554140Z hint: call:
+Build website	Checkout repository	2026-08-20T22:49:24.9554609Z hint:
+Build website	Checkout repository	2026-08-20T22:49:24.9555225Z hint: 	git config --global init.defaultBranch <name>
+Build website	Checkout repository	2026-08-20T22:49:24.9556021Z hint:
+Build website	Checkout repository	2026-08-20T22:49:24.9556722Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+Build website	Checkout repository	2026-08-20T22:49:24.9557887Z hint: 'development'. The just-created branch can be renamed via this command:
+Build website	Checkout repository	2026-08-20T22:49:24.9558851Z hint:
+Build website	Checkout repository	2026-08-20T22:49:24.9559365Z hint: 	git branch -m <name>
+Build website	Checkout repository	2026-08-20T22:49:24.9559959Z hint:
+Build website	Checkout repository	2026-08-20T22:49:24.9561008Z hint: Disable this message with "git config set advice.defaultBranchName false"
+Build website	Checkout repository	2026-08-20T22:49:24.9562286Z Initialized empty Git repository in /home/runner/work/pomorise/pomorise/.git/
+Build website	Checkout repository	2026-08-20T22:49:24.9564374Z [command]/usr/bin/git remote add origin https://github.com/amanalip/pomorise
+Build website	Checkout repository	2026-08-20T22:49:24.9598442Z ##[endgroup]
+Build website	Checkout repository	2026-08-20T22:49:24.9599148Z ##[group]Disabling automatic garbage collection
+Build website	Checkout repository	2026-08-20T22:49:24.9601329Z [command]/usr/bin/git config --local gc.auto 0
+Build website	Checkout repository	2026-08-20T22:49:24.9623434Z ##[endgroup]
+Build website	Checkout repository	2026-08-20T22:49:24.9624468Z ##[group]Setting up auth
+Build website	Checkout repository	2026-08-20T22:49:24.9624952Z Removing SSH command configuration
+Build website	Checkout repository	2026-08-20T22:49:24.9628954Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Build website	Checkout repository	2026-08-20T22:49:24.9652889Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Build website	Checkout repository	2026-08-20T22:49:25.0574616Z Removing HTTP extra header
+Build website	Checkout repository	2026-08-20T22:49:25.0581194Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Build website	Checkout repository	2026-08-20T22:49:25.0612488Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Build website	Checkout repository	2026-08-20T22:49:25.0783284Z Removing includeIf entries pointing to credentials config files
+Build website	Checkout repository	2026-08-20T22:49:25.0788906Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Build website	Checkout repository	2026-08-20T22:49:25.0818046Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Build website	Checkout repository	2026-08-20T22:49:25.0996197Z [command]/usr/bin/git config --file /home/runner/work/_temp/git-credentials-38ef5ced-88b1-4284-9369-84b51c3dc233.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+Build website	Checkout repository	2026-08-20T22:49:25.1029729Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/pomorise/pomorise/.git.path /home/runner/work/_temp/git-credentials-38ef5ced-88b1-4284-9369-84b51c3dc233.config
+Build website	Checkout repository	2026-08-20T22:49:25.1056534Z [command]/usr/bin/git config --local includeIf.gitdir:/home/runner/work/pomorise/pomorise/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-38ef5ced-88b1-4284-9369-84b51c3dc233.config
+Build website	Checkout repository	2026-08-20T22:49:25.1085662Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-38ef5ced-88b1-4284-9369-84b51c3dc233.config
+Build website	Checkout repository	2026-08-20T22:49:25.1113925Z [command]/usr/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-38ef5ced-88b1-4284-9369-84b51c3dc233.config
+Build website	Checkout repository	2026-08-20T22:49:25.1142284Z ##[endgroup]
+Build website	Checkout repository	2026-08-20T22:49:25.1143493Z ##[group]Fetching the repository
+Build website	Checkout repository	2026-08-20T22:49:25.1145054Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +303bcca934489c53b279fb6dc63e493992553d99:refs/remotes/origin/main
+Build website	Checkout repository	2026-08-20T22:49:26.0313801Z From https://github.com/amanalip/pomorise
+Build website	Checkout repository	2026-08-20T22:49:26.0316133Z  * [new ref]         303bcca934489c53b279fb6dc63e493992553d99 -> origin/main
+Build website	Checkout repository	2026-08-20T22:49:26.0322355Z [command]/usr/bin/git branch --list --remote origin/main
+Build website	Checkout repository	2026-08-20T22:49:26.0343121Z   origin/main
+Build website	Checkout repository	2026-08-20T22:49:26.0349217Z [command]/usr/bin/git rev-parse refs/remotes/origin/main
+Build website	Checkout repository	2026-08-20T22:49:26.0367958Z 303bcca934489c53b279fb6dc63e493992553d99
+Build website	Checkout repository	2026-08-20T22:49:26.0371720Z ##[endgroup]
+Build website	Checkout repository	2026-08-20T22:49:26.0372983Z ##[group]Determining the checkout info
+Build website	Checkout repository	2026-08-20T22:49:26.0374655Z ##[endgroup]
+Build website	Checkout repository	2026-08-20T22:49:26.0375838Z [command]/usr/bin/git sparse-checkout disable
+Build website	Checkout repository	2026-08-20T22:49:26.0460578Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+Build website	Checkout repository	2026-08-20T22:49:26.0480929Z ##[group]Checking out the ref
+Build website	Checkout repository	2026-08-20T22:49:26.0483076Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+Build website	Checkout repository	2026-08-20T22:49:26.0642808Z Switched to a new branch 'main'
+Build website	Checkout repository	2026-08-20T22:49:26.0648322Z branch 'main' set up to track 'origin/main'.
+Build website	Checkout repository	2026-08-20T22:49:26.0655174Z ##[endgroup]
+Build website	Checkout repository	2026-08-20T22:49:26.0685411Z [command]/usr/bin/git log -1 --format=%H
+Build website	Checkout repository	2026-08-20T22:49:26.0704328Z 303bcca934489c53b279fb6dc63e493992553d99
+Build website	Check whether the application is ready	﻿2026-08-20T22:49:26.1282237Z ##[group]Run # Treat the scaffold as ready only when both the manifest and generated lockfile exist.
+Build website	Check whether the application is ready	2026-08-20T22:49:26.1284941Z ^[[36;1m# Treat the scaffold as ready only when both the manifest and generated lockfile exist.^[[0m
+Build website	Check whether the application is ready	2026-08-20T22:49:26.1287113Z ^[[36;1mif [[ -f package.json && -f package-lock.json ]]; then^[[0m
+Build website	Check whether the application is ready	2026-08-20T22:49:26.1289040Z ^[[36;1m  # Expose the positive result through GitHub's supported step-output channel.^[[0m
+Build website	Check whether the application is ready	2026-08-20T22:49:26.1291003Z ^[[36;1m  echo "ready=true" >> "$GITHUB_OUTPUT"^[[0m
+Build website	Check whether the application is ready	2026-08-20T22:49:26.1292617Z ^[[36;1m  # Leave a human-readable explanation in the automation log.^[[0m
+Build website	Check whether the application is ready	2026-08-20T22:49:26.1294328Z ^[[36;1m  echo "The application is ready to build."^[[0m
+Build website	Check whether the application is ready	2026-08-20T22:49:26.1296313Z ^[[36;1m# Handle documentation-only commits that predate the application scaffold.^[[0m
+Build website	Check whether the application is ready	2026-08-20T22:49:26.1297955Z ^[[36;1melse^[[0m
+Build website	Check whether the application is ready	2026-08-20T22:49:26.1299347Z ^[[36;1m  # Expose the negative result so install, build, upload, and deploy stay skipped.^[[0m
+Build website	Check whether the application is ready	2026-08-20T22:49:26.1301227Z ^[[36;1m  echo "ready=false" >> "$GITHUB_OUTPUT"^[[0m
+Build website	Check whether the application is ready	2026-08-20T22:49:26.1302870Z ^[[36;1m  # Explain the safe skip in the automation log for future maintainers.^[[0m
+Build website	Check whether the application is ready	2026-08-20T22:49:26.1304999Z ^[[36;1m  echo "Deployment skipped until the application scaffold and lockfile are committed."^[[0m
+Build website	Check whether the application is ready	2026-08-20T22:49:26.1307354Z ^[[36;1m# Close the readiness condition after both repository states have explicit behavior.^[[0m
+Build website	Check whether the application is ready	2026-08-20T22:49:26.1309051Z ^[[36;1mfi^[[0m
+Build website	Check whether the application is ready	2026-08-20T22:49:26.1337364Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+Build website	Check whether the application is ready	2026-08-20T22:49:26.1338696Z ##[endgroup]
+Build website	Check whether the application is ready	2026-08-20T22:49:26.1409268Z The application is ready to build.
+Build website	Set up Node.js	﻿2026-08-20T22:49:26.2746959Z ##[group]Run actions/setup-node@v6
+Build website	Set up Node.js	2026-08-20T22:49:26.2747938Z with:
+Build website	Set up Node.js	2026-08-20T22:49:26.2748652Z   node-version: 24
+Build website	Set up Node.js	2026-08-20T22:49:26.2749407Z   cache: npm
+Build website	Set up Node.js	2026-08-20T22:49:26.2750124Z   check-latest: false
+Build website	Set up Node.js	2026-08-20T22:49:26.2757947Z   token: ***
+Build website	Set up Node.js	2026-08-20T22:49:26.2758740Z   package-manager-cache: true
+Build website	Set up Node.js	2026-08-20T22:49:26.2759623Z ##[endgroup]
+Build website	Set up Node.js	2026-08-20T22:49:26.4378677Z Found in cache @ /opt/hostedtoolcache/node/24.19.0/x64
+Build website	Set up Node.js	2026-08-20T22:49:26.4381038Z ##[group]Environment details
+Build website	Set up Node.js	2026-08-20T22:49:27.1639233Z node: v24.19.0
+Build website	Set up Node.js	2026-08-20T22:49:27.1639876Z npm: 11.17.0
+Build website	Set up Node.js	2026-08-20T22:49:27.1640282Z yarn: 1.22.22
+Build website	Set up Node.js	2026-08-20T22:49:27.1641442Z ##[endgroup]
+Build website	Set up Node.js	2026-08-20T22:49:27.1656217Z [command]/opt/hostedtoolcache/node/24.19.0/x64/bin/npm config get cache
+Build website	Set up Node.js	2026-08-20T22:49:27.2651831Z /home/runner/.npm
+Build website	Set up Node.js	2026-08-20T22:49:27.4226713Z Cache hit for: node-cache-Linux-x64-npm-6bb8893db111fb295c1a8f393c5cdf4928f7b19fcf41a157264d38131187902b
+Build website	Set up Node.js	2026-08-20T22:49:28.2206680Z Received 47014534 of 47014534 (100.0%), 70.8 MBs/sec
+Build website	Set up Node.js	2026-08-20T22:49:28.2207453Z Cache Size: ~45 MB (47014534 B)
+Build website	Set up Node.js	2026-08-20T22:49:28.2302236Z [command]/usr/bin/tar -xf /home/runner/work/_temp/cce39a86-7ceb-49d5-b566-1514cc6b1170/cache.tzst -P -C /home/runner/work/pomorise/pomorise --use-compress-program unzstd
+Build website	Set up Node.js	2026-08-20T22:49:28.3766487Z Cache restored successfully
+Build website	Set up Node.js	2026-08-20T22:49:28.3791155Z Cache restored from key: node-cache-Linux-x64-npm-6bb8893db111fb295c1a8f393c5cdf4928f7b19fcf41a157264d38131187902b
+Build website	Configure GitHub Pages	﻿2026-08-20T22:49:28.4011921Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+Build website	Configure GitHub Pages	2026-08-20T22:49:28.4013021Z ##[group]Run actions/configure-pages@v5
+Build website	Configure GitHub Pages	2026-08-20T22:49:28.4013268Z with:
+Build website	Configure GitHub Pages	2026-08-20T22:49:28.4015421Z   token: ***
+Build website	Configure GitHub Pages	2026-08-20T22:49:28.4015629Z   enablement: false
+Build website	Configure GitHub Pages	2026-08-20T22:49:28.4015846Z ##[endgroup]
+Build website	Install dependencies	﻿2026-08-20T22:49:28.7081576Z ##[group]Run npm ci
+Build website	Install dependencies	2026-08-20T22:49:28.7081860Z ^[[36;1mnpm ci^[[0m
+Build website	Install dependencies	2026-08-20T22:49:28.7221305Z shell: /usr/bin/bash -e {0}
+Build website	Install dependencies	2026-08-20T22:49:28.7221569Z env:
+Build website	Install dependencies	2026-08-20T22:49:28.7221762Z   GITHUB_PAGES: true
+Build website	Install dependencies	2026-08-20T22:49:28.7221969Z ##[endgroup]
+Build website	Install dependencies	2026-08-20T22:49:32.3290303Z npm warn deprecated glob@11.1.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+Build website	Install dependencies	2026-08-20T22:49:33.3257313Z 
+Build website	Install dependencies	2026-08-20T22:49:33.3258298Z added 508 packages, and audited 509 packages in 5s
+Build website	Install dependencies	2026-08-20T22:49:33.3258625Z 
+Build website	Install dependencies	2026-08-20T22:49:33.3262680Z 150 packages are looking for funding
+Build website	Install dependencies	2026-08-20T22:49:33.3263328Z   run `npm fund` for details
+Build website	Install dependencies	2026-08-20T22:49:33.3281182Z 
+Build website	Install dependencies	2026-08-20T22:49:33.3281619Z found 0 vulnerabilities
+Build website	Check formatting	﻿2026-08-20T22:49:33.3670637Z ##[group]Run npm run format:check
+Build website	Check formatting	2026-08-20T22:49:33.3671137Z ^[[36;1mnpm run format:check^[[0m
+Build website	Check formatting	2026-08-20T22:49:33.3692890Z shell: /usr/bin/bash -e {0}
+Build website	Check formatting	2026-08-20T22:49:33.3693192Z env:
+Build website	Check formatting	2026-08-20T22:49:33.3693436Z   GITHUB_PAGES: true
+Build website	Check formatting	2026-08-20T22:49:33.3693681Z ##[endgroup]
+Build website	Check formatting	2026-08-20T22:49:33.4465817Z 
+Build website	Check formatting	2026-08-20T22:49:33.4466211Z > pomorise@1.0.0 format:check
+Build website	Check formatting	2026-08-20T22:49:33.4467346Z > prettier --check index.html package.json tsconfig.json *.config.{js,ts} .github/workflows/*.yml src code_annotations dependency_review.md quality_baseline.md
+Build website	Check formatting	2026-08-20T22:49:33.4468102Z 
+Build website	Check formatting	2026-08-20T22:49:33.5162579Z Checking formatting...
+Build website	Check formatting	2026-08-20T22:49:34.4184862Z All matched files use Prettier code style!
+Build website	Lint source and tests	﻿2026-08-20T22:49:34.4577327Z ##[group]Run npm run lint
+Build website	Lint source and tests	2026-08-20T22:49:34.4577748Z ^[[36;1mnpm run lint^[[0m
+Build website	Lint source and tests	2026-08-20T22:49:34.4605201Z shell: /usr/bin/bash -e {0}
+Build website	Lint source and tests	2026-08-20T22:49:34.4605636Z env:
+Build website	Lint source and tests	2026-08-20T22:49:34.4605935Z   GITHUB_PAGES: true
+Build website	Lint source and tests	2026-08-20T22:49:34.4606301Z ##[endgroup]
+Build website	Lint source and tests	2026-08-20T22:49:34.5370390Z 
+Build website	Lint source and tests	2026-08-20T22:49:34.5370927Z > pomorise@1.0.0 lint
+Build website	Lint source and tests	2026-08-20T22:49:34.5371494Z > eslint . --max-warnings 0
+Build website	Lint source and tests	2026-08-20T22:49:34.5371793Z 
+Build website	Test units and components	﻿2026-08-20T22:49:38.2624763Z ##[group]Run npm test
+Build website	Test units and components	2026-08-20T22:49:38.2625028Z ^[[36;1mnpm test^[[0m
+Build website	Test units and components	2026-08-20T22:49:38.2646219Z shell: /usr/bin/bash -e {0}
+Build website	Test units and components	2026-08-20T22:49:38.2646477Z env:
+Build website	Test units and components	2026-08-20T22:49:38.2646664Z   GITHUB_PAGES: true
+Build website	Test units and components	2026-08-20T22:49:38.2646871Z ##[endgroup]
+Build website	Test units and components	2026-08-20T22:49:38.3514279Z 
+Build website	Test units and components	2026-08-20T22:49:38.3514776Z > pomorise@1.0.0 test
+Build website	Test units and components	2026-08-20T22:49:38.3515216Z > vitest run
+Build website	Test units and components	2026-08-20T22:49:38.3515392Z 
+Build website	Test units and components	2026-08-20T22:49:38.5954728Z 
+Build website	Test units and components	2026-08-20T22:49:38.5957921Z ^[[1m^[[30m^[[46m RUN ^[[49m^[[39m^[[22m ^[[36mv4.1.11 ^[[39m^[[90m/home/runner/work/pomorise/pomorise^[[39m
+Build website	Test units and components	2026-08-20T22:49:38.5958549Z 
+Build website	Test units and components	2026-08-20T22:49:39.5323422Z  ^[[32m✓^[[39m src/tests/unit/writing-style.test.ts ^[[2m(^[[22m^[[2m1 test^[[22m^[[2m)^[[22m^[[32m 14^[[2mms^[[22m^[[39m
+Build website	Test units and components	2026-08-20T22:49:39.5988167Z  ^[[32m✓^[[39m src/tests/unit/timer-engine.test.ts ^[[2m(^[[22m^[[2m7 tests^[[22m^[[2m)^[[22m^[[32m 11^[[2mms^[[22m^[[39m
+Build website	Test units and components	2026-08-20T22:49:40.5821906Z  ^[[32m✓^[[39m src/tests/unit/focus-journey.test.ts ^[[2m(^[[22m^[[2m3 tests^[[22m^[[2m)^[[22m^[[32m 8^[[2mms^[[22m^[[39m
+Build website	Test units and components	2026-08-20T22:49:40.6570675Z  ^[[32m✓^[[39m src/tests/unit/focus-planning.test.ts ^[[2m(^[[22m^[[2m3 tests^[[22m^[[2m)^[[22m^[[32m 7^[[2mms^[[22m^[[39m
+Build website	Test units and components	2026-08-20T22:49:41.4571055Z  ^[[32m✓^[[39m src/tests/unit/timer-storage.test.ts ^[[2m(^[[22m^[[2m2 tests^[[22m^[[2m)^[[22m^[[32m 7^[[2mms^[[22m^[[39m
+Build website	Test units and components	2026-08-20T22:49:41.5273517Z  ^[[32m✓^[[39m src/tests/unit/data-backup.test.ts ^[[2m(^[[22m^[[2m3 tests^[[22m^[[2m)^[[22m^[[32m 12^[[2mms^[[22m^[[39m
+Build website	Test units and components	2026-08-20T22:49:41.7942831Z  ^[[32m✓^[[39m src/tests/component/App.test.tsx ^[[2m(^[[22m^[[2m5 tests^[[22m^[[2m)^[[22m^[[33m 1940^[[2mms^[[22m^[[39m
+Build website	Test units and components	2026-08-20T22:49:41.7944763Z      ^[[33m^[[2m✓^[[22m^[[39m introduces the branded focus workspace with accessible empty states ^[[33m 312^[[2mms^[[22m^[[39m
+Build website	Test units and components	2026-08-20T22:49:41.7951256Z      ^[[33m^[[2m✓^[[22m^[[39m starts and pauses a focus session through accessible timer controls ^[[33m 413^[[2mms^[[22m^[[39m
+Build website	Test units and components	2026-08-20T22:49:41.7962392Z      ^[[33m^[[2m✓^[[22m^[[39m adds, selects, and completes a small focus task ^[[33m 841^[[2mms^[[22m^[[39m
+Build website	Test units and components	2026-08-20T22:49:42.2793185Z  ^[[32m✓^[[39m src/tests/unit/foundation.test.ts ^[[2m(^[[22m^[[2m1 test^[[22m^[[2m)^[[22m^[[32m 4^[[2mms^[[22m^[[39m
+Build website	Test units and components	2026-08-20T22:49:42.4220686Z  ^[[32m✓^[[39m src/tests/component/AppErrorBoundary.test.tsx ^[[2m(^[[22m^[[2m1 test^[[22m^[[2m)^[[22m^[[32m 130^[[2mms^[[22m^[[39m
+Build website	Test units and components	2026-08-20T22:49:42.4259722Z 
+Build website	Test units and components	2026-08-20T22:49:42.4264503Z ^[[2m Test Files ^[[22m ^[[1m^[[32m9 passed^[[39m^[[22m^[[90m (9)^[[39m
+Build website	Test units and components	2026-08-20T22:49:42.4265265Z ^[[2m      Tests ^[[22m ^[[1m^[[32m26 passed^[[39m^[[22m^[[90m (26)^[[39m
+Build website	Test units and components	2026-08-20T22:49:42.4265790Z ^[[2m   Start at ^[[22m 22:49:38
+Build website	Test units and components	2026-08-20T22:49:42.4266609Z ^[[2m   Duration ^[[22m 3.82s^[[2m (transform 269ms, setup 918ms, import 578ms, tests 2.13s, environment 5.81s)^[[22m
+Build website	Test units and components	2026-08-20T22:49:42.4267280Z 
+Build website	Install release browsers	﻿2026-08-20T22:49:42.4548419Z ##[group]Run npx playwright install --with-deps chromium firefox
+Build website	Install release browsers	2026-08-20T22:49:42.4548855Z ^[[36;1mnpx playwright install --with-deps chromium firefox^[[0m
+Build website	Install release browsers	2026-08-20T22:49:42.4569786Z shell: /usr/bin/bash -e {0}
+Build website	Install release browsers	2026-08-20T22:49:42.4570034Z env:
+Build website	Install release browsers	2026-08-20T22:49:42.4570218Z   GITHUB_PAGES: true
+Build website	Install release browsers	2026-08-20T22:49:42.4570421Z ##[endgroup]
+Build website	Install release browsers	2026-08-20T22:49:43.0833336Z Installing dependencies...
+Build website	Install release browsers	2026-08-20T22:49:43.0897519Z Switching to root user to install dependencies...
+Build website	Install release browsers	2026-08-20T22:49:43.2990668Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+Build website	Install release browsers	2026-08-20T22:49:43.3272051Z Hit:2 http://azure.archive.ubuntu.com/ubuntu noble InRelease
+Build website	Install release browsers	2026-08-20T22:49:43.3283866Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+Build website	Install release browsers	2026-08-20T22:49:43.4443648Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+Build website	Install release browsers	2026-08-20T22:49:43.4472389Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+Build website	Install release browsers	2026-08-20T22:49:43.4473380Z Hit:6 https://packages.microsoft.com/repos/azure-cli noble InRelease
+Build website	Install release browsers	2026-08-20T22:49:43.4474395Z Get:7 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease [3600 B]
+Build website	Install release browsers	2026-08-20T22:49:43.4895303Z Get:8 https://dl.google.com/linux/chrome-stable/deb stable InRelease [2548 B]
+Build website	Install release browsers	2026-08-20T22:49:43.5442407Z Get:9 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1226 kB]
+Build website	Install release browsers	2026-08-20T22:49:43.5576037Z Get:10 http://azure.archive.ubuntu.com/ubuntu noble-updates/main Translation-en [286 kB]
+Build website	Install release browsers	2026-08-20T22:49:43.5595714Z Get:11 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Components [181 kB]
+Build website	Install release browsers	2026-08-20T22:49:43.5613001Z Get:12 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1685 kB]
+Build website	Install release browsers	2026-08-20T22:49:43.5709777Z Get:13 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe Translation-en [336 kB]
+Build website	Install release browsers	2026-08-20T22:49:43.5733776Z Get:14 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Components [388 kB]
+Build website	Install release browsers	2026-08-20T22:49:43.5758760Z Get:15 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [1483 kB]
+Build website	Install release browsers	2026-08-20T22:49:43.5846284Z Get:16 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [339 kB]
+Build website	Install release browsers	2026-08-20T22:49:43.5866768Z Get:17 http://azure.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Components [940 B]
+Build website	Install release browsers	2026-08-20T22:49:43.5876460Z Get:18 http://azure.archive.ubuntu.com/ubuntu noble-backports/main amd64 Components [5776 B]
+Build website	Install release browsers	2026-08-20T22:49:43.6315527Z Get:19 http://azure.archive.ubuntu.com/ubuntu noble-backports/universe amd64 Components [12.6 kB]
+Build website	Install release browsers	2026-08-20T22:49:43.6329417Z Get:20 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Packages [958 kB]
+Build website	Install release browsers	2026-08-20T22:49:43.6382619Z Get:21 http://azure.archive.ubuntu.com/ubuntu noble-security/main Translation-en [205 kB]
+Build website	Install release browsers	2026-08-20T22:49:43.6401069Z Get:22 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Components [46.4 kB]
+Build website	Install release browsers	2026-08-20T22:49:43.6416536Z Get:23 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Packages [1201 kB]
+Build website	Install release browsers	2026-08-20T22:49:43.6485123Z Get:24 http://azure.archive.ubuntu.com/ubuntu noble-security/universe Translation-en [240 kB]
+Build website	Install release browsers	2026-08-20T22:49:43.6502996Z Get:25 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Components [76.2 kB]
+Build website	Install release browsers	2026-08-20T22:49:43.6518901Z Get:26 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted amd64 Packages [1369 kB]
+Build website	Install release browsers	2026-08-20T22:49:43.6621690Z Get:27 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted Translation-en [315 kB]
+Build website	Install release browsers	2026-08-20T22:49:43.7010140Z Get:28 https://packages.microsoft.com/ubuntu/24.04/prod noble/main arm64 Packages [337 kB]
+Build website	Install release browsers	2026-08-20T22:49:43.7419107Z Get:29 https://packages.microsoft.com/ubuntu/24.04/prod noble/main amd64 Packages [382 kB]
+Build website	Install release browsers	2026-08-20T22:49:43.7528116Z Get:30 https://dl.google.com/linux/chrome-stable/deb stable/main amd64 Packages [1416 B]
+Build website	Install release browsers	2026-08-20T22:49:51.1714979Z Fetched 11.5 MB in 1s (9047 kB/s)
+Build website	Install release browsers	2026-08-20T22:49:51.8002897Z Reading package lists...
+Build website	Install release browsers	2026-08-20T22:49:51.8261147Z Reading package lists...
+Build website	Install release browsers	2026-08-20T22:49:51.9351091Z Building dependency tree...
+Build website	Install release browsers	2026-08-20T22:49:51.9357057Z Reading state information...
+Build website	Install release browsers	2026-08-20T22:49:52.0740253Z libasound2t64 is already the newest version (1.2.11-1ubuntu0.3).
+Build website	Install release browsers	2026-08-20T22:49:52.0741459Z libasound2t64 set to manually installed.
+Build website	Install release browsers	2026-08-20T22:49:52.0742230Z libatk-bridge2.0-0t64 is already the newest version (2.52.0-1build1).
+Build website	Install release browsers	2026-08-20T22:49:52.0742970Z libatk-bridge2.0-0t64 set to manually installed.
+Build website	Install release browsers	2026-08-20T22:49:52.0743579Z libatk1.0-0t64 is already the newest version (2.52.0-1build1).
+Build website	Install release browsers	2026-08-20T22:49:52.0744205Z libatk1.0-0t64 set to manually installed.
+Build website	Install release browsers	2026-08-20T22:49:52.0744855Z libatspi2.0-0t64 is already the newest version (2.52.0-1build1).
+Build website	Install release browsers	2026-08-20T22:49:52.0745494Z libatspi2.0-0t64 set to manually installed.
+Build website	Install release browsers	2026-08-20T22:49:52.0746110Z libcairo2 is already the newest version (1.18.0-3build1).
+Build website	Install release browsers	2026-08-20T22:49:52.0746705Z libcairo2 set to manually installed.
+Build website	Install release browsers	2026-08-20T22:49:52.0747371Z libcups2t64 is already the newest version (2.4.7-1.2ubuntu7.14).
+Build website	Install release browsers	2026-08-20T22:49:52.0748033Z libcups2t64 set to manually installed.
+Build website	Install release browsers	2026-08-20T22:49:52.0748652Z libdbus-1-3 is already the newest version (1.14.10-4ubuntu4.1).
+Build website	Install release browsers	2026-08-20T22:49:52.0749271Z libdbus-1-3 set to manually installed.
+Build website	Install release browsers	2026-08-20T22:49:52.0749895Z libdrm2 is already the newest version (2.4.125-1ubuntu0.1~24.04.2).
+Build website	Install release browsers	2026-08-20T22:49:52.0750510Z libdrm2 set to manually installed.
+Build website	Install release browsers	2026-08-20T22:49:52.0751316Z libgbm1 is already the newest version (25.2.8-0ubuntu0.24.04.2).
+Build website	Install release browsers	2026-08-20T22:49:52.0751914Z libgbm1 set to manually installed.
+Build website	Install release browsers	2026-08-20T22:49:52.0752542Z libglib2.0-0t64 is already the newest version (2.80.0-6ubuntu3.8).
+Build website	Install release browsers	2026-08-20T22:49:52.0753199Z libglib2.0-0t64 set to manually installed.
+Build website	Install release browsers	2026-08-20T22:49:52.0753818Z libnspr4 is already the newest version (2:4.35-1.1build1).
+Build website	Install release browsers	2026-08-20T22:49:52.0754366Z libnspr4 set to manually installed.
+Build website	Install release browsers	2026-08-20T22:49:52.0754801Z libnss3 is already the newest version (2:3.98-1ubuntu0.2).
+Build website	Install release browsers	2026-08-20T22:49:52.0755612Z libnss3 set to manually installed.
+Build website	Install release browsers	2026-08-20T22:49:52.0755954Z libpango-1.0-0 is already the newest version (1.52.1+ds-1build1).
+Build website	Install release browsers	2026-08-20T22:49:52.0756292Z libpango-1.0-0 set to manually installed.
+Build website	Install release browsers	2026-08-20T22:49:52.0756611Z libx11-6 is already the newest version (2:1.8.7-1build1).
+Build website	Install release browsers	2026-08-20T22:49:52.0756912Z libx11-6 set to manually installed.
+Build website	Install release browsers	2026-08-20T22:49:52.0757219Z libxcb1 is already the newest version (1.15-1ubuntu2).
+Build website	Install release browsers	2026-08-20T22:49:52.0757511Z libxcb1 set to manually installed.
+Build website	Install release browsers	2026-08-20T22:49:52.0757844Z libxcomposite1 is already the newest version (1:0.4.5-1build3).
+Build website	Install release browsers	2026-08-20T22:49:52.0758336Z libxcomposite1 set to manually installed.
+Build website	Install release browsers	2026-08-20T22:49:52.0758698Z libxdamage1 is already the newest version (1:1.1.6-1build1).
+Build website	Install release browsers	2026-08-20T22:49:52.0759040Z libxdamage1 set to manually installed.
+Build website	Install release browsers	2026-08-20T22:49:52.0759377Z libxext6 is already the newest version (2:1.3.4-1build2).
+Build website	Install release browsers	2026-08-20T22:49:52.0759690Z libxext6 set to manually installed.
+Build website	Install release browsers	2026-08-20T22:49:52.0760029Z libxfixes3 is already the newest version (1:6.0.0-2build1).
+Build website	Install release browsers	2026-08-20T22:49:52.0760346Z libxfixes3 set to manually installed.
+Build website	Install release browsers	2026-08-20T22:49:52.0760920Z libxkbcommon0 is already the newest version (1.6.0-1build1).
+Build website	Install release browsers	2026-08-20T22:49:52.0761266Z libxkbcommon0 set to manually installed.
+Build website	Install release browsers	2026-08-20T22:49:52.0761602Z libxrandr2 is already the newest version (2:1.5.2-2build1).
+Build website	Install release browsers	2026-08-20T22:49:52.0761928Z libxrandr2 set to manually installed.
+Build website	Install release browsers	2026-08-20T22:49:52.0762258Z xvfb is already the newest version (2:21.1.12-1ubuntu1.6).
+Build website	Install release browsers	2026-08-20T22:49:52.0762694Z fonts-noto-color-emoji is already the newest version (2.047-0ubuntu0.24.04.1).
+Build website	Install release browsers	2026-08-20T22:49:52.0763162Z libfontconfig1 is already the newest version (2.15.0-1.1ubuntu2).
+Build website	Install release browsers	2026-08-20T22:49:52.0763509Z libfontconfig1 set to manually installed.
+Build website	Install release browsers	2026-08-20T22:49:52.0763868Z libfreetype6 is already the newest version (2.13.2+dfsg-1ubuntu0.1).
+Build website	Install release browsers	2026-08-20T22:49:52.0764221Z libfreetype6 set to manually installed.
+Build website	Install release browsers	2026-08-20T22:49:52.0764575Z fonts-liberation is already the newest version (1:2.1.5-3).
+Build website	Install release browsers	2026-08-20T22:49:52.0765027Z fonts-liberation set to manually installed.
+Build website	Install release browsers	2026-08-20T22:49:52.0765393Z libcairo-gobject2 is already the newest version (1.18.0-3build1).
+Build website	Install release browsers	2026-08-20T22:49:52.0765738Z libcairo-gobject2 set to manually installed.
+Build website	Install release browsers	2026-08-20T22:49:52.0766126Z libgdk-pixbuf-2.0-0 is already the newest version (2.42.10+dfsg-3ubuntu3.3).
+Build website	Install release browsers	2026-08-20T22:49:52.0766509Z libgdk-pixbuf-2.0-0 set to manually installed.
+Build website	Install release browsers	2026-08-20T22:49:52.0766878Z libgtk-3-0t64 is already the newest version (3.24.41-4ubuntu1.3).
+Build website	Install release browsers	2026-08-20T22:49:52.0767208Z libgtk-3-0t64 set to manually installed.
+Build website	Install release browsers	2026-08-20T22:49:52.0767564Z libpangocairo-1.0-0 is already the newest version (1.52.1+ds-1build1).
+Build website	Install release browsers	2026-08-20T22:49:52.0767932Z libpangocairo-1.0-0 set to manually installed.
+Build website	Install release browsers	2026-08-20T22:49:52.0768279Z libx11-xcb1 is already the newest version (2:1.8.7-1build1).
+Build website	Install release browsers	2026-08-20T22:49:52.0768589Z libx11-xcb1 set to manually installed.
+Build website	Install release browsers	2026-08-20T22:49:52.0768914Z libxcb-shm0 is already the newest version (1.15-1ubuntu2).
+Build website	Install release browsers	2026-08-20T22:49:52.0769228Z libxcb-shm0 set to manually installed.
+Build website	Install release browsers	2026-08-20T22:49:52.0769549Z libxcursor1 is already the newest version (1:1.2.1-1build1).
+Build website	Install release browsers	2026-08-20T22:49:52.0769981Z libxcursor1 set to manually installed.
+Build website	Install release browsers	2026-08-20T22:49:52.0770323Z libxi6 is already the newest version (2:1.8.1-1build1).
+Build website	Install release browsers	2026-08-20T22:49:52.0770641Z libxi6 set to manually installed.
+Build website	Install release browsers	2026-08-20T22:49:52.0771116Z libxrender1 is already the newest version (1:0.9.10-1.1build1).
+Build website	Install release browsers	2026-08-20T22:49:52.0771463Z libxrender1 set to manually installed.
+Build website	Install release browsers	2026-08-20T22:49:52.0771791Z The following additional packages will be installed:
+Build website	Install release browsers	2026-08-20T22:49:52.0772227Z   libavutil58 libcodec2-1.2 libdav1d7 libgsm1 libhwy1t64 libjxl0.7 libmp3lame0
+Build website	Install release browsers	2026-08-20T22:49:52.0772715Z   libopus0 librav1e0 librsvg2-2 libshine3 libsoxr0 libspeex1 libsvtav1enc1d1
+Build website	Install release browsers	2026-08-20T22:49:52.0773156Z   libswresample4 libtheora0 libtwolame0 libva-drm2 libva-x11-2 libva2
+Build website	Install release browsers	2026-08-20T22:49:52.0773582Z   libvdpau1 libvorbisenc2 libvpl2 libvpx9 libx264-164 libx265-199 libxvidcore4
+Build website	Install release browsers	2026-08-20T22:49:52.0774126Z   libzvbi-common libzvbi0t64 ocl-icd-libopencl1 xfonts-encodings xfonts-utils
+Build website	Install release browsers	2026-08-20T22:49:52.0774487Z Suggested packages:
+Build website	Install release browsers	2026-08-20T22:49:52.0774809Z   libcuda1 libnvcuvid1 libnvidia-encode1 opus-tools librsvg2-bin speex
+Build website	Install release browsers	2026-08-20T22:49:52.0775131Z   opencl-icd
+Build website	Install release browsers	2026-08-20T22:49:52.0775347Z Recommended packages:
+Build website	Install release browsers	2026-08-20T22:49:52.0775818Z   fonts-ipafont-mincho fonts-tlwg-loma librsvg2-common va-driver-all
+Build website	Install release browsers	2026-08-20T22:49:52.0776190Z   | va-driver vdpau-driver-all | vdpau-driver
+Build website	Install release browsers	2026-08-20T22:49:52.1537444Z The following NEW packages will be installed:
+Build website	Install release browsers	2026-08-20T22:49:52.1538136Z   fonts-freefont-ttf fonts-ipafont-gothic fonts-tlwg-loma-otf fonts-unifont
+Build website	Install release browsers	2026-08-20T22:49:52.1539332Z   fonts-wqy-zenhei libavcodec60 libavutil58 libcodec2-1.2 libdav1d7 libgsm1
+Build website	Install release browsers	2026-08-20T22:49:52.1542011Z   libhwy1t64 libjxl0.7 libmp3lame0 libopus0 librav1e0 librsvg2-2 libshine3
+Build website	Install release browsers	2026-08-20T22:49:52.1542613Z   libsoxr0 libspeex1 libsvtav1enc1d1 libswresample4 libtheora0 libtwolame0
+Build website	Install release browsers	2026-08-20T22:49:52.1543087Z   libva-drm2 libva-x11-2 libva2 libvdpau1 libvorbisenc2 libvpl2 libvpx9
+Build website	Install release browsers	2026-08-20T22:49:52.1543720Z   libx264-164 libx265-199 libxvidcore4 libzvbi-common libzvbi0t64
+Build website	Install release browsers	2026-08-20T22:49:52.1545315Z   ocl-icd-libopencl1 xfonts-cyrillic xfonts-encodings xfonts-scalable
+Build website	Install release browsers	2026-08-20T22:49:52.1545885Z   xfonts-utils
+Build website	Install release browsers	2026-08-20T22:49:52.1697228Z 0 upgraded, 40 newly installed, 0 to remove and 18 not upgraded.
+Build website	Install release browsers	2026-08-20T22:49:52.1697934Z Need to get 48.8 MB of archives.
+Build website	Install release browsers	2026-08-20T22:49:52.1698630Z After this operation, 168 MB of additional disk space will be used.
+Build website	Install release browsers	2026-08-20T22:49:52.1699386Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+Build website	Install release browsers	2026-08-20T22:49:52.2505097Z Get:2 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-ipafont-gothic all 00303-21ubuntu1 [3513 kB]
+Build website	Install release browsers	2026-08-20T22:49:52.3136944Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 fonts-freefont-ttf all 20211204+svn4273-2 [5641 kB]
+Build website	Install release browsers	2026-08-20T22:49:52.3981496Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-tlwg-loma-otf all 1:0.7.3-1 [107 kB]
+Build website	Install release browsers	2026-08-20T22:49:52.4293914Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-unifont all 1:15.1.01-1build1 [2993 kB]
+Build website	Install release browsers	2026-08-20T22:49:52.4882297Z Get:6 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 fonts-wqy-zenhei all 0.9.45-8 [7472 kB]
+Build website	Install release browsers	2026-08-20T22:49:52.5874968Z Get:7 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 libva2 amd64 2.20.0-2ubuntu0.2 [66.4 kB]
+Build website	Install release browsers	2026-08-20T22:49:52.6159784Z Get:8 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 libva-drm2 amd64 2.20.0-2ubuntu0.2 [7124 B]
+Build website	Install release browsers	2026-08-20T22:49:52.6439047Z Get:9 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 libva-x11-2 amd64 2.20.0-2ubuntu0.2 [12.0 kB]
+Build website	Install release browsers	2026-08-20T22:49:52.6719121Z Get:10 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libvdpau1 amd64 1.5-2build1 [27.8 kB]
+Build website	Install release browsers	2026-08-20T22:49:52.6999752Z Get:11 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 libvpl2 amd64 2023.3.0-1build1 [99.8 kB]
+Build website	Install release browsers	2026-08-20T22:49:52.7287430Z Get:12 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 ocl-icd-libopencl1 amd64 2.3.2-1build1 [38.5 kB]
+Build website	Install release browsers	2026-08-20T22:49:52.7574029Z Get:13 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 libavutil58 amd64 7:6.1.1-3ubuntu5 [401 kB]
+Build website	Install release browsers	2026-08-20T22:49:52.7884282Z Get:14 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 libcodec2-1.2 amd64 1.2.0-2build1 [8998 kB]
+Build website	Install release browsers	2026-08-20T22:49:52.8966153Z Get:15 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 libdav1d7 amd64 1.4.1-1build1 [604 kB]
+Build website	Install release browsers	2026-08-20T22:49:52.9297766Z Get:16 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 libgsm1 amd64 1.0.22-1build1 [27.8 kB]
+Build website	Install release browsers	2026-08-20T22:49:52.9581861Z Get:17 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 libhwy1t64 amd64 1.0.7-8.1build1 [584 kB]
+Build website	Install release browsers	2026-08-20T22:49:52.9908865Z Get:18 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 libjxl0.7 amd64 0.7.0-10.2ubuntu6.1 [1001 kB]
+Build website	Install release browsers	2026-08-20T22:49:53.0545532Z Get:19 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libmp3lame0 amd64 3.100-6build1 [142 kB]
+Build website	Install release browsers	2026-08-20T22:49:53.1267730Z Get:20 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libopus0 amd64 1.4-1build1 [208 kB]
+Build website	Install release browsers	2026-08-20T22:49:53.1557691Z Get:21 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 librav1e0 amd64 0.7.1-2 [1022 kB]
+Build website	Install release browsers	2026-08-20T22:49:53.1926236Z Get:22 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 librsvg2-2 amd64 2.58.0+dfsg-1build1 [2135 kB]
+Build website	Install release browsers	2026-08-20T22:49:53.2389362Z Get:23 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 libshine3 amd64 3.1.1-2build1 [23.2 kB]
+Build website	Install release browsers	2026-08-20T22:49:53.2670156Z Get:24 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libspeex1 amd64 1.2.1-2ubuntu2.24.04.1 [59.6 kB]
+Build website	Install release browsers	2026-08-20T22:49:53.2956804Z Get:25 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 libsvtav1enc1d1 amd64 1.7.0+dfsg-2build1 [2425 kB]
+Build website	Install release browsers	2026-08-20T22:49:53.3443944Z Get:26 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 libsoxr0 amd64 0.1.3-4build3 [80.0 kB]
+Build website	Install release browsers	2026-08-20T22:49:53.3728802Z Get:27 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 libswresample4 amd64 7:6.1.1-3ubuntu5 [63.8 kB]
+Build website	Install release browsers	2026-08-20T22:49:53.4019322Z Get:28 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libtheora0 amd64 1.1.1+dfsg.1-16.1build3 [211 kB]
+Build website	Install release browsers	2026-08-20T22:49:53.4319943Z Get:29 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libtwolame0 amd64 0.4.0-2build3 [52.3 kB]
+Build website	Install release browsers	2026-08-20T22:49:53.4658126Z Get:30 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libvorbisenc2 amd64 1.3.7-1build3 [80.8 kB]
+Build website	Install release browsers	2026-08-20T22:49:53.4945284Z Get:31 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libvpx9 amd64 1.14.0-1ubuntu2.3 [1143 kB]
+Build website	Install release browsers	2026-08-20T22:49:53.5321482Z Get:32 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 libx264-164 amd64 2:0.164.3108+git31e19f9-1 [604 kB]
+Build website	Install release browsers	2026-08-20T22:49:53.5652215Z Get:33 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 libx265-199 amd64 3.5-2build1 [1226 kB]
+Build website	Install release browsers	2026-08-20T22:49:53.6044079Z Get:34 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 libxvidcore4 amd64 2:1.3.7-1build1 [219 kB]
+Build website	Install release browsers	2026-08-20T22:49:53.6338091Z Get:35 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 libzvbi-common all 0.2.42-2 [42.4 kB]
+Build website	Install release browsers	2026-08-20T22:49:53.6902318Z Get:36 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 libzvbi0t64 amd64 0.2.42-2 [261 kB]
+Build website	Install release browsers	2026-08-20T22:49:53.8439571Z Get:37 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 libavcodec60 amd64 7:6.1.1-3ubuntu5 [5851 kB]
+Build website	Install release browsers	2026-08-20T22:49:54.0225868Z Get:38 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-encodings all 1:1.0.5-0ubuntu2 [578 kB]
+Build website	Install release browsers	2026-08-20T22:49:54.0987192Z Get:39 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-utils amd64 1:7.7+6build3 [94.4 kB]
+Build website	Install release browsers	2026-08-20T22:49:54.1277183Z Get:40 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 xfonts-cyrillic all 1:1.0.5+nmu1 [384 kB]
+Build website	Install release browsers	2026-08-20T22:49:54.1581428Z Get:41 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xfonts-scalable all 1:1.0.3-1.3 [304 kB]
+Build website	Install release browsers	2026-08-20T22:49:54.4895851Z Fetched 48.8 MB in 2s (24.4 MB/s)
+Build website	Install release browsers	2026-08-20T22:49:54.5614161Z Selecting previously unselected package fonts-ipafont-gothic.
+Build website	Install release browsers	2026-08-20T22:49:54.5805174Z (Reading database ... 
+Build website	Install release browsers	2026-08-20T22:49:54.5805604Z (Reading database ... 5%
+Build website	Install release browsers	2026-08-20T22:49:54.5805979Z (Reading database ... 10%
+Build website	Install release browsers	2026-08-20T22:49:54.5806389Z (Reading database ... 15%
+Build website	Install release browsers	2026-08-20T22:49:54.5806640Z (Reading database ... 20%
+Build website	Install release browsers	2026-08-20T22:49:54.5806908Z (Reading database ... 25%
+Build website	Install release browsers	2026-08-20T22:49:54.5807155Z (Reading database ... 30%
+Build website	Install release browsers	2026-08-20T22:49:54.5807365Z (Reading database ... 35%
+Build website	Install release browsers	2026-08-20T22:49:54.5807580Z (Reading database ... 40%
+Build website	Install release browsers	2026-08-20T22:49:54.5807798Z (Reading database ... 45%
+Build website	Install release browsers	2026-08-20T22:49:54.5808006Z (Reading database ... 50%
+Build website	Install release browsers	2026-08-20T22:49:54.6072603Z (Reading database ... 55%
+Build website	Install release browsers	2026-08-20T22:49:54.6973302Z (Reading database ... 60%
+Build website	Install release browsers	2026-08-20T22:49:55.0831054Z (Reading database ... 65%
+Build website	Install release browsers	2026-08-20T22:49:55.3629504Z (Reading database ... 70%
+Build website	Install release browsers	2026-08-20T22:49:55.8209228Z (Reading database ... 75%
+Build website	Install release browsers	2026-08-20T22:49:56.2213661Z (Reading database ... 80%
+Build website	Install release browsers	2026-08-20T22:49:56.6502016Z (Reading database ... 85%
+Build website	Install release browsers	2026-08-20T22:49:57.2020480Z (Reading database ... 90%
+Build website	Install release browsers	2026-08-20T22:49:57.4305403Z (Reading database ... 95%
+Build website	Install release browsers	2026-08-20T22:49:57.4305766Z (Reading database ... 100%
+Build website	Install release browsers	2026-08-20T22:49:57.4306149Z (Reading database ... 203124 files and directories currently installed.)
+Build website	Install release browsers	2026-08-20T22:49:57.4346358Z Preparing to unpack .../00-fonts-ipafont-gothic_00303-21ubuntu1_all.deb ...
+Build website	Install release browsers	2026-08-20T22:49:57.4427862Z Unpacking fonts-ipafont-gothic (00303-21ubuntu1) ...
+Build website	Install release browsers	2026-08-20T22:49:58.0363474Z Selecting previously unselected package fonts-freefont-ttf.
+Build website	Install release browsers	2026-08-20T22:49:58.0479324Z Preparing to unpack .../01-fonts-freefont-ttf_20211204+svn4273-2_all.deb ...
+Build website	Install release browsers	2026-08-20T22:49:58.0489325Z Unpacking fonts-freefont-ttf (20211204+svn4273-2) ...
+Build website	Install release browsers	2026-08-20T22:49:58.4665580Z Selecting previously unselected package fonts-tlwg-loma-otf.
+Build website	Install release browsers	2026-08-20T22:49:58.4774311Z Preparing to unpack .../02-fonts-tlwg-loma-otf_1%3a0.7.3-1_all.deb ...
+Build website	Install release browsers	2026-08-20T22:49:58.4785299Z Unpacking fonts-tlwg-loma-otf (1:0.7.3-1) ...
+Build website	Install release browsers	2026-08-20T22:49:58.4954738Z Selecting previously unselected package fonts-unifont.
+Build website	Install release browsers	2026-08-20T22:49:58.5063808Z Preparing to unpack .../03-fonts-unifont_1%3a15.1.01-1build1_all.deb ...
+Build website	Install release browsers	2026-08-20T22:49:58.5311609Z Unpacking fonts-unifont (1:15.1.01-1build1) ...
+Build website	Install release browsers	2026-08-20T22:49:58.7852996Z Selecting previously unselected package fonts-wqy-zenhei.
+Build website	Install release browsers	2026-08-20T22:49:58.7968478Z Preparing to unpack .../04-fonts-wqy-zenhei_0.9.45-8_all.deb ...
+Build website	Install release browsers	2026-08-20T22:49:58.8053788Z Unpacking fonts-wqy-zenhei (0.9.45-8) ...
+Build website	Install release browsers	2026-08-20T22:49:59.4136479Z Selecting previously unselected package libva2:amd64.
+Build website	Install release browsers	2026-08-20T22:49:59.4243756Z Preparing to unpack .../05-libva2_2.20.0-2ubuntu0.2_amd64.deb ...
+Build website	Install release browsers	2026-08-20T22:49:59.4267684Z Unpacking libva2:amd64 (2.20.0-2ubuntu0.2) ...
+Build website	Install release browsers	2026-08-20T22:49:59.4444646Z Selecting previously unselected package libva-drm2:amd64.
+Build website	Install release browsers	2026-08-20T22:49:59.4552470Z Preparing to unpack .../06-libva-drm2_2.20.0-2ubuntu0.2_amd64.deb ...
+Build website	Install release browsers	2026-08-20T22:49:59.4567157Z Unpacking libva-drm2:amd64 (2.20.0-2ubuntu0.2) ...
+Build website	Install release browsers	2026-08-20T22:49:59.5525036Z Selecting previously unselected package libva-x11-2:amd64.
+Build website	Install release browsers	2026-08-20T22:49:59.5628596Z Preparing to unpack .../07-libva-x11-2_2.20.0-2ubuntu0.2_amd64.deb ...
+Build website	Install release browsers	2026-08-20T22:49:59.5641638Z Unpacking libva-x11-2:amd64 (2.20.0-2ubuntu0.2) ...
+Build website	Install release browsers	2026-08-20T22:49:59.5826703Z Selecting previously unselected package libvdpau1:amd64.
+Build website	Install release browsers	2026-08-20T22:49:59.5928115Z Preparing to unpack .../08-libvdpau1_1.5-2build1_amd64.deb ...
+Build website	Install release browsers	2026-08-20T22:49:59.6716702Z Unpacking libvdpau1:amd64 (1.5-2build1) ...
+Build website	Install release browsers	2026-08-20T22:49:59.6896133Z Selecting previously unselected package libvpl2.
+Build website	Install release browsers	2026-08-20T22:49:59.6997889Z Preparing to unpack .../09-libvpl2_2023.3.0-1build1_amd64.deb ...
+Build website	Install release browsers	2026-08-20T22:49:59.7008794Z Unpacking libvpl2 (2023.3.0-1build1) ...
+Build website	Install release browsers	2026-08-20T22:49:59.7896070Z Selecting previously unselected package ocl-icd-libopencl1:amd64.
+Build website	Install release browsers	2026-08-20T22:49:59.7995733Z Preparing to unpack .../10-ocl-icd-libopencl1_2.3.2-1build1_amd64.deb ...
+Build website	Install release browsers	2026-08-20T22:49:59.8639458Z Unpacking ocl-icd-libopencl1:amd64 (2.3.2-1build1) ...
+Build website	Install release browsers	2026-08-20T22:49:59.8888294Z Selecting previously unselected package libavutil58:amd64.
+Build website	Install release browsers	2026-08-20T22:49:59.8986197Z Preparing to unpack .../11-libavutil58_7%3a6.1.1-3ubuntu5_amd64.deb ...
+Build website	Install release browsers	2026-08-20T22:49:59.9000302Z Unpacking libavutil58:amd64 (7:6.1.1-3ubuntu5) ...
+Build website	Install release browsers	2026-08-20T22:50:00.0479419Z Selecting previously unselected package libcodec2-1.2:amd64.
+Build website	Install release browsers	2026-08-20T22:50:00.0586506Z Preparing to unpack .../12-libcodec2-1.2_1.2.0-2build1_amd64.deb ...
+Build website	Install release browsers	2026-08-20T22:50:00.0594585Z Unpacking libcodec2-1.2:amd64 (1.2.0-2build1) ...
+Build website	Install release browsers	2026-08-20T22:50:00.2033391Z Selecting previously unselected package libdav1d7:amd64.
+Build website	Install release browsers	2026-08-20T22:50:00.2139971Z Preparing to unpack .../13-libdav1d7_1.4.1-1build1_amd64.deb ...
+Build website	Install release browsers	2026-08-20T22:50:00.2152668Z Unpacking libdav1d7:amd64 (1.4.1-1build1) ...
+Build website	Install release browsers	2026-08-20T22:50:00.2959436Z Selecting previously unselected package libgsm1:amd64.
+Build website	Install release browsers	2026-08-20T22:50:00.3066472Z Preparing to unpack .../14-libgsm1_1.0.22-1build1_amd64.deb ...
+Build website	Install release browsers	2026-08-20T22:50:00.3077152Z Unpacking libgsm1:amd64 (1.0.22-1build1) ...
+Build website	Install release browsers	2026-08-20T22:50:00.3252838Z Selecting previously unselected package libhwy1t64:amd64.
+Build website	Install release browsers	2026-08-20T22:50:00.3373019Z Preparing to unpack .../15-libhwy1t64_1.0.7-8.1build1_amd64.deb ...
+Build website	Install release browsers	2026-08-20T22:50:00.3386961Z Unpacking libhwy1t64:amd64 (1.0.7-8.1build1) ...
+Build website	Install release browsers	2026-08-20T22:50:00.4025162Z Selecting previously unselected package libjxl0.7:amd64.
+Build website	Install release browsers	2026-08-20T22:50:00.4126250Z Preparing to unpack .../16-libjxl0.7_0.7.0-10.2ubuntu6.1_amd64.deb ...
+Build website	Install release browsers	2026-08-20T22:50:00.4144014Z Unpacking libjxl0.7:amd64 (0.7.0-10.2ubuntu6.1) ...
+Build website	Install release browsers	2026-08-20T22:50:00.4984146Z Selecting previously unselected package libmp3lame0:amd64.
+Build website	Install release browsers	2026-08-20T22:50:00.5091094Z Preparing to unpack .../17-libmp3lame0_3.100-6build1_amd64.deb ...
+Build website	Install release browsers	2026-08-20T22:50:00.5104348Z Unpacking libmp3lame0:amd64 (3.100-6build1) ...
+Build website	Install release browsers	2026-08-20T22:50:00.5352516Z Selecting previously unselected package libopus0:amd64.
+Build website	Install release browsers	2026-08-20T22:50:00.5455364Z Preparing to unpack .../18-libopus0_1.4-1build1_amd64.deb ...
+Build website	Install release browsers	2026-08-20T22:50:00.5551284Z Unpacking libopus0:amd64 (1.4-1build1) ...
+Build website	Install release browsers	2026-08-20T22:50:00.6336473Z Selecting previously unselected package librav1e0:amd64.
+Build website	Install release browsers	2026-08-20T22:50:00.6439504Z Preparing to unpack .../19-librav1e0_0.7.1-2_amd64.deb ...
+Build website	Install release browsers	2026-08-20T22:50:00.6543475Z Unpacking librav1e0:amd64 (0.7.1-2) ...
+Build website	Install release browsers	2026-08-20T22:50:00.6867801Z Selecting previously unselected package librsvg2-2:amd64.
+Build website	Install release browsers	2026-08-20T22:50:00.6971589Z Preparing to unpack .../20-librsvg2-2_2.58.0+dfsg-1build1_amd64.deb ...
+Build website	Install release browsers	2026-08-20T22:50:00.6996083Z Unpacking librsvg2-2:amd64 (2.58.0+dfsg-1build1) ...
+Build website	Install release browsers	2026-08-20T22:50:01.0469350Z Selecting previously unselected package libshine3:amd64.
+Build website	Install release browsers	2026-08-20T22:50:01.0584348Z Preparing to unpack .../21-libshine3_3.1.1-2build1_amd64.deb ...
+Build website	Install release browsers	2026-08-20T22:50:01.0601693Z Unpacking libshine3:amd64 (3.1.1-2build1) ...
+Build website	Install release browsers	2026-08-20T22:50:01.1168647Z Selecting previously unselected package libspeex1:amd64.
+Build website	Install release browsers	2026-08-20T22:50:01.1276460Z Preparing to unpack .../22-libspeex1_1.2.1-2ubuntu2.24.04.1_amd64.deb ...
+Build website	Install release browsers	2026-08-20T22:50:01.2663337Z Unpacking libspeex1:amd64 (1.2.1-2ubuntu2.24.04.1) ...
+Build website	Install release browsers	2026-08-20T22:50:01.9125911Z Selecting previously unselected package libsvtav1enc1d1:amd64.
+Build website	Install release browsers	2026-08-20T22:50:01.9255955Z Preparing to unpack .../23-libsvtav1enc1d1_1.7.0+dfsg-2build1_amd64.deb ...
+Build website	Install release browsers	2026-08-20T22:50:02.0250125Z Unpacking libsvtav1enc1d1:amd64 (1.7.0+dfsg-2build1) ...
+Build website	Install release browsers	2026-08-20T22:50:02.6027377Z Selecting previously unselected package libsoxr0:amd64.
+Build website	Install release browsers	2026-08-20T22:50:02.6143519Z Preparing to unpack .../24-libsoxr0_0.1.3-4build3_amd64.deb ...
+Build website	Install release browsers	2026-08-20T22:50:02.6494186Z Unpacking libsoxr0:amd64 (0.1.3-4build3) ...
+Build website	Install release browsers	2026-08-20T22:50:03.0884933Z Selecting previously unselected package libswresample4:amd64.
+Build website	Install release browsers	2026-08-20T22:50:03.1009273Z Preparing to unpack .../25-libswresample4_7%3a6.1.1-3ubuntu5_amd64.deb ...
+Build website	Install release browsers	2026-08-20T22:50:03.1168706Z Unpacking libswresample4:amd64 (7:6.1.1-3ubuntu5) ...
+Build website	Install release browsers	2026-08-20T22:50:03.4369781Z Selecting previously unselected package libtheora0:amd64.
+Build website	Install release browsers	2026-08-20T22:50:03.4494397Z Preparing to unpack .../26-libtheora0_1.1.1+dfsg.1-16.1build3_amd64.deb ...
+Build website	Install release browsers	2026-08-20T22:50:03.6678215Z Unpacking libtheora0:amd64 (1.1.1+dfsg.1-16.1build3) ...
+Build website	Install release browsers	2026-08-20T22:50:03.9980025Z Selecting previously unselected package libtwolame0:amd64.
+Build website	Install release browsers	2026-08-20T22:50:04.0107792Z Preparing to unpack .../27-libtwolame0_0.4.0-2build3_amd64.deb ...
+Build website	Install release browsers	2026-08-20T22:50:04.0305657Z Unpacking libtwolame0:amd64 (0.4.0-2build3) ...
+Build website	Install release browsers	2026-08-20T22:50:04.0523040Z Selecting previously unselected package libvorbisenc2:amd64.
+Build website	Install release browsers	2026-08-20T22:50:04.0631050Z Preparing to unpack .../28-libvorbisenc2_1.3.7-1build3_amd64.deb ...
+Build website	Install release browsers	2026-08-20T22:50:04.0643457Z Unpacking libvorbisenc2:amd64 (1.3.7-1build3) ...
+Build website	Install release browsers	2026-08-20T22:50:05.1397365Z Selecting previously unselected package libvpx9:amd64.
+Build website	Install release browsers	2026-08-20T22:50:05.1513788Z Preparing to unpack .../29-libvpx9_1.14.0-1ubuntu2.3_amd64.deb ...
+Build website	Install release browsers	2026-08-20T22:50:05.1868956Z Unpacking libvpx9:amd64 (1.14.0-1ubuntu2.3) ...
+Build website	Install release browsers	2026-08-20T22:50:05.2226308Z Selecting previously unselected package libx264-164:amd64.
+Build website	Install release browsers	2026-08-20T22:50:05.2335420Z Preparing to unpack .../30-libx264-164_2%3a0.164.3108+git31e19f9-1_amd64.deb ...
+Build website	Install release browsers	2026-08-20T22:50:05.2347891Z Unpacking libx264-164:amd64 (2:0.164.3108+git31e19f9-1) ...
+Build website	Install release browsers	2026-08-20T22:50:05.3321839Z Selecting previously unselected package libx265-199:amd64.
+Build website	Install release browsers	2026-08-20T22:50:05.3431172Z Preparing to unpack .../31-libx265-199_3.5-2build1_amd64.deb ...
+Build website	Install release browsers	2026-08-20T22:50:05.7008095Z Unpacking libx265-199:amd64 (3.5-2build1) ...
+Build website	Install release browsers	2026-08-20T22:50:05.8924189Z Selecting previously unselected package libxvidcore4:amd64.
+Build website	Install release browsers	2026-08-20T22:50:05.9049958Z Preparing to unpack .../32-libxvidcore4_2%3a1.3.7-1build1_amd64.deb ...
+Build website	Install release browsers	2026-08-20T22:50:05.9170126Z Unpacking libxvidcore4:amd64 (2:1.3.7-1build1) ...
+Build website	Install release browsers	2026-08-20T22:50:05.9356460Z Selecting previously unselected package libzvbi-common.
+Build website	Install release browsers	2026-08-20T22:50:05.9463681Z Preparing to unpack .../33-libzvbi-common_0.2.42-2_all.deb ...
+Build website	Install release browsers	2026-08-20T22:50:05.9477438Z Unpacking libzvbi-common (0.2.42-2) ...
+Build website	Install release browsers	2026-08-20T22:50:06.0331511Z Selecting previously unselected package libzvbi0t64:amd64.
+Build website	Install release browsers	2026-08-20T22:50:06.0445133Z Preparing to unpack .../34-libzvbi0t64_0.2.42-2_amd64.deb ...
+Build website	Install release browsers	2026-08-20T22:50:06.0452731Z Unpacking libzvbi0t64:amd64 (0.2.42-2) ...
+Build website	Install release browsers	2026-08-20T22:50:06.0658858Z Selecting previously unselected package libavcodec60:amd64.
+Build website	Install release browsers	2026-08-20T22:50:06.0767404Z Preparing to unpack .../35-libavcodec60_7%3a6.1.1-3ubuntu5_amd64.deb ...
+Build website	Install release browsers	2026-08-20T22:50:06.0780488Z Unpacking libavcodec60:amd64 (7:6.1.1-3ubuntu5) ...
+Build website	Install release browsers	2026-08-20T22:50:06.3447600Z Selecting previously unselected package xfonts-encodings.
+Build website	Install release browsers	2026-08-20T22:50:06.3556991Z Preparing to unpack .../36-xfonts-encodings_1%3a1.0.5-0ubuntu2_all.deb ...
+Build website	Install release browsers	2026-08-20T22:50:06.3580621Z Unpacking xfonts-encodings (1:1.0.5-0ubuntu2) ...
+Build website	Install release browsers	2026-08-20T22:50:06.3843403Z Selecting previously unselected package xfonts-utils.
+Build website	Install release browsers	2026-08-20T22:50:06.3951865Z Preparing to unpack .../37-xfonts-utils_1%3a7.7+6build3_amd64.deb ...
+Build website	Install release browsers	2026-08-20T22:50:06.3963877Z Unpacking xfonts-utils (1:7.7+6build3) ...
+Build website	Install release browsers	2026-08-20T22:50:06.4757572Z Selecting previously unselected package xfonts-cyrillic.
+Build website	Install release browsers	2026-08-20T22:50:06.4876928Z Preparing to unpack .../38-xfonts-cyrillic_1%3a1.0.5+nmu1_all.deb ...
+Build website	Install release browsers	2026-08-20T22:50:06.4891515Z Unpacking xfonts-cyrillic (1:1.0.5+nmu1) ...
+Build website	Install release browsers	2026-08-20T22:50:06.5272257Z Selecting previously unselected package xfonts-scalable.
+Build website	Install release browsers	2026-08-20T22:50:06.5404174Z Preparing to unpack .../39-xfonts-scalable_1%3a1.0.3-1.3_all.deb ...
+Build website	Install release browsers	2026-08-20T22:50:06.5418674Z Unpacking xfonts-scalable (1:1.0.3-1.3) ...
+Build website	Install release browsers	2026-08-20T22:50:06.5902271Z Setting up libhwy1t64:amd64 (1.0.7-8.1build1) ...
+Build website	Install release browsers	2026-08-20T22:50:06.6638295Z Setting up libspeex1:amd64 (1.2.1-2ubuntu2.24.04.1) ...
+Build website	Install release browsers	2026-08-20T22:50:06.6664600Z Setting up libshine3:amd64 (3.1.1-2build1) ...
+Build website	Install release browsers	2026-08-20T22:50:06.6690784Z Setting up libvpl2 (2023.3.0-1build1) ...
+Build website	Install release browsers	2026-08-20T22:50:06.6718078Z Setting up libx264-164:amd64 (2:0.164.3108+git31e19f9-1) ...
+Build website	Install release browsers	2026-08-20T22:50:06.6743238Z Setting up libtwolame0:amd64 (0.4.0-2build3) ...
+Build website	Install release browsers	2026-08-20T22:50:06.6768359Z Setting up libgsm1:amd64 (1.0.22-1build1) ...
+Build website	Install release browsers	2026-08-20T22:50:06.6796604Z Setting up libsoxr0:amd64 (0.1.3-4build3) ...
+Build website	Install release browsers	2026-08-20T22:50:06.6821241Z Setting up libcodec2-1.2:amd64 (1.2.0-2build1) ...
+Build website	Install release browsers	2026-08-20T22:50:06.6845392Z Setting up fonts-wqy-zenhei (0.9.45-8) ...
+Build website	Install release browsers	2026-08-20T22:50:06.6954671Z Setting up fonts-freefont-ttf (20211204+svn4273-2) ...
+Build website	Install release browsers	2026-08-20T22:50:06.6980450Z Setting up libsvtav1enc1d1:amd64 (1.7.0+dfsg-2build1) ...
+Build website	Install release browsers	2026-08-20T22:50:06.7007882Z Setting up libxvidcore4:amd64 (2:1.3.7-1build1) ...
+Build website	Install release browsers	2026-08-20T22:50:06.7037010Z Setting up librav1e0:amd64 (0.7.1-2) ...
+Build website	Install release browsers	2026-08-20T22:50:06.7109787Z Setting up librsvg2-2:amd64 (2.58.0+dfsg-1build1) ...
+Build website	Install release browsers	2026-08-20T22:50:06.7137671Z Setting up fonts-tlwg-loma-otf (1:0.7.3-1) ...
+Build website	Install release browsers	2026-08-20T22:50:06.7165076Z Setting up libva2:amd64 (2.20.0-2ubuntu0.2) ...
+Build website	Install release browsers	2026-08-20T22:50:06.7301203Z Setting up xfonts-encodings (1:1.0.5-0ubuntu2) ...
+Build website	Install release browsers	2026-08-20T22:50:06.7338694Z Setting up libopus0:amd64 (1.4-1build1) ...
+Build website	Install release browsers	2026-08-20T22:50:06.7365456Z Setting up libjxl0.7:amd64 (0.7.0-10.2ubuntu6.1) ...
+Build website	Install release browsers	2026-08-20T22:50:06.7401126Z Setting up libx265-199:amd64 (3.5-2build1) ...
+Build website	Install release browsers	2026-08-20T22:50:06.7615024Z Setting up libvpx9:amd64 (1.14.0-1ubuntu2.3) ...
+Build website	Install release browsers	2026-08-20T22:50:06.7643647Z Setting up libdav1d7:amd64 (1.4.1-1build1) ...
+Build website	Install release browsers	2026-08-20T22:50:06.7668451Z Setting up libva-drm2:amd64 (2.20.0-2ubuntu0.2) ...
+Build website	Install release browsers	2026-08-20T22:50:06.7694868Z Setting up fonts-ipafont-gothic (00303-21ubuntu1) ...
+Build website	Install release browsers	2026-08-20T22:50:06.7757278Z update-alternatives: using /usr/share/fonts/opentype/ipafont-gothic/ipag.ttf to provide /usr/share/fonts/truetype/fonts-japanese-gothic.ttf (fonts-japanese-gothic.ttf) in auto mode
+Build website	Install release browsers	2026-08-20T22:50:06.7774935Z Setting up ocl-icd-libopencl1:amd64 (2.3.2-1build1) ...
+Build website	Install release browsers	2026-08-20T22:50:06.7802066Z Setting up libvdpau1:amd64 (1.5-2build1) ...
+Build website	Install release browsers	2026-08-20T22:50:06.7837203Z Setting up libtheora0:amd64 (1.1.1+dfsg.1-16.1build3) ...
+Build website	Install release browsers	2026-08-20T22:50:06.7865406Z Setting up libva-x11-2:amd64 (2.20.0-2ubuntu0.2) ...
+Build website	Install release browsers	2026-08-20T22:50:06.7892063Z Setting up libzvbi-common (0.2.42-2) ...
+Build website	Install release browsers	2026-08-20T22:50:06.7918327Z Setting up libmp3lame0:amd64 (3.100-6build1) ...
+Build website	Install release browsers	2026-08-20T22:50:06.7943894Z Setting up libvorbisenc2:amd64 (1.3.7-1build3) ...
+Build website	Install release browsers	2026-08-20T22:50:06.7969260Z Setting up fonts-unifont (1:15.1.01-1build1) ...
+Build website	Install release browsers	2026-08-20T22:50:06.7995792Z Setting up libzvbi0t64:amd64 (0.2.42-2) ...
+Build website	Install release browsers	2026-08-20T22:50:06.8021462Z Setting up libavutil58:amd64 (7:6.1.1-3ubuntu5) ...
+Build website	Install release browsers	2026-08-20T22:50:06.8046176Z Setting up xfonts-utils (1:7.7+6build3) ...
+Build website	Install release browsers	2026-08-20T22:50:06.8087856Z Setting up libswresample4:amd64 (7:6.1.1-3ubuntu5) ...
+Build website	Install release browsers	2026-08-20T22:50:06.8116835Z Setting up libavcodec60:amd64 (7:6.1.1-3ubuntu5) ...
+Build website	Install release browsers	2026-08-20T22:50:06.8143759Z Setting up xfonts-cyrillic (1:1.0.5+nmu1) ...
+Build website	Install release browsers	2026-08-20T22:50:06.8386707Z Setting up xfonts-scalable (1:1.0.3-1.3) ...
+Build website	Install release browsers	2026-08-20T22:50:06.8593014Z Processing triggers for libc-bin (2.39-0ubuntu8.8) ...
+Build website	Install release browsers	2026-08-20T22:50:07.0592686Z Processing triggers for man-db (2.12.0-4build2) ...
+Build website	Install release browsers	2026-08-20T22:50:07.0615577Z Not building database; man-db/auto-update is not 'true'.
+Build website	Install release browsers	2026-08-20T22:50:07.0631053Z Processing triggers for fontconfig (2.15.0-1.1ubuntu2) ...
+Build website	Install release browsers	2026-08-20T22:50:07.7469285Z 
+Build website	Install release browsers	2026-08-20T22:50:07.7471965Z Running kernel seems to be up-to-date.
+Build website	Install release browsers	2026-08-20T22:50:07.7472212Z 
+Build website	Install release browsers	2026-08-20T22:50:07.7472354Z No services need to be restarted.
+Build website	Install release browsers	2026-08-20T22:50:07.7472506Z 
+Build website	Install release browsers	2026-08-20T22:50:07.7472638Z No containers need to be restarted.
+Build website	Install release browsers	2026-08-20T22:50:07.7472798Z 
+Build website	Install release browsers	2026-08-20T22:50:07.7472947Z No user sessions are running outdated binaries.
+Build website	Install release browsers	2026-08-20T22:50:07.7473128Z 
+Build website	Install release browsers	2026-08-20T22:50:07.7473365Z No VM guests are running outdated hypervisor (qemu) binaries on this host.
+Build website	Install release browsers	2026-08-20T22:50:08.3999643Z Downloading Chrome for Testing 151.0.7922.34 (playwright chromium v1234) from https://cdn.playwright.dev/builds/cft/151.0.7922.34/linux64/chrome-linux64.zip
+Build website	Install release browsers	2026-08-20T22:50:09.4151912Z |                                                                                |   0% of 184.3 MiB
+Build website	Install release browsers	2026-08-20T22:50:09.8537770Z |■■■■■■■■                                                                        |  10% of 184.3 MiB
+Build website	Install release browsers	2026-08-20T22:50:09.9283774Z |■■■■■■■■■■■■■■■■                                                                |  20% of 184.3 MiB
+Build website	Install release browsers	2026-08-20T22:50:09.9963667Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 184.3 MiB
+Build website	Install release browsers	2026-08-20T22:50:10.0295394Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 184.3 MiB
+Build website	Install release browsers	2026-08-20T22:50:10.0888554Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 184.3 MiB
+Build website	Install release browsers	2026-08-20T22:50:10.1267549Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 184.3 MiB
+Build website	Install release browsers	2026-08-20T22:50:10.1843669Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 184.3 MiB
+Build website	Install release browsers	2026-08-20T22:50:10.2339793Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 184.3 MiB
+Build website	Install release browsers	2026-08-20T22:50:10.2913391Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 184.3 MiB
+Build website	Install release browsers	2026-08-20T22:50:10.3428727Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 184.3 MiB
+Build website	Install release browsers	2026-08-20T22:50:13.1224832Z Chrome for Testing 151.0.7922.34 (playwright chromium v1234) downloaded to /home/runner/.cache/ms-playwright/chromium-1234
+Build website	Install release browsers	2026-08-20T22:50:13.1227922Z Downloading FFmpeg (playwright ffmpeg v1011) from https://cdn.playwright.dev/dbazure/download/playwright/builds/ffmpeg/1011/ffmpeg-linux.zip
+Build website	Install release browsers	2026-08-20T22:50:14.2196621Z |                                                                                |   0% of 2.3 MiB
+Build website	Install release browsers	2026-08-20T22:50:14.2508500Z |■■■■■■■■                                                                        |  10% of 2.3 MiB
+Build website	Install release browsers	2026-08-20T22:50:14.2752242Z |■■■■■■■■■■■■■■■■                                                                |  20% of 2.3 MiB
+Build website	Install release browsers	2026-08-20T22:50:14.2889706Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 2.3 MiB
+Build website	Install release browsers	2026-08-20T22:50:14.2944407Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 2.3 MiB
+Build website	Install release browsers	2026-08-20T22:50:14.3053844Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 2.3 MiB
+Build website	Install release browsers	2026-08-20T22:50:14.3334590Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 2.3 MiB
+Build website	Install release browsers	2026-08-20T22:50:14.3362378Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 2.3 MiB
+Build website	Install release browsers	2026-08-20T22:50:14.3401286Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 2.3 MiB
+Build website	Install release browsers	2026-08-20T22:50:14.3482097Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 2.3 MiB
+Build website	Install release browsers	2026-08-20T22:50:14.3515513Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 2.3 MiB
+Build website	Install release browsers	2026-08-20T22:50:14.4037274Z FFmpeg (playwright ffmpeg v1011) downloaded to /home/runner/.cache/ms-playwright/ffmpeg-1011
+Build website	Install release browsers	2026-08-20T22:50:14.4039822Z Downloading Chrome Headless Shell 151.0.7922.34 (playwright chromium-headless-shell v1234) from https://cdn.playwright.dev/builds/cft/151.0.7922.34/linux64/chrome-headless-shell-linux64.zip
+Build website	Install release browsers	2026-08-20T22:50:15.4107228Z |                                                                                |   0% of 114.7 MiB
+Build website	Install release browsers	2026-08-20T22:50:15.8376565Z |■■■■■■■■                                                                        |  10% of 114.7 MiB
+Build website	Install release browsers	2026-08-20T22:50:15.9253856Z |■■■■■■■■■■■■■■■■                                                                |  20% of 114.7 MiB
+Build website	Install release browsers	2026-08-20T22:50:15.9531551Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 114.7 MiB
+Build website	Install release browsers	2026-08-20T22:50:15.9999888Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 114.7 MiB
+Build website	Install release browsers	2026-08-20T22:50:16.0529525Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 114.7 MiB
+Build website	Install release browsers	2026-08-20T22:50:16.0805068Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 114.7 MiB
+Build website	Install release browsers	2026-08-20T22:50:16.1053345Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 114.7 MiB
+Build website	Install release browsers	2026-08-20T22:50:16.1508110Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 114.7 MiB
+Build website	Install release browsers	2026-08-20T22:50:16.1750675Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 114.7 MiB
+Build website	Install release browsers	2026-08-20T22:50:16.2171838Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 114.7 MiB
+Build website	Install release browsers	2026-08-20T22:50:18.2651181Z Chrome Headless Shell 151.0.7922.34 (playwright chromium-headless-shell v1234) downloaded to /home/runner/.cache/ms-playwright/chromium_headless_shell-1234
+Build website	Install release browsers	2026-08-20T22:50:18.2653270Z Downloading Firefox 153.0 (playwright firefox v1538) from https://cdn.playwright.dev/dbazure/download/playwright/builds/firefox/1538/firefox-ubuntu-24.04.zip
+Build website	Install release browsers	2026-08-20T22:50:19.2342161Z |                                                                                |   0% of 108.2 MiB
+Build website	Install release browsers	2026-08-20T22:50:19.4233836Z |■■■■■■■■                                                                        |  10% of 108.2 MiB
+Build website	Install release browsers	2026-08-20T22:50:19.4965785Z |■■■■■■■■■■■■■■■■                                                                |  20% of 108.2 MiB
+Build website	Install release browsers	2026-08-20T22:50:19.5489492Z |■■■■■■■■■■■■■■■■■■■■■■■■                                                        |  30% of 108.2 MiB
+Build website	Install release browsers	2026-08-20T22:50:19.6108116Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                                |  40% of 108.2 MiB
+Build website	Install release browsers	2026-08-20T22:50:19.6785450Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                        |  50% of 108.2 MiB
+Build website	Install release browsers	2026-08-20T22:50:19.7196872Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                                |  60% of 108.2 MiB
+Build website	Install release browsers	2026-08-20T22:50:19.7726718Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                        |  70% of 108.2 MiB
+Build website	Install release browsers	2026-08-20T22:50:19.8745025Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■                |  80% of 108.2 MiB
+Build website	Install release browsers	2026-08-20T22:50:19.9277104Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■        |  90% of 108.2 MiB
+Build website	Install release browsers	2026-08-20T22:50:19.9896353Z |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■| 100% of 108.2 MiB
+Build website	Install release browsers	2026-08-20T22:50:21.8664523Z Firefox 153.0 (playwright firefox v1538) downloaded to /home/runner/.cache/ms-playwright/firefox-1538
+Build website	Test production browsers	﻿2026-08-20T22:50:21.9685231Z ##[group]Run npm run test:browser
+Build website	Test production browsers	2026-08-20T22:50:21.9685536Z ^[[36;1mnpm run test:browser^[[0m
+Build website	Test production browsers	2026-08-20T22:50:21.9707130Z shell: /usr/bin/bash -e {0}
+Build website	Test production browsers	2026-08-20T22:50:21.9707376Z env:
+Build website	Test production browsers	2026-08-20T22:50:21.9707561Z   GITHUB_PAGES: true
+Build website	Test production browsers	2026-08-20T22:50:21.9707913Z ##[endgroup]
+Build website	Test production browsers	2026-08-20T22:50:22.0466137Z 
+Build website	Test production browsers	2026-08-20T22:50:22.0466884Z > pomorise@1.0.0 test:browser
+Build website	Test production browsers	2026-08-20T22:50:22.0467573Z > npm run build && playwright test
+Build website	Test production browsers	2026-08-20T22:50:22.0467985Z 
+Build website	Test production browsers	2026-08-20T22:50:22.1279718Z 
+Build website	Test production browsers	2026-08-20T22:50:22.1280172Z > pomorise@1.0.0 build
+Build website	Test production browsers	2026-08-20T22:50:22.1280559Z > tsc --noEmit && vite build
+Build website	Test production browsers	2026-08-20T22:50:22.1280875Z 
+Build website	Test production browsers	2026-08-20T22:50:24.5634204Z ^[[36mvite v8.2.2 ^[[32mbuilding client environment for production...^[[36m^[[39m
+Build website	Test production browsers	2026-08-20T22:50:24.5719183Z transforming...
+Build website	Test production browsers	2026-08-20T22:50:24.6329477Z ✓ 114 modules transformed.
+Build website	Test production browsers	2026-08-20T22:50:24.6612771Z rendering chunks...
+Build website	Test production browsers	2026-08-20T22:50:24.7036651Z computing gzip size...
+Build website	Test production browsers	2026-08-20T22:50:24.7083420Z dist/manifest.webmanifest                            0.50 kB
+Build website	Test production browsers	2026-08-20T22:50:24.7084383Z dist/index.html                                      2.29 kB │ gzip:  1.00 kB
+Build website	Test production browsers	2026-08-20T22:50:24.7084973Z dist/assets/header_light_mode_phase6-DUI5yD4o.png  144.72 kB
+Build website	Test production browsers	2026-08-20T22:50:24.7085537Z dist/assets/header_dark_mode_phase6-BaeRq2j5.png   148.27 kB
+Build website	Test production browsers	2026-08-20T22:50:24.7086188Z dist/assets/index-DUuUIH7y.css                      21.26 kB │ gzip:  4.56 kB
+Build website	Test production browsers	2026-08-20T22:50:24.7086879Z dist/assets/rolldown-runtime-CbXtAM7H.js             0.58 kB │ gzip:  0.36 kB
+Build website	Test production browsers	2026-08-20T22:50:24.7087576Z dist/assets/workbox-window.prod.es5-Bd17z0YL.js      5.65 kB │ gzip:  2.20 kB
+Build website	Test production browsers	2026-08-20T22:50:24.7088256Z dist/assets/DataControls-BkfhiR6I.js                 9.27 kB │ gzip:  3.05 kB
+Build website	Test production browsers	2026-08-20T22:50:24.7088933Z dist/assets/database-D8FdzvFT.js                    99.79 kB │ gzip: 32.72 kB
+Build website	Test production browsers	2026-08-20T22:50:24.7089597Z dist/assets/index-DBzMYn7e.js                      296.69 kB │ gzip: 89.23 kB
+Build website	Test production browsers	2026-08-20T22:50:24.7089896Z 
+Build website	Test production browsers	2026-08-20T22:50:24.7090208Z ^[[32m✓ built in 144ms^[[39m
+Build website	Test production browsers	2026-08-20T22:50:25.9066642Z 
+Build website	Test production browsers	2026-08-20T22:50:25.9067670Z ^[[36mPWA v1.3.0^[[39m
+Build website	Test production browsers	2026-08-20T22:50:25.9068260Z mode      ^[[35mgenerateSW^[[39m
+Build website	Test production browsers	2026-08-20T22:50:25.9068921Z precache  ^[[32m18 entries^[[39m ^[[2m(897.74 KiB)^[[22m
+Build website	Test production browsers	2026-08-20T22:50:25.9069341Z files generated
+Build website	Test production browsers	2026-08-20T22:50:25.9069787Z   ^[[2mdist/sw.js^[[22m
+Build website	Test production browsers	2026-08-20T22:50:25.9070236Z   ^[[2mdist/workbox-2fbc6a65.js^[[22m
+Build website	Test production browsers	2026-08-20T22:50:26.9630885Z 
+Build website	Test production browsers	2026-08-20T22:50:26.9631612Z Running 36 tests using 2 workers
+Build website	Test production browsers	2026-08-20T22:50:26.9631925Z 
+Build website	Test production browsers	2026-08-20T22:50:28.2375404Z   ✓   2 [chromium] › src/tests/browser/network-boundary.spec.ts:7:1 › loads the themed shell without unexpected runtime requests (465ms)
+Build website	Test production browsers	2026-08-20T22:50:28.5792685Z   ✓   1 [chromium] › src/tests/browser/local-data-controls.spec.ts:79:1 › migrates a version-one task without losing visitor wording (817ms)
+Build website	Test production browsers	2026-08-20T22:50:28.9240395Z   ✓   3 [chromium] › src/tests/browser/network-boundary.spec.ts:43:1 › has no serious automated accessibility findings (674ms)
+Build website	Test production browsers	2026-08-20T22:50:29.2381072Z   ✓   5 [chromium] › src/tests/browser/network-boundary.spec.ts:58:1 › persists an explicit theme locally (306ms)
+Build website	Test production browsers	2026-08-20T22:50:30.6720072Z   ✓   6 [chromium] › src/tests/browser/network-boundary.spec.ts:79:1 › keeps timestamp-accurate time and restores a running session after refresh (1.4s)
+Build website	Test production browsers	2026-08-20T22:50:30.8447001Z   ✓   7 [chromium] › src/tests/browser/network-boundary.spec.ts:101:1 › reflows at the supported mobile width (164ms)
+Build website	Test production browsers	2026-08-20T22:50:30.9231671Z   ✓   4 [chromium] › src/tests/browser/local-data-controls.spec.ts:204:1 › restores focus data after closing and reopening the page (2.3s)
+Build website	Test production browsers	2026-08-20T22:50:31.0258078Z   ✓   8 [chromium] › src/tests/browser/network-boundary.spec.ts:129:3 › keeps the start action visible initially at the mobile viewport (172ms)
+Build website	Test production browsers	2026-08-20T22:50:31.1861791Z   ✓  10 [chromium] › src/tests/browser/network-boundary.spec.ts:129:3 › keeps the start action visible initially at the desktop viewport (151ms)
+Build website	Test production browsers	2026-08-20T22:50:32.1029794Z [performance] interaction-to-paint=13.30ms
+Build website	Test production browsers	2026-08-20T22:50:32.1192197Z   ✓  11 [chromium] › src/tests/browser/network-boundary.spec.ts:144:1 › paints primary timer feedback within the interaction budget (923ms)
+Build website	Test production browsers	2026-08-20T22:50:33.2546932Z   ✓   9 [chromium] › src/tests/browser/local-data-controls.spec.ts:227:1 › previews valid backup replacement and rejects malformed input without partial writes (2.3s)
+Build website	Test production browsers	2026-08-20T22:50:33.9533441Z   ✓  12 [chromium] › src/tests/browser/offline-hardening.spec.ts:3:1 › installs an approved manifest and reopens after the network goes offline (1.8s)
+Build website	Test production browsers	2026-08-20T22:50:34.2979184Z   ✓  14 [chromium] › src/tests/browser/offline-hardening.spec.ts:37:1 › continues normally when notification permission is denied (328ms)
+Build website	Test production browsers	2026-08-20T22:50:34.4837113Z   ✓  13 [chromium] › src/tests/browser/local-data-controls.spec.ts:278:1 › preserves tasks during history clearing and removes them during focus-data deletion (1.2s)
+Build website	Test production browsers	2026-08-20T22:50:36.1950002Z   ✓  15 [chromium] › src/tests/browser/offline-hardening.spec.ts:56:1 › keeps personal text out of versioned application caches (1.9s)
+Build website	Test production browsers	2026-08-20T22:50:36.3781152Z   ✓  17 [chromium] › src/tests/browser/offline-hardening.spec.ts:83:3 › has no page overflow at the medium viewport (174ms)
+Build website	Test production browsers	2026-08-20T22:50:36.4414211Z   ✓  16 [chromium] › src/tests/browser/local-data-controls.spec.ts:315:1 › resets only preferences and continues when storage protection is declined (1.9s)
+Build website	Test production browsers	2026-08-20T22:50:36.5270125Z   ✓  18 [chromium] › src/tests/browser/offline-hardening.spec.ts:83:3 › has no page overflow at the wide viewport (141ms)
+Build website	Test production browsers	2026-08-20T22:50:40.3200171Z   ✓  19 [firefox] › src/tests/browser/local-data-controls.spec.ts:79:1 › migrates a version-one task without losing visitor wording (2.6s)
+Build website	Test production browsers	2026-08-20T22:50:40.3376818Z   ✓  20 [firefox] › src/tests/browser/network-boundary.spec.ts:7:1 › loads the themed shell without unexpected runtime requests (1.7s)
+Build website	Test production browsers	2026-08-20T22:50:41.4331563Z   ✓  22 [firefox] › src/tests/browser/network-boundary.spec.ts:43:1 › has no serious automated accessibility findings (1.1s)
+Build website	Test production browsers	2026-08-20T22:50:42.0848228Z   ✓  23 [firefox] › src/tests/browser/network-boundary.spec.ts:58:1 › persists an explicit theme locally (640ms)
+Build website	Test production browsers	2026-08-20T22:50:42.8638076Z   ✓  21 [firefox] › src/tests/browser/local-data-controls.spec.ts:204:1 › restores focus data after closing and reopening the page (2.5s)
+Build website	Test production browsers	2026-08-20T22:50:43.9749694Z   ✓  24 [firefox] › src/tests/browser/network-boundary.spec.ts:79:1 › keeps timestamp-accurate time and restores a running session after refresh (1.9s)
+Build website	Test production browsers	2026-08-20T22:50:44.3061746Z   ✓  26 [firefox] › src/tests/browser/network-boundary.spec.ts:101:1 › reflows at the supported mobile width (323ms)
+Build website	Test production browsers	2026-08-20T22:50:44.6918853Z   ✓  27 [firefox] › src/tests/browser/network-boundary.spec.ts:129:3 › keeps the start action visible initially at the mobile viewport (368ms)
+Build website	Test production browsers	2026-08-20T22:50:45.1466915Z   ✓  28 [firefox] › src/tests/browser/network-boundary.spec.ts:129:3 › keeps the start action visible initially at the desktop viewport (445ms)
+Build website	Test production browsers	2026-08-20T22:50:45.6447174Z   ✓  25 [firefox] › src/tests/browser/local-data-controls.spec.ts:227:1 › previews valid backup replacement and rejects malformed input without partial writes (2.8s)
+Build website	Test production browsers	2026-08-20T22:50:46.3635632Z [performance] interaction-to-paint=13.00ms
+Build website	Test production browsers	2026-08-20T22:50:46.3838709Z   ✓  29 [firefox] › src/tests/browser/network-boundary.spec.ts:144:1 › paints primary timer feedback within the interaction budget (1.2s)
+Build website	Test production browsers	2026-08-20T22:50:47.2038670Z   ✓  30 [firefox] › src/tests/browser/local-data-controls.spec.ts:278:1 › preserves tasks during history clearing and removes them during focus-data deletion (1.5s)
+Build website	Test production browsers	2026-08-20T22:50:48.9099971Z   ✓  31 [firefox] › src/tests/browser/offline-hardening.spec.ts:3:1 › installs an approved manifest and reopens after the network goes offline (2.5s)
+Build website	Test production browsers	2026-08-20T22:50:49.8013052Z   ✓  32 [firefox] › src/tests/browser/local-data-controls.spec.ts:315:1 › resets only preferences and continues when storage protection is declined (2.6s)
+Build website	Test production browsers	2026-08-20T22:50:50.3612546Z   ✓  33 [firefox] › src/tests/browser/offline-hardening.spec.ts:37:1 › continues normally when notification permission is denied (1.4s)
+Build website	Test production browsers	2026-08-20T22:50:52.4733540Z   ✓  34 [firefox] › src/tests/browser/offline-hardening.spec.ts:56:1 › keeps personal text out of versioned application caches (2.1s)
+Build website	Test production browsers	2026-08-20T22:50:52.7948754Z   ✓  35 [firefox] › src/tests/browser/offline-hardening.spec.ts:83:3 › has no page overflow at the medium viewport (313ms)
+Build website	Test production browsers	2026-08-20T22:50:53.1127399Z   ✓  36 [firefox] › src/tests/browser/offline-hardening.spec.ts:83:3 › has no page overflow at the wide viewport (309ms)
+Build website	Test production browsers	2026-08-20T22:50:53.8758943Z 
+Build website	Test production browsers	2026-08-20T22:50:53.8762362Z   36 passed (27.4s)
+Build website	Build production website	﻿2026-08-20T22:50:53.8994014Z ##[group]Run npm run build
+Build website	Build production website	2026-08-20T22:50:53.8994281Z ^[[36;1mnpm run build^[[0m
+Build website	Build production website	2026-08-20T22:50:53.9014821Z shell: /usr/bin/bash -e {0}
+Build website	Build production website	2026-08-20T22:50:53.9015059Z env:
+Build website	Build production website	2026-08-20T22:50:53.9015247Z   GITHUB_PAGES: true
+Build website	Build production website	2026-08-20T22:50:53.9015449Z ##[endgroup]
+Build website	Build production website	2026-08-20T22:50:53.9811381Z 
+Build website	Build production website	2026-08-20T22:50:53.9812185Z > pomorise@1.0.0 build
+Build website	Build production website	2026-08-20T22:50:53.9812502Z > tsc --noEmit && vite build
+Build website	Build production website	2026-08-20T22:50:56.3424131Z 
+Build website	Build production website	2026-08-20T22:50:56.3425699Z ^[[36mvite v8.2.2 ^[[32mbuilding client environment for production...^[[36m^[[39m
+Build website	Build production website	2026-08-20T22:50:56.3533383Z transforming...
+Build website	Build production website	2026-08-20T22:50:56.4102050Z ✓ 114 modules transformed.
+Build website	Build production website	2026-08-20T22:50:56.4362359Z rendering chunks...
+Build website	Build production website	2026-08-20T22:50:56.4788911Z computing gzip size...
+Build website	Build production website	2026-08-20T22:50:56.4827047Z dist/manifest.webmanifest                            0.50 kB
+Build website	Build production website	2026-08-20T22:50:56.4827867Z dist/index.html                                      2.29 kB │ gzip:  1.00 kB
+Build website	Build production website	2026-08-20T22:50:56.4828293Z dist/assets/header_light_mode_phase6-DUI5yD4o.png  144.72 kB
+Build website	Build production website	2026-08-20T22:50:56.4828765Z dist/assets/header_dark_mode_phase6-BaeRq2j5.png   148.27 kB
+Build website	Build production website	2026-08-20T22:50:56.4829243Z dist/assets/index-DUuUIH7y.css                      21.26 kB │ gzip:  4.56 kB
+Build website	Build production website	2026-08-20T22:50:56.4829764Z dist/assets/rolldown-runtime-CbXtAM7H.js             0.58 kB │ gzip:  0.36 kB
+Build website	Build production website	2026-08-20T22:50:56.4830419Z dist/assets/workbox-window.prod.es5-Bd17z0YL.js      5.65 kB │ gzip:  2.20 kB
+Build website	Build production website	2026-08-20T22:50:56.4831312Z dist/assets/DataControls-BkfhiR6I.js                 9.27 kB │ gzip:  3.05 kB
+Build website	Build production website	2026-08-20T22:50:56.4831833Z dist/assets/database-D8FdzvFT.js                    99.79 kB │ gzip: 32.72 kB
+Build website	Build production website	2026-08-20T22:50:56.4832583Z dist/assets/index-DBzMYn7e.js                      296.69 kB │ gzip: 89.23 kB
+Build website	Build production website	2026-08-20T22:50:56.4832812Z 
+Build website	Build production website	2026-08-20T22:50:56.4832984Z ^[[32m✓ built in 139ms^[[39m
+Build website	Build production website	2026-08-20T22:50:57.5177452Z 
+Build website	Build production website	2026-08-20T22:50:57.5178746Z ^[[36mPWA v1.3.0^[[39m
+Build website	Build production website	2026-08-20T22:50:57.5179628Z mode      ^[[35mgenerateSW^[[39m
+Build website	Build production website	2026-08-20T22:50:57.5180629Z precache  ^[[32m18 entries^[[39m ^[[2m(897.74 KiB)^[[22m
+Build website	Build production website	2026-08-20T22:50:57.5181400Z files generated
+Build website	Build production website	2026-08-20T22:50:57.5181908Z   ^[[2mdist/sw.js^[[22m
+Build website	Build production website	2026-08-20T22:50:57.5182584Z   ^[[2mdist/workbox-2fbc6a65.js^[[22m
+Build website	Upload production website	﻿2026-08-20T22:50:57.5667057Z ##[group]Run actions/upload-pages-artifact@v4
+Build website	Upload production website	2026-08-20T22:50:57.5667361Z with:
+Build website	Upload production website	2026-08-20T22:50:57.5667549Z   path: ./dist
+Build website	Upload production website	2026-08-20T22:50:57.5667742Z   name: github-pages
+Build website	Upload production website	2026-08-20T22:50:57.5667941Z   retention-days: 1
+Build website	Upload production website	2026-08-20T22:50:57.5668118Z env:
+Build website	Upload production website	2026-08-20T22:50:57.5668293Z   GITHUB_PAGES: true
+Build website	Upload production website	2026-08-20T22:50:57.5668478Z ##[endgroup]
+Build website	Upload production website	2026-08-20T22:50:57.5753533Z ##[start-action display=Archive artifact;id=__actions_upload-pages-artifact.__run]
+Build website	Upload production website	2026-08-20T22:50:57.5797892Z ##[group]Run echo ::group::Archive artifact
+Build website	Upload production website	2026-08-20T22:50:57.5798217Z ^[[36;1mecho ::group::Archive artifact^[[0m
+Build website	Upload production website	2026-08-20T22:50:57.5798461Z ^[[36;1mtar \^[[0m
+Build website	Upload production website	2026-08-20T22:50:57.5798681Z ^[[36;1m  --dereference --hard-dereference \^[[0m
+Build website	Upload production website	2026-08-20T22:50:57.5798957Z ^[[36;1m  --directory "$INPUT_PATH" \^[[0m
+Build website	Upload production website	2026-08-20T22:50:57.5799212Z ^[[36;1m  -cvf "$RUNNER_TEMP/artifact.tar" \^[[0m
+Build website	Upload production website	2026-08-20T22:50:57.5799464Z ^[[36;1m  --exclude=.git \^[[0m
+Build website	Upload production website	2026-08-20T22:50:57.5799683Z ^[[36;1m  --exclude=.github \^[[0m
+Build website	Upload production website	2026-08-20T22:50:57.5799947Z ^[[36;1m  --exclude=".[^/]*" \^[[0m
+Build website	Upload production website	2026-08-20T22:50:57.5800154Z ^[[36;1m  .^[[0m
+Build website	Upload production website	2026-08-20T22:50:57.5800339Z ^[[36;1mecho ::endgroup::^[[0m
+Build website	Upload production website	2026-08-20T22:50:57.5818604Z shell: /usr/bin/sh -e {0}
+Build website	Upload production website	2026-08-20T22:50:57.5818833Z env:
+Build website	Upload production website	2026-08-20T22:50:57.5819017Z   GITHUB_PAGES: true
+Build website	Upload production website	2026-08-20T22:50:57.5819218Z   INPUT_PATH: ./dist
+Build website	Upload production website	2026-08-20T22:50:57.5819416Z ##[endgroup]
+Build website	Upload production website	2026-08-20T22:50:57.5847777Z ##[group]Archive artifact
+Build website	Upload production website	2026-08-20T22:50:57.5859335Z ./
+Build website	Upload production website	2026-08-20T22:50:57.5859628Z ./sw.js
+Build website	Upload production website	2026-08-20T22:50:57.5859869Z ./icons/
+Build website	Upload production website	2026-08-20T22:50:57.5860177Z ./icons/pomorise-192.png
+Build website	Upload production website	2026-08-20T22:50:57.5860528Z ./icons/apple-touch-icon.png
+Build website	Upload production website	2026-08-20T22:50:57.5860971Z ./icons/pomorise-512.png
+Build website	Upload production website	2026-08-20T22:50:57.5861359Z ./icons/pomorise-maskable-512.png
+Build website	Upload production website	2026-08-20T22:50:57.5861669Z ./index.html
+Build website	Upload production website	2026-08-20T22:50:57.5861883Z ./assets/
+Build website	Upload production website	2026-08-20T22:50:57.5862138Z ./assets/header_dark_mode_phase6-BaeRq2j5.png
+Build website	Upload production website	2026-08-20T22:50:57.5862559Z ./assets/DataControls-BkfhiR6I.js
+Build website	Upload production website	2026-08-20T22:50:57.5862976Z ./assets/workbox-window.prod.es5-Bd17z0YL.js
+Build website	Upload production website	2026-08-20T22:50:57.5863371Z ./assets/index-DUuUIH7y.css
+Build website	Upload production website	2026-08-20T22:50:57.5863707Z ./assets/database-D8FdzvFT.js
+Build website	Upload production website	2026-08-20T22:50:57.5864061Z ./assets/header_light_mode_phase6-DUI5yD4o.png
+Build website	Upload production website	2026-08-20T22:50:57.5864440Z ./assets/index-DBzMYn7e.js
+Build website	Upload production website	2026-08-20T22:50:57.5866259Z ./assets/rolldown-runtime-CbXtAM7H.js
+Build website	Upload production website	2026-08-20T22:50:57.5866603Z ./manifest.webmanifest
+Build website	Upload production website	2026-08-20T22:50:57.5866856Z ./workbox-2fbc6a65.js
+Build website	Upload production website	2026-08-20T22:50:57.5869001Z ##[endgroup]
+Build website	Upload production website	2026-08-20T22:50:57.5877202Z ##[end-action id=__actions_upload-pages-artifact.__run;outcome=success;conclusion=success;duration_ms=12]
+Build website	Upload production website	2026-08-20T22:50:57.5902454Z ##[start-action display=Archive artifact;id=__actions_upload-pages-artifact.__run_2]
+Build website	Upload production website	2026-08-20T22:50:57.5918912Z ##[end-action id=__actions_upload-pages-artifact.__run_2;outcome=skipped;conclusion=skipped;duration_ms=0]
+Build website	Upload production website	2026-08-20T22:50:57.5944629Z ##[start-action display=Archive artifact;id=__actions_upload-pages-artifact.__run_3]
+Build website	Upload production website	2026-08-20T22:50:57.5959164Z ##[end-action id=__actions_upload-pages-artifact.__run_3;outcome=skipped;conclusion=skipped;duration_ms=0]
+Build website	Upload production website	2026-08-20T22:50:57.5984109Z ##[start-action display=Upload artifact;id=__actions_upload-pages-artifact.upload-artifact]
+Build website	Upload production website	2026-08-20T22:50:57.6288516Z Node 20 is being deprecated. This workflow is running with Node 24 by default. If you need to temporarily use Node 20, you can set the ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION=true environment variable. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+Build website	Upload production website	2026-08-20T22:50:57.6289539Z ##[group]Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+Build website	Upload production website	2026-08-20T22:50:57.6289862Z with:
+Build website	Upload production website	2026-08-20T22:50:57.6290040Z   name: github-pages
+Build website	Upload production website	2026-08-20T22:50:57.6290255Z   path: /home/runner/work/_temp/artifact.tar
+Build website	Upload production website	2026-08-20T22:50:57.6290494Z   retention-days: 1
+Build website	Upload production website	2026-08-20T22:50:57.6290687Z   if-no-files-found: error
+Build website	Upload production website	2026-08-20T22:50:57.6291135Z   compression-level: 6
+Build website	Upload production website	2026-08-20T22:50:57.6291333Z   overwrite: false
+Build website	Upload production website	2026-08-20T22:50:57.6291740Z   include-hidden-files: false
+Build website	Upload production website	2026-08-20T22:50:57.6291955Z env:
+Build website	Upload production website	2026-08-20T22:50:57.6292140Z   GITHUB_PAGES: true
+Build website	Upload production website	2026-08-20T22:50:57.6292333Z ##[endgroup]
+Build website	Upload production website	2026-08-20T22:50:57.7729982Z (node:5110) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+Build website	Upload production website	2026-08-20T22:50:57.7731494Z (Use `node --trace-deprecation ...` to show where the warning was created)
+Build website	Upload production website	2026-08-20T22:50:57.7772415Z With the provided path, there will be 1 file uploaded
+Build website	Upload production website	2026-08-20T22:50:57.7797166Z Artifact name is valid!
+Build website	Upload production website	2026-08-20T22:50:57.7798031Z Root directory input is valid!
+Build website	Upload production website	2026-08-20T22:50:58.0903099Z Beginning upload of artifact content to blob storage
+Build website	Upload production website	2026-08-20T22:50:58.1305526Z (node:5110) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+Build website	Upload production website	2026-08-20T22:50:58.4273330Z Uploaded bytes 622408
+Build website	Upload production website	2026-08-20T22:50:58.4653630Z Finished uploading artifact content to blob storage!
+Build website	Upload production website	2026-08-20T22:50:58.4654602Z SHA256 digest of uploaded artifact zip is de6cd0258746c1ea769f31e56a6c35cb772348a3bc961474d0655da95981ba9f
+Build website	Upload production website	2026-08-20T22:50:58.4655311Z Finalizing artifact upload
+Build website	Upload production website	2026-08-20T22:50:58.6483435Z Artifact github-pages.zip successfully finalized. Artifact ID 9427454707
+Build website	Upload production website	2026-08-20T22:50:58.6484259Z Artifact github-pages has been successfully uploaded! Final size is 622408 bytes. Artifact ID is 9427454707
+Build website	Upload production website	2026-08-20T22:50:58.6490224Z Artifact download URL: https://github.com/amanalip/pomorise/actions/runs/32425974118/artifacts/9427454707
+Build website	Upload production website	2026-08-20T22:50:58.6555284Z ##[end-action id=__actions_upload-pages-artifact.upload-artifact;outcome=success;conclusion=success;duration_ms=1057]
+Build website	Post Set up Node.js	﻿2026-08-20T22:50:58.6863591Z Post job cleanup.
+Build website	Post Set up Node.js	2026-08-20T22:50:58.7900565Z Cache hit occurred on the primary key node-cache-Linux-x64-npm-6bb8893db111fb295c1a8f393c5cdf4928f7b19fcf41a157264d38131187902b, not saving cache.
+Build website	Post Checkout repository	﻿2026-08-20T22:50:58.8256266Z Post job cleanup.
+Build website	Post Checkout repository	2026-08-20T22:50:58.8959096Z [command]/usr/bin/git version
+Build website	Post Checkout repository	2026-08-20T22:50:58.8992184Z git version 2.55.0
+Build website	Post Checkout repository	2026-08-20T22:50:58.9022793Z Temporarily overriding HOME='/home/runner/work/_temp/ce931add-d8c0-4bf2-ad36-77bc01d87ef2' before making global git config changes
+Build website	Post Checkout repository	2026-08-20T22:50:58.9024035Z Adding repository directory to the temporary git global config as a safe directory
+Build website	Post Checkout repository	2026-08-20T22:50:58.9026764Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/pomorise/pomorise
+Build website	Post Checkout repository	2026-08-20T22:50:58.9052443Z Removing SSH command configuration
+Build website	Post Checkout repository	2026-08-20T22:50:58.9058198Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+Build website	Post Checkout repository	2026-08-20T22:50:58.9086391Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Build website	Post Checkout repository	2026-08-20T22:50:58.9267580Z Removing HTTP extra header
+Build website	Post Checkout repository	2026-08-20T22:50:58.9273227Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Build website	Post Checkout repository	2026-08-20T22:50:58.9297956Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Build website	Post Checkout repository	2026-08-20T22:50:58.9465843Z Removing includeIf entries pointing to credentials config files
+Build website	Post Checkout repository	2026-08-20T22:50:58.9471901Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Build website	Post Checkout repository	2026-08-20T22:50:58.9493713Z includeif.gitdir:/home/runner/work/pomorise/pomorise/.git.path
+Build website	Post Checkout repository	2026-08-20T22:50:58.9501679Z includeif.gitdir:/home/runner/work/pomorise/pomorise/.git/worktrees/*.path
+Build website	Post Checkout repository	2026-08-20T22:50:58.9503822Z includeif.gitdir:/github/workspace/.git.path
+Build website	Post Checkout repository	2026-08-20T22:50:58.9504479Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+Build website	Post Checkout repository	2026-08-20T22:50:58.9505974Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/pomorise/pomorise/.git.path
+Build website	Post Checkout repository	2026-08-20T22:50:58.9521141Z /home/runner/work/_temp/git-credentials-38ef5ced-88b1-4284-9369-84b51c3dc233.config
+Build website	Post Checkout repository	2026-08-20T22:50:58.9542740Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/pomorise/pomorise/.git.path /home/runner/work/_temp/git-credentials-38ef5ced-88b1-4284-9369-84b51c3dc233.config
+Build website	Post Checkout repository	2026-08-20T22:50:58.9573683Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/home/runner/work/pomorise/pomorise/.git/worktrees/*.path
+Build website	Post Checkout repository	2026-08-20T22:50:58.9594453Z /home/runner/work/_temp/git-credentials-38ef5ced-88b1-4284-9369-84b51c3dc233.config
+Build website	Post Checkout repository	2026-08-20T22:50:58.9608536Z [command]/usr/bin/git config --local --unset includeif.gitdir:/home/runner/work/pomorise/pomorise/.git/worktrees/*.path /home/runner/work/_temp/git-credentials-38ef5ced-88b1-4284-9369-84b51c3dc233.config
+Build website	Post Checkout repository	2026-08-20T22:50:58.9643433Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+Build website	Post Checkout repository	2026-08-20T22:50:58.9654464Z /github/runner_temp/git-credentials-38ef5ced-88b1-4284-9369-84b51c3dc233.config
+Build website	Post Checkout repository	2026-08-20T22:50:58.9662757Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-38ef5ced-88b1-4284-9369-84b51c3dc233.config
+Build website	Post Checkout repository	2026-08-20T22:50:58.9685771Z [command]/usr/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+Build website	Post Checkout repository	2026-08-20T22:50:58.9701985Z /github/runner_temp/git-credentials-38ef5ced-88b1-4284-9369-84b51c3dc233.config
+Build website	Post Checkout repository	2026-08-20T22:50:58.9710452Z [command]/usr/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-38ef5ced-88b1-4284-9369-84b51c3dc233.config
+Build website	Post Checkout repository	2026-08-20T22:50:58.9734882Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Build website	Post Checkout repository	2026-08-20T22:50:58.9938044Z Removing credentials config '/home/runner/work/_temp/git-credentials-38ef5ced-88b1-4284-9369-84b51c3dc233.config'
+Build website	Complete job	﻿2026-08-20T22:50:59.0056626Z Evaluate and set job outputs
+Build website	Complete job	2026-08-20T22:50:59.0080346Z Set output 'app_ready'
+Build website	Complete job	2026-08-20T22:50:59.0082218Z Cleaning up orphan processes
+Build website	Complete job	2026-08-20T22:50:59.0304735Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/configure-pages@v5, actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+Deploy website	Set up job	﻿2026-08-20T22:51:06.7884353Z Current runner version: '2.336.0'
+Deploy website	Set up job	2026-08-20T22:51:06.7912697Z ##[group]Runner Image Provisioner
+Deploy website	Set up job	2026-08-20T22:51:06.7913726Z Hosted Compute Agent
+Deploy website	Set up job	2026-08-20T22:51:06.7914437Z Version: 20260729.566
+Deploy website	Set up job	2026-08-20T22:51:06.7915114Z Commit: cf7153fe6e25b664e8693c24944bf2b00355d109
+Deploy website	Set up job	2026-08-20T22:51:06.7915934Z Build Date: 2026-07-29T19:17:02Z
+Deploy website	Set up job	2026-08-20T22:51:06.7916655Z Worker ID: {98665938-7508-4dbf-ae04-f850edb9cf16}
+Deploy website	Set up job	2026-08-20T22:51:06.7917463Z Azure Region: eastus2
+Deploy website	Set up job	2026-08-20T22:51:06.7918089Z ##[endgroup]
+Deploy website	Set up job	2026-08-20T22:51:06.7919483Z ##[group]Operating System
+Deploy website	Set up job	2026-08-20T22:51:06.7920221Z Ubuntu
+Deploy website	Set up job	2026-08-20T22:51:06.7920774Z 24.04.4
+Deploy website	Set up job	2026-08-20T22:51:06.7921336Z LTS
+Deploy website	Set up job	2026-08-20T22:51:06.7922175Z ##[endgroup]
+Deploy website	Set up job	2026-08-20T22:51:06.7922805Z ##[group]Runner Image
+Deploy website	Set up job	2026-08-20T22:51:06.7923477Z Image: ubuntu-24.04
+Deploy website	Set up job	2026-08-20T22:51:06.7924077Z Version: 20260816.277.1
+Deploy website	Set up job	2026-08-20T22:51:06.7925196Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20260816.277/images/ubuntu/Ubuntu2404-Readme.md
+Deploy website	Set up job	2026-08-20T22:51:06.7927072Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20260816.277
+Deploy website	Set up job	2026-08-20T22:51:06.7928159Z ##[endgroup]
+Deploy website	Set up job	2026-08-20T22:51:06.7929400Z ##[group]GITHUB_TOKEN Permissions
+Deploy website	Set up job	2026-08-20T22:51:06.7932047Z Contents: read
+Deploy website	Set up job	2026-08-20T22:51:06.7932712Z Metadata: read
+Deploy website	Set up job	2026-08-20T22:51:06.7933287Z Pages: write
+Deploy website	Set up job	2026-08-20T22:51:06.7933945Z ##[endgroup]
+Deploy website	Set up job	2026-08-20T22:51:06.7936645Z Secret source: Actions
+Deploy website	Set up job	2026-08-20T22:51:06.7938046Z Prepare workflow directory
+Deploy website	Set up job	2026-08-20T22:51:06.8905348Z Prepare all required actions
+Deploy website	Set up job	2026-08-20T22:51:06.8953451Z Getting action download info
+Deploy website	Set up job	2026-08-20T22:51:07.0678099Z Download action repository 'actions/deploy-pages@v5' (SHA:cd2ce8fcbc39b97be8ca5fce6e763baed58fa128)
+Deploy website	Set up job	2026-08-20T22:51:07.4890598Z Complete job name: Deploy website
+Deploy website	Deploy to GitHub Pages	﻿2026-08-20T22:51:07.6262547Z ##[group]Run actions/deploy-pages@v5
+Deploy website	Deploy to GitHub Pages	2026-08-20T22:51:07.6263502Z with:
+Deploy website	Deploy to GitHub Pages	2026-08-20T22:51:07.6267344Z   token: ***
+Deploy website	Deploy to GitHub Pages	2026-08-20T22:51:07.6267810Z   timeout: 600000
+Deploy website	Deploy to GitHub Pages	2026-08-20T22:51:07.6268306Z   error_count: 10
+Deploy website	Deploy to GitHub Pages	2026-08-20T22:51:07.6268768Z   reporting_interval: 5000
+Deploy website	Deploy to GitHub Pages	2026-08-20T22:51:07.6269284Z   artifact_name: github-pages
+Deploy website	Deploy to GitHub Pages	2026-08-20T22:51:07.6269786Z   preview: false
+Deploy website	Deploy to GitHub Pages	2026-08-20T22:51:07.6270385Z ##[endgroup]
+Deploy website	Deploy to GitHub Pages	2026-08-20T22:51:07.8292834Z (node:2070) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+Deploy website	Deploy to GitHub Pages	2026-08-20T22:51:07.8295557Z (Use `node --trace-deprecation ...` to show where the warning was created)
+Deploy website	Deploy to GitHub Pages	2026-08-20T22:51:07.9033725Z Fetching artifact metadata for "github-pages" in this workflow run
+Deploy website	Deploy to GitHub Pages	2026-08-20T22:51:07.9803321Z Found 1 artifact(s)
+Deploy website	Deploy to GitHub Pages	2026-08-20T22:51:07.9816165Z Creating Pages deployment with payload:
+Deploy website	Deploy to GitHub Pages	2026-08-20T22:51:07.9817055Z {
+Deploy website	Deploy to GitHub Pages	2026-08-20T22:51:07.9817676Z 	"artifact_id": 9427454707,
+Deploy website	Deploy to GitHub Pages	2026-08-20T22:51:07.9818362Z 	"pages_build_version": "303bcca934489c53b279fb6dc63e493992553d99",
+Deploy website	Deploy to GitHub Pages	2026-08-20T22:51:07.9863986Z 	"oidc_token": "***"
+Deploy website	Deploy to GitHub Pages	2026-08-20T22:51:07.9864553Z }
+Deploy website	Deploy to GitHub Pages	2026-08-20T22:51:08.2075381Z Created deployment for 303bcca934489c53b279fb6dc63e493992553d99, ID: 303bcca934489c53b279fb6dc63e493992553d99
+Deploy website	Deploy to GitHub Pages	2026-08-20T22:51:13.2085131Z Getting Pages deployment status...
+Deploy website	Deploy to GitHub Pages	2026-08-20T22:51:13.3093330Z Reported success!
+Deploy website	Complete job	﻿2026-08-20T22:51:13.3445755Z Evaluate and set environment url
+Deploy website	Complete job	2026-08-20T22:51:13.3534843Z Evaluated environment url: https://amanalip.github.io/pomorise/
+Deploy website	Complete job	2026-08-20T22:51:13.3537868Z Cleaning up orphan processes
+
+Script done on 2026-08-20 18:52:59-04:00 [COMMAND_EXIT_CODE="0"]

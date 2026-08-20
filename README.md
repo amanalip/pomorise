@@ -5,11 +5,11 @@ Rise one session at a time.
 | Document information | Value |
 | --- | --- |
 | Created | August 15, 2026 at 10:14:39 PM EDT |
-| Last updated | August 20, 2026 at 4:50:39 PM EDT |
-| ISO 8601 last updated | `2026-08-20T16:50:39-04:00` |
+| Last updated | August 20, 2026 at 7:04:00 PM EDT |
+| ISO 8601 last updated | `2026-08-20T19:04:00-04:00` |
 | Timezone | America/Toronto (UTC−04:00) |
 | Estimated reading time | 3 minutes |
-| Verification status | Fact-checked and sanity-checked against the linked primary documentation |
+| Verification status | Pomorise 1.0 published; Phase 7 comprehensive report passed |
 
 ## Table of contents
 
@@ -22,17 +22,17 @@ Rise one session at a time.
 
 ## Overview
 
-Pomorise is a Pomodoro website planned for deployment on GitHub Pages.
+Pomorise is a private, local-first Pomodoro website published on [GitHub Pages](https://amanalip.github.io/pomorise/).
 
 The goal is simple: make it easier to choose one meaningful task, give it your full attention, and return refreshed after a well-timed break. Development is organized into seven implementation phases so the product can grow without losing its reliability, accessibility, or privacy boundaries. One comprehensive suite verifies the integrated product at the end of Phase 7.
 
 ## Project status
 
-Phases 1 through 3 are implementation-ready. Pomorise now has a reproducible React, TypeScript, and Vite foundation, a responsive light and dark application shell, and a timestamp-based focus timer with recovery, accessible controls, custom durations, optional automatic transitions, local sound, and contextual browser notifications. The first complete public release is named **Pomorise 1.0: First Light**. The product direction lives in [`project_plan.md`](project_plan.md), the seven-phase sequence lives in [`implementation_plan.md`](implementation_plan.md), and the latest technical narrative lives in [`development_docs/phase-03-reliable-timer-engine/doc.md`](development_docs/phase-03-reliable-timer-engine/doc.md).
+All seven phases are complete. **Pomorise 1.0: First Light** provides a responsive light and dark focus loop, a timestamp-based recoverable timer, deliberately small task planning, distraction capture, reflection, private progress, local backup and deletion controls, and installable offline behavior. The product direction lives in [`project_plan.md`](project_plan.md), the completed sequence lives in [`implementation_plan.md`](implementation_plan.md), and the release narrative lives in [`development_docs/phase-07-release-verification-publication/doc.md`](development_docs/phase-07-release-verification-publication/doc.md).
 
-After all implementation phases are ready, one comprehensive Phase 7 report will preserve commands, raw logs, screenshots, failures, retests, and the evidence-based release conclusion. It is indexed in [`testreports/README.md`](testreports/README.md).
+The [comprehensive Phase 7 report](testreports/final-comprehensive-suite/test_report.md) preserves commands, raw logs, screenshots, original failures, fixes, retests, public-site checks, and the passing release conclusion. It is indexed in [`testreports/README.md`](testreports/README.md).
 
-Every meaningful development unit will also produce a beginner-focused technical narrative explaining its design method, system design, decisions, assumptions, architecture, files, flows, tradeoffs, and learning path. These documents are indexed in [`development_docs/README.md`](development_docs/README.md).
+Every meaningful development unit has a beginner-focused technical narrative explaining its design method, system design, decisions, assumptions, architecture, files, flows, tradeoffs, and learning path. These documents are indexed in [`development_docs/README.md`](development_docs/README.md).
 
 ## Development commands
 

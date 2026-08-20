@@ -1,0 +1,39 @@
+Script started on 2026-08-20 18:48:50-04:00 [COMMAND="npx playwright test src/tests/browser/local-data-controls.spec.ts --project=chromium --project=firefox" <not executed on terminal>]
+npm notice run pomorise@1.0.0 npx
+npm notice run 'playwright' test src/tests/browser/local-data-controls.spec.ts --project=chromium --project=firefox
+[WebServer] npm notice run pomorise@1.0.0 preview
+
+[WebServer] npm notice run vite preview --host 127.0.0.1 --port 4173
+
+[WebServer] (node:91724) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+
+Running 10 tests using 2 workers
+
+(node:91757) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:91758) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/10] [chromium] › src/tests/browser/local-data-controls.spec.ts:79:1 › migrates a version-one task without losing visitor wording
+[2/10] [firefox] › src/tests/browser/local-data-controls.spec.ts:79:1 › migrates a version-one task without losing visitor wording
+[3/10] [chromium] › src/tests/browser/local-data-controls.spec.ts:204:1 › restores focus data after closing and reopening the page
+[4/10] [firefox] › src/tests/browser/local-data-controls.spec.ts:204:1 › restores focus data after closing and reopening the page
+[5/10] [chromium] › src/tests/browser/local-data-controls.spec.ts:227:1 › previews valid backup replacement and rejects malformed input without partial writes
+[6/10] [firefox] › src/tests/browser/local-data-controls.spec.ts:227:1 › previews valid backup replacement and rejects malformed input without partial writes
+[7/10] [chromium] › src/tests/browser/local-data-controls.spec.ts:278:1 › preserves tasks during history clearing and removes them during focus-data deletion
+[8/10] [chromium] › src/tests/browser/local-data-controls.spec.ts:315:1 › resets only preferences and continues when storage protection is declined
+[9/10] [firefox] › src/tests/browser/local-data-controls.spec.ts:278:1 › preserves tasks during history clearing and removes them during focus-data deletion
+[10/10] [firefox] › src/tests/browser/local-data-controls.spec.ts:315:1 › resets only preferences and continues when storage protection is declined
+  10 passed (15.5s)
+
+To open last HTML report run:
+[36m[39m
+[36m  npx playwright show-report[39m
+[36m[39m
+
+Script done on 2026-08-20 18:49:07-04:00 [COMMAND_EXIT_CODE="0"]

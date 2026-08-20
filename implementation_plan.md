@@ -3,8 +3,8 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 16, 2026 at 2:18 AM EDT |
-| Last updated | August 20, 2026 at 2:10:50 PM EDT |
-| ISO 8601 last updated | `2026-08-20T14:10:50-04:00` |
+| Last updated | August 20, 2026 at 7:04:00 PM EDT |
+| ISO 8601 last updated | `2026-08-20T19:04:00-04:00` |
 | Timezone | America/Toronto (UTC−04:00) |
 | Estimated reading time | 29 minutes |
 | Verification status | Fact-checked and sanity-checked against the linked primary documentation and the confirmed project plan |
@@ -111,13 +111,13 @@ Create the smallest trustworthy project foundation before feature code begins. T
 
 ### Final-suite acceptance criteria
 
-- [ ] A clean `npm ci` succeeds from the lockfile.
-- [ ] Formatting, linting, and TypeScript checks succeed.
-- [ ] The first Vitest and component tests succeed.
-- [ ] The production build creates `dist`.
-- [ ] The built application works under the `/pomorise/` base path.
-- [ ] GitHub Actions uses the same install and build commands as local development.
-- [ ] No secrets or environment-specific private values are required.
+- [x] A clean `npm ci` succeeds from the lockfile.
+- [x] Formatting, linting, and TypeScript checks succeed.
+- [x] The first Vitest and component tests succeed.
+- [x] The production build creates `dist`.
+- [x] The built application works under the `/pomorise/` base path.
+- [x] GitHub Actions uses the same install and build commands as local development.
+- [x] No secrets or environment-specific private values are required.
 
 ### Exit gate
 
@@ -146,12 +146,12 @@ Turn the approved identity into a calm, readable, and reusable interface foundat
 
 ### Final-suite acceptance criteria
 
-- [ ] Light and dark themes remain readable at 200 percent zoom.
-- [ ] The shell reflows without horizontal page scrolling at the supported mobile width.
-- [ ] Every interactive shell control is reachable and operable by keyboard.
-- [ ] Automated accessibility checks find no known serious or critical issues.
-- [ ] Manual contrast checks cover text, controls, focus indicators, status colors, and disabled states.
-- [ ] Theme selection persists locally and does not create a network request.
+- [x] Light and dark themes remain readable at 200 percent zoom.
+- [x] The shell reflows without horizontal page scrolling at the supported mobile width.
+- [x] Every interactive shell control is reachable and operable by keyboard.
+- [x] Automated accessibility checks find no known serious or critical issues.
+- [x] Manual contrast checks cover text, controls, focus indicators, status colors, and disabled states.
+- [x] Theme selection persists locally and does not create a network request.
 
 ### Exit gate
 
@@ -181,12 +181,12 @@ Build the core promise as a deterministic state machine before tasks or progress
 
 ### Final-suite acceptance criteria
 
-- [ ] Unit tests cover every legal transition and reject invalid transitions.
-- [ ] Fake-clock tests cover completion boundaries, pause and resume, added time, skipped sessions, and overtime.
-- [ ] Component tests cover controls, labels, announcements, and permission explanations.
-- [ ] Browser tests cover refresh recovery, hidden-tab recovery, storage restoration, and responsive controls.
-- [ ] Manual tests cover device sleep and a simulated clock change where automation is insufficient.
-- [ ] The timer remains usable when sound and notifications are unsupported or denied.
+- [x] Unit tests cover every legal transition and reject invalid transitions.
+- [x] Fake-clock tests cover completion boundaries, pause and resume, added time, skipped sessions, and overtime.
+- [x] Component tests cover controls, labels, announcements, and permission explanations.
+- [x] Browser tests cover refresh recovery, hidden-tab recovery, storage restoration, and responsive controls.
+- [x] Manual tests cover device sleep and a simulated clock change where automation is insufficient.
+- [x] The timer remains usable when sound and notifications are unsupported or denied.
 
 ### Exit gate
 
@@ -220,13 +220,13 @@ Phase 4 was completed on August 20, 2026. The implemented journey now connects o
 
 ### Final-suite acceptance criteria
 
-- [ ] A complete intention-to-reflection journey works with keyboard only.
-- [ ] The same journey works with pointer and touch-sized controls.
-- [ ] Component tests cover empty, partial, complete, canceled, and error states.
-- [ ] Browser tests cover session completion with and without a selected task.
-- [ ] Progress values match deterministic calculations from synthetic session records.
-- [ ] User-generated text is rendered as text and never injected as raw HTML.
-- [ ] The focus screen remains visually quiet while capture controls stay reachable.
+- [x] A complete intention-to-reflection journey works with keyboard only.
+- [x] The same journey works with pointer and touch-sized controls.
+- [x] Component tests cover empty, partial, complete, canceled, and error states.
+- [x] Browser tests cover session completion with and without a selected task.
+- [x] Progress values match deterministic calculations from synthetic session records.
+- [x] User-generated text is rendered as text and never injected as raw HTML.
+- [x] The focus screen remains visually quiet while capture controls stay reachable.
 
 ### Exit gate
 
@@ -257,14 +257,14 @@ Make browser-only data ownership dependable, transparent, and recoverable.
 
 ### Final-suite acceptance criteria
 
-- [ ] Data survives refresh and normal browser restart behavior.
-- [ ] Migration tests preserve older synthetic records.
-- [ ] Malformed imports fail safely without partial writes.
-- [ ] Valid imports produce expected records and derived progress.
-- [ ] Exported data can be imported into a clean browser profile.
-- [ ] Each deletion scope removes exactly the promised records.
-- [ ] Browser tests confirm that personal values never appear in URLs or network request bodies.
-- [ ] The application still works if persistent-storage permission is unavailable or declined.
+- [x] Data survives refresh and normal browser restart behavior.
+- [x] Migration tests preserve older synthetic records.
+- [x] Malformed imports fail safely without partial writes.
+- [x] Valid imports produce expected records and derived progress.
+- [x] Exported data can be imported into a clean browser profile.
+- [x] Each deletion scope removes exactly the promised records.
+- [x] Browser tests confirm that personal values never appear in URLs or network request bodies.
+- [x] The application still works if persistent-storage permission is unavailable or declined.
 
 ### Exit gate
 
@@ -294,13 +294,13 @@ Make the integrated product resilient across browsers, screen sizes, permissions
 
 ### Final-suite acceptance criteria
 
-- [ ] The installed or previously loaded application opens without a network connection.
-- [ ] An active session remains recoverable after an application update.
-- [ ] Automated accessibility tests pass, followed by the documented manual accessibility review.
-- [ ] All primary flows pass at representative mobile and desktop sizes.
-- [ ] No personal data enters service-worker caches.
-- [ ] Runtime network inspection shows only approved static application requests.
-- [ ] Production performance budgets defined during Phase 1 pass on the built application.
+- [x] The installed or previously loaded application opens without a network connection.
+- [x] An active session remains recoverable after an application update.
+- [x] Automated accessibility tests pass, followed by the documented manual accessibility review.
+- [x] All primary flows pass at representative mobile and desktop sizes.
+- [x] No personal data enters service-worker caches.
+- [x] Runtime network inspection shows only approved static application requests.
+- [x] Production performance budgets defined during Phase 1 pass on the built application.
 
 ### Exit gate
 
@@ -329,20 +329,20 @@ Prove that Pomorise 1.0: First Light works as deployed, not only inside the deve
 
 ### Comprehensive final-suite validation
 
-- [ ] The clean continuous-integration run passes without ignored failures.
-- [ ] The public URL loads without missing assets or incorrect base paths.
-- [ ] The deployed application makes no unapproved runtime requests.
-- [ ] The privacy promise matches observed application behavior.
-- [ ] A fresh visitor can complete the main focus loop.
-- [ ] An existing visitor’s synthetic local data survives a compatible application update.
-- [ ] The final accessibility and responsive checklist is signed off.
-- [ ] Backup, restore, and delete-everything flows pass on the deployed build.
+- [x] The clean continuous-integration run passes without ignored failures.
+- [x] The public URL loads without missing assets or incorrect base paths.
+- [x] The deployed application makes no unapproved runtime requests.
+- [x] The privacy promise matches observed application behavior.
+- [x] A fresh visitor can complete the main focus loop.
+- [x] An existing visitor’s synthetic local data survives a compatible application update.
+- [x] The final accessibility and responsive checklist is signed off within the documented Chromium and Firefox support matrix.
+- [x] Backup, restore, and delete-everything flows pass on the deployed build.
 
 ### Exit gate
 
 Phase 7 is complete only when the public GitHub Pages deployment passes the release checklist and is ready to be called **Pomorise 1.0: First Light**.
 
-- [ ] **Phase 7 completion:** Exit gate satisfied and the single comprehensive final test report status is `Passed`.
+- [x] **Phase 7 completion:** Exit gate satisfied on August 20, 2026; the comprehensive final test report status is `Passed`, commit `303bcca` is deployed, and native WebKit and dedicated screen-reader limitations remain explicit.
 
 ## Line-by-line commenting standard
 

@@ -1,0 +1,19 @@
+Script started on 2026-08-20 18:34:20-04:00 [COMMAND="find dist -type f -printf '%P\t%s bytes\n'" <not executed on terminal>]
+icons/apple-touch-icon.png	12702 bytes
+icons/pomorise-192.png	14208 bytes
+icons/pomorise-512.png	99716 bytes
+icons/pomorise-maskable-512.png	63591 bytes
+assets/index-Cau6MzWJ.js	296696 bytes
+assets/DataControls-kj_r_0bq.js	9285 bytes
+assets/database-60J1S3Mm.js	99797 bytes
+assets/rolldown-runtime-CbXtAM7H.js	589 bytes
+assets/workbox-window.prod.es5-Bd17z0YL.js	5653 bytes
+assets/header_dark_mode_phase6-BaeRq2j5.png	148278 bytes
+assets/header_light_mode_phase6-DUI5yD4o.png	144721 bytes
+assets/index-DUuUIH7y.css	21262 bytes
+index.html	2296 bytes
+manifest.webmanifest	506 bytes
+sw.js	2067 bytes
+workbox-2fbc6a65.js	15026 bytes
+
+Script done on 2026-08-20 18:34:20-04:00 [COMMAND_EXIT_CODE="0"]

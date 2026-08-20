@@ -1,0 +1,14 @@
+Script started on 2026-08-20 18:38:54-04:00 [COMMAND="npm run test:component" <not executed on terminal>]
+npm notice run pomorise@1.0.0 test:component
+npm notice run vitest run src/tests/component
+[?25l
+ RUN  v4.1.11 /home/amanap/Documents/GitHub/pomorise
+
+
+ Test Files  2 passed (2)
+      Tests  6 passed (6)
+   Start at  18:38:55
+   Duration  3.10s (transform 310ms, setup 288ms, import 421ms, tests 2.09s, environment 1.17s)
+
+[?25h
+Script done on 2026-08-20 18:38:58-04:00 [COMMAND_EXIT_CODE="0"]

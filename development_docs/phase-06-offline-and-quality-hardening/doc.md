@@ -3,11 +3,11 @@
 | Document information   | Value                                                                                  |
 | ---------------------- | -------------------------------------------------------------------------------------- |
 | Created                | August 20, 2026 at 6:00 PM EDT                                                         |
-| Last updated           | August 20, 2026 at 6:00 PM EDT                                                         |
-| ISO 8601 last updated  | `2026-08-20T18:00:00-04:00`                                                            |
+| Last updated           | August 20, 2026 at 7:04:00 PM EDT                                                      |
+| ISO 8601 last updated  | `2026-08-20T19:04:00-04:00`                                                            |
 | Timezone               | America/Toronto (UTC−04:00)                                                            |
 | Estimated reading time | 7 minutes                                                                              |
-| Verification status    | Phase 6 implementation complete; comprehensive release verification remains in Phase 7 |
+| Verification status    | Complete; offline, quality, performance, and public release evidence passed in Phase 7 |
 
 ## Learning outcome
 
@@ -107,3 +107,7 @@ The browser suite covers offline reload, manifest identity, cache privacy, denie
 - [Implementation plan](../../implementation_plan.md)
 - [Quality baseline](../../quality_baseline.md)
 - [Phase 5 local data and privacy controls](../phase-05-local-data-and-privacy-controls/doc.md)
+
+## Final evidence
+
+The integrated offline, quality, performance, and public deployment evidence passed in the [Phase 7 final comprehensive report](../../testreports/final-comprehensive-suite/test_report.md).

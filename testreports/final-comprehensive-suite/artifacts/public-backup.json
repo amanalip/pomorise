@@ -1,0 +1,12 @@
+{
+  "product": "Pomorise",
+  "formatVersion": 1,
+  "exportedAt": 1787266014744,
+  "dataSchemaVersion": 2,
+  "records": {
+    "tasks": [],
+    "sessions": [],
+    "distractions": [],
+    "reflections": []
+  }
+}

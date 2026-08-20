@@ -1,0 +1,24 @@
+Script started on 2026-08-20 18:21:02-04:00 [COMMAND="npm run build" <not executed on terminal>]
+npm notice run pomorise@0.1.0 build
+npm notice run tsc --noEmit && vite build
+vite v8.2.2 building client environment for production...
+[2K✓ 114 modules transformed.
+[2Krendering chunks (1)...[2Krendering chunks (2)...[2Kcomputing gzip size...
+[2Kdist/manifest.webmanifest                            0.50 kB
+dist/index.html                                      2.20 kB │ gzip:   0.96 kB
+dist/assets/header_light_mode_phase6-DUI5yD4o.png  144.72 kB
+dist/assets/header_dark_mode_phase6-BaeRq2j5.png   148.27 kB
+dist/assets/index-DUuUIH7y.css                      21.26 kB │ gzip:   4.56 kB
+dist/assets/workbox-window.prod.es5-Bd17z0YL.js      5.65 kB │ gzip:   2.20 kB
+dist/assets/index-B0KcKvKf.js                      405.01 kB │ gzip: 123.14 kB
+
+✓ built in 234ms
+
+PWA v1.3.0
+mode      generateSW
+precache  15 entries (896.34 KiB)
+files generated
+  dist/sw.js
+  dist/workbox-2fbc6a65.js
+
+Script done on 2026-08-20 18:21:09-04:00 [COMMAND_EXIT_CODE="0"]

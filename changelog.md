@@ -3,8 +3,8 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 15, 2026 at 10:36 PM EDT |
-| Last updated | August 20, 2026 at 6:15:50 PM EDT |
-| ISO 8601 last updated | `2026-08-20T18:15:50-04:00` |
+| Last updated | August 20, 2026 at 7:04:00 PM EDT |
+| ISO 8601 last updated | `2026-08-20T19:04:00-04:00` |
 | Timezone | America/Toronto (UTC−04:00) |
 | Estimated reading time | 42 minutes |
 | Verification status | Commit facts checked against local Git history; technical claims checked against linked primary documentation |
@@ -17,15 +17,20 @@ The newest commit should be added at the top of the **Commit history** section.
 
 - [Entry template](#entry-template)
 - [Commit history](#commit-history)
-  - [Pending: Prepare First Light release verification](#pending-prepare-first-light-release-verification)
-  - [Pending: Establish Phase 6 offline experience and quality hardening](#pending-establish-phase-6-offline-experience-and-quality-hardening)
-  - [Pending: Begin Phase 5 local data and privacy controls](#pending-begin-phase-5-local-data-and-privacy-controls)
-  - [Pending: Establish Phase 4 complete focus loop](#pending-establish-phase-4-complete-focus-loop)
-  - [Pending: Establish Phase 3 reliable timer engine](#pending-establish-phase-3-reliable-timer-engine)
-  - [Pending: Establish Phase 2 design system and application shell](#pending-establish-phase-2-design-system-and-application-shell)
+  - [Pending: Publish First Light evidence and release notes](#pending-publish-first-light-evidence-and-release-notes)
+  - [`303bcca`: Fix deployed backup preview reset](#303bcca-fix-deployed-backup-preview-reset)
+  - [`700ee3a`: Mark First Light as version 1.0.0](#700ee3a-mark-first-light-as-version-100)
+  - [`7e10f77`: Optimize First Light startup performance](#7e10f77-optimize-first-light-startup-performance)
+  - [`fb59b1c` and `cc48c40`: Protect planning during hydration](#fb59b1c-and-cc48c40-protect-planning-during-hydration)
+  - [`8fdd646`: Prepare First Light release verification](#8fdd646-prepare-first-light-release-verification)
+  - [`6bd3702`: Establish Phase 6 offline experience and quality hardening](#6bd3702-establish-phase-6-offline-experience-and-quality-hardening)
+  - [`83b901c`: Begin Phase 5 local data and privacy controls](#83b901c-begin-phase-5-local-data-and-privacy-controls)
+  - [`a2ecc96`: Establish Phase 4 complete focus loop](#a2ecc96-establish-phase-4-complete-focus-loop)
+  - [`1927abb`: Establish Phase 3 reliable timer engine](#1927abb-establish-phase-3-reliable-timer-engine)
+  - [`c5842cb`: Establish Phase 2 design system and application shell](#c5842cb-establish-phase-2-design-system-and-application-shell)
   - [`cd5cbde`: Establish Phase 1 foundation and guardrails](#cd5cbde-establish-phase-1-foundation-and-guardrails)
-  - [Pending: Consolidate verification into one final suite](#pending-consolidate-verification-into-one-final-suite)
-  - [Pending: Establish beginner-focused development documentation](#pending-establish-beginner-focused-development-documentation)
+  - [`91b6900`: Consolidate verification into one final suite](#91b6900-consolidate-verification-into-one-final-suite)
+  - [`753a40a`: Establish beginner-focused development documentation](#753a40a-establish-beginner-focused-development-documentation)
   - [`00c4ec9`: Establish screenshot-backed test reporting](#00c4ec9-establish-screenshot-backed-test-reporting)
   - [`554be76`: Define seven-phase implementation plan](#554be76-define-seven-phase-implementation-plan)
   - [`4add167`: Approve light and dark Pomorise logos](#4add167-approve-light-and-dark-pomorise-logos)
@@ -104,12 +109,114 @@ Describe what a visitor or maintainer will notice. Write “None” when the cha
 
 ## Commit history
 
-### `Pending`: Prepare First Light release verification
+### `Pending`: Publish First Light evidence and release notes
+
+- **Status:** Prepared for the Phase 7 closeout commit
+- **Prepared:** August 20, 2026 at 6:53 PM EDT
+- **Author:** Aman Ali with Codex collaboration
+- **Full commit:** Assigned by Git after this evidence-bearing commit is created
+
+#### Purpose
+
+Preserve the complete First Light release evidence, synchronize every project status document, and close the Phase 7 gate only after the public release passes.
+
+#### Changes
+
+- Added the permanent comprehensive report with raw logs, machine artifacts, ten screenshots, failures, fixes, retests, public-site checks, limitations, and a passing conclusion.
+- Added the Phase 7 development narrative and indexed it beside Phases 1 through 6.
+- Updated the README, project plan, implementation plan, decision record, development documents, test-report index, and changelog to reflect the public 1.0 release.
+- Recorded the supported Chromium and Firefox matrix without implying native WebKit or dedicated screen-reader coverage.
+
+#### Validation
+
+- The report references the successful final workflow for deployed commit `303bcca`.
+- Markdown links, forbidden punctuation, source formatting, linting, tests, build output, and repository status receive a final closeout check before commit.
+
+#### Follow-up
+
+Create the signed or annotated `v1.0.0` release tag and publish the GitHub release notes at the closeout commit.
+
+### `303bcca`: Fix deployed backup preview reset
+
+- **Date:** August 20, 2026 at 6:49 PM EDT
+- **Author:** Aman Ali with Codex collaboration
+- **Full commit:** `303bcca934489c53b279fb6dc63e493992553d99`
+
+#### Purpose
+
+Correct the production backup-preview input reset that the public Phase 7 smoke test exposed.
+
+#### Changes and impact
+
+- Retained the native file input before the asynchronous file read instead of reading `event.currentTarget` after React released it.
+- Added a cross-browser regression assertion that the file input clears, allowing the same backup to be selected again.
+- Removed the deployed console error without changing the validated preview or transactional restore boundaries.
+
+#### Validation
+
+- Ten local-data browser cases passed in Chromium and Firefox.
+- The complete GitHub Actions build and deploy workflow passed.
+- The public preview appeared, the file input cleared, replacement succeeded, and delete-everything returned all record counts to zero.
+
+#### Follow-up
+
+None for this defect. Native WebKit remains a documented release limitation.
+
+### `700ee3a`: Mark First Light as version 1.0.0
+
+- **Date:** August 20, 2026 at 6:39 PM EDT
+- **Author:** Aman Ali with Codex collaboration
+- **Full commit:** `700ee3a9a71461f3ceeba0a633bea1ef0d89d71e`
+
+#### Purpose
+
+Align package metadata and visible local diagnostics with the approved First Light release identity.
+
+#### Changes and impact
+
+- Changed the package and lockfile version from `0.1.0` to `1.0.0`.
+- Changed the version shown in local diagnostics to `1.0.0`.
+- Verified formatting, linting, 20 unit tests, 6 component tests, the production build, the gated workflow, and the deployed diagnostic value.
+
+### `7e10f77`: Optimize First Light startup performance
+
+- **Date:** August 20, 2026 at 6:34 PM EDT
+- **Author:** Aman Ali with Codex collaboration
+- **Full commit:** `7e10f7784f734931c9f09e4210b4d4d65b989beb`
+
+#### Purpose
+
+Bring the mobile first screen inside the approved LCP and bundle budgets without weakening persistence or offline readiness.
+
+#### Changes and impact
+
+- Loaded data ownership controls, Dexie, and Zod outside the first-screen bundle.
+- Scheduled structured hydration after 300 milliseconds and service-worker registration after 1.5 seconds.
+- Reduced initial JavaScript to 89.23 KiB gzip.
+- Reached a three-run median Lighthouse score of 97 and 2.453-second LCP.
+
+### `fb59b1c` and `cc48c40`: Protect planning during hydration
+
+- **Dates:** August 20, 2026 during the Phase 7 suite
+- **Author:** Aman Ali with Codex collaboration
+- **Full commits:** `fb59b1c` and `cc48c40`
+
+#### Purpose
+
+Prevent late IndexedDB hydration from overwriting a visitor who types immediately after first paint, then align the component evidence with the new readiness boundary.
+
+#### Changes and impact
+
+- Disabled structured planning inputs until local hydration completes.
+- Updated the component interaction to wait for the enabled state.
+- Passed component coverage and the final 36-case Chromium and Firefox suite.
+
+### `8fdd646`: Prepare First Light release verification
 
 - **Status:** Release-candidate implementation prepared for the Phase 7 evidence run
 - **Prepared:** 2026-08-20 18:15 EDT
 - **Author:** Aman Ali with Codex collaboration
-- **Full commit:** Assigned after the release-candidate commit is created
+- **Full commit:** `8fdd646`
 
 #### Purpose
 
@@ -138,12 +245,12 @@ Close the remaining Phase 5 implementation gap, fix issues exposed by cross-brow
 
 Run the clean comprehensive suite, publish through the strengthened workflow, verify the public URL, retain the report and screenshots, and publish First Light release notes.
 
-### `Pending`: Establish Phase 6 offline experience and quality hardening
+### `6bd3702`: Establish Phase 6 offline experience and quality hardening
 
 - **Status:** Prepared for the next owner commit
 - **Prepared:** 2026-08-20 18:00 EDT
 - **Author:** Aman Ali with Codex collaboration
-- **Full commit:** Assigned after the commit is created
+- **Full commit:** `6bd3702b23c65e1da226f79d993b1d10c9a069f4`
 
 #### Purpose
 
@@ -167,12 +274,12 @@ Make Pomorise installable and resilient offline while keeping updates consentful
 
 Run the comprehensive Phase 7 release suite, including the supported-browser and assistive-technology matrix, throttled performance measurements, artifact audit, deployment, and public-site smoke tests.
 
-### `Pending`: Begin Phase 5 local data and privacy controls
+### `83b901c`: Begin Phase 5 local data and privacy controls
 
-- **Status:** In progress for the next owner commit
+- **Status:** Committed; release-candidate completion continued in `8fdd646`
 - **Prepared:** 2026-08-20 17:33 EDT
 - **Author:** Aman Ali with Codex collaboration
-- **Full commit:** Assigned after the commit is created
+- **Full commit:** `83b901cc7f24ff643bdc26bb3edfb57bf5e615ae`
 
 #### Purpose
 
@@ -190,12 +297,12 @@ Replace fragile transient data and header presentation with a durable local-firs
 
 Phase 5 remains in progress. Migration coverage, preference reset, and comprehensive browser scenarios are still required.
 
-### `Pending`: Establish Phase 4 complete focus loop
+### `a2ecc96`: Establish Phase 4 complete focus loop
 
 - **Status:** Prepared for the next owner commit
 - **Prepared:** 2026-08-20 17:17 EDT
 - **Author:** Aman Ali with Codex collaboration
-- **Full commit:** Assigned after the commit is created
+- **Full commit:** `a2ecc96171f31f4df1449f6c0c86c3a63cf3328f`
 
 #### Purpose
 
@@ -252,12 +359,12 @@ Visitors can now move through the complete focus loop from optional planning to 
 - Begin Phase 5 with versioned local data, migrations, validation, export, import, and deletion.
 - Repeat the complete focus journey through the comprehensive Phase 7 browser and accessibility suite.
 
-### `Pending`: Establish Phase 3 reliable timer engine
+### `1927abb`: Establish Phase 3 reliable timer engine
 
 - **Status:** Prepared for the next owner commit
 - **Prepared:** 2026-08-20 16:50 EDT
 - **Author:** Aman Ali with Codex collaboration
-- **Full commit:** Assigned after the commit is created
+- **Full commit:** `1927abb7892a57063b7436874976b52086ad8fda`
 
 #### Purpose
 
@@ -306,12 +413,12 @@ Visitors can now run and recover real focus and break timers, customize duration
 - Begin Phase 4 with the complete focus loop on the stable timer boundary.
 - Repeat the full timer matrix and manual sleep and clock-change cases in Phase 7.
 
-### `Pending`: Establish Phase 2 design system and application shell
+### `c5842cb`: Establish Phase 2 design system and application shell
 
-- **Status:** Prepared for the next owner commit
+- **Status:** Committed and verified by the Phase 7 report
 - **Prepared:** 2026-08-20 14:10 EDT
 - **Author:** Aman Ali with Codex collaboration
-- **Full commit:** Assigned after the commit is created
+- **Full commit:** `c5842cbe112841a314821cf8ff6ce1dfaf20a48d`
 - **Expected files:** Theme provider, project-owned UI primitives, responsive shell, design tokens, appearance and writing-style tests, and synchronized phase documentation
 
 #### Purpose
@@ -473,12 +580,12 @@ Visitors can see a deliberately minimal branded foundation page and reveal a sho
 - Begin Phase 2 only after accepting this implementation-ready closeout.
 - Re-audit the transitive warning and measure image delivery before the release gate.
 
-### `Pending`: Consolidate verification into one final suite
+### `91b6900`: Consolidate verification into one final suite
 
 - **Status:** Prepared for the next commit
 - **Prepared:** 2026-08-20 13:21 EDT
 - **Author:** Aman Ali with Codex collaboration
-- **Full commit:** Assigned after the commit is created
+- **Full commit:** `91b6900cfd11851d41fb3890659907d56dea8d2f`
 - **Expected files:** Every project Markdown document
 
 #### Purpose
@@ -520,12 +627,12 @@ There is no application interface change. The implementation workflow now perfor
 
 - Create the comprehensive report directory from the updated template when Phase 7 verification begins.
 
-### `Pending`: Establish beginner-focused development documentation
+### `753a40a`: Establish beginner-focused development documentation
 
 - **Status:** Prepared for the next commit
 - **Prepared:** 2026-08-16 02:48 EDT
 - **Author:** Aman Ali with Codex collaboration
-- **Full commit:** Assigned after the commit is created
+- **Full commit:** `753a40ab0717e78ed08826930eef37ee19b38c8f`
 - **Expected files:** `README.md`, `changelog.md`, `development_docs/`, `implementation_plan.md`, `meta_thinking.md`, `project_plan.md`, and `testreports/`
 
 #### Purpose

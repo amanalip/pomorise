@@ -1,0 +1,117 @@
+Script started on 2026-08-20 18:22:06-04:00 [COMMAND="CI=1 npm run test:browser" <not executed on terminal>]
+npm notice run pomorise@0.1.0 test:browser
+npm notice run npm run build && playwright test
+npm notice run pomorise@0.1.0 build
+npm notice run tsc --noEmit && vite build
+vite v8.2.2 building client environment for production...
+transforming...
+✓ 114 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/manifest.webmanifest                            0.50 kB
+dist/index.html                                      2.20 kB │ gzip:   0.96 kB
+dist/assets/header_light_mode_phase6-DUI5yD4o.png  144.72 kB
+dist/assets/header_dark_mode_phase6-BaeRq2j5.png   148.27 kB
+dist/assets/index-DUuUIH7y.css                      21.26 kB │ gzip:   4.56 kB
+dist/assets/workbox-window.prod.es5-Bd17z0YL.js      5.65 kB │ gzip:   2.20 kB
+dist/assets/index-B0KcKvKf.js                      405.01 kB │ gzip: 123.14 kB
+
+✓ built in 295ms
+
+PWA v1.3.0
+mode      generateSW
+precache  15 entries (896.34 KiB)
+files generated
+  dist/sw.js
+  dist/workbox-2fbc6a65.js
+[WebServer] npm notice run pomorise@0.1.0 preview
+[WebServer] npm notice run vite preview --host 127.0.0.1 --port 4173
+[WebServer] (node:70883) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 34 tests using 4 workers
+
+(node:70916) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:70917) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:70918) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:70919) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+      1 [chromium] › src/tests/browser/local-data-controls.spec.ts:79:1 › migrates a version-one task without losing visitor wording
+      2 [firefox] › src/tests/browser/local-data-controls.spec.ts:79:1 › migrates a version-one task without losing visitor wording
+      3 [chromium] › src/tests/browser/offline-hardening.spec.ts:3:1 › installs an approved manifest and reopens after the network goes offline
+      4 [chromium] › src/tests/browser/network-boundary.spec.ts:7:1 › loads the themed shell without unexpected runtime requests
+  ✓   4 [chromium] › src/tests/browser/network-boundary.spec.ts:7:1 › loads the themed shell without unexpected runtime requests (293ms)
+      5 [chromium] › src/tests/browser/network-boundary.spec.ts:43:1 › has no serious automated accessibility findings
+  ✓   1 [chromium] › src/tests/browser/local-data-controls.spec.ts:79:1 › migrates a version-one task without losing visitor wording (450ms)
+      6 [chromium] › src/tests/browser/local-data-controls.spec.ts:204:1 › restores focus data after closing and reopening the page
+  ✓   3 [chromium] › src/tests/browser/offline-hardening.spec.ts:3:1 › installs an approved manifest and reopens after the network goes offline (595ms)
+      7 [chromium] › src/tests/browser/offline-hardening.spec.ts:37:1 › continues normally when notification permission is denied
+  ✓   7 [chromium] › src/tests/browser/offline-hardening.spec.ts:37:1 › continues normally when notification permission is denied (458ms)
+      8 [chromium] › src/tests/browser/offline-hardening.spec.ts:56:1 › keeps personal text out of versioned application caches
+  ✓   5 [chromium] › src/tests/browser/network-boundary.spec.ts:43:1 › has no serious automated accessibility findings (822ms)
+      9 [chromium] › src/tests/browser/network-boundary.spec.ts:58:1 › persists an explicit theme locally
+  ✓   6 [chromium] › src/tests/browser/local-data-controls.spec.ts:204:1 › restores focus data after closing and reopening the page (983ms)
+     10 [chromium] › src/tests/browser/local-data-controls.spec.ts:227:1 › previews valid backup replacement and rejects malformed input without partial writes
+  ✓   9 [chromium] › src/tests/browser/network-boundary.spec.ts:58:1 › persists an explicit theme locally (501ms)
+     11 [chromium] › src/tests/browser/network-boundary.spec.ts:79:1 › keeps timestamp-accurate time and restores a running session after refresh
+  ✓   2 [firefox] › src/tests/browser/local-data-controls.spec.ts:79:1 › migrates a version-one task without losing visitor wording (1.5s)
+     12 [firefox] › src/tests/browser/local-data-controls.spec.ts:204:1 › restores focus data after closing and reopening the page
+  ✓   8 [chromium] › src/tests/browser/offline-hardening.spec.ts:56:1 › keeps personal text out of versioned application caches (893ms)
+     13 [chromium] › src/tests/browser/offline-hardening.spec.ts:83:3 › has no page overflow at the medium viewport
+  ✓  13 [chromium] › src/tests/browser/offline-hardening.spec.ts:83:3 › has no page overflow at the medium viewport (210ms)
+     14 [chromium] › src/tests/browser/offline-hardening.spec.ts:83:3 › has no page overflow at the wide viewport
+  ✓  14 [chromium] › src/tests/browser/offline-hardening.spec.ts:83:3 › has no page overflow at the wide viewport (242ms)
+(node:71636) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+     15 [firefox] › src/tests/browser/network-boundary.spec.ts:7:1 › loads the themed shell without unexpected runtime requests
+  ✓  10 [chromium] › src/tests/browser/local-data-controls.spec.ts:227:1 › previews valid backup replacement and rejects malformed input without partial writes (1.6s)
+     16 [chromium] › src/tests/browser/local-data-controls.spec.ts:276:1 › preserves tasks during history clearing and removes them during focus-data deletion
+  ✓  12 [firefox] › src/tests/browser/local-data-controls.spec.ts:204:1 › restores focus data after closing and reopening the page (1.4s)
+     17 [firefox] › src/tests/browser/local-data-controls.spec.ts:227:1 › previews valid backup replacement and rejects malformed input without partial writes
+  ✓  11 [chromium] › src/tests/browser/network-boundary.spec.ts:79:1 › keeps timestamp-accurate time and restores a running session after refresh (1.7s)
+     18 [chromium] › src/tests/browser/network-boundary.spec.ts:101:1 › reflows at the supported mobile width
+  ✓  18 [chromium] › src/tests/browser/network-boundary.spec.ts:101:1 › reflows at the supported mobile width (298ms)
+     19 [chromium] › src/tests/browser/network-boundary.spec.ts:129:3 › keeps the start action visible initially at the mobile viewport
+  ✓  19 [chromium] › src/tests/browser/network-boundary.spec.ts:129:3 › keeps the start action visible initially at the mobile viewport (227ms)
+     20 [chromium] › src/tests/browser/network-boundary.spec.ts:129:3 › keeps the start action visible initially at the desktop viewport
+  ✓  16 [chromium] › src/tests/browser/local-data-controls.spec.ts:276:1 › preserves tasks during history clearing and removes them during focus-data deletion (1.1s)
+     21 [chromium] › src/tests/browser/local-data-controls.spec.ts:313:1 › resets only preferences and continues when storage protection is declined
+  ✓  20 [chromium] › src/tests/browser/network-boundary.spec.ts:129:3 › keeps the start action visible initially at the desktop viewport (214ms)
+(node:71991) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+     22 [firefox] › src/tests/browser/offline-hardening.spec.ts:3:1 › installs an approved manifest and reopens after the network goes offline
+  ✓  15 [firefox] › src/tests/browser/network-boundary.spec.ts:7:1 › loads the themed shell without unexpected runtime requests (1.1s)
+     23 [firefox] › src/tests/browser/network-boundary.spec.ts:43:1 › has no serious automated accessibility findings
+  ✓  17 [firefox] › src/tests/browser/local-data-controls.spec.ts:227:1 › previews valid backup replacement and rejects malformed input without partial writes (2.1s)
+     24 [firefox] › src/tests/browser/local-data-controls.spec.ts:276:1 › preserves tasks during history clearing and removes them during focus-data deletion
+  ✓  21 [chromium] › src/tests/browser/local-data-controls.spec.ts:313:1 › resets only preferences and continues when storage protection is declined (1.4s)
+  ✓  23 [firefox] › src/tests/browser/network-boundary.spec.ts:43:1 › has no serious automated accessibility findings (1.6s)
+     25 [firefox] › src/tests/browser/network-boundary.spec.ts:58:1 › persists an explicit theme locally
+  ✓  24 [firefox] › src/tests/browser/local-data-controls.spec.ts:276:1 › preserves tasks during history clearing and removes them during focus-data deletion (1.3s)
+     26 [firefox] › src/tests/browser/local-data-controls.spec.ts:313:1 › resets only preferences and continues when storage protection is declined
+  ✓  22 [firefox] › src/tests/browser/offline-hardening.spec.ts:3:1 › installs an approved manifest and reopens after the network goes offline (1.8s)
+     27 [firefox] › src/tests/browser/offline-hardening.spec.ts:37:1 › continues normally when notification permission is denied
+  ✓  25 [firefox] › src/tests/browser/network-boundary.spec.ts:58:1 › persists an explicit theme locally (1.0s)
+     28 [firefox] › src/tests/browser/network-boundary.spec.ts:79:1 › keeps timestamp-accurate time and restores a running session after refresh
+  ✓  27 [firefox] › src/tests/browser/offline-hardening.spec.ts:37:1 › continues normally when notification permission is denied (749ms)
+     29 [firefox] › src/tests/browser/offline-hardening.spec.ts:56:1 › keeps personal text out of versioned application caches
+  ✓  29 [firefox] › src/tests/browser/offline-hardening.spec.ts:56:1 › keeps personal text out of versioned application caches (961ms)
+     30 [firefox] › src/tests/browser/offline-hardening.spec.ts:83:3 › has no page overflow at the medium viewport
+  ✓  26 [firefox] › src/tests/browser/local-data-controls.spec.ts:313:1 › resets only preferences and continues when storage protection is declined (2.2s)
+  ✓  30 [firefox] › src/tests/browser/offline-hardening.spec.ts:83:3 › has no page overflow at the medium viewport (430ms)
+     31 [firefox] › src/tests/browser/offline-hardening.spec.ts:83:3 › has no page overflow at the wide viewport
+  ✓  28 [firefox] › src/tests/browser/network-boundary.spec.ts:79:1 › keeps timestamp-accurate time and restores a running session after refresh (2.0s)
+     32 [firefox] › src/tests/browser/network-boundary.spec.ts:101:1 › reflows at the supported mobile width
+  ✓  31 [firefox] › src/tests/browser/offline-hardening.spec.ts:83:3 › has no page overflow at the wide viewport (553ms)
+  ✓  32 [firefox] › src/tests/browser/network-boundary.spec.ts:101:1 › reflows at the supported mobile width (573ms)
+     33 [firefox] › src/tests/browser/network-boundary.spec.ts:129:3 › keeps the start action visible initially at the mobile viewport
+  ✓  33 [firefox] › src/tests/browser/network-boundary.spec.ts:129:3 › keeps the start action visible initially at the mobile viewport (635ms)
+     34 [firefox] › src/tests/browser/network-boundary.spec.ts:129:3 › keeps the start action visible initially at the desktop viewport
+  ✓  34 [firefox] › src/tests/browser/network-boundary.spec.ts:129:3 › keeps the start action visible initially at the desktop viewport (595ms)
+
+  34 passed (13.4s)
+
+Script done on 2026-08-20 18:22:25-04:00 [COMMAND_EXIT_CODE="0"]

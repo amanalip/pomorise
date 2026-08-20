@@ -3,8 +3,8 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 15, 2026 at 10:36 PM EDT |
-| Last updated | August 20, 2026 at 2:10:50 PM EDT |
-| ISO 8601 last updated | `2026-08-20T14:10:50-04:00` |
+| Last updated | August 20, 2026 at 7:04:00 PM EDT |
+| ISO 8601 last updated | `2026-08-20T19:04:00-04:00` |
 | Timezone | America/Toronto (UTC−04:00) |
 | Estimated reading time | 24 minutes |
 | Verification status | Fact-checked and sanity-checked against the primary sources in **Further reading** |
@@ -40,6 +40,7 @@ This is Pomorise's shared memory. It captures the conversations, requests, decis
   - [Final testing consolidated](#2026-08-20-final-testing-consolidated)
   - [Phase 1 implementation completed](#2026-08-20-phase-1-implementation-completed)
   - [Phase 2 implementation completed](#2026-08-20-phase-2-implementation-completed)
+  - [Phase 7 completed with final UX review](#2026-08-20-phase-7-completed-with-final-ux-review)
 - [Confirmed decisions](#confirmed-decisions)
 - [Open decisions](#open-decisions)
 - [Documentation verification standard](#documentation-verification-standard)
@@ -447,6 +448,22 @@ The project owner asked to begin Phase 2. The implementation converted the appro
 During visual review, the project owner clarified that em dashes must not appear on the website or anywhere in source code. The visible instance was replaced immediately, a Unicode code-point unit guard was added without placing the character in the test source, and the requirement was carried into the Phase 7 mapping.
 
 Real-browser inspection exposed and corrected a 320 pixel overflow caused by a root minimum width and a pointer hit-target problem in styled native radio inputs. Formatting, strict types, linting, two unit cases, three component cases, production building, and four Chromium cases completed successfully as targeted implementation diagnostics. The comprehensive release conclusion remains Phase 7 work.
+
+### 2026-08-20: Phase 7 completed with final UX review
+
+| Conversation details | Value |
+| --- | --- |
+| Conversation date | August 20, 2026 |
+| Entry recorded | August 20, 2026 at 6:53 PM EDT |
+| ISO 8601 | `2026-08-20T18:53:00-04:00` |
+| Timezone | America/Toronto (UTC-04:00) |
+| Entry reading time | 1 minute |
+
+The project owner asked to complete the final Phase 7 properly and to keep working through the release before performing a final best-possible UX and UI review. The release process therefore included the full clean suite, mobile performance profiling, visual inspection in light and dark themes at mobile and desktop sizes, deployment through the gated workflow, and real-browser smoke testing on the public GitHub Pages site.
+
+The visual review moved the primary timer action above the mobile fold, tightened the first-screen rhythm, preserved clear horizontal timer modes, and removed a non-actionable toast that could obscure controls. The deployed review then exposed an asynchronous backup-preview error. That defect was fixed, covered by a regression assertion, redeployed, and retested before Phase 7 was allowed to close.
+
+The resulting decision is confirmed: Pomorise 1.0: First Light is public, the comprehensive report status is `Passed`, and the known native WebKit and dedicated screen-reader limitations remain documented rather than implied as tested.
 
 ## Confirmed decisions
 

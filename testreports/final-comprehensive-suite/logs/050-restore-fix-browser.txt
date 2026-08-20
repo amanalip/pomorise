@@ -1,0 +1,12 @@
+Script started on 2026-08-20 18:48:24-04:00 [COMMAND="npx playwright test src/tests/browser/local-data-controls.spec.ts --project=chromium --project=firefox" <not executed on terminal>]
+npm notice run pomorise@1.0.0 npx
+npm notice run 'playwright' test src/tests/browser/local-data-controls.spec.ts --project=chromium --project=firefox
+Error: Process from config.webServer was not able to start. Exit code: 1
+
+
+To open last HTML report run:
+[36m[39m
+[36m  npx playwright show-report[39m
+[36m[39m
+
+Script done on 2026-08-20 18:48:26-04:00 [COMMAND_EXIT_CODE="1"]

@@ -1,0 +1,4 @@
+Script started on 2026-08-20 18:34:20-04:00 [COMMAND="du -sb dist" <not executed on terminal>]
+936393	dist
+
+Script done on 2026-08-20 18:34:20-04:00 [COMMAND_EXIT_CODE="0"]
