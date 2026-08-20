@@ -146,7 +146,7 @@ describe("App", () => {
     // Verify the decorative approved symbol switches to its locally bundled dark asset.
     expect(document.querySelector(".app-header__mark img")).toHaveAttribute(
       "src",
-      expect.stringContaining("dark_mode_v2.png"),
+      expect.stringContaining("dark_mode_phase6.png"),
     );
     // Close settings through the dialog's explicit completion control.
     await user.click(screen.getByRole("button", { name: "Done" }));

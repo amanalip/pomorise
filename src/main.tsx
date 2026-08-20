@@ -4,6 +4,10 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 // Import the product shell that composes the Phase 2 responsive workspace.
 import { App } from "./app/App";
+// Keep unexpected render failures recoverable without clearing durable browser data.
+import { AppErrorBoundary } from "./components/AppErrorBoundary";
+// Register offline assets and expose connectivity or update choices in calm plain language.
+import { PwaStatus } from "./components/PwaStatus";
 // Import the theme provider so every shell surface shares one persisted appearance preference.
 import { ThemeProvider } from "./components/ThemeProvider";
 // Import the local stylesheet so the first shell never depends on a remote font or style host.
@@ -26,12 +30,16 @@ const root = createRoot(rootElement);
 root.render(
   // Enable additional React diagnostics without changing the production interface contract.
   <StrictMode>
-    {/* Share resolved light and dark appearance state across the complete interface. */}
-    <ThemeProvider>
-      {/* Render the Pomorise application as the only owner of the page interface. */}
-      <App />
-      {/* Close the theme boundary after the complete application shell. */}
-    </ThemeProvider>
+    <AppErrorBoundary>
+      {/* Share resolved light and dark appearance state across the complete interface. */}
+      <ThemeProvider>
+        {/* Keep offline and update state outside the timer so it cannot interrupt timing. */}
+        <PwaStatus />
+        {/* Render the Pomorise application as the only owner of the primary page interface. */}
+        <App />
+        {/* Close the theme boundary after the complete application shell. */}
+      </ThemeProvider>
+    </AppErrorBoundary>
     {/* Close StrictMode after wrapping the complete application tree. */}
   </StrictMode>,
   // Close the render call after providing the application element.

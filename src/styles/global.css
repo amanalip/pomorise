@@ -1228,6 +1228,53 @@ img {
   /* Close the error notice modifier after applying its semantic boundary. */
 }
 
+/* Keep offline and update choices visible without covering the running timer workspace. */
+.pwa-status {
+  position: fixed;
+  z-index: calc(var(--layer-dialog) - 1);
+  inset: var(--space-3) var(--space-3) auto;
+  width: min(42rem, calc(100% - (2 * var(--space-3))));
+  margin-inline: auto;
+  filter: drop-shadow(var(--shadow-lg));
+}
+
+/* Let long status explanations wrap while keeping their explicit choices nearby. */
+.pwa-status__content,
+.storage-warning {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+/* Keep update consent and dismissal in one compact, touch-friendly row. */
+.pwa-status__actions,
+.recovery-screen__actions {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+/* Center the root recovery path without hiding the browser's normal reload controls. */
+.recovery-screen {
+  display: grid;
+  place-items: center;
+  min-height: 100dvh;
+  padding: var(--space-6);
+  background: var(--color-canvas);
+}
+
+/* Keep error recovery readable at text zoom and ordinary desktop widths. */
+.recovery-screen > .notice {
+  width: min(38rem, 100%);
+  padding: var(--space-6);
+}
+
+.recovery-screen h1 {
+  margin-top: 0;
+}
+
 /* Use a softer surface for the future permission-explanation pattern. */
 .permission-card {
   /* Replace the standard card surface with the grouped muted surface. */
@@ -1734,6 +1781,15 @@ img {
 
 /* Tighten surface geometry and controls for the narrowest supported mobile widths. */
 @media (max-width: 36rem) {
+  /* Stack transient status actions so enlarged text cannot force horizontal overflow. */
+  .pwa-status__content {
+    align-items: stretch;
+  }
+
+  .pwa-status__actions .button {
+    flex: 1 1 9rem;
+  }
+
   /* Preserve the header hierarchy while reducing unused edge space. */
   .app-header {
     /* Use compact spacing so logo and settings remain on one row at 320 pixels. */

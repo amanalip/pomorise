@@ -1,9 +1,9 @@
 // Import React reference and state tools for the settings dialog and shell-only demonstrations.
 import { useEffect, useReducer, useRef, useState, type FormEvent } from "react";
 // Import the approved dark logo as a locally bundled identity for the dark palette.
-import darkLogoUrl from "../../assets/logos/header_dark_mode_v2.png";
+import darkLogoUrl from "../../assets/logos/header_dark_mode_phase6.png";
 // Import the approved light logo as a locally bundled identity for the light palette.
-import lightLogoUrl from "../../assets/logos/header_light_mode_v2.png";
+import lightLogoUrl from "../../assets/logos/header_light_mode_phase6.png";
 // Import theme state so the logo and appearance settings follow one resolved preference.
 import { useTheme } from "../components/ThemeProvider";
 // Import project-owned primitives that establish Phase 2 interaction and surface patterns.
@@ -96,6 +96,8 @@ export function App() {
   const [settingsView, setSettingsView] = useState<"preferences" | "data">("preferences");
   // Prevent an empty first render from overwriting IndexedDB before hydration completes.
   const [localDataState, setLocalDataState] = useState<"loading" | "ready" | "error">("loading");
+  // Count explicit recovery attempts so a transient IndexedDB failure can be retried in place.
+  const [storageLoadAttempt, setStorageLoadAttempt] = useState(0);
 
   // Open settings as a modal without adding a custom focus-trap implementation.
   function openSettings() {
@@ -125,7 +127,7 @@ export function App() {
     return () => {
       active = false;
     };
-  }, []);
+  }, [storageLoadAttempt]);
 
   // Persist coherent snapshots shortly after meaningful planning or journey changes.
   useEffect(() => {
@@ -313,14 +315,21 @@ export function App() {
       );
       return;
     }
-    const permission = await Notification.requestPermission();
-    const granted = permission === "granted";
-    timer.setPreferences({ ...timer.preferences, notificationsEnabled: granted });
-    setNotificationStatus(
-      granted
-        ? "Browser notifications are on."
-        : "Notification permission was not granted. The timer still works normally.",
-    );
+    try {
+      const permission = await Notification.requestPermission();
+      const granted = permission === "granted";
+      timer.setPreferences({ ...timer.preferences, notificationsEnabled: granted });
+      setNotificationStatus(
+        granted
+          ? "Browser notifications are on."
+          : "Notification permission was not granted. The timer still works normally.",
+      );
+    } catch {
+      timer.setPreferences({ ...timer.preferences, notificationsEnabled: false });
+      setNotificationStatus(
+        "Notifications could not be enabled. The timer still works normally without them.",
+      );
+    }
   }
 
   // Render the complete branded shell, responsive workspace, and appearance dialog.
@@ -387,8 +396,19 @@ export function App() {
         {/* Explain a failed local-storage boundary instead of silently implying persistence. */}
         {localDataState === "error" && (
           <Notice className="storage-warning" role="alert" tone="warning">
-            Local saving is unavailable in this browser session. The timer still works, but export
-            anything you want to keep before closing the page.
+            <span>
+              Local saving is unavailable in this browser session. The timer still works, but export
+              anything you want to keep before closing the page.
+            </span>
+            <Button
+              onClick={() => {
+                setLocalDataState("loading");
+                setStorageLoadAttempt((attempt) => attempt + 1);
+              }}
+              variant="secondary"
+            >
+              Try local data again
+            </Button>
           </Notice>
         )}
         {/* Keep the reliable timer as the calm central application surface. */}
@@ -1179,6 +1199,10 @@ export function App() {
             <Notice>
               Timer and appearance settings are saved only in this browser. Changing them sends no
               network request.
+            </Notice>
+            <Notice>
+              After one complete online visit, Pomorise can reopen offline. Updates wait for your
+              permission before reloading, so an active session is never replaced automatically.
             </Notice>
           </div>
         ) : (

@@ -3,8 +3,8 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 15, 2026 at 10:36 PM EDT |
-| Last updated | August 20, 2026 at 5:33:36 PM EDT |
-| ISO 8601 last updated | `2026-08-20T17:33:36-04:00` |
+| Last updated | August 20, 2026 at 6:00 PM EDT |
+| ISO 8601 last updated | `2026-08-20T18:00:00-04:00` |
 | Timezone | America/Toronto (UTC−04:00) |
 | Estimated reading time | 42 minutes |
 | Verification status | Commit facts checked against local Git history; technical claims checked against linked primary documentation |
@@ -17,6 +17,7 @@ The newest commit should be added at the top of the **Commit history** section.
 
 - [Entry template](#entry-template)
 - [Commit history](#commit-history)
+  - [Pending: Establish Phase 6 offline experience and quality hardening](#pending-establish-phase-6-offline-experience-and-quality-hardening)
   - [Pending: Begin Phase 5 local data and privacy controls](#pending-begin-phase-5-local-data-and-privacy-controls)
   - [Pending: Establish Phase 4 complete focus loop](#pending-establish-phase-4-complete-focus-loop)
   - [Pending: Establish Phase 3 reliable timer engine](#pending-establish-phase-3-reliable-timer-engine)
@@ -101,6 +102,35 @@ Describe what a visitor or maintainer will notice. Write “None” when the cha
 ```
 
 ## Commit history
+
+### `Pending`: Establish Phase 6 offline experience and quality hardening
+
+- **Status:** Prepared for the next owner commit
+- **Prepared:** 2026-08-20 18:00 EDT
+- **Author:** Aman Ali with Codex collaboration
+- **Full commit:** Assigned after the commit is created
+
+#### Purpose
+
+Make Pomorise installable and resilient offline while keeping updates consentful, caches free of personal data, failures recoverable, and the production bundle inside its approved budgets.
+
+#### Changes
+
+- Activated a generated app-shell service worker with no runtime data caching.
+- Added the manifest, compact identity icons, theme metadata, offline readiness, connectivity status, and consent-only update controls.
+- Added root error recovery, local-storage retry, and notification denial or failure handling.
+- Optimized header artwork and added offline, cache-privacy, permission, error-boundary, accessibility, network, and responsive verification.
+- Marked the Phase 6 implementation gate ready for the comprehensive Phase 7 suite.
+
+#### Validation
+
+- Formatting, strict TypeScript, ESLint, 26 Vitest tests, and the production build passed.
+- The first browser run found an incorrect service-worker control assertion; the test was corrected to reload once after installation before switching offline.
+- The final production-style browser rerun passed all 10 cases.
+
+#### Follow-up
+
+Run the comprehensive Phase 7 release suite, including the supported-browser and assistive-technology matrix, throttled performance measurements, artifact audit, deployment, and public-site smoke tests.
 
 ### `Pending`: Begin Phase 5 local data and privacy controls
 

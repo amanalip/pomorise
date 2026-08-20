@@ -306,7 +306,7 @@ Make the integrated product resilient across browsers, screen sizes, permissions
 
 Phase 6 is implementation-complete when offline behavior, denied-permission handling, responsive layouts, recovery paths, update behavior, and remaining final-suite coverage are ready for Phase 7 verification.
 
-- [ ] **Phase 6 completion:** Implementation gate satisfied; acceptance criteria are queued for the Phase 7 comprehensive suite.
+- [x] **Phase 6 completion:** Implementation gate satisfied; acceptance criteria are queued for the Phase 7 comprehensive suite.
 
 ## Phase 7: Release verification and publication
 
