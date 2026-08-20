@@ -3,10 +3,10 @@
 | Document information | Value |
 | --- | --- |
 | Created | August 15, 2026 at 10:36 PM EDT |
-| Last updated | August 20, 2026 at 12:52:35 PM EDT |
-| ISO 8601 last updated | `2026-08-20T12:52:35-04:00` |
+| Last updated | August 16, 2026 at 2:50:30 AM EDT |
+| ISO 8601 last updated | `2026-08-16T02:50:30-04:00` |
 | Timezone | America/Toronto (UTC−04:00) |
-| Estimated reading time | 44 minutes |
+| Estimated reading time | 40 minutes |
 | Verification status | Commit facts checked against local Git history; technical claims checked against linked primary documentation |
 
 Every commit moves Pomorise somewhere. This changelog tells that story in chronological detail, capturing the purpose, files, behavior, implementation choices, validation, and follow-up behind each step.
@@ -17,8 +17,7 @@ The newest commit should be added at the top of the **Commit history** section.
 
 - [Entry template](#entry-template)
 - [Commit history](#commit-history)
-  - [Pending: Consolidate testing into the final release suite](#pending-consolidate-testing-into-the-final-release-suite)
-  - [`753a40a`: Establish beginner-focused development documentation](#753a40a-establish-beginner-focused-development-documentation)
+  - [Pending: Establish beginner-focused development documentation](#pending-establish-beginner-focused-development-documentation)
   - [`00c4ec9`: Establish screenshot-backed test reporting](#00c4ec9-establish-screenshot-backed-test-reporting)
   - [`554be76`: Define seven-phase implementation plan](#554be76-define-seven-phase-implementation-plan)
   - [`4add167`: Approve light and dark Pomorise logos](#4add167-approve-light-and-dark-pomorise-logos)
@@ -97,105 +96,13 @@ Describe what a visitor or maintainer will notice. Write “None” when the cha
 
 ## Commit history
 
-### `Pending`: Consolidate testing into the final release suite
+### `Pending`: Establish beginner-focused development documentation
 
 - **Status:** Prepared for the next commit
-- **Prepared:** 2026-08-20 12:45 EDT
+- **Prepared:** 2026-08-16 02:48 EDT
 - **Author:** Aman Ali with Codex collaboration
 - **Full commit:** Assigned after the commit is created
-- **Expected files:** `README.md`, `changelog.md`, `development_docs/README.md`, `development_docs/_template/doc.md`, `implementation_plan.md`, `meta_thinking.md`, `project_plan.md`, `testreports/README.md`, and `testreports/_template/test_report.md`
-
-#### Purpose
-
-Reduce repeated testing documentation and token use while keeping enough verification during development to catch defects close to their source.
-
-#### Decision context
-
-The project owner proposed replacing detailed testing at the end of every phase with one complete test suite at the end of development. The accepted model keeps small, directly relevant checks during Phases 1 through 6 and moves the exhaustive integrated, deployed, screenshot-backed evidence run to Phase 7. The project owner also reconfirmed that code must be commented well for beginners.
-
-#### Changes
-
-- Kept the implementation sequence at seven phases.
-- Reframed Phases 1 through 6 around focused checks recorded concisely in development documents.
-- Removed the requirement to create a separate detailed test report and screenshot collection for every phase.
-- Made Phase 7 responsible for one comprehensive suite covering static, unit, component, integration, end-to-end, regression, accessibility, privacy, responsive, offline, performance, build, and deployed-site verification.
-- Fixed the final evidence path at `testreports/final-release-verification/test_report.md`.
-- Revised phase exit gates and the mandatory closeout checklist so unresolved focused-check failures still block progress.
-- Updated the final test-report index and reusable template for one release-wide report.
-- Changed development-document traceability from one-to-one report pairing to many phase narratives linked by the final report.
-- Preserved the binding requirement for adjacent beginner-friendly comments on every human-authored code line and companion annotations for non-commentable formats.
-- Synchronized the repository overview, product plan, implementation plan, discussion record, development-document guidance, test-report guidance, and changelog.
-- Resolved the previous pending documentation entry as commit `753a40a`.
-
-#### Files affected
-
-- `implementation_plan.md`: Defines focused phase checks and the comprehensive Phase 7 suite.
-- `testreports/README.md`: Governs the single final report and its evidence.
-- `testreports/_template/test_report.md`: Becomes the final-release verification template.
-- `development_docs/README.md`: Makes development narratives the home for focused phase results.
-- `development_docs/_template/doc.md`: Records focused checks and links the final report when available.
-- `project_plan.md`: Updates the product-wide quality and documentation promises.
-- `meta_thinking.md`: Preserves the testing-cadence decision and repeated commenting request.
-- `README.md`: Explains the new testing approach publicly.
-- `changelog.md`: Records this policy change and resolves commit `753a40a`.
-
-#### User-visible impact
-
-There is no application interface change. Future development will produce fewer repeated test-report files while retaining one detailed final evidence package and focused safeguards during each phase.
-
-#### Decisions and tradeoffs
-
-- A single final report saves documentation effort, screenshots, repeated setup, and tokens.
-- Focused phase checks remain mandatory because deferring every test would make failures harder to locate and could allow incompatible work to accumulate.
-- Phase development documents record concise evidence instead of duplicating the final report structure.
-- The final suite remains broad because it must verify interactions between features, browsers, storage, offline behavior, privacy boundaries, and the deployed GitHub Pages environment.
-- The line-by-line commenting standard is unchanged because the user explicitly reconfirmed beginner readability.
-
-#### Risks and limitations
-
-- The final suite will take longer than any focused phase check.
-- Integration defects may still appear late even when focused checks pass.
-- A large final report needs clear links back to phase narratives so failures remain diagnosable.
-- Focused phase records must remain honest and cannot omit an unresolved failure merely to save space.
-
-#### Validation
-
-- Confirmed the implementation plan still contains seven named phases.
-- Confirmed Phases 1 through 6 retain checkable validation and exit gates without requiring separate report directories.
-- Confirmed Phase 7 requires the complete suite and a passing final report.
-- Confirmed the final path is consistent across plans, templates, indexes, and overview documents.
-- Confirmed the every-line commenting rule and companion-annotation exception remain binding.
-- Checked populated Markdown files for timestamps, reading times, tables of contents, glossaries, further reading, local links, balanced fences, and forbidden em dashes.
-
-#### Lessons learned by the agent
-
-- Reporting cadence and testing cadence can differ: compact checks can run continuously while comprehensive evidence is assembled once.
-- Consolidation is safe only when known failures still block phase completion.
-
-#### Lessons learned by the user
-
-- The project owner identified that one final comprehensive report can reduce repeated work and token use.
-- The project owner reconfirmed that code comments must remain thorough and beginner-friendly.
-
-#### Related references
-
-- Implementation plan: `implementation_plan.md`
-- Final report policy: `testreports/README.md`
-- Development documentation policy: `development_docs/README.md`
-
-#### Follow-up
-
-- Start Phase 1 only when explicitly requested.
-- Record focused checks in each phase development document.
-- Create the comprehensive final report during Phase 7.
-- Replace `Pending` with the commit hash while preparing the next meaningful change.
-
-### `753a40a`: Establish beginner-focused development documentation
-
-- **Date:** 2026-08-16 02:54 EDT
-- **Author:** Aman Ali
-- **Full commit:** `753a40ab0717e78ed08826930eef37ee19b38c8f`
-- **Change size:** 9 files changed, 1,257 lines added, 45 lines removed
+- **Expected files:** `README.md`, `changelog.md`, `development_docs/`, `implementation_plan.md`, `meta_thinking.md`, `project_plan.md`, and `testreports/`
 
 #### Purpose
 
@@ -294,7 +201,7 @@ There is no application interface change. Future contributors will be able to mo
 - Create the first real development narrative when Phase 1 or another meaningful implementation unit begins.
 - Use the same identifier for its paired test report.
 - Add every completed document to `development_docs/README.md`.
-- Resolve the pending entry with the final commit hash. Completed in the consolidated-testing change.
+- Replace `Pending` with the commit hash while preparing the next meaningful change.
 
 ### `00c4ec9`: Establish screenshot-backed test reporting
 

@@ -1,26 +1,26 @@
-# Pomorise Final Release Verification Report
+# Pomorise Test Report: Replace with Phase, Run, or Step Name
 
 | Document information | Value |
 | --- | --- |
-| Report identifier | `final-release-verification` after copying this template |
+| Report identifier | `_template` |
 | Report status | Template, replace with `Passed`, `Failed`, `Blocked`, or `Incomplete` in a copied report |
 | Created | August 16, 2026 at 2:28:00 AM EDT |
-| Last updated | August 20, 2026 at 12:52:35 PM EDT |
+| Last updated | August 16, 2026 at 2:50:30 AM EDT |
 | ISO 8601 created | `2026-08-16T02:28:00-04:00` |
-| ISO 8601 last updated | `2026-08-20T12:52:35-04:00` |
+| ISO 8601 last updated | `2026-08-16T02:50:30-04:00` |
 | Timezone | America/Toronto (UTC−04:00) |
 | Estimated reading time | 15 minutes for this blank template; recalculate after completing a copied report |
 | Prepared by | Replace with name or agent |
 | Verification status | Template only, no test run recorded |
 
-This template becomes the single permanent evidence record for the comprehensive Phase 7 suite. Copy the `_template` directory to `testreports/final-release-verification/`, then replace every instruction and placeholder with observed evidence. Phases 1 through 6 record only focused checks inside their development documents.
+This template becomes the permanent evidence record for one Pomorise phase, run, or independently verified step. Copy the `_template` directory to `testreports/<phase_or_run_or_step>/`, then replace every instruction and placeholder with observed evidence.
 
 ## Table of contents
 
 - [Executive result](#executive-result)
 - [Scope and acceptance criteria](#scope-and-acceptance-criteria)
 - [Change under test](#change-under-test)
-- [Development document coverage](#development-document-coverage)
+- [Paired development document](#paired-development-document)
 - [Test environment](#test-environment)
 - [Synthetic test data](#synthetic-test-data)
 - [Tools and versions](#tools-and-versions)
@@ -59,7 +59,7 @@ This template becomes the single permanent evidence record for the comprehensive
 | Retests performed | Replace with count |
 | Required screenshots | Replace with count |
 | Screenshots retained | Replace with count |
-| Phase 7 exit gate | Unchecked or passed with evidence |
+| Phase exit gate | Not applicable, unchecked, or passed with evidence |
 
 Write a plain-language summary of what was tested, what passed, what failed, what remains uncertain, and whether the evidence supports the stated result. Never declare success solely because one command returned exit code zero.
 
@@ -97,23 +97,17 @@ Write a plain-language summary of what was tested, what passed, what failed, wha
 | Application URL | Replace with exact local or public URL |
 | Previous comparison point | Replace with commit, report, or `None` |
 
-Summarize the integrated First Light release in enough detail that another contributor understands what result is expected without reading every phase diff first.
+Summarize the implementation change in enough detail that another contributor understands what result is expected without reading the entire diff first.
 
-## Development document coverage
+## Paired development document
 
-Link the completed development narratives for all seven phases:
+Use the same identifier for this report and its technical narrative. Link the real file after it exists:
 
 ```text
-development_docs/phase-01-foundation/doc.md
-development_docs/phase-02-design-shell/doc.md
-development_docs/phase-03-timer-engine/doc.md
-development_docs/phase-04-focus-loop/doc.md
-development_docs/phase-05-local-data/doc.md
-development_docs/phase-06-offline-hardening/doc.md
-development_docs/phase-07-release-publication/doc.md
+development_docs/<same-identifier>/doc.md
 ```
 
-Use the actual stable identifiers chosen during development if they differ from these examples. Confirm that the documents collectively explain the implemented design, architecture, decisions, assumptions, files, limitations, and focused phase checks reflected by the final suite. If final evidence changes the design understanding, update the affected narrative without erasing the earlier assumption or decision.
+Confirm that the development document explains the implemented design, architecture, decisions, assumptions, files, and limitations reflected by this test run. If evidence changes the design understanding, update the development document without erasing the earlier assumption or decision.
 
 ## Test environment
 
@@ -316,7 +310,7 @@ Write `None observed` only after reviewing the complete evidence.
 ## Mandatory closeout checklist
 
 - [ ] The approved scope and every deviation are documented.
-- [ ] Development documents for all seven phases are linked and match the implementation under test.
+- [ ] The paired development document uses the same identifier and matches the implementation under test.
 - [ ] Every required validation item is checked and linked to evidence.
 - [ ] Every human-authored code line satisfies the commenting standard.
 - [ ] Required companion annotations are complete.
@@ -334,20 +328,20 @@ Write `None observed` only after reviewing the complete evidence.
 - [ ] The conclusion matches the evidence and totals.
 - [ ] `testreports/README.md` links to this report.
 - [ ] Related project documents and the changelog are synchronized.
-- [ ] The Phase 7 exit gate is checked only if every blocking item passed.
+- [ ] The phase exit gate is checked only if every blocking item passed.
 
 ## Conclusion
 
 State exactly one final result: `Passed`, `Failed`, `Blocked`, or `Incomplete`.
 
-Explain the evidence supporting that result, the behaviors that are safe to rely on, the behaviors that remain uncertain, and the next required action. The final report may state `Passed` only when the complete suite, Phase 7 exit gate, required validation checkboxes, screenshots, logs, and mandatory closeout checklist are complete.
+Explain the evidence supporting that result, the behaviors that are safe to rely on, the behaviors that remain uncertain, and the next required action. A phase report may state `Passed` only when its exit gate, required validation checkboxes, screenshots, logs, and mandatory closeout checklist are complete.
 
 ## Glossary
 
 - **Artifact:** A retained machine-generated output such as a JSON result, browser trace, video, coverage file, or HTML report.
 - **Blocked:** Testing cannot proceed because a stated dependency or environment condition is unavailable.
 - **Exit gate:** The complete evidence requirements that must pass before a phase closes.
-- **Development document:** A technical narrative explaining what was built and why during one phase or implementation unit.
+- **Development document:** The technical narrative explaining what was built and why, paired with this evidence report.
 - **Flaky:** A case produced inconsistent results without an intentional change that explains the difference.
 - **Residual risk:** A known risk remaining after the tested controls.
 - **Synthetic data:** Invented test information containing no real visitor or contributor data.
@@ -374,4 +368,4 @@ Explain the evidence supporting that result, the behaviors that are safe to rely
 6. Keep result totals consistent across the executive summary and detailed tables.
 7. Update timestamps, reading time, table of contents, glossary, and sources whenever the report changes substantially.
 8. Keep the writing factual, detailed, beginner-friendly, and free of em dashes.
-9. Keep every affected development document synchronized with final findings, failures, corrections, and changed assumptions.
+9. Keep the paired development document synchronized with findings, failures, corrections, and changed assumptions.
