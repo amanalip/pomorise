@@ -368,6 +368,13 @@ export function App() {
       );
       return;
     }
+    if (Notification.permission === "denied") {
+      timer.setPreferences({ ...timer.preferences, notificationsEnabled: false });
+      setNotificationStatus(
+        "Chrome has blocked notifications for this site. Open the site controls beside the address bar, allow Notifications, then try again.",
+      );
+      return;
+    }
     try {
       const permission = await Notification.requestPermission();
       const granted = permission === "granted";
@@ -375,7 +382,7 @@ export function App() {
       setNotificationStatus(
         granted
           ? "Browser notifications are on."
-          : "Notification permission was not granted. The timer still works normally.",
+          : "Notifications were not allowed. If Chrome no longer shows the prompt, open the site controls beside the address bar and allow Notifications.",
       );
     } catch {
       timer.setPreferences({ ...timer.preferences, notificationsEnabled: false });
@@ -398,7 +405,7 @@ export function App() {
     timer.setPreferences({ ...timer.preferences, soundEnabled: confirmed });
     setSoundStatus(
       confirmed
-        ? "Local completion sound is on."
+        ? "Local completion sound is on. Chrome has no separate sound permission prompt. If it stays silent, open the site controls beside the address bar and allow Sound."
         : "Sound permission was not granted. The timer remains silent.",
     );
   }
@@ -1163,6 +1170,19 @@ export function App() {
         {/* Close the compact navigation bar after all destinations. */}
       </nav>
 
+      {/* Keep ownership and support links available at the bottom of every application view. */}
+      <footer className="app-footer">
+        {/* Identify the site owner and release year in one concise line. */}
+        <span>© 2026 Aman Ali Pogaku</span>
+        {/* Group project information links without competing with primary navigation. */}
+        <nav aria-label="Project information">
+          <a href="/pomorise/FAQs.html">FAQs</a>
+          <a href="https://github.com/amanalip/pomorise" rel="noreferrer">
+            GitHub repository
+          </a>
+        </nav>
+      </footer>
+
       {/* Keep appearance settings inside a native modal with project-owned visual treatment. */}
       <Dialog
         className={settingsView === "data" ? "dialog--wide" : undefined}
@@ -1270,7 +1290,9 @@ export function App() {
               />
               <span>
                 <strong>Play a local completion sound</strong>
-                <small>The tone is generated on this device and never streamed.</small>
+                <small>
+                  The tone is generated locally. Chrome manages sound through its site controls.
+                </small>
               </span>
             </label>
             {soundStatus && <Notice>{soundStatus}</Notice>}
@@ -1282,7 +1304,9 @@ export function App() {
               />
               <span>
                 <strong>Show browser notifications</strong>
-                <small>Permission is requested only when you turn this on.</small>
+                <small>
+                  Chrome asks when you turn this on unless the site was previously blocked.
+                </small>
               </span>
             </label>
             {notificationStatus && <Notice tone="warning">{notificationStatus}</Notice>}
