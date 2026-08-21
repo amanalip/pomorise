@@ -43,6 +43,16 @@ describe("App", () => {
     expect(screen.getByRole("textbox", { name: "What will you move forward?" })).toBeVisible();
     // Protect the plain-language empty task state used before Phase 4 adds stored tasks.
     expect(screen.getByText("No task is selected. That is completely fine.")).toBeVisible();
+    // Keep ownership and help destinations available at the bottom of the application.
+    expect(screen.getByText("© 2026 Aman Ali Pogaku")).toBeVisible();
+    expect(screen.getByRole("link", { name: "FAQs" })).toHaveAttribute(
+      "href",
+      "/pomorise/FAQs.html",
+    );
+    expect(screen.getByRole("link", { name: "GitHub repository" })).toHaveAttribute(
+      "href",
+      "https://github.com/amanalip/pomorise",
+    );
     // Verify unavailable future transitions remain visible but cannot be activated.
     expect(screen.getByRole("button", { name: "Reset" })).toBeDisabled();
     // Close the branded shell test after checking identity, purpose, field, and empty state.

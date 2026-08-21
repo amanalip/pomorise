@@ -1,0 +1,143 @@
+:root {
+  color-scheme: light dark;
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  color: #321b3b;
+  background: #fbf5ec;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background: linear-gradient(180deg, #fffaf3, #fbf5ec);
+}
+
+a {
+  color: inherit;
+  font-weight: 750;
+}
+
+.faq-header,
+.faq-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem clamp(1rem, 5vw, 3rem);
+  border-color: #d9ccd8;
+  border-style: solid;
+  border-width: 0 0 1px;
+}
+
+.faq-brand {
+  font-size: 1.25rem;
+  text-decoration: none;
+}
+
+main {
+  width: min(52rem, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: clamp(2rem, 7vw, 5rem) 0;
+}
+
+.faq-intro {
+  margin-bottom: 2rem;
+}
+
+.faq-intro > span {
+  color: #a42e39;
+  font-size: 0.8rem;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0.5rem 0 0.75rem;
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  line-height: 1.05;
+}
+
+.faq-intro p,
+details p {
+  color: #6f6073;
+  line-height: 1.65;
+}
+
+.faq-list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+details {
+  padding: 1.1rem 1.25rem;
+  background: #fffaf3;
+  border: 1px solid #d9ccd8;
+  border-radius: 0.9rem;
+  box-shadow: 0 0.5rem 1.5rem rgb(50 27 59 / 6%);
+}
+
+summary {
+  cursor: pointer;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+details p {
+  margin: 0.8rem 0 0;
+}
+
+.faq-footer {
+  border-width: 1px 0 0;
+  color: #6f6073;
+  font-size: 0.9rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color: #fff7ee;
+    background: #170f1d;
+  }
+
+  body {
+    background: linear-gradient(180deg, #24152d, #170f1d);
+  }
+
+  .faq-header,
+  .faq-footer,
+  details {
+    border-color: #544159;
+  }
+
+  .faq-intro > span {
+    color: #ffae72;
+  }
+
+  .faq-intro p,
+  details p,
+  .faq-footer {
+    color: #c8b9c9;
+  }
+
+  details {
+    background: #24152d;
+  }
+}
+
+@media (max-width: 36rem) {
+  .faq-header,
+  .faq-footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

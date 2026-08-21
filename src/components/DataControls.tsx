@@ -21,7 +21,7 @@ import {
 } from "../data/database";
 
 // Keep the application version visible without introducing a runtime network check.
-const APPLICATION_VERSION = "1.0.1";
+const APPLICATION_VERSION = "1.0.2";
 
 // Describe the callback used to synchronize React after transactional database changes.
 interface DataControlsProps {

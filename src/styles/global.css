@@ -1443,20 +1443,51 @@ img {
 }
 
 .data-counts span {
+  display: grid;
+  align-content: start;
+  gap: var(--space-1);
+  min-width: 0;
+  min-height: 5rem;
+  padding: var(--space-3) var(--space-4);
+  background: color-mix(in srgb, var(--color-surface) 72%, transparent);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-ink-muted);
+  font-size: 0.875rem;
+  overflow-wrap: anywhere;
+}
+
+.data-counts strong {
+  display: block;
+  color: var(--color-ink);
+  font-size: 1.35rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Keep ownership and project links distinct from the focused workspace above them. */
+.app-footer {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
-  gap: var(--space-3);
-  padding-bottom: var(--space-2);
-  border-bottom: 1px solid var(--color-border);
+  gap: var(--space-4);
+  padding: var(--space-5) clamp(var(--space-4), 4vw, var(--space-8));
+  border-top: 1px solid var(--color-border);
   color: var(--color-ink-muted);
   font-size: 0.875rem;
 }
 
-.data-counts strong {
+/* Let informational footer links wrap cleanly at narrow widths. */
+.app-footer nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--space-4);
+}
+
+/* Keep footer links recognizable in both approved themes. */
+.app-footer a {
   color: var(--color-ink);
-  font-size: 1.2rem;
-  font-variant-numeric: tabular-nums;
+  font-weight: 750;
 }
 
 /* Separate each ownership task with space and a quiet top boundary. */
@@ -1781,6 +1812,11 @@ img {
 
 /* Reflow the shell into one content column before either region becomes cramped. */
 @media (max-width: 58rem) {
+  /* Keep footer content above the persistent compact navigation bar. */
+  .app-footer {
+    padding-bottom: 5.5rem;
+  }
+
   /* Keep the header simple when the full desktop navigation no longer fits comfortably. */
   .app-header {
     /* Let identity expand while settings stays anchored at the opposite edge. */
@@ -1882,6 +1918,18 @@ img {
   /* Stack record counts so each label remains contained at narrow widths. */
   .data-counts {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Stack ownership and project links without crowding the narrow viewport. */
+  .app-footer {
+    align-items: flex-start;
+    flex-direction: column;
+    padding-bottom: 6rem;
+  }
+
+  /* Align stacked footer links with the ownership line above them. */
+  .app-footer nav {
+    justify-content: flex-start;
   }
 
   /* Let status labels move below longer ownership explanations when necessary. */

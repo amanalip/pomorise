@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Answers to common questions about Pomorise tasks, timers, privacy, storage, alerts, backups, and offline use."
+    />
+    <link rel="icon" type="image/png" href="/pomorise/icons/pomorise-192.png" />
+    <link rel="stylesheet" href="/pomorise/faqs.css" />
+    <title>Pomorise FAQs</title>
+  </head>
+  <body>
+    <header class="faq-header">
+      <a class="faq-brand" href="/pomorise/">Pomorise</a>
+      <a href="/pomorise/">Back to timer</a>
+    </header>
+
+    <main>
+      <section class="faq-intro" aria-labelledby="faq-title">
+        <span>Pomorise 1.0.2</span>
+        <h1 id="faq-title">Frequently asked questions</h1>
+        <p>
+          Clear answers about focusing, tasks, privacy, browser permissions, local storage, and
+          keeping your Pomorise data safe.
+        </p>
+      </section>
+
+      <section class="faq-list" aria-label="Pomorise questions and answers">
+        <details open>
+          <summary>What is Pomorise?</summary>
+          <p>
+            Pomorise is a calm Pomodoro-style focus timer. It helps you choose one task, work in a
+            timed session, take a break, and record a short private reflection. It works without an
+            account and keeps your information in your browser.
+          </p>
+        </details>
+
+        <details>
+          <summary>How do focus and break sessions work?</summary>
+          <p>
+            Focus, short-break, and long-break modes have separate durations. The defaults are 25,
+            5, and 15 minutes. You can change each duration in Settings. Starting, pausing, adding a
+            minute, skipping, resetting, and continuing in overtime are all explicit controls.
+          </p>
+        </details>
+
+        <details>
+          <summary>What does “Session 1 of 3” mean?</summary>
+          <p>
+            When a task is selected, this shows your current session within that task's estimate.
+            For example, “Session 1 of 3” means the task was estimated at three focus sessions and
+            no session has yet been carried forward. Without a selected task, the number describes
+            Pomorise's regular four-session focus cycle.
+          </p>
+        </details>
+
+        <details>
+          <summary>How do tasks work?</summary>
+          <p>
+            Add a short task, estimate it at one to eight focus sessions, and choose which
+            unfinished task is current. Pomorise allows up to five unfinished tasks at a time so the
+            list stays manageable. Completed tasks remain available in Task history and do not
+            consume those five spaces.
+          </p>
+        </details>
+
+        <details>
+          <summary>What is the difference between completing and carrying a task forward?</summary>
+          <p>
+            Mark complete when the work itself is finished. Carry forward records one completed
+            focus session against the current task and keeps that task selected for another session.
+            The task history shows completed sessions beside the original estimate.
+          </p>
+        </details>
+
+        <details>
+          <summary>Where can I review previous tasks?</summary>
+          <p>
+            Open Tasks and expand Task history. It lists completed tasks with their completed and
+            estimated focus-session totals. This history stays in the same browser unless you delete
+            all focus data or replace it by importing a backup.
+          </p>
+        </details>
+
+        <details>
+          <summary>What does Progress show?</summary>
+          <p>
+            Progress summarizes completed focus sessions and focus minutes for today, plus sessions
+            completed during the last seven days. These numbers are calculated from records stored
+            privately in this browser.
+          </p>
+        </details>
+
+        <details>
+          <summary>What is Quick capture?</summary>
+          <p>
+            Quick capture lets you save a distracting thought without stopping the timer. After the
+            focus session, you can turn it into a task, keep it for later, or dismiss it.
+          </p>
+        </details>
+
+        <details>
+          <summary>Are reflections required?</summary>
+          <p>
+            No. A reflection can include a next step, focus rating, and private notes, but every
+            part is optional and the complete reflection can be skipped.
+          </p>
+        </details>
+
+        <details>
+          <summary>Where is my data stored?</summary>
+          <p>
+            Tasks, sessions, captured thoughts, and reflections are stored in this browser profile
+            using IndexedDB. Timer and appearance preferences use local browser storage. Pomorise
+            has no account system, application database, analytics, advertising tracker, or cloud
+            sync.
+          </p>
+        </details>
+
+        <details>
+          <summary>What does Storage protection do?</summary>
+          <p>
+            Browsers can remove site data when device storage is low. Storage protection asks the
+            browser to reduce that risk. The browser may decline, so it is still important to export
+            a backup. Private-browsing data remains temporary even when this feature is available.
+          </p>
+        </details>
+
+        <details>
+          <summary>How do backup and restore work?</summary>
+          <p>
+            Download backup creates a JSON file locally containing your structured Pomorise data.
+            Export sessions CSV creates a spreadsheet-friendly session history. Import previews a
+            selected backup before it replaces the current tasks and history. Nothing is uploaded by
+            Pomorise during these actions.
+          </p>
+        </details>
+
+        <details>
+          <summary>Why did Chrome not show a notification prompt?</summary>
+          <p>
+            Chrome normally asks the first time you enable notifications. If you previously blocked
+            or dismissed the request, Chrome may stop showing it. Select the site-controls icon
+            beside the address bar, open the site's permissions, allow Notifications, and then try
+            the Pomorise setting again.
+          </p>
+        </details>
+
+        <details>
+          <summary>Why is there no Chrome permission prompt for sound?</summary>
+          <p>
+            Chrome does not provide websites with a sound permission-request prompt like the
+            notification prompt. Pomorise asks for confirmation before enabling its locally
+            generated completion tone. If the tone remains silent, use Chrome's site controls to
+            allow Sound and confirm that the tab and device are not muted.
+          </p>
+        </details>
+
+        <details>
+          <summary>Can Pomorise work offline?</summary>
+          <p>
+            Yes. After one complete online visit, supported browsers can reopen the installed or
+            cached application offline. Updates wait for your approval and never replace an active
+            timer automatically.
+          </p>
+        </details>
+
+        <details>
+          <summary>How do I delete my information?</summary>
+          <p>
+            Open Settings, then Data &amp; privacy. Clear history removes sessions, reflections, and
+            captured thoughts while keeping tasks and preferences. Delete everything removes tasks
+            and history. Reset preferences changes only appearance and timer choices.
+          </p>
+        </details>
+
+        <details>
+          <summary>Does Pomorise work across devices?</summary>
+          <p>
+            There is no cloud synchronization. Each browser profile has its own local data. To move
+            information between devices, download a backup on one device and import it on the other.
+          </p>
+        </details>
+
+        <details>
+          <summary>Where can I report a problem or inspect the code?</summary>
+          <p>
+            Pomorise is developed in a public GitHub repository. You can inspect the source or
+            report an issue at
+            <a href="https://github.com/amanalip/pomorise">github.com/amanalip/pomorise</a>.
+          </p>
+        </details>
+      </section>
+    </main>
+
+    <footer class="faq-footer">
+      <span>© 2026 Aman Ali Pogaku</span>
+      <a href="https://github.com/amanalip/pomorise">GitHub repository</a>
+    </footer>
+  </body>
+</html>

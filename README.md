@@ -2,14 +2,14 @@
 
 Rise one session at a time.
 
-| Document information   | Value                                                     |
-| ---------------------- | --------------------------------------------------------- |
-| Created                | August 15, 2026 at 10:14:39 PM EDT                        |
-| Last updated           | August 20, 2026 at 7:04:00 PM EDT                         |
-| ISO 8601 last updated  | `2026-08-20T19:04:00-04:00`                               |
-| Timezone               | America/Toronto (UTC−04:00)                               |
-| Estimated reading time | 3 minutes                                                 |
-| Verification status    | Pomorise 1.0.1 prepared; focused regression checks passed |
+| Document information   | Value                                              |
+| ---------------------- | -------------------------------------------------- |
+| Created                | August 15, 2026 at 10:14:39 PM EDT                 |
+| Last updated           | August 20, 2026 at 7:04:00 PM EDT                  |
+| ISO 8601 last updated  | `2026-08-20T19:04:00-04:00`                        |
+| Timezone               | America/Toronto (UTC−04:00)                        |
+| Estimated reading time | 3 minutes                                          |
+| Verification status    | Pomorise 1.0.2 in development; focused checks only |
 
 ## Table of contents
 

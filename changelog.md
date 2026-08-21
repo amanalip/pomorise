@@ -109,6 +109,23 @@ Describe what a visitor or maintainer will notice. Write “None” when the cha
 
 ## Commit history
 
+### `Pending`: Prepare Pomorise 1.0.2 help and polish update
+
+- **Status:** In development with focused verification
+- **Date:** August 20, 2026
+
+#### Changes
+
+- Reorganized local record totals into padded, contained summary tiles.
+- Added clearer Chrome notification and sound troubleshooting guidance.
+- Added a detailed standalone FAQ page covering the product, privacy, storage, alerts, offline behavior, and troubleshooting.
+- Added the site-owner copyright, FAQ link, and GitHub repository link to the application footer.
+- Updated application and package metadata to version 1.0.2.
+
+#### Validation
+
+- Focused static, component, and production-build checks only. No broad end-to-end suite was run.
+
 ### `Pending`: Prepare Pomorise 1.0.1 usability fixes
 
 - **Status:** Implemented with focused regression coverage
