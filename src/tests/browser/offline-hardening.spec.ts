@@ -48,7 +48,7 @@ test("continues normally when notification permission is denied", async ({ page 
   await page.goto("./");
   await page.getByRole("button", { name: "Settings" }).click();
   await page.getByRole("checkbox", { name: /Show browser notifications/ }).click();
-  await expect(page.getByText(/Notification permission was not granted/)).toBeVisible();
+  await expect(page.getByText(/Chrome has blocked notifications for this site/)).toBeVisible();
   await page.getByRole("button", { name: "Done" }).click();
   await expect(page.getByRole("button", { name: "Start focus" })).toBeEnabled();
 });
