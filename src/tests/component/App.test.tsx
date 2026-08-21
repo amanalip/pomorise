@@ -80,6 +80,17 @@ describe("App", () => {
     expect(screen.getByRole("button", { name: "Resume" })).toBeEnabled();
   });
 
+  // Keep restored timers from presenting the internal break cadence as a user-selected total.
+  it("restores the current session without defaulting its total to four", () => {
+    // Persist a later idle focus session like the one restored after reopening the website.
+    saveTimerState(createTimerState("focus", 25 * 60, 3));
+    // Render through the production storage restoration path.
+    renderApp();
+    // Show the restored position without claiming that the visitor chose a four-session total.
+    expect(screen.getByText("Session 3")).toBeVisible();
+    expect(screen.queryByText("Session 3 of 4")).not.toBeInTheDocument();
+  });
+
   // Verify focus completion reaches skippable reflection and both break experiences.
   it("continues from completed focus through reflection into a guided break", async () => {
     // Create a realistic visitor interaction controller for the post-session journey.

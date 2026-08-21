@@ -219,11 +219,11 @@ export function App() {
   const pendingTasks = focusPlan.tasks.filter((task) => !task.completed);
   // Preserve completed work as a local audit trail instead of removing it from the plan.
   const completedTasks = focusPlan.tasks.filter((task) => task.completed);
-  // Relate focus-session progress to the selected task instead of always showing the four-part cycle.
+  // Relate focus-session progress to the selected task without implying a fixed total otherwise.
   const sessionSequence =
     timer.state.mode === "focus" && activeTask
       ? `Session ${Math.min(activeTask.completedSessions + 1, activeTask.estimatedSessions)} of ${activeTask.estimatedSessions}`
-      : `Session ${timer.state.sessionNumber} of 4`;
+      : `Session ${timer.state.sessionNumber}`;
   // Derive pending review items without hiding kept or converted history from state.
   const pendingDistractions = focusJourney.distractions.filter(
     // Present only thoughts that still need one explicit post-session choice.
@@ -495,7 +495,7 @@ export function App() {
           <div className="timer-card__eyebrow">
             {/* Name the current timer mode in a short high-contrast label. */}
             <span>{modeLabel(timer.state.mode)}</span>
-            {/* Show selected-task progress during focus and the four-part cycle otherwise. */}
+            {/* Show selected-task progress during focus and only the current session otherwise. */}
             <span>{sessionSequence}</span>
             {/* Close the timer context row after both concise labels. */}
           </div>
