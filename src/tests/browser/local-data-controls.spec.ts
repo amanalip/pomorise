@@ -465,6 +465,74 @@ test("keeps task updatedAt stable across unrelated saves and bumps on real chang
   // Close the timestamp-meaning case after proving both stability and honest bumps.
 });
 
+// Verify export, deletion, and import reproduce the exact same local workspace.
+test("round-trips tasks, intention, and captures through backup and restore", async ({
+  page,
+}) => {
+  // Open a fresh profile and build one recognizable workspace through the ordinary UI.
+  await page.goto("./");
+  // Let hydration finish so planning inputs accept visitor input.
+  await page.waitForTimeout(400);
+  // Set the optional intention that must survive the entire round trip.
+  await page
+    .getByRole("textbox", { name: "What will you move forward?" })
+    .fill("Round trip keeper");
+  // Add a first default-estimate task.
+  await page.getByRole("textbox", { name: "Add a small task" }).fill("First trip task");
+  await page.getByRole("button", { name: "Add task" }).click();
+  // Add a second task with a distinct estimate so restore fidelity is observable.
+  await page.getByRole("combobox", { name: "Estimated sessions" }).selectOption("2");
+  await page.getByRole("textbox", { name: "Add a small task" }).fill("Second trip task");
+  await page.getByRole("button", { name: "Add task" }).click();
+  // Start and pause a session so the quick-capture surface becomes available.
+  await page.getByRole("button", { name: "Start focus" }).click();
+  await page.getByRole("button", { name: "Pause" }).click();
+  // Capture one pending thought that must travel with the backup.
+  await page.getByRole("textbox", { name: "Quick capture" }).fill("Round trip thought");
+  await page.getByRole("button", { name: "Capture and continue" }).click();
+  // Allow the final pre-export transaction to commit before downloading.
+  await page.waitForTimeout(500);
+  // Open the ownership controls for export, deletion, and import steps.
+  await openDataControls(page);
+  // Export a JSON backup through the real browser download pipeline.
+  const downloadPromise = page.waitForEvent("download");
+  await page.getByRole("button", { name: "Download backup" }).click();
+  const download = await downloadPromise;
+  // Keep the downloaded file path for the later re-import step.
+  const backupPath = await download.path();
+  expect(backupPath).toBeTruthy();
+  // Delete every structured record through its explicit confirmation flow.
+  await page.getByRole("button", { name: "Delete all focus data" }).click();
+  await page.getByRole("button", { name: "Yes, delete focus data" }).click();
+  // Require verified emptiness before attempting any restore.
+  await expect(page.getByLabel("Local record summary")).toContainText("0 tasks");
+  // Close settings so the emptied interface can be observed honestly.
+  await page.getByRole("button", { name: "Done" }).click();
+  await expect(page.getByText("No task is selected. That is completely fine.")).toBeVisible();
+  // Reopen ownership controls and import the exact downloaded file.
+  await openDataControls(page);
+  await page.locator('input[type="file"]').setInputFiles(backupPath as string);
+  // Require the preview to disclose the complete restored inventory.
+  await expect(
+    page.getByText(/2 tasks · 0 sessions · 1 captured thoughts/),
+  ).toBeVisible();
+  // Commit the replacement after reviewing the validated preview.
+  await page.getByRole("button", { name: "Replace local records" }).click();
+  // Close settings so restored visitor data can be compared with the original.
+  await page.getByRole("button", { name: "Done" }).click();
+  // Require the identical intention after the full export-delete-import cycle.
+  await expect(page.getByRole("textbox", { name: "What will you move forward?" })).toHaveValue(
+    "Round trip keeper",
+  );
+  // Require both task titles to exist again inside the unfinished list.
+  const unfinished = page.getByLabel("Unfinished tasks");
+  await expect(unfinished).toContainText("First trip task");
+  await expect(unfinished).toContainText("Second trip task");
+  // Require the restored selection marker from workspace metadata equality.
+  await expect(page.getByText("1 selected")).toBeVisible();
+  // Close the round-trip case after proving export and import preserve everything.
+});
+
 // Prove captured thoughts keep the moment they were captured instead of the latest save time.
 test("preserves original capture timestamps across later workspace saves", async ({ page }) => {
   // Open a fresh profile so captured identities are deterministic for this test only.
