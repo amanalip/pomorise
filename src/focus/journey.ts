@@ -219,6 +219,8 @@ export interface ProgressSummary {
   todayMinutes: number;
   // Count focus sessions completed during the trailing seven local calendar days.
   weekSessions: number;
+  // Average every rated session so reflection effort becomes a gentle private signal.
+  averageFocusRating: number | null;
   // Close the progress summary after its deterministic semantic values.
 }
 
@@ -240,7 +242,11 @@ export function summarizeProgress(sessions: SessionRecord[], now: number): Progr
   ).getTime();
   // Select today's immutable records once for both count and minute calculations.
   const todayRecords = sessions.filter((session) => session.completedAt >= todayStart);
-  // Return counts and minutes derived only from the supplied session records.
+  // Collect every non-null rating so the average reflects exactly the rated sessions.
+  const ratings = sessions
+    .map((session) => session.focusRating)
+    .filter((rating): rating is number => typeof rating === "number");
+  // Return counts, minutes, and the calm rating signal derived only from supplied records.
   return {
     todaySessions: todayRecords.length,
     todayMinutes: Math.round(
@@ -250,6 +256,12 @@ export function summarizeProgress(sessions: SessionRecord[], now: number): Progr
       ) / 60,
     ),
     weekSessions: sessions.filter((session) => session.completedAt >= weekStart).length,
+    // Round to one decimal so the private summary reads gently instead of clinically.
+    averageFocusRating:
+      ratings.length > 0
+        ? Math.round((ratings.reduce((total, rating) => total + rating, 0) / ratings.length) * 10) /
+          10
+        : null,
   };
   // Close the progress calculation after returning its semantic summary.
 }

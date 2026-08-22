@@ -94,16 +94,20 @@ describe("focus journey", () => {
       intention: "",
       taskTitle: null,
       nextStep: "",
-      focusRating: null,
+      focusRating: record.completedAt === now - 60_000 ? 4 : null,
       notes: "",
       reflectionStatus: "skipped" as const,
     }));
-    // Derive counts and honest focused minutes including continued overtime work.
+    // Derive counts, honest focused minutes, and the gentle average of rated sessions.
     expect(summarizeProgress(sessions, now)).toEqual({
       todaySessions: 2,
       todayMinutes: 45,
       weekSessions: 3,
+      averageFocusRating: 4,
     });
+    // Prove unrated history produces a quiet null instead of a misleading zero.
+    const unrated = sessions.map((session) => ({ ...session, focusRating: null }));
+    expect(summarizeProgress(unrated, now).averageFocusRating).toBeNull();
   });
 
   // Verify focused overtime is credited exactly once without shrinking earlier credit.

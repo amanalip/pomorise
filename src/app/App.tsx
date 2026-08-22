@@ -1485,6 +1485,13 @@ export function App() {
                 <dt>Sessions in the last 7 days</dt>
                 <dd>{progressSummary.weekSessions}</dd>
               </div>
+              {/* Surface the gentle rating signal only once reflection ratings exist. */}
+              {progressSummary.averageFocusRating !== null && (
+                <div>
+                  <dt>Average focus rating</dt>
+                  <dd>{progressSummary.averageFocusRating.toFixed(1)} of 5</dd>
+                </div>
+              )}
             </dl>
             {/* Explain the current device-local privacy boundary without implying cloud sync. */}
             <Notice>
