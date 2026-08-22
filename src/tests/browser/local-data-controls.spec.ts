@@ -289,6 +289,23 @@ test("previews valid backup replacement and rejects malformed input without part
   // Close the import case after proving rejection safety, preview, commit, and derived UI.
 });
 
+// Verify oversized selections are refused before their contents are read into memory.
+test("rejects oversized backup files before reading them", async ({ page }) => {
+  // Open the application and navigate directly to the ownership controls.
+  await page.goto("./");
+  // Open the data panel so the hidden import control becomes available.
+  await openDataControls(page);
+  // Select a synthetic one-byte-too-large file without touching the real filesystem.
+  await page.locator('input[type="file"]').setInputFiles({
+    name: "oversized.json",
+    mimeType: "application/json",
+    buffer: Buffer.alloc(5_000_001, 32),
+  });
+  // Require the friendly size message instead of a frozen interface or parse error.
+  await expect(page.getByText("Backup files must be 5 MB or smaller.")).toBeVisible();
+  // Close the oversized-file case after proving the early size boundary holds.
+});
+
 // Verify each destructive scope removes exactly the records promised by its confirmation text.
 test("preserves tasks during history clearing and removes them during focus-data deletion", async ({
   page,

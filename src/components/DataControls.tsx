@@ -6,6 +6,7 @@ import { Button, Notice } from "./ui";
 import {
   createBackup,
   createSessionCsv,
+  MAX_BACKUP_BYTES,
   parseBackupText,
   replaceFromBackup,
   type PomoriseBackup,
@@ -112,6 +113,8 @@ export function DataControls({
     const file = input.files?.[0];
     if (!file) return;
     try {
+      // Refuse oversized files before reading so a huge selection cannot freeze the interface.
+      if (file.size > MAX_BACKUP_BYTES) throw new Error("Backup files must be 5 MB or smaller.");
       const backup = parseBackupText(await file.text());
       setPendingBackup(backup);
       setStatus("Backup checked. Review the preview before replacing local records.");
