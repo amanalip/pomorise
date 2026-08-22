@@ -21,6 +21,7 @@ import { Button, Card, Dialog, Field, Notice, SegmentedControl } from "../compon
 import type { LocalWorkspaceSnapshot } from "../data/database";
 // Import the bounded Phase 4 planning model without coupling it to timer accuracy.
 import {
+  countUnfinishedTasks,
   createInitialFocusPlan,
   MAX_ESTIMATED_SESSIONS,
   MAX_FOCUS_TASKS,
@@ -484,9 +485,9 @@ export function App() {
     const distraction = focusJourney.distractions.find((item) => item.id === distractionId);
     // Refuse stale review requests that no longer point to a pending thought.
     if (!distraction || distraction.resolution !== "pending") return;
-    // Convert only when the deliberately small task list still has capacity.
+    // Convert only when the deliberately small task list still has unfinished capacity.
     if (resolution === "task") {
-      if (focusPlan.tasks.length >= MAX_FOCUS_TASKS) {
+      if (countUnfinishedTasks(focusPlan.tasks) >= MAX_FOCUS_TASKS) {
         setJourneyStatus("The task list is full. Keep or dismiss this thought instead.");
         return;
       }
@@ -1014,7 +1015,7 @@ export function App() {
                       {/* Allow actions to wrap without changing their logical order. */}
                       <div>
                         <Button
-                          disabled={focusPlan.tasks.length >= MAX_FOCUS_TASKS}
+                          disabled={countUnfinishedTasks(focusPlan.tasks) >= MAX_FOCUS_TASKS}
                           onClick={() => resolveDistraction(distraction.id, "task")}
                           variant="secondary"
                         >

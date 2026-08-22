@@ -48,6 +48,11 @@ export const MAX_FOCUS_TASKS = 5;
 // Keep estimates useful and compact for this first task-planning slice.
 export const MAX_ESTIMATED_SESSIONS = 8;
 
+// Count only unfinished work so completed history never consumes active-plan capacity.
+export function countUnfinishedTasks(tasks: FocusTask[]): number {
+  return tasks.filter((task) => !task.completed).length;
+}
+
 // Provide a fresh empty plan for each application mount until Phase 5 adds durable storage.
 export function createInitialFocusPlan(): FocusPlanState {
   // Return new arrays so tests and application mounts never share mutable state.
@@ -76,7 +81,7 @@ export function reduceFocusPlan(state: FocusPlanState, action: FocusPlanAction):
         !Number.isInteger(action.estimatedSessions) ||
         action.estimatedSessions < 1 ||
         action.estimatedSessions > MAX_ESTIMATED_SESSIONS ||
-        state.tasks.filter((task) => !task.completed).length >= MAX_FOCUS_TASKS
+        countUnfinishedTasks(state.tasks) >= MAX_FOCUS_TASKS
       ) {
         return state;
       }

@@ -1,7 +1,12 @@
 // Import Vitest helpers for deterministic focus-planning checks.
 import { describe, expect, it } from "vitest";
 // Import the pure Phase 4 boundary so tests do not depend on rendered UI details.
-import { createInitialFocusPlan, MAX_FOCUS_TASKS, reduceFocusPlan } from "../../focus/planning";
+import {
+  countUnfinishedTasks,
+  createInitialFocusPlan,
+  MAX_FOCUS_TASKS,
+  reduceFocusPlan,
+} from "../../focus/planning";
 
 // Group the first Phase 4 planning rules under their visitor-facing purpose.
 describe("focus planning", () => {
@@ -88,6 +93,32 @@ describe("focus planning", () => {
     expect(next.tasks).toHaveLength(2);
     expect(next.tasks[0]?.completed).toBe(true);
     expect(next.activeTaskId).toBe(2);
+  });
+  // Keep completed history from consuming the small active-plan capacity.
+  it("allows new tasks when only completed history fills the list", () => {
+    // Fill the plan entirely with finished work like a long-lived browser profile would hold.
+    let state = createInitialFocusPlan();
+    for (let index = 1; index <= MAX_FOCUS_TASKS; index += 1) {
+      state = reduceFocusPlan(state, {
+        type: "ADD_TASK",
+        title: `Finished ${index}`,
+        estimatedSessions: 1,
+      });
+      state = reduceFocusPlan(state, { type: "COMPLETE_TASK", taskId: index });
+    }
+    // Confirm every stored task is complete before attempting the next addition.
+    expect(countUnfinishedTasks(state.tasks)).toBe(0);
+    // Accept one more task because capacity counts unfinished work only.
+    const revived = reduceFocusPlan(state, {
+      type: "ADD_TASK",
+      title: "Fresh intention",
+      estimatedSessions: 1,
+    });
+    // Keep all history visible while the new task becomes the current selection.
+    expect(revived.tasks).toHaveLength(MAX_FOCUS_TASKS + 1);
+    expect(countUnfinishedTasks(revived.tasks)).toBe(1);
+    expect(revived.activeTaskId).toBe(MAX_FOCUS_TASKS + 1);
+    // Close the completed-history capacity case after proving unfinished counting.
   });
   // Close the focus-planning group after protecting its initial vertical slice.
 });
