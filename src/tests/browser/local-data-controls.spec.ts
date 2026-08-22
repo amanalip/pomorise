@@ -404,6 +404,67 @@ test("resets only preferences and continues when storage protection is declined"
   // Close the preference and permission case after proving both graceful boundaries.
 });
 
+// Prove task update times reflect the task itself instead of unrelated workspace saves.
+test("keeps task updatedAt stable across unrelated saves and bumps on real change", async ({
+  page,
+}) => {
+  // Read helper that returns every stored task with its durable timestamps.
+  const readTasks = () =>
+    page.evaluate(
+      () =>
+        new Promise<{ title: string; createdAt: number; updatedAt: number }[]>(
+          (resolve, reject) => {
+            // Open the release database in read-only mode for inspection.
+            const request = indexedDB.open("pomorise-first-light");
+            request.onerror = () => reject(request.error ?? new Error("Database open failed."));
+            request.onsuccess = () => {
+              const transaction = request.result.transaction(["tasks"], "readonly");
+              const getAll = transaction.objectStore("tasks").getAll();
+              getAll.onsuccess = () => {
+                request.result.close();
+                resolve(
+                  (getAll.result as { title: string; createdAt: number; updatedAt: number }[]).map(
+                    ({ title, createdAt, updatedAt }) => ({ title, createdAt, updatedAt }),
+                  ),
+                );
+              };
+              getAll.onerror = () => reject(getAll.error ?? new Error("Task read failed."));
+            };
+          },
+        ),
+    );
+  // Open a fresh profile so the stored task set is deterministic for this test.
+  await page.goto("./");
+  // Let hydration finish so planning inputs accept visitor input.
+  await page.waitForTimeout(400);
+  // Create one small task through the ordinary planning form.
+  await page.getByRole("textbox", { name: "Add a small task" }).fill("Timestamp probe task");
+  await page.getByRole("button", { name: "Add task" }).click();
+  // Allow the creation transaction to commit before recording its update stamp.
+  await page.waitForTimeout(400);
+  // Capture the honest creation-time snapshot for later comparisons.
+  const afterCreation = await readTasks();
+  expect(afterCreation).toHaveLength(1);
+  // Trigger an unrelated workspace save through the optional intention field.
+  await page
+    .getByRole("textbox", { name: "What will you move forward?" })
+    .fill("Unrelated intention probe");
+  // Give the unrelated save time to complete before re-reading storage.
+  await page.waitForTimeout(400);
+  // Require the untouched task to keep exactly its original timestamps.
+  const afterUnrelatedSave = await readTasks();
+  expect(afterUnrelatedSave[0]).toEqual(afterCreation[0]);
+  // Change the actual task through its visible completion control.
+  await page.getByRole("button", { name: "Mark complete" }).click();
+  // Allow the changed-task transaction to commit before verifying the bump.
+  await page.waitForTimeout(400);
+  // Require only the update time to advance while creation history stays intact.
+  const afterCompletion = await readTasks();
+  expect(afterCompletion[0]?.createdAt).toBe(afterCreation[0]?.createdAt);
+  expect(afterCompletion[0]?.updatedAt).toBeGreaterThan(afterCreation[0]?.updatedAt as number);
+  // Close the timestamp-meaning case after proving both stability and honest bumps.
+});
+
 // Prove captured thoughts keep the moment they were captured instead of the latest save time.
 test("preserves original capture timestamps across later workspace saves", async ({ page }) => {
   // Open a fresh profile so captured identities are deterministic for this test only.

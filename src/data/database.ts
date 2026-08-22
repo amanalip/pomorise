@@ -216,6 +216,20 @@ export async function loadLocalWorkspace(
   };
 }
 
+// Detect a visitor-meaningful task change so unrelated saves keep the honest update time.
+function hasTaskMeaningChanged(previous: StoredTask | undefined, next: FocusTask): boolean {
+  // Treat a brand-new record as changed so its first update time reflects creation.
+  if (!previous) return true;
+  // Compare exactly the planning values visitors can observe and edit.
+  return (
+    previous.title !== next.title ||
+    previous.estimatedSessions !== next.estimatedSessions ||
+    previous.completed !== next.completed ||
+    previous.completedSessions !== next.completedSessions ||
+    previous.lastCarriedAt !== next.lastCarriedAt
+  );
+}
+
 // Persist one coherent reducer snapshot in a single all-or-nothing local transaction.
 export async function saveLocalWorkspace(
   snapshot: LocalWorkspaceSnapshot,
@@ -238,11 +252,16 @@ export async function saveLocalWorkspace(
       await database.distractions.clear();
       await database.reflections.clear();
       await database.tasks.bulkPut(
-        snapshot.plan.tasks.map((task) => ({
-          ...task,
-          createdAt: previousTasks.get(task.id)?.createdAt ?? now,
-          updatedAt: now,
-        })),
+        snapshot.plan.tasks.map((task) => {
+          // Find the stored twin so unchanged tasks keep their meaningful update time.
+          const previous = previousTasks.get(task.id);
+          return {
+            ...task,
+            createdAt: previous?.createdAt ?? now,
+            // Bump the update stamp only when this specific task actually changed.
+            updatedAt: hasTaskMeaningChanged(previous, task) ? now : (previous?.updatedAt ?? now),
+          };
+        }),
       );
       await database.sessions.bulkPut(
         snapshot.journey.sessions.map((session) => ({
