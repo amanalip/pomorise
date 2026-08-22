@@ -112,6 +112,19 @@ const timerPreferencesSchema = z.object({
   notificationsEnabled: z.boolean(),
 });
 
+// Probe whether non-sensitive timer choices can persist in this browser session.
+export function isTimerStorageAvailable(storage: Storage = window.localStorage): boolean {
+  try {
+    // Write and remove a tiny marker so quota or privacy blocking surfaces immediately.
+    const probeKey = `${TIMER_STORAGE_KEY}.probe`;
+    storage.setItem(probeKey, "1");
+    storage.removeItem(probeKey);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 // Read a valid saved timer, returning no state when storage is absent or malformed.
 export function loadTimerState(storage: Storage = window.localStorage): TimerState | null {
   try {

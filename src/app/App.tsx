@@ -46,7 +46,7 @@ import {
 } from "../timer/engine";
 import { modeLabel, useTimer } from "../timer/useTimer";
 // Import the reviewed defaults so preference reset has one shared source of truth.
-import { DEFAULT_TIMER_PREFERENCES } from "../timer/storage";
+import { DEFAULT_TIMER_PREFERENCES, isTimerStorageAvailable } from "../timer/storage";
 
 // Load higher-cost ownership controls only after a visitor opens their settings destination.
 const DataControls = lazy(async () => {
@@ -246,6 +246,8 @@ export function App() {
   const [storageLoadAttempt, setStorageLoadAttempt] = useState(0);
   // Version queued saves so imports and deletion can invalidate older pending snapshots safely.
   const workspacePersistenceEpoch = useRef(0);
+  // Probe browser storage once so blocked persistence can be explained honestly.
+  const [timerStorageAvailable] = useState(() => isTimerStorageAvailable());
 
   // Open settings as a modal without adding a custom focus-trap implementation.
   function openSettings() {
@@ -814,6 +816,16 @@ export function App() {
 
       {/* Place the timer workspace first and secondary context beside it on wider viewports. */}
       <main className="workspace" id="workspace" tabIndex={-1}>
+        {/* Explain blocked browser storage instead of implying timer recovery survives. */}
+        {!timerStorageAvailable && (
+          <Notice className="storage-warning" role="status" tone="warning">
+            <span>
+              Local browser storage is blocked, so the timer cannot remember this session or your
+              settings after the page closes. The timer itself still works.
+            </span>
+            {/* Close the honest storage warning without offering a retry that cannot help. */}
+          </Notice>
+        )}
         {/* Explain a failed local-storage boundary instead of silently implying persistence. */}
         {localDataState === "error" && (
           <Notice className="storage-warning" role="alert" tone="warning">
