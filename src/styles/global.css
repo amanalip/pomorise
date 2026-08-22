@@ -612,6 +612,15 @@ img {
   /* Close the linked field hint after defining its secondary hierarchy. */
 }
 
+/* Explain rejected field values in the same quiet scale as hints but with error ink. */
+.field__error {
+  /* Use the dedicated error token so the message reads as a correction, not decoration. */
+  color: var(--color-error);
+  font-size: 0.875rem;
+  font-weight: 600;
+  /* Close the inline field error after matching the shared guidance hierarchy. */
+}
+
 /* Center the future countdown as the shell's strongest status object. */
 .timer-display {
   /* Use grid so duration and state form one compact readable group. */
@@ -1799,12 +1808,17 @@ img {
 
 /* Keep every duration label visibly connected to its number input. */
 .duration-settings label {
-  display: grid;
-  grid-template-rows: 2.5rem 3.25rem;
+  display: flex;
+  flex-direction: column;
   gap: var(--space-2);
   color: var(--color-ink-muted);
   font-size: 0.875rem;
   font-weight: 700;
+}
+
+/* Preserve the label rhythm while leaving room for an optional inline error. */
+.duration-settings label > span:first-child {
+  min-height: 2.5rem;
 }
 
 /* Give every duration box the same complete grid-cell dimensions. */

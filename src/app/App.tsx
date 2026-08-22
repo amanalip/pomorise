@@ -38,6 +38,7 @@ import {
 import {
   formatDuration,
   LONG_BREAK_INTERVAL_LIMITS,
+  TIMER_LIMITS,
   type TimerMode,
   type TimerState,
 } from "../timer/engine";
@@ -66,6 +67,13 @@ const phaseLabels = {
   skipped: "Skipped",
   overtime: "Overtime",
 } as const;
+
+// Name each timer mode in plain visitor language for validation feedback.
+const modeNames: Record<TimerMode, string> = {
+  focus: "Focus",
+  shortBreak: "Short break",
+  longBreak: "Long break",
+};
 
 // Let every transient confirmation stay readable before it quietly leaves the interface.
 const STATUS_CLEAR_DELAY_MS = 6000;
@@ -190,6 +198,12 @@ export function App() {
   const [notificationStatus, setNotificationStatus] = useTransientStatus();
   // Report the result of the explicit local-sound confirmation beside its setting.
   const [soundStatus, setSoundStatus] = useTransientStatus();
+  // Explain rejected duration values beside the fields that produced them.
+  const [durationError, setDurationError] = useState<{ mode: TimerMode; message: string } | null>(
+    null,
+  );
+  // Explain a rejected rhythm value beside its own field.
+  const [rhythmError, setRhythmError] = useState("");
   // Hold the native dialog element so settings can use its modal browser behavior.
   const settingsDialogRef = useRef<HTMLDialogElement>(null);
   // Hold the native dialog element so sound confirmation uses the same modal behavior.
@@ -236,6 +250,9 @@ export function App() {
     });
     // Clear permission feedback because notifications return to their disabled default.
     setNotificationStatus("");
+    // Clear field validation feedback because defaults are always valid.
+    setDurationError(null);
+    setRhythmError("");
     // Close the exact-scope reset after coordinating both preference owners.
   }
 
@@ -508,7 +525,21 @@ export function App() {
 
   // Update one bounded duration and synchronize the idle clock for the selected mode.
   function updateDuration(mode: TimerMode, minutes: number) {
-    if (!Number.isInteger(minutes) || minutes < 1 || minutes > 180) return;
+    // Treat a cleared field as quiet mid-edit typing instead of an error to correct.
+    if (Number.isNaN(minutes)) return;
+    // Explain out-of-range values instead of silently keeping the previous duration.
+    if (
+      !Number.isInteger(minutes) ||
+      minutes < TIMER_LIMITS.minimumMinutes ||
+      minutes > TIMER_LIMITS.maximumMinutes
+    ) {
+      setDurationError({
+        mode,
+        message: `${modeNames[mode]} must be a whole number from ${TIMER_LIMITS.minimumMinutes} to ${TIMER_LIMITS.maximumMinutes}.`,
+      });
+      return;
+    }
+    setDurationError(null);
     const durations = { ...timer.preferences.durations, [mode]: minutes * 60 };
     timer.setPreferences({ ...timer.preferences, durations });
     if (timer.state.phase === "idle" && timer.state.mode === mode) {
@@ -518,13 +549,20 @@ export function App() {
 
   // Update the focus-session count that triggers each long break within its safe bounds.
   function updateLongBreakInterval(sessions: number) {
+    // Treat a cleared field as quiet mid-edit typing instead of an error to correct.
+    if (Number.isNaN(sessions)) return;
+    // Explain out-of-range values instead of silently keeping the previous rhythm.
     if (
       !Number.isInteger(sessions) ||
       sessions < LONG_BREAK_INTERVAL_LIMITS.minimum ||
       sessions > LONG_BREAK_INTERVAL_LIMITS.maximum
     ) {
+      setRhythmError(
+        `Choose a whole number from ${LONG_BREAK_INTERVAL_LIMITS.minimum} to ${LONG_BREAK_INTERVAL_LIMITS.maximum} focus sessions.`,
+      );
       return;
     }
+    setRhythmError("");
     timer.setPreferences({ ...timer.preferences, longBreakInterval: sessions });
   }
 
@@ -1481,6 +1519,7 @@ export function App() {
                   <label key={mode}>
                     <span>{label} minutes</span>
                     <input
+                      aria-invalid={durationError?.mode === mode || undefined}
                       className="field__control"
                       max={180}
                       min={1}
@@ -1488,6 +1527,12 @@ export function App() {
                       type="number"
                       value={timer.preferences.durations[mode] / 60}
                     />
+                    {/* Keep each rejected value's explanation beside its own field. */}
+                    {durationError?.mode === mode && (
+                      <span className="field__error" role="alert">
+                        {durationError.message}
+                      </span>
+                    )}
                   </label>
                 ))}
               </div>
@@ -1500,6 +1545,7 @@ export function App() {
               <label className="rhythm-setting">
                 <span>Long break after this many focus sessions</span>
                 <input
+                  aria-invalid={rhythmError ? true : undefined}
                   className="field__control"
                   max={LONG_BREAK_INTERVAL_LIMITS.maximum}
                   min={LONG_BREAK_INTERVAL_LIMITS.minimum}
@@ -1507,8 +1553,17 @@ export function App() {
                   type="number"
                   value={timer.preferences.longBreakInterval}
                 />
+                {/* Keep the rejected rhythm explanation beside its own field. */}
+                {rhythmError && (
+                  <span className="field__error" role="alert">
+                    {rhythmError}
+                  </span>
+                )}
               </label>
-              <span className="field__hint">Choose 1 to 8 focus sessions per cycle.</span>
+              {/* Hide the generic hint only while a specific correction is being shown. */}
+              {!rhythmError && (
+                <span className="field__hint">Choose 1 to 8 focus sessions per cycle.</span>
+              )}
             </fieldset>
 
             {/* Keep automatic flow optional until its final product behavior is approved. */}
