@@ -138,18 +138,18 @@ function getTimerShortcutHints(phase: TimerState["phase"]): TimerShortcutHint[] 
   if (phase === "running")
     return [
       { key: "Space", label: "pause" },
-      { key: "A", label: "add 1 min" },
-      { key: "S", label: "skip" },
+      { key: "Alt+A", label: "add 1 min" },
+      { key: "Alt+S", label: "skip" },
     ];
   // Offer resume, extra time, and skip while a session holds its remaining time.
   if (phase === "paused")
     return [
       { key: "Space", label: "resume" },
-      { key: "A", label: "add 1 min" },
-      { key: "S", label: "skip" },
+      { key: "Alt+A", label: "add 1 min" },
+      { key: "Alt+S", label: "skip" },
     ];
   // Offer skip during overtime because finishing is already available as a button.
-  if (phase === "overtime") return [{ key: "S", label: "skip" }];
+  if (phase === "overtime") return [{ key: "Alt+S", label: "skip" }];
   // Keep completion and skipped phases quiet so reflection choices stay deliberate.
   return [];
 }
@@ -309,8 +309,6 @@ export function App() {
   useEffect(() => {
     // Translate one key press into the same event its matching button would send.
     function handleTimerShortcut(event: KeyboardEvent) {
-      // Leave browser and operating system chord combinations completely untouched.
-      if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
       // Stay out of the way while any modal dialog owns the interaction.
       if (document.querySelector("dialog[open]")) return;
       // Let native controls keep their own Space, Enter, and arrow behavior.
@@ -321,8 +319,9 @@ export function App() {
       ) {
         return;
       }
-      // Mirror the visible primary control with the universal Space bar.
-      if (event.key === " ") {
+      // Mirror the visible primary control with an unmodified Space bar only.
+      if (!event.altKey && !event.ctrlKey && !event.metaKey && !event.shiftKey) {
+        if (event.code !== "Space") return;
         if (timer.state.phase === "idle") {
           event.preventDefault();
           timer.send({ type: "START", now: Date.now() }, `${modeLabel(timer.state.mode)} started.`);
@@ -336,29 +335,38 @@ export function App() {
         // Close the Space branch after covering every legal toggle state.
         return;
       }
-      // Treat lowercase and uppercase letters identically regardless of Caps Lock state.
-      const shortcutKey = event.key.toLowerCase();
-      // Repeat the reset button's guarded behavior for the R key.
-      if (shortcutKey === "r" && timer.state.phase !== "idle") {
-        timer.send({ type: "RESET" }, "Timer reset.");
-        return;
-      }
-      // Add one minute exactly when the visible Add 1 minute button is available.
-      if (
-        shortcutKey === "a" &&
-        (timer.state.phase === "running" || timer.state.phase === "paused")
-      ) {
-        timer.send({ type: "ADD_TIME", seconds: 60, now: Date.now() }, "One minute added.");
-        return;
-      }
-      // Skip only during the phases where skipping is a legal engine transition.
-      if (
-        shortcutKey === "s" &&
-        (timer.state.phase === "running" ||
-          timer.state.phase === "paused" ||
-          timer.state.phase === "overtime")
-      ) {
-        timer.send({ type: "SKIP", now: Date.now() }, "Session skipped.");
+      // Reserve secondary actions for Alt chords so plain typing can never trigger them.
+      if (!event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+      // Match physical keys so international layouts keep the same chords.
+      switch (event.code) {
+        // Repeat the reset button's guarded behavior for Alt+R.
+        case "KeyR":
+          if (timer.state.phase !== "idle") {
+            event.preventDefault();
+            timer.send({ type: "RESET" }, "Timer reset.");
+          }
+          break;
+        // Add one minute exactly when the visible Add 1 minute button is available.
+        case "KeyA":
+          if (timer.state.phase === "running" || timer.state.phase === "paused") {
+            event.preventDefault();
+            timer.send({ type: "ADD_TIME", seconds: 60, now: Date.now() }, "One minute added.");
+          }
+          break;
+        // Skip only during the phases where skipping is a legal engine transition.
+        case "KeyS":
+          if (
+            timer.state.phase === "running" ||
+            timer.state.phase === "paused" ||
+            timer.state.phase === "overtime"
+          ) {
+            event.preventDefault();
+            timer.send({ type: "SKIP", now: Date.now() }, "Session skipped.");
+          }
+          break;
+        // Leave every other Alt chord to the browser and operating system.
+        default:
+          break;
       }
       // Close the shortcut handler after leaving all other keys untouched.
     }
