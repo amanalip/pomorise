@@ -134,22 +134,28 @@ interface TimerShortcutHint {
 function getTimerShortcutHints(phase: TimerState["phase"]): TimerShortcutHint[] {
   // Offer the primary start action while the timer rests.
   if (phase === "idle") return [{ key: "Space", label: "start" }];
-  // Offer pause, extra time, and skip while a session actively counts down.
+  // Offer pause, extra time, skipping, and reset while a session actively counts down.
   if (phase === "running")
     return [
       { key: "Space", label: "pause" },
       { key: "Alt+A", label: "add 1 min" },
       { key: "Alt+S", label: "skip" },
+      { key: "Alt+R", label: "reset" },
     ];
-  // Offer resume, extra time, and skip while a session holds its remaining time.
+  // Offer resume, extra time, skipping, and reset while a session holds its remaining time.
   if (phase === "paused")
     return [
       { key: "Space", label: "resume" },
       { key: "Alt+A", label: "add 1 min" },
       { key: "Alt+S", label: "skip" },
+      { key: "Alt+R", label: "reset" },
     ];
-  // Offer skip during overtime because finishing is already available as a button.
-  if (phase === "overtime") return [{ key: "Alt+S", label: "skip" }];
+  // Offer skipping and reset during overtime because finishing remains a visible button.
+  if (phase === "overtime")
+    return [
+      { key: "Alt+S", label: "skip" },
+      { key: "Alt+R", label: "reset" },
+    ];
   // Keep completion and skipped phases quiet so reflection choices stay deliberate.
   return [];
 }
