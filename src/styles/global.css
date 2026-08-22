@@ -666,6 +666,44 @@ img {
   /* Close the timer action group after defining responsive behavior. */
 }
 
+/* Teach keyboard shortcuts as a quiet caption that never competes with the clock. */
+.timer-shortcuts {
+  /* Keep the hint group centered beneath the actions it explains. */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  /* Use a small gap so chips read as related but individually scannable. */
+  gap: var(--space-2);
+  margin: 0;
+  color: var(--color-ink-muted);
+  font-size: 0.8125rem;
+  /* Close the shortcut caption after defining its restrained presence. */
+}
+
+/* Pair each key cap with its plain-language action inside one quiet chip. */
+.timer-shortcuts__item {
+  /* Keep key and label on one line even while the group wraps between chips. */
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  /* Close one hint chip after its internal alignment. */
+}
+
+/* Render key caps as small physical keys without adding visual noise. */
+.timer-shortcuts kbd {
+  padding: 0.0625rem var(--space-2);
+  background: var(--color-surface-muted);
+  border: 1px solid var(--color-border);
+  border-bottom-width: 2px;
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-ink);
+  /* Close the key cap treatment after its tactile suggestion. */
+}
+
 /* Center the quiet live status beneath the timer controls. */
 .timer-status {
   /* Keep the feedback message centered with the action group it describes. */

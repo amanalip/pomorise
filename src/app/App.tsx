@@ -35,7 +35,7 @@ import {
   type DistractionResolution,
 } from "../focus/journey";
 // Import the timestamp-based timer interface and pure display helpers.
-import { formatDuration, type TimerMode } from "../timer/engine";
+import { formatDuration, type TimerMode, type TimerState } from "../timer/engine";
 import { modeLabel, useTimer } from "../timer/useTimer";
 // Import the reviewed defaults so preference reset has one shared source of truth.
 import { DEFAULT_TIMER_PREFERENCES } from "../timer/storage";
@@ -107,6 +107,38 @@ function useTransientStatus(): [string, (message: string, persist?: boolean) => 
   }, []);
 
   return [status, setTransientStatus];
+}
+
+// Describe one keyboard action so the visible hint always matches the wired behavior.
+interface TimerShortcutHint {
+  // Show the key cap exactly as a keyboard labels it.
+  key: string;
+  // Explain the action in the same calm voice as the buttons.
+  label: string;
+}
+
+// List only the shortcuts that are legal for the current timer phase.
+function getTimerShortcutHints(phase: TimerState["phase"]): TimerShortcutHint[] {
+  // Offer the primary start action while the timer rests.
+  if (phase === "idle") return [{ key: "Space", label: "start" }];
+  // Offer pause, extra time, and skip while a session actively counts down.
+  if (phase === "running")
+    return [
+      { key: "Space", label: "pause" },
+      { key: "A", label: "add 1 min" },
+      { key: "S", label: "skip" },
+    ];
+  // Offer resume, extra time, and skip while a session holds its remaining time.
+  if (phase === "paused")
+    return [
+      { key: "Space", label: "resume" },
+      { key: "A", label: "add 1 min" },
+      { key: "S", label: "skip" },
+    ];
+  // Offer skip during overtime because finishing is already available as a button.
+  if (phase === "overtime") return [{ key: "S", label: "skip" }];
+  // Keep completion and skipped phases quiet so reflection choices stay deliberate.
+  return [];
 }
 
 // Render the responsive shell around the reliable Phase 3 timer engine.
@@ -244,6 +276,69 @@ export function App() {
     settingsDialogRef.current?.close();
     // Close the settings-dismiss action after restoring the non-modal page.
   }
+
+  // Give keyboard visitors direct timer control without reaching for the pointer.
+  useEffect(() => {
+    // Translate one key press into the same event its matching button would send.
+    function handleTimerShortcut(event: KeyboardEvent) {
+      // Leave browser and operating system chord combinations completely untouched.
+      if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+      // Stay out of the way while the modal settings dialog owns the interaction.
+      if (settingsDialogRef.current?.open) return;
+      // Let native controls keep their own Space, Enter, and arrow behavior.
+      const target = event.target as HTMLElement | null;
+      if (
+        target?.closest("input, textarea, select, button, a, summary") ||
+        target?.isContentEditable
+      ) {
+        return;
+      }
+      // Mirror the visible primary control with the universal Space bar.
+      if (event.key === " ") {
+        if (timer.state.phase === "idle") {
+          event.preventDefault();
+          timer.send({ type: "START", now: Date.now() }, `${modeLabel(timer.state.mode)} started.`);
+        } else if (timer.state.phase === "running") {
+          event.preventDefault();
+          timer.send({ type: "PAUSE", now: Date.now() }, "Timer paused.");
+        } else if (timer.state.phase === "paused") {
+          event.preventDefault();
+          timer.send({ type: "RESUME", now: Date.now() }, "Timer resumed.");
+        }
+        // Close the Space branch after covering every legal toggle state.
+        return;
+      }
+      // Treat lowercase and uppercase letters identically regardless of Caps Lock state.
+      const shortcutKey = event.key.toLowerCase();
+      // Repeat the reset button's guarded behavior for the R key.
+      if (shortcutKey === "r" && timer.state.phase !== "idle") {
+        timer.send({ type: "RESET" }, "Timer reset.");
+        return;
+      }
+      // Add one minute exactly when the visible Add 1 minute button is available.
+      if (
+        shortcutKey === "a" &&
+        (timer.state.phase === "running" || timer.state.phase === "paused")
+      ) {
+        timer.send({ type: "ADD_TIME", seconds: 60, now: Date.now() }, "One minute added.");
+        return;
+      }
+      // Skip only during the phases where skipping is a legal engine transition.
+      if (
+        shortcutKey === "s" &&
+        (timer.state.phase === "running" ||
+          timer.state.phase === "paused" ||
+          timer.state.phase === "overtime")
+      ) {
+        timer.send({ type: "SKIP", now: Date.now() }, "Session skipped.");
+      }
+      // Close the shortcut handler after leaving all other keys untouched.
+    }
+    // Listen at the window level so shortcuts work from anywhere in the workspace.
+    window.addEventListener("keydown", handleTimerShortcut);
+    return () => window.removeEventListener("keydown", handleTimerShortcut);
+    // Rebind only when the phase-dependent behavior or sender identity changes.
+  }, [timer.send, timer.state.mode, timer.state.phase]);
 
   // Switch modes only while idle so active session history never changes meaning.
   function selectMode(mode: TimerMode) {
@@ -470,6 +565,9 @@ export function App() {
       !confirmed,
     );
   }
+
+  // Derive the visible keyboard hints from the same phase logic that gates the shortcuts.
+  const timerShortcutHints = getTimerShortcutHints(timer.state.phase);
 
   // Render the complete branded shell, responsive workspace, and appearance dialog.
   return (
@@ -743,6 +841,26 @@ export function App() {
               </Button>
             )}
           </div>
+
+          {/* Teach the keyboard shortcuts quietly so they never compete with the timer itself. */}
+          {timerShortcutHints.length > 0 && (
+            <p className="timer-shortcuts">
+              {/* Announce the group once instead of reading decorative separators aloud. */}
+              <span className="timer-shortcuts__label">Keyboard:</span>
+              {/* Show only the keys that work right now, in the order visitors will use them. */}
+              {timerShortcutHints.map((hint) => (
+                // Keep each stable key name as React's identity for its hint chip.
+                <span key={hint.key} className="timer-shortcuts__item">
+                  {/* Mark the key cap as a keyboard input for assistive technology. */}
+                  <kbd>{hint.key}</kbd>
+                  {/* Pair the key with its plain-language action. */}
+                  <span>{hint.label}</span>
+                  {/* Close one hint chip after its key and action. */}
+                </span>
+              ))}
+              {/* Close the shortcut hints after listing every available key. */}
+            </p>
+          )}
 
           {/* Offer one-step capture only while an active focus session can be interrupted. */}
           {timer.state.mode === "focus" &&
