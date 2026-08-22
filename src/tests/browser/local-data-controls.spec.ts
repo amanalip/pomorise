@@ -403,3 +403,50 @@ test("resets only preferences and continues when storage protection is declined"
   await expect(page.getByRole("button", { name: "Start focus" })).toBeEnabled();
   // Close the preference and permission case after proving both graceful boundaries.
 });
+
+// Prove captured thoughts keep the moment they were captured instead of the latest save time.
+test("preserves original capture timestamps across later workspace saves", async ({ page }) => {
+  // Open a fresh profile so captured identities are deterministic for this test only.
+  await page.goto("./");
+  // Let initial hydration finish so the capture form reflects real readiness.
+  await page.waitForTimeout(400);
+  // Begin a running session exactly like a visitor capturing mid-focus would.
+  await page.getByRole("button", { name: "Start focus" }).click();
+  // Capture the first distracting thought without stopping the timer.
+  await page.getByRole("textbox", { name: "Quick capture" }).fill("First timestamp probe");
+  await page.getByRole("button", { name: "Capture and continue" }).click();
+  // Wait long enough that an incorrect shared save time could never match the first.
+  await page.waitForTimeout(700);
+  // Capture a second thought so its honest capture time must be strictly later.
+  await page.getByRole("textbox", { name: "Quick capture" }).fill("Second timestamp probe");
+  await page.getByRole("button", { name: "Capture and continue" }).click();
+  // Give the second local transaction time to commit before inspecting storage.
+  await page.waitForTimeout(500);
+  // Read the stored thoughts directly so assertions cover durable records, not UI state.
+  const capturedAtValues = await page.evaluate(
+    () =>
+      new Promise<number[]>((resolve, reject) => {
+        // Open the release database in read-only mode for this inspection.
+        const request = indexedDB.open("pomorise-first-light");
+        // Surface open failures instead of hanging the browser test.
+        request.onerror = () => reject(request.error ?? new Error("Database open failed."));
+        request.onsuccess = () => {
+          // Read every distraction record inside one read-only transaction.
+          const transaction = request.result.transaction(["distractions"], "readonly");
+          const store = transaction.objectStore("distractions");
+          const getAll = store.getAll();
+          getAll.onsuccess = () => {
+            // Close the connection after collecting all capture timestamps.
+            request.result.close();
+            resolve((getAll.result as { capturedAt: number }[]).map((item) => item.capturedAt));
+          };
+          getAll.onerror = () => reject(getAll.error ?? new Error("Distraction read failed."));
+        };
+      }),
+  );
+  // Require both thoughts to be present before comparing their honest capture order.
+  expect(capturedAtValues).toHaveLength(2);
+  // The first thought must keep its earlier moment even after two later full saves.
+  expect(capturedAtValues[0]).toBeLessThan(capturedAtValues[1] as number);
+  // Close the timestamp-preservation case after proving durable capture history.
+});

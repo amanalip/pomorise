@@ -229,6 +229,10 @@ export async function saveLocalWorkspace(
       const previousTasks = new Map(
         (await database.tasks.toArray()).map((task) => [task.id, task]),
       );
+      // Remember original capture times so unrelated saves never rewrite thought history.
+      const previousDistractions = new Map(
+        (await database.distractions.toArray()).map((item) => [item.id, item]),
+      );
       await database.tasks.clear();
       await database.sessions.clear();
       await database.distractions.clear();
@@ -250,7 +254,11 @@ export async function saveLocalWorkspace(
         })),
       );
       await database.distractions.bulkPut(
-        snapshot.journey.distractions.map((item) => ({ ...item, capturedAt: now })),
+        snapshot.journey.distractions.map((item) => ({
+          ...item,
+          // Keep the moment the visitor actually captured this thought, not the latest save.
+          capturedAt: previousDistractions.get(item.id)?.capturedAt ?? now,
+        })),
       );
       await database.reflections.bulkPut(
         snapshot.journey.sessions.map((session) => ({
