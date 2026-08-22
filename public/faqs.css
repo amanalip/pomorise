@@ -1,3 +1,5 @@
+/* Define every Pomorise brand color once so the static FAQ page cannot drift internally.
+   Values mirror the approved tokens in src/styles/global.css and must be updated together. */
 :root {
   color-scheme: light dark;
   font-family:
@@ -8,8 +10,35 @@
     BlinkMacSystemFont,
     "Segoe UI",
     sans-serif;
-  color: #321b3b;
-  background: #fbf5ec;
+  /* Light ivory canvas shared with the application shell. */
+  --faq-canvas: #fbf5ec;
+  /* Raised ivory surface shared with application cards. */
+  --faq-surface: #fffaf3;
+  /* Deep plum ink derived from the approved logo. */
+  --faq-ink: #321b3b;
+  /* Softened plum used for secondary copy. */
+  --faq-ink-muted: #6f6073;
+  /* Quiet mauve hairline shared with application borders. */
+  --faq-border: #d9ccd8;
+  /* Darkened coral used for the eyebrow accent. */
+  --faq-accent-strong: #a42e39;
+  /* Plum-tinted shadow shared with application cards. */
+  --faq-shadow: rgb(50 27 59 / 6%);
+  color: var(--faq-ink);
+  background: var(--faq-canvas);
+}
+
+/* Swap only token values for dark visitors instead of restating every rule. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --faq-canvas: #170f1d;
+    --faq-surface: #24152d;
+    --faq-ink: #fff7ee;
+    --faq-ink-muted: #c8b9c9;
+    --faq-border: #544159;
+    --faq-accent-strong: #ffae72;
+    --faq-shadow: rgb(0 0 0 / 20%);
+  }
 }
 
 * {
@@ -19,7 +48,7 @@
 body {
   min-height: 100vh;
   margin: 0;
-  background: linear-gradient(180deg, #fffaf3, #fbf5ec);
+  background: linear-gradient(180deg, var(--faq-surface), var(--faq-canvas));
 }
 
 a {
@@ -34,7 +63,7 @@ a {
   justify-content: space-between;
   gap: 1rem;
   padding: 1.25rem clamp(1rem, 5vw, 3rem);
-  border-color: #d9ccd8;
+  border-color: var(--faq-border);
   border-style: solid;
   border-width: 0 0 1px;
 }
@@ -55,7 +84,7 @@ main {
 }
 
 .faq-intro > span {
-  color: #a42e39;
+  color: var(--faq-accent-strong);
   font-size: 0.8rem;
   font-weight: 850;
   letter-spacing: 0.08em;
@@ -70,7 +99,7 @@ h1 {
 
 .faq-intro p,
 details p {
-  color: #6f6073;
+  color: var(--faq-ink-muted);
   line-height: 1.65;
 }
 
@@ -81,10 +110,10 @@ details p {
 
 details {
   padding: 1.1rem 1.25rem;
-  background: #fffaf3;
-  border: 1px solid #d9ccd8;
+  background: var(--faq-surface);
+  border: 1px solid var(--faq-border);
   border-radius: 0.9rem;
-  box-shadow: 0 0.5rem 1.5rem rgb(50 27 59 / 6%);
+  box-shadow: 0 0.5rem 1.5rem var(--faq-shadow);
 }
 
 summary {
@@ -99,39 +128,8 @@ details p {
 
 .faq-footer {
   border-width: 1px 0 0;
-  color: #6f6073;
+  color: var(--faq-ink-muted);
   font-size: 0.9rem;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    color: #fff7ee;
-    background: #170f1d;
-  }
-
-  body {
-    background: linear-gradient(180deg, #24152d, #170f1d);
-  }
-
-  .faq-header,
-  .faq-footer,
-  details {
-    border-color: #544159;
-  }
-
-  .faq-intro > span {
-    color: #ffae72;
-  }
-
-  .faq-intro p,
-  details p,
-  .faq-footer {
-    color: #c8b9c9;
-  }
-
-  details {
-    background: #24152d;
-  }
 }
 
 @media (max-width: 36rem) {
