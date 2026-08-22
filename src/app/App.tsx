@@ -383,6 +383,28 @@ export function App() {
     // Rebind only when the phase-dependent behavior or sender identity changes.
   }, [timer.send, timer.state.mode, timer.state.phase]);
 
+  // Keep the browser tab honest about live progress without demanding attention.
+  useEffect(() => {
+    // Start from the calm product title used by idle, completed, and skipped moments.
+    let title = "Pomorise";
+    // Show a live clock while a session counts down or runs honestly into overtime.
+    if (timer.state.phase === "running" || timer.state.phase === "overtime") {
+      // Reuse the exact on-screen duration so the tab and display never disagree.
+      const overtimePrefix = timer.state.phase === "overtime" ? "+" : "";
+      const clock = formatDuration(
+        timer.state.phase === "overtime" ? timer.overtimeMs : timer.remainingMs,
+      );
+      // Keep break modes equally visible with one shared calm label.
+      const label = timer.state.mode === "focus" ? "Focus" : "Break";
+      title = `${overtimePrefix}${clock} · ${label} · Pomorise`;
+    } else if (timer.state.phase === "paused") {
+      // Lead with the state so an untouched paused timer reads clearly at a glance.
+      title = `Paused · ${formatDuration(timer.remainingMs)} · Pomorise`;
+    }
+    document.title = title;
+    // Refresh only when the visible clock or phase actually changes.
+  }, [timer.overtimeMs, timer.remainingMs, timer.state.mode, timer.state.phase]);
+
   // Switch modes only while idle so active session history never changes meaning.
   function selectMode(mode: TimerMode) {
     timer.send({ type: "SELECT_MODE", mode, seconds: timer.preferences.durations[mode] });

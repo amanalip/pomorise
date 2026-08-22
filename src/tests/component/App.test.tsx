@@ -82,6 +82,8 @@ describe("App", () => {
     expect(screen.getByRole("button", { name: "Pause" })).toBeEnabled();
     await user.click(screen.getByRole("button", { name: "Pause" }));
     expect(screen.getByRole("button", { name: "Resume" })).toBeEnabled();
+    // Protect the paused browser-tab title so background visitors keep honest context.
+    expect(document.title).toMatch(/^Paused · \d{2}:\d{2} · Pomorise$/);
   });
 
   // Keep restored timers from presenting the internal break cadence as a user-selected total.
