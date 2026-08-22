@@ -19,6 +19,8 @@ export default tseslint.config(
       "playwright-report/**",
       // Ignore Playwright's transient results because browser runs recreate them.
       "test-results/**",
+      // Ignore static public assets such as the FAQ page and its service-worker helper.
+      "public/**",
       // Ignore JavaScript configuration modules that remain formatting-checked and fully annotated.
       "*.config.js",
       // Close the ignored-path list after every generated or non-TypeScript boundary is explicit.

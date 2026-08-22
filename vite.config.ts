@@ -28,6 +28,8 @@ export default defineConfig({
         globPatterns: ["**/*.{js,css,html,png,svg,ico,webmanifest}"],
         cleanupOutdatedCaches: true,
         navigateFallback: "index.html",
+        // Load the local click handler because generated workers ship without one.
+        importScripts: ["sw-notification-click.js"],
         // Do not add runtime routes: personal IndexedDB and localStorage records never enter Cache Storage.
         runtimeCaching: [],
       },

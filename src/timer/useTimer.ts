@@ -55,6 +55,41 @@ function prepareCompletionTone(): void {
   if (completionAudioContext.state === "suspended") void completionAudioContext.resume();
 }
 
+// Deliver the completion alert through the service worker first because Android only
+// displays notifications created by a registered worker, then fall back to the page.
+async function showCompletionNotification(mode: TimerMode): Promise<void> {
+  // Share one title across delivery channels so every platform reads identically.
+  const title = "Pomorise session complete";
+  // Share one body sentence that invites selecting the alert to return to the timer.
+  const body = `${modeLabel(mode)} is complete. Select to return to your timer.`;
+  // Prefer the service-worker channel whenever this browser manages workers.
+  if ("serviceWorker" in navigator) {
+    try {
+      // Ask for the registration controlling this page instead of assuming a fixed scope.
+      const registration = await navigator.serviceWorker.getRegistration();
+      if (registration) {
+        // Show through the worker so Android and installed experiences receive alerts.
+        await registration.showNotification(title, { body, tag: "pomorise-session-complete" });
+        // Stop here so mobile platforms never attempt the unsupported page channel.
+        return;
+      }
+    } catch {
+      // Continue quietly to the fallback when the worker channel fails unexpectedly.
+    }
+  }
+  // Keep a guarded desktop fallback for browsers without a controllable service worker.
+  if (!("Notification" in window)) return;
+  // Build the fallback notification with the same stable tag so repeats replace cleanly.
+  const notification = new Notification(title, { body, tag: "pomorise-session-complete" });
+  // Treat selecting the notification as a request to return to the timer immediately.
+  notification.addEventListener("click", () => {
+    // Bring this application's tab or installed window back to the foreground.
+    window.focus();
+    // Close the notification after it has done its one job.
+    notification.close();
+  });
+}
+
 // Coordinate timestamp-derived display refreshes, persistence, recovery, and completion alerts.
 export function useTimer() {
   const [preferences, setPreferencesState] = useState<TimerPreferences>(() =>
@@ -137,18 +172,8 @@ export function useTimer() {
         "Notification" in window &&
         Notification.permission === "granted"
       ) {
-        // Build the completion notification with a stable tag so repeats replace cleanly.
-        const notification = new Notification("Pomorise session complete", {
-          body: `${modeLabel(state.mode)} is complete. Select to return to your timer.`,
-          tag: "pomorise-session-complete",
-        });
-        // Treat selecting the notification as a request to return to the timer immediately.
-        notification.addEventListener("click", () => {
-          // Bring this application's tab or installed window back to the foreground.
-          window.focus();
-          // Close the notification after it has done its one job.
-          notification.close();
-        });
+        // Deliver the alert through the service worker when possible, desktop fallback otherwise.
+        void showCompletionNotification(state.mode);
       }
     }
     previousPhaseRef.current = state.phase;

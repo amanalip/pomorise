@@ -2,15 +2,19 @@
 import userEvent from "@testing-library/user-event";
 // Import accessible render and query helpers that avoid React implementation details.
 import { render, screen, waitFor, within } from "@testing-library/react";
-// Import Vitest's grouping, assertion, and test functions for shell behavior.
-import { describe, expect, it } from "vitest";
+// Import Vitest's grouping, assertion, test functions, and spy tools for shell behavior.
+import { describe, expect, it, vi } from "vitest";
 // Import the real Phase 2 shell so tests protect visitor-visible product behavior.
 import { App } from "../../app/App";
 // Import the shared provider so component tests use the production theme boundary.
 import { ThemeProvider } from "../../components/ThemeProvider";
 // Import pure timer transitions and storage so completed-state journeys can start deterministically.
 import { createTimerState, timerReducer } from "../../timer/engine";
-import { saveTimerState } from "../../timer/storage";
+import {
+  DEFAULT_TIMER_PREFERENCES,
+  saveTimerPreferences,
+  saveTimerState,
+} from "../../timer/storage";
 
 // Render the shell inside the same appearance provider used by the browser entry.
 function renderApp() {
@@ -154,6 +158,55 @@ describe("App", () => {
       "Shape the project brief",
     );
     // Close the Phase 4 component case after its add, selection, and completion journey.
+  });
+
+  // Verify completion alerts prefer the service-worker channel that Android requires.
+  it("shows the completion alert through a registered service worker", async () => {
+    // Model a granted desktop-style Notification API for the fallback guard checks.
+    class GrantedNotification {
+      static permission = "granted";
+      constructor(public title: string) {}
+      addEventListener() {}
+    }
+    Object.defineProperty(window, "Notification", {
+      configurable: true,
+      value: GrantedNotification,
+    });
+    // Spy on the worker-scoped display method so delivery can be asserted directly.
+    const showNotification = vi.fn(async () => {});
+    // Install a minimal service-worker container whose registration owns notifications.
+    Object.defineProperty(navigator, "serviceWorker", {
+      configurable: true,
+      value: { getRegistration: () => Promise.resolve({ showNotification }) },
+    });
+    try {
+      // Enable the notification preference because the alert only fires when opted in.
+      saveTimerPreferences({ ...DEFAULT_TIMER_PREFERENCES, notificationsEnabled: true });
+      // Start a one-minute focus session whose deadline lands just after first paint.
+      const started = timerReducer(createTimerState("focus", 60), {
+        type: "START",
+        now: Date.now() - 59_700,
+      });
+      // Persist the running session so the production hook restores and keeps ticking.
+      saveTimerState(started);
+      // Render through the production hook so its completion effect runs once.
+      renderApp();
+      // Expect the worker channel to receive the stable tagged completion alert.
+      await waitFor(
+        () =>
+          expect(showNotification).toHaveBeenCalledWith("Pomorise session complete", {
+            body: "Focus session is complete. Select to return to your timer.",
+            tag: "pomorise-session-complete",
+          }),
+        { timeout: 3_000 },
+      );
+    } finally {
+      // Remove the injected container so later tests keep jsdom's default navigator.
+      Reflect.deleteProperty(navigator, "serviceWorker");
+      // Remove the granted Notification model for the same isolation reason.
+      Reflect.deleteProperty(window, "Notification");
+    }
+    // Close the service-worker notification test after verifying worker-scoped delivery.
   });
 
   // Verify explicit theme choices update the palette, approved logo, and local preference.
