@@ -95,6 +95,9 @@ const DURATION_PRESETS: { id: string; label: string; durations: TimerDurations }
 // Let every transient confirmation stay readable before it quietly leaves the interface.
 const STATUS_CLEAR_DELAY_MS = 6000;
 
+// Give the reset undo window enough time to be noticed without lingering.
+const RESET_UNDO_WINDOW_MS = 8000;
+
 // Hold one piece of interface feedback and clear it automatically unless marked persistent.
 function useTransientStatus(): [string, (message: string, persist?: boolean) => void] {
   // Store the current notice text as ordinary component state.
@@ -217,6 +220,10 @@ export function App() {
   const [reflectionNotes, setReflectionNotes] = useState("");
   // Track the keyboard-focused rating so older browsers can still show a focus ring.
   const [focusedRating, setFocusedRating] = useState<number | null>(null);
+  // Hold the pre-reset timer snapshot so a mistaken reset can be undone calmly.
+  const [resetUndoState, setResetUndoState] = useState<TimerState | null>(null);
+  // Remember the pending undo expiry so a newer reset always replaces the older window.
+  const resetUndoTimeout = useRef<number | null>(null);
   // Provide restrained feedback for capture and review actions outside timer announcements.
   const [journeyStatus, setJourneyStatus] = useTransientStatus();
   // Report notification support and permission results beside the explicit setting.
@@ -337,6 +344,34 @@ export function App() {
     // Close the settings-dismiss action after restoring the non-modal page.
   }
 
+  // Reset through the shared undo flow so an accidental click stays recoverable.
+  function requestReset() {
+    // Keep the guarded engine rule: idle timers have nothing to reset.
+    if (timer.state.phase === "idle") return;
+    // Snapshot the exact pre-reset state for the undo window.
+    setResetUndoState(timer.state);
+    // Replace any pending expiry so the newest reset owns one clear undo window.
+    if (resetUndoTimeout.current !== null) window.clearTimeout(resetUndoTimeout.current);
+    resetUndoTimeout.current = window.setTimeout(() => {
+      setResetUndoState(null);
+      resetUndoTimeout.current = null;
+    }, RESET_UNDO_WINDOW_MS);
+    // Perform the ordinary reset with its usual calm announcement.
+    timer.send({ type: "RESET" }, "Timer reset.");
+  }
+
+  // Reinstate the exact pre-reset snapshot when the visitor selects Undo in time.
+  function undoReset() {
+    // Ignore stale toasts whose snapshot has already expired.
+    if (resetUndoState === null) return;
+    if (resetUndoTimeout.current !== null) {
+      window.clearTimeout(resetUndoTimeout.current);
+      resetUndoTimeout.current = null;
+    }
+    timer.send({ type: "RESTORE", state: resetUndoState }, "Timer restored.");
+    setResetUndoState(null);
+  }
+
   // Give keyboard visitors direct timer control without reaching for the pointer.
   useEffect(() => {
     // Translate one key press into the same event its matching button would send.
@@ -376,7 +411,7 @@ export function App() {
         case "KeyR":
           if (timer.state.phase !== "idle") {
             event.preventDefault();
-            timer.send({ type: "RESET" }, "Timer reset.");
+            requestReset();
           }
           break;
         // Add one minute exactly when the visible Add 1 minute button is available.
@@ -944,11 +979,7 @@ export function App() {
 
           {/* Expose only actions legal for the current deterministic state. */}
           <div className="timer-actions">
-            <Button
-              disabled={timer.state.phase === "idle"}
-              onClick={() => timer.send({ type: "RESET" }, "Timer reset.")}
-              variant="quiet"
-            >
+            <Button disabled={timer.state.phase === "idle"} onClick={requestReset} variant="quiet">
               Reset
             </Button>
 
@@ -1068,6 +1099,16 @@ export function App() {
               </Button>
             )}
           </div>
+
+          {/* Offer one calm undo window so an accidental reset stays recoverable. */}
+          {resetUndoState && (
+            <p className="undo-toast" role="status" aria-label="Reset undo">
+              <span>Timer reset.</span>
+              <Button onClick={undoReset} variant="secondary">
+                Undo
+              </Button>
+            </p>
+          )}
 
           {/* Teach the keyboard shortcuts quietly so they never compete with the timer itself. */}
           {timerShortcutHints.length > 0 && (

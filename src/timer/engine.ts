@@ -39,6 +39,8 @@ export type TimerEvent =
   | { type: "PAUSE"; now: number }
   | { type: "RESUME"; now: number }
   | { type: "RESET" }
+  // Reinstate one trusted earlier snapshot so a reset can be undone calmly.
+  | { type: "RESTORE"; state: TimerState }
   | { type: "SKIP"; now: number }
   | { type: "ADD_TIME"; seconds: number; now: number }
   | { type: "TICK"; now: number }
@@ -139,6 +141,11 @@ export function timerReducer(state: TimerState, event: TimerEvent): TimerState {
     case "RESET": {
       if (state.phase === "idle") throw new InvalidTimerTransitionError(state.phase, event.type);
       return createTimerState(state.mode, state.plannedSeconds, state.sessionNumber);
+    }
+    case "RESTORE": {
+      // Accept only snapshots of the same mode so the visible cycle never changes meaning.
+      if (event.state.mode !== state.mode) return state;
+      return { ...event.state };
     }
     case "SKIP": {
       if (state.phase !== "running" && state.phase !== "paused" && state.phase !== "overtime") {

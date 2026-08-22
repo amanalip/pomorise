@@ -675,6 +675,22 @@ img {
   /* Close the timer action group after defining responsive behavior. */
 }
 
+/* Present the undo window as a quiet inline companion to the timer actions. */
+.undo-toast {
+  /* Keep the message and its single action on one centered row. */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  margin: var(--space-4) 0 0;
+}
+
+/* Let the toast text stay readable without competing with the countdown. */
+.undo-toast span {
+  color: var(--color-ink-muted);
+  font-weight: 700;
+}
+
 /* Teach keyboard shortcuts as a quiet caption that never competes with the clock. */
 .timer-shortcuts {
   /* Keep the hint group centered beneath the actions it explains. */

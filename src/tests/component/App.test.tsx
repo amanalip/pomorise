@@ -249,6 +249,28 @@ describe("App", () => {
     // Close the guard-rail case after proving each suppression boundary holds.
   });
 
+  // Verify a mistaken reset stays recoverable through its calm undo window.
+  it("offers undo after resetting and restores the paused session", async () => {
+    // Create a realistic interaction controller for the reset and undo journey.
+    const user = userEvent.setup();
+    // Render the shell before starting the recoverable journey.
+    renderApp();
+    // Start and pause one real session so the reset has meaningful state to protect.
+    await user.click(screen.getByRole("button", { name: "Start focus" }));
+    await user.click(screen.getByRole("button", { name: "Pause" }));
+    // Reset through the visible control and expect the undo toast to appear.
+    await user.click(screen.getByRole("button", { name: "Reset" }));
+    const undoToast = screen.getByRole("status", { name: "Reset undo" });
+    expect(undoToast).toHaveTextContent("Timer reset.");
+    // Require an explicit Undo affordance rather than an unrecoverable action.
+    await user.click(within(undoToast).getByRole("button", { name: "Undo" }));
+    // The paused session returns with its own Resume control available again.
+    expect(screen.getByRole("button", { name: "Resume" })).toBeEnabled();
+    // The undo toast leaves quietly once the snapshot has been reinstated.
+    expect(screen.queryByText("Timer reset.")).not.toBeInTheDocument();
+    // Close the reset-undo case after proving recovery end to end.
+  });
+
   // Verify reviewed duration rhythms apply across modes and honest custom states show.
   it("applies duration presets and reveals the custom state after edits", async () => {
     // Create a realistic interaction controller for dialog and field behavior.

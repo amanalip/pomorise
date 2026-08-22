@@ -47,6 +47,25 @@ describe("timer engine accuracy", () => {
     expect(getOvertimeMs(overtime, 151_000)).toBe(1_000);
   });
 
+  it("restores a same-mode snapshot so a reset can be undone", () => {
+    // Start a short session and pause it to build one meaningful pre-reset snapshot.
+    const started = timerReducer(createTimerState("focus", 60), { type: "START", now: 0 });
+    const paused = timerReducer(started, { type: "PAUSE", now: 10_000 });
+    // Reset through the ordinary transition and confirm the calm empty state.
+    const reset = timerReducer(paused, { type: "RESET" });
+    expect(reset.phase).toBe("idle");
+    // Restore the exact pre-reset snapshot and require its paused truth to survive.
+    const restored = timerReducer(reset, { type: "RESTORE", state: paused });
+    expect(restored).toEqual(paused);
+    // Refuse cross-mode snapshots so the visible cycle never changes meaning.
+    expect(
+      timerReducer(reset, {
+        type: "RESTORE",
+        state: createTimerState("shortBreak", 300),
+      }).mode,
+    ).toBe("focus");
+  });
+
   it("treats the duration maximum as an absolute per-session ceiling", () => {
     // Build a paused session exactly one minute below the absolute limit.
     const nearLimit = timerReducer(
