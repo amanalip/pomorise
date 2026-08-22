@@ -8,6 +8,29 @@
     <meta charset="UTF-8" />
     <!-- Match the layout viewport to the device width so later responsive work starts correctly. -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Apply the stored or system dark palette before first paint so returning dark visitors never see a light flash. -->
+    <script>
+      (() => {
+        // Start from no resolved theme so restricted storage still falls back to the system query.
+        let theme = null;
+        try {
+          // Read the same non-sensitive appearance key the application persists.
+          const stored = localStorage.getItem("pomorise.theme");
+          // Accept only explicit choices because system-following is decided below.
+          theme = stored === "dark" || stored === "light" ? stored : null;
+        } catch {
+          // Continue with the operating-system preference when storage is unavailable.
+        }
+        // Resolve system-following visitors through the standard media feature.
+        if (theme === null) {
+          theme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        }
+        // Stamp only the dark attribute because light tokens are the root default.
+        if (theme === "dark") {
+          document.documentElement.dataset.theme = "dark";
+        }
+      })();
+    </script>
     <!-- Use a compact approved identity derivative for browser tabs and installed-app launchers. -->
     <link rel="icon" type="image/png" sizes="192x192" href="/pomorise/icons/pomorise-192.png" />
     <!-- Give iOS a local high-resolution identity without making a network request. -->
