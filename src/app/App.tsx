@@ -213,6 +213,10 @@ export function App() {
   );
   // Explain a rejected rhythm value beside its own field.
   const [rhythmError, setRhythmError] = useState("");
+  // Keep in-progress duration typing local so live ticks never snap fields mid-edit.
+  const [durationDrafts, setDurationDrafts] = useState<Partial<Record<TimerMode, string>>>({});
+  // Keep the in-progress rhythm value local for the same calm editing behavior.
+  const [rhythmDraft, setRhythmDraft] = useState<string | null>(null);
   // Hold the native dialog element so settings can use its modal browser behavior.
   const settingsDialogRef = useRef<HTMLDialogElement>(null);
   // Hold the native dialog element so sound confirmation uses the same modal behavior.
@@ -262,6 +266,9 @@ export function App() {
     // Clear field validation feedback because defaults are always valid.
     setDurationError(null);
     setRhythmError("");
+    // Release every local draft so fields show the restored defaults immediately.
+    setDurationDrafts({});
+    setRhythmDraft(null);
     // Close the exact-scope reset after coordinating both preference owners.
   }
 
@@ -587,6 +594,12 @@ export function App() {
       return;
     }
     setDurationError(null);
+    // Release the local draft so the committed value normalizes in the field.
+    setDurationDrafts((drafts) => {
+      const next = { ...drafts };
+      delete next[mode];
+      return next;
+    });
     const durations = { ...timer.preferences.durations, [mode]: minutes * 60 };
     timer.setPreferences({ ...timer.preferences, durations });
     if (timer.state.phase === "idle" && timer.state.mode === mode) {
@@ -610,7 +623,21 @@ export function App() {
       return;
     }
     setRhythmError("");
+    // Release the local draft so the committed value normalizes in the field.
+    setRhythmDraft(null);
     timer.setPreferences({ ...timer.preferences, longBreakInterval: sessions });
+  }
+
+  // Accept raw typing for one duration while keeping validation on parsed values only.
+  function changeDurationDraft(mode: TimerMode, raw: string) {
+    setDurationDrafts((drafts) => ({ ...drafts, [mode]: raw }));
+    updateDuration(mode, raw.trim() === "" ? Number.NaN : Number(raw));
+  }
+
+  // Accept raw typing for the rhythm while keeping validation on parsed values only.
+  function changeRhythmDraft(raw: string) {
+    setRhythmDraft(raw);
+    updateLongBreakInterval(raw.trim() === "" ? Number.NaN : Number(raw));
   }
 
   // Request notification permission only in response to the visitor enabling the setting.
@@ -1589,9 +1616,10 @@ export function App() {
                       className="field__control"
                       max={180}
                       min={1}
-                      onChange={(event) => updateDuration(mode, event.currentTarget.valueAsNumber)}
+                      onChange={(event) => changeDurationDraft(mode, event.currentTarget.value)}
                       type="number"
-                      value={timer.preferences.durations[mode] / 60}
+                      // Show the local draft while typing and the committed value otherwise.
+                      value={durationDrafts[mode] ?? String(timer.preferences.durations[mode] / 60)}
                     />
                     {/* Keep each rejected value's explanation beside its own field. */}
                     {durationError?.mode === mode && (
@@ -1615,9 +1643,10 @@ export function App() {
                   className="field__control"
                   max={LONG_BREAK_INTERVAL_LIMITS.maximum}
                   min={LONG_BREAK_INTERVAL_LIMITS.minimum}
-                  onChange={(event) => updateLongBreakInterval(event.currentTarget.valueAsNumber)}
+                  onChange={(event) => changeRhythmDraft(event.currentTarget.value)}
                   type="number"
-                  value={timer.preferences.longBreakInterval}
+                  // Show the local draft while typing and the committed value otherwise.
+                  value={rhythmDraft ?? String(timer.preferences.longBreakInterval)}
                 />
                 {/* Keep the rejected rhythm explanation beside its own field. */}
                 {rhythmError && (
