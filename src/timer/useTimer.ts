@@ -161,6 +161,7 @@ export function useTimer() {
           now: Date.now(),
           durations: preferences.durations,
           startImmediately: true,
+          longBreakInterval: preferences.longBreakInterval,
         },
         "The next session started automatically.",
       );

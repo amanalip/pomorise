@@ -1813,6 +1813,31 @@ img {
   height: 3.25rem;
 }
 
+/* Keep the rhythm label connected to its number input like the duration cells. */
+.rhythm-setting {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 6.5rem;
+  align-items: end;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+  color: var(--color-ink-muted);
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+/* Give the rhythm input the same comfortable target as the duration boxes. */
+.rhythm-setting .field__control {
+  height: 3.25rem;
+}
+
+/* Stack the rhythm label above its input before the row becomes cramped. */
+@media (max-width: 36rem) {
+  .rhythm-setting {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
 /* Present optional timer preferences as full-width native checkbox targets. */
 .setting-toggle {
   display: grid;

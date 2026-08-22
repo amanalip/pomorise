@@ -8,6 +8,12 @@ export const DEFAULT_DURATIONS = {
   longBreak: 15 * 60,
 } as const;
 
+// Keep the familiar four-session rhythm as the default distance between long breaks.
+export const DEFAULT_LONG_BREAK_INTERVAL = 4;
+
+// Bound how many focus sessions a visitor may stack before the longer recovery break.
+export const LONG_BREAK_INTERVAL_LIMITS = { minimum: 1, maximum: 8 } as const;
+
 // Name the three session purposes used by the timer cycle.
 export type TimerMode = keyof typeof DEFAULT_DURATIONS;
 
@@ -38,7 +44,13 @@ export type TimerEvent =
   | { type: "TICK"; now: number }
   | { type: "START_OVERTIME"; now: number }
   | { type: "RECOVER_CLOCK"; now: number; remainingMs: number }
-  | { type: "ADVANCE"; now: number; durations: TimerDurations; startImmediately?: boolean }
+  | {
+      type: "ADVANCE";
+      now: number;
+      durations: TimerDurations;
+      startImmediately?: boolean;
+      longBreakInterval?: number;
+    }
   | { type: "SELECT_MODE"; mode: TimerMode; seconds: number }
   | { type: "SET_DURATION"; seconds: number };
 
@@ -86,10 +98,16 @@ export function getOvertimeMs(state: TimerState, now: number): number {
   return Math.max(0, now - state.overtimeStartedAt);
 }
 
-// Select the next familiar mode in a four-focus cycle.
-export function getNextMode(state: TimerState): { mode: TimerMode; sessionNumber: number } {
+// Select the next familiar mode using the visitor's chosen long-break rhythm.
+export function getNextMode(
+  state: TimerState,
+  longBreakInterval = DEFAULT_LONG_BREAK_INTERVAL,
+): { mode: TimerMode; sessionNumber: number } {
+  // Breaks always hand control back to the same numbered focus session.
   if (state.mode !== "focus") return { mode: "focus", sessionNumber: state.sessionNumber };
-  if (state.sessionNumber >= 4) return { mode: "longBreak", sessionNumber: 1 };
+  // Give the longer recovery break once the configured focus count has been reached.
+  if (state.sessionNumber >= longBreakInterval) return { mode: "longBreak", sessionNumber: 1 };
+  // Otherwise continue the current cycle through the shorter recovery break.
   return { mode: "shortBreak", sessionNumber: state.sessionNumber + 1 };
 }
 
@@ -179,7 +197,7 @@ export function timerReducer(state: TimerState, event: TimerEvent): TimerState {
       if (state.phase !== "completed" && state.phase !== "skipped" && state.phase !== "overtime") {
         throw new InvalidTimerTransitionError(state.phase, event.type);
       }
-      const next = getNextMode(state);
+      const next = getNextMode(state, event.longBreakInterval);
       const freshState = createTimerState(
         next.mode,
         event.durations[next.mode],

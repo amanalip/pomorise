@@ -2,7 +2,12 @@
 import { z } from "zod";
 // Import the public timer contract shared with the state machine and interface.
 import type { TimerDurations, TimerState } from "./engine";
-import { DEFAULT_DURATIONS, TIMER_LIMITS } from "./engine";
+import {
+  DEFAULT_DURATIONS,
+  DEFAULT_LONG_BREAK_INTERVAL,
+  LONG_BREAK_INTERVAL_LIMITS,
+  TIMER_LIMITS,
+} from "./engine";
 
 // Keep timer storage versioned and separate from the existing appearance preference.
 export const TIMER_STORAGE_KEY = "pomorise.timer.v1";
@@ -12,7 +17,8 @@ export const TIMER_PREFERENCES_KEY = "pomorise.timer-preferences.v1";
 const timerStateSchema = z.object({
   mode: z.enum(["focus", "shortBreak", "longBreak"]),
   phase: z.enum(["idle", "running", "paused", "completed", "skipped", "overtime"]),
-  sessionNumber: z.number().int().min(1).max(4),
+  // Accept every session number the configurable long-break rhythm can produce.
+  sessionNumber: z.number().int().min(1).max(LONG_BREAK_INTERVAL_LIMITS.maximum),
   plannedSeconds: z.number().int().positive(),
   remainingMs: z.number().nonnegative(),
   startedAt: z.number().nullable(),
@@ -24,6 +30,8 @@ const timerStateSchema = z.object({
 // Describe small non-personal timer choices that can be read synchronously at startup.
 export interface TimerPreferences {
   durations: TimerDurations;
+  // Count the focus sessions that pass before each longer recovery break begins.
+  longBreakInterval: number;
   automaticTransitions: boolean;
   soundEnabled: boolean;
   notificationsEnabled: boolean;
@@ -32,6 +40,7 @@ export interface TimerPreferences {
 // Supply conservative defaults while unresolved product choices remain visitor-controlled.
 export const DEFAULT_TIMER_PREFERENCES: TimerPreferences = {
   durations: { ...DEFAULT_DURATIONS },
+  longBreakInterval: DEFAULT_LONG_BREAK_INTERVAL,
   automaticTransitions: false,
   soundEnabled: false,
   notificationsEnabled: false,
@@ -56,6 +65,13 @@ const timerPreferencesSchema = z.object({
       .min(TIMER_LIMITS.minimumMinutes * 60)
       .max(TIMER_LIMITS.maximumMinutes * 60),
   }),
+  // Keep older saved preferences valid by supplying the familiar four-session default.
+  longBreakInterval: z
+    .number()
+    .int()
+    .min(LONG_BREAK_INTERVAL_LIMITS.minimum)
+    .max(LONG_BREAK_INTERVAL_LIMITS.maximum)
+    .default(DEFAULT_LONG_BREAK_INTERVAL),
   automaticTransitions: z.boolean(),
   soundEnabled: z.boolean(),
   notificationsEnabled: z.boolean(),

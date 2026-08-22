@@ -35,7 +35,12 @@ import {
   type DistractionResolution,
 } from "../focus/journey";
 // Import the timestamp-based timer interface and pure display helpers.
-import { formatDuration, type TimerMode, type TimerState } from "../timer/engine";
+import {
+  formatDuration,
+  LONG_BREAK_INTERVAL_LIMITS,
+  type TimerMode,
+  type TimerState,
+} from "../timer/engine";
 import { modeLabel, useTimer } from "../timer/useTimer";
 // Import the reviewed defaults so preference reset has one shared source of truth.
 import { DEFAULT_TIMER_PREFERENCES } from "../timer/storage";
@@ -490,6 +495,7 @@ export function App() {
         now: Date.now(),
         durations: timer.preferences.durations,
         startImmediately: timer.preferences.automaticTransitions,
+        longBreakInterval: timer.preferences.longBreakInterval,
       },
       skip ? "Reflection skipped. Your break is ready." : "Reflection saved. Your break is ready.",
     );
@@ -508,6 +514,18 @@ export function App() {
     if (timer.state.phase === "idle" && timer.state.mode === mode) {
       timer.send({ type: "SET_DURATION", seconds: minutes * 60 });
     }
+  }
+
+  // Update the focus-session count that triggers each long break within its safe bounds.
+  function updateLongBreakInterval(sessions: number) {
+    if (
+      !Number.isInteger(sessions) ||
+      sessions < LONG_BREAK_INTERVAL_LIMITS.minimum ||
+      sessions > LONG_BREAK_INTERVAL_LIMITS.maximum
+    ) {
+      return;
+    }
+    timer.setPreferences({ ...timer.preferences, longBreakInterval: sessions });
   }
 
   // Request notification permission only in response to the visitor enabling the setting.
@@ -803,6 +821,7 @@ export function App() {
                           type: "ADVANCE",
                           now: Date.now(),
                           durations: timer.preferences.durations,
+                          longBreakInterval: timer.preferences.longBreakInterval,
                         },
                         "Next session is ready.",
                       )
@@ -817,7 +836,12 @@ export function App() {
               <Button
                 onClick={() =>
                   timer.send(
-                    { type: "ADVANCE", now: Date.now(), durations: timer.preferences.durations },
+                    {
+                      type: "ADVANCE",
+                      now: Date.now(),
+                      durations: timer.preferences.durations,
+                      longBreakInterval: timer.preferences.longBreakInterval,
+                    },
                     "Next session is ready.",
                   )
                 }
@@ -829,7 +853,12 @@ export function App() {
               <Button
                 onClick={() =>
                   timer.send(
-                    { type: "ADVANCE", now: Date.now(), durations: timer.preferences.durations },
+                    {
+                      type: "ADVANCE",
+                      now: Date.now(),
+                      durations: timer.preferences.durations,
+                      longBreakInterval: timer.preferences.longBreakInterval,
+                    },
                     "Overtime ended. The next session is ready.",
                   )
                 }
@@ -1463,6 +1492,23 @@ export function App() {
                 ))}
               </div>
               <span className="field__hint">Choose 1 to 180 whole minutes.</span>
+            </fieldset>
+
+            {/* Let visitors choose their own distance between longer recovery breaks. */}
+            <fieldset className="settings-group">
+              <legend>Focus rhythm</legend>
+              <label className="rhythm-setting">
+                <span>Long break after this many focus sessions</span>
+                <input
+                  className="field__control"
+                  max={LONG_BREAK_INTERVAL_LIMITS.maximum}
+                  min={LONG_BREAK_INTERVAL_LIMITS.minimum}
+                  onChange={(event) => updateLongBreakInterval(event.currentTarget.valueAsNumber)}
+                  type="number"
+                  value={timer.preferences.longBreakInterval}
+                />
+              </label>
+              <span className="field__hint">Choose 1 to 8 focus sessions per cycle.</span>
             </fieldset>
 
             {/* Keep automatic flow optional until its final product behavior is approved. */}

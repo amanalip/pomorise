@@ -85,6 +85,34 @@ describe("timer state transitions", () => {
     expect(next).toMatchObject({ mode: "longBreak", phase: "running", sessionNumber: 1 });
   });
 
+  it("honors a custom long-break interval when advancing the cycle", () => {
+    // Complete the second focus session under a shorter two-session rhythm.
+    const focusTwo = timerReducer(
+      timerReducer(createTimerState("focus", 1, 2), { type: "START", now: 0 }),
+      { type: "TICK", now: 1_000 },
+    );
+    const longBreakNext = timerReducer(focusTwo, {
+      type: "ADVANCE",
+      now: 2_000,
+      durations: { ...DEFAULT_DURATIONS },
+      longBreakInterval: 2,
+    });
+    expect(longBreakNext).toMatchObject({ mode: "longBreak", sessionNumber: 1 });
+
+    // Complete the first focus session under a longer eight-session rhythm.
+    const focusOne = timerReducer(
+      timerReducer(createTimerState("focus", 1, 1), { type: "START", now: 0 }),
+      { type: "TICK", now: 1_000 },
+    );
+    const shortBreakNext = timerReducer(focusOne, {
+      type: "ADVANCE",
+      now: 2_000,
+      durations: { ...DEFAULT_DURATIONS },
+      longBreakInterval: 8,
+    });
+    expect(shortBreakNext).toMatchObject({ mode: "shortBreak", sessionNumber: 2 });
+  });
+
   it("accepts every legal phase-event pair and rejects every illegal pair", () => {
     const idle = createTimerState("focus", 60);
     const running = timerReducer(idle, { type: "START", now: 0 });
