@@ -29,9 +29,7 @@
         if (theme === "dark") {
           document.documentElement.dataset.theme = "dark";
           // Match browser chrome to the dark canvas before anything paints.
-          document
-            .querySelector('meta[name="theme-color"]')
-            ?.setAttribute("content", "#170f1d");
+          document.querySelector('meta[name="theme-color"]')?.setAttribute("content", "#170f1d");
         }
       })();
     </script>

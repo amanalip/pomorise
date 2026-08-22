@@ -1359,13 +1359,25 @@ img {
   overflow: auto;
 }
 
-/* Keep the completion action reachable while a longer data view scrolls beneath it. */
+/* Keep the completion action reachable and logically end-aligned while a longer data view scrolls beneath it. */
 .dialog__actions {
+  /* Use flex so additional future actions can join without rewriting layout. */
+  display: flex;
+  /* Place the current primary completion action at the logical end. */
+  justify-content: flex-end;
+  /* Stay pinned above scrolling modal content instead of drifting out of reach. */
   position: sticky;
+  /* Anchor against the dialog's own responsive padding so the bar meets its edge. */
   bottom: calc(-1 * clamp(var(--space-6), 5vw, var(--space-8)));
+  /* Keep the action bar above the content that scrolls underneath it. */
   z-index: 1;
+  /* Separate the notice and action group with the shared comfortable rhythm. */
+  margin-top: var(--space-6);
+  /* Stretch across the dialog padding so the gradient reaches both edges. */
   margin-inline: calc(-1 * clamp(var(--space-6), 5vw, var(--space-8)));
+  /* Pad the pinned bar back to the dialog's inner rhythm. */
   padding: var(--space-4) clamp(var(--space-6), 5vw, var(--space-8));
+  /* Fade the surface upward so scrolled content dissolves behind the pinned action. */
   background: linear-gradient(to top, var(--color-surface) 76%, transparent);
 }
 
@@ -1724,17 +1736,6 @@ img {
   /* Add restrained depth as a second non-color selection cue. */
   box-shadow: var(--shadow-sm);
   /* Close the selected segment state after applying surface, text, and depth. */
-}
-
-/* Align the modal's completion action with the logical end of the content. */
-.dialog__actions {
-  /* Use flex so additional future actions can join without rewriting layout. */
-  display: flex;
-  /* Place the current primary completion action at the logical end. */
-  justify-content: flex-end;
-  /* Separate the notice and action group with the shared comfortable rhythm. */
-  margin-top: var(--space-6);
-  /* Close the dialog action layout after defining alignment and spacing. */
 }
 
 /* Group duration fields under one native legend without browser-specific spacing. */
