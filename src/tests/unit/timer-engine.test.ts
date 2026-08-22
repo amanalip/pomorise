@@ -48,13 +48,13 @@ describe("timer engine accuracy", () => {
   });
 
   it("treats the duration maximum as an absolute per-session ceiling", () => {
-    // Build a paused session one minute below the absolute limit.
+    // Build a paused session exactly one minute below the absolute limit.
     const nearLimit = timerReducer(
       timerReducer(createTimerState("focus", TIMER_LIMITS.maximumMinutes * 60 - 60), {
         type: "START",
         now: 0,
       }),
-      { type: "PAUSE", now: 1_000 },
+      { type: "PAUSE", now: 0 },
     );
     // Expect the paused remaining time to sit exactly one minute under the ceiling.
     expect(nearLimit.remainingMs).toBe((TIMER_LIMITS.maximumMinutes - 1) * 60_000);
@@ -65,9 +65,14 @@ describe("timer engine accuracy", () => {
     expect(timerReducer(atLimit, { type: "ADD_TIME", seconds: 60, now: 3_000 })).toBe(atLimit);
     // Repeat the ceiling check while running so live target movement is capped too.
     const resumedAtLimit = timerReducer(atLimit, { type: "RESUME", now: 4_000 });
-    expect(timerReducer(resumedAtLimit, { type: "ADD_TIME", seconds: 60, now: 5_000 })).toBe(
-      resumedAtLimit,
-    );
+    const stillCapped = timerReducer(resumedAtLimit, {
+      type: "ADD_TIME",
+      seconds: 60,
+      now: 5_000,
+    });
+    // Running sessions may only refill elapsed time and must never exceed the ceiling.
+    expect(stillCapped.remainingMs).toBe(TIMER_LIMITS.maximumMinutes * 60_000);
+    expect(stillCapped.targetEndAt).toBe(5_000 + TIMER_LIMITS.maximumMinutes * 60_000);
   });
 });
 
