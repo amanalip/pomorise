@@ -137,8 +137,17 @@ export function useTimer() {
         "Notification" in window &&
         Notification.permission === "granted"
       ) {
-        new Notification("Pomorise session complete", {
-          body: `${modeLabel(state.mode)} is complete.`,
+        // Build the completion notification with a stable tag so repeats replace cleanly.
+        const notification = new Notification("Pomorise session complete", {
+          body: `${modeLabel(state.mode)} is complete. Select to return to your timer.`,
+          tag: "pomorise-session-complete",
+        });
+        // Treat selecting the notification as a request to return to the timer immediately.
+        notification.addEventListener("click", () => {
+          // Bring this application's tab or installed window back to the foreground.
+          window.focus();
+          // Close the notification after it has done its one job.
+          notification.close();
         });
       }
     }
