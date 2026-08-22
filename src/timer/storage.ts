@@ -32,7 +32,10 @@ export interface TimerPreferences {
   durations: TimerDurations;
   // Count the focus sessions that pass before each longer recovery break begins.
   longBreakInterval: number;
-  automaticTransitions: boolean;
+  // Begin each break on its own when the focus session that earned it completes.
+  automaticBreaks: boolean;
+  // Begin the next focus session on its own when a break completes.
+  automaticFocus: boolean;
   soundEnabled: boolean;
   notificationsEnabled: boolean;
 }
@@ -41,7 +44,8 @@ export interface TimerPreferences {
 export const DEFAULT_TIMER_PREFERENCES: TimerPreferences = {
   durations: { ...DEFAULT_DURATIONS },
   longBreakInterval: DEFAULT_LONG_BREAK_INTERVAL,
-  automaticTransitions: false,
+  automaticBreaks: false,
+  automaticFocus: false,
   soundEnabled: false,
   notificationsEnabled: false,
 };
@@ -72,7 +76,10 @@ const timerPreferencesSchema = z.object({
     .min(LONG_BREAK_INTERVAL_LIMITS.minimum)
     .max(LONG_BREAK_INTERVAL_LIMITS.maximum)
     .default(DEFAULT_LONG_BREAK_INTERVAL),
-  automaticTransitions: z.boolean(),
+  // Accept the legacy single toggle so older profiles migrate without surprises.
+  automaticTransitions: z.boolean().optional(),
+  automaticBreaks: z.boolean().optional(),
+  automaticFocus: z.boolean().optional(),
   soundEnabled: z.boolean(),
   notificationsEnabled: z.boolean(),
 });
@@ -104,7 +111,17 @@ export function loadTimerPreferences(storage: Storage = window.localStorage): Ti
     const raw = storage.getItem(TIMER_PREFERENCES_KEY);
     if (!raw) return DEFAULT_TIMER_PREFERENCES;
     const result = timerPreferencesSchema.safeParse(JSON.parse(raw));
-    return result.success ? result.data : DEFAULT_TIMER_PREFERENCES;
+    if (!result.success) return DEFAULT_TIMER_PREFERENCES;
+    const parsed = result.data;
+    return {
+      durations: parsed.durations,
+      longBreakInterval: parsed.longBreakInterval,
+      // Legacy profiles only ever auto-started focus, so migration preserves that meaning.
+      automaticBreaks: parsed.automaticBreaks ?? false,
+      automaticFocus: parsed.automaticFocus ?? parsed.automaticTransitions ?? false,
+      soundEnabled: parsed.soundEnabled,
+      notificationsEnabled: parsed.notificationsEnabled,
+    };
   } catch {
     return DEFAULT_TIMER_PREFERENCES;
   }

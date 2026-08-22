@@ -177,8 +177,10 @@ export function useTimer() {
       }
     }
     previousPhaseRef.current = state.phase;
-    if (state.phase !== "completed" || !preferences.automaticTransitions || state.mode === "focus")
-      return undefined;
+    if (state.phase !== "completed") return undefined;
+    // Honor the two independent automation choices per completed mode boundary.
+    if (state.mode === "focus" && !preferences.automaticBreaks) return undefined;
+    if (state.mode !== "focus" && !preferences.automaticFocus) return undefined;
     const timeoutId = window.setTimeout(() => {
       send(
         {
@@ -188,7 +190,9 @@ export function useTimer() {
           startImmediately: true,
           longBreakInterval: preferences.longBreakInterval,
         },
-        "The next session started automatically.",
+        state.mode === "focus"
+          ? "Your break started automatically."
+          : "The next session started automatically.",
       );
     }, 1_500);
     return () => window.clearTimeout(timeoutId);

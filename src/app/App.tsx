@@ -582,7 +582,7 @@ export function App() {
         type: "ADVANCE",
         now: Date.now(),
         durations: timer.preferences.durations,
-        startImmediately: timer.preferences.automaticTransitions,
+        startImmediately: timer.preferences.automaticBreaks,
         longBreakInterval: timer.preferences.longBreakInterval,
       },
       skip ? "Reflection skipped. Your break is ready." : "Reflection saved. Your break is ready.",
@@ -1726,21 +1726,37 @@ export function App() {
               )}
             </fieldset>
 
-            {/* Keep automatic flow optional until its final product behavior is approved. */}
+            {/* Let automatic flow be chosen per boundary so breaks and focus stay independent. */}
             <label className="setting-toggle">
               <input
-                checked={timer.preferences.automaticTransitions}
+                checked={timer.preferences.automaticBreaks}
                 onChange={(event) =>
                   timer.setPreferences({
                     ...timer.preferences,
-                    automaticTransitions: event.currentTarget.checked,
+                    automaticBreaks: event.currentTarget.checked,
                   })
                 }
                 type="checkbox"
               />
               <span>
-                <strong>Start the next session automatically</strong>
-                <small>Focus review stays available before an automatic break begins.</small>
+                <strong>Automatically start breaks</strong>
+                <small>When a focus session ends, its break begins on its own.</small>
+              </span>
+            </label>
+            <label className="setting-toggle">
+              <input
+                checked={timer.preferences.automaticFocus}
+                onChange={(event) =>
+                  timer.setPreferences({
+                    ...timer.preferences,
+                    automaticFocus: event.currentTarget.checked,
+                  })
+                }
+                type="checkbox"
+              />
+              <span>
+                <strong>Automatically start focus sessions</strong>
+                <small>When a break ends, the next focus session begins on its own.</small>
               </span>
             </label>
             <label className="setting-toggle">
