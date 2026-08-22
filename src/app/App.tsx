@@ -630,7 +630,7 @@ export function App() {
     if (Notification.permission === "denied") {
       timer.setPreferences({ ...timer.preferences, notificationsEnabled: false });
       setNotificationStatus(
-        "Chrome has blocked notifications for this site. Open the site controls beside the address bar, allow Notifications, then try again.",
+        "Your browser has blocked notifications for this site. Open the site controls beside the address bar, allow Notifications, then try again.",
         true,
       );
       return;
@@ -642,7 +642,7 @@ export function App() {
       setNotificationStatus(
         granted
           ? "Browser notifications are on."
-          : "Notifications were not allowed. If Chrome no longer shows the prompt, open the site controls beside the address bar and allow Notifications.",
+          : "Notifications were not allowed. If no prompt appears, open the site controls beside the address bar and allow Notifications.",
         !granted,
       );
     } catch {
@@ -673,7 +673,7 @@ export function App() {
   function confirmSoundEnable() {
     timer.setPreferences({ ...timer.preferences, soundEnabled: true });
     setSoundStatus(
-      "Local completion sound is on. Chrome has no separate sound permission prompt. If it stays silent, open the site controls beside the address bar and allow Sound.",
+      "Local completion sound is on. If it stays silent, check that the tab and device are not muted, or allow Sound in your browser's site controls.",
     );
     closeSoundDialog();
   }
@@ -1657,7 +1657,7 @@ export function App() {
               <span>
                 <strong>Play a local completion sound</strong>
                 <small>
-                  The tone is generated locally. Chrome manages sound through its site controls.
+                  The tone is generated locally. Sound follows your browser's site controls.
                 </small>
               </span>
             </label>
@@ -1680,9 +1680,7 @@ export function App() {
               />
               <span>
                 <strong>Show browser notifications</strong>
-                <small>
-                  Chrome asks when you turn this on unless the site was previously blocked.
-                </small>
+                <small>Your browser asks for permission when you turn this on.</small>
               </span>
             </label>
             {notificationStatus && <Notice tone="warning">{notificationStatus}</Notice>}
