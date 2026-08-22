@@ -230,7 +230,49 @@ function hasTaskMeaningChanged(previous: StoredTask | undefined, next: FocusTask
   );
 }
 
-// Persist one coherent reducer snapshot in a single all-or-nothing local transaction.
+// Detect a visitor-meaningful session change so history bytes stay stable between saves.
+function hasSessionMeaningChanged(
+  previous: StoredSession | undefined,
+  next: LocalWorkspaceSnapshot["journey"]["sessions"][number],
+): boolean {
+  // Treat a brand-new record as changed so its completion is written exactly once.
+  if (!previous) return true;
+  // Compare the completed-session fields that visitors can review later.
+  return (
+    previous.plannedSeconds !== next.plannedSeconds ||
+    previous.intention !== next.intention ||
+    previous.taskTitle !== next.taskTitle
+  );
+}
+
+// Detect a visitor-meaningful captured-thought change so saves touch only edited thoughts.
+function hasDistractionMeaningChanged(
+  previous: StoredDistraction | undefined,
+  next: LocalWorkspaceSnapshot["journey"]["distractions"][number],
+): boolean {
+  // Treat a brand-new record as changed so its first write carries its capture moment.
+  if (!previous) return true;
+  // Compare the wording and review outcome while ignoring the preserved timestamp.
+  return previous.text !== next.text || previous.resolution !== next.resolution;
+}
+
+// Detect a visitor-meaningful reflection change so quiet fields are never rewritten.
+function hasReflectionMeaningChanged(
+  previous: StoredReflection | undefined,
+  next: StoredReflection,
+): boolean {
+  // Treat a brand-new record as changed so its first save lands durably.
+  if (!previous) return true;
+  // Compare every optional reflection field visitors can author.
+  return (
+    previous.nextStep !== next.nextStep ||
+    previous.focusRating !== next.focusRating ||
+    previous.notes !== next.notes ||
+    previous.status !== next.status
+  );
+}
+
+// Persist only new, changed, or removed records inside one all-or-nothing local transaction.
 export async function saveLocalWorkspace(
   snapshot: LocalWorkspaceSnapshot,
   database: PomoriseDatabase = pomoriseDatabase,
@@ -240,58 +282,111 @@ export async function saveLocalWorkspace(
     "rw",
     [database.tasks, database.sessions, database.distractions, database.reflections, database.meta],
     async () => {
-      const previousTasks = new Map(
-        (await database.tasks.toArray()).map((task) => [task.id, task]),
-      );
-      // Remember original capture times so unrelated saves never rewrite thought history.
-      const previousDistractions = new Map(
-        (await database.distractions.toArray()).map((item) => [item.id, item]),
-      );
-      await database.tasks.clear();
-      await database.sessions.clear();
-      await database.distractions.clear();
-      await database.reflections.clear();
-      await database.tasks.bulkPut(
-        snapshot.plan.tasks.map((task) => {
-          // Find the stored twin so unchanged tasks keep their meaningful update time.
-          const previous = previousTasks.get(task.id);
+      const [storedTasks, storedSessions, storedDistractions, storedReflections, storedMeta] =
+        await Promise.all([
+          database.tasks.toArray(),
+          database.sessions.toArray(),
+          database.distractions.toArray(),
+          database.reflections.toArray(),
+          database.meta.get("focus-plan"),
+        ]);
+      const taskById = new Map(storedTasks.map((task) => [task.id, task]));
+      const sessionById = new Map(storedSessions.map((session) => [session.id, session]));
+      const distractionById = new Map(storedDistractions.map((item) => [item.id, item]));
+      const reflectionById = new Map(storedReflections.map((item) => [item.sessionId, item]));
+
+      // Write only tasks that are new or meaningfully different from stored records.
+      const changedTasks = snapshot.plan.tasks
+        .filter((task) => hasTaskMeaningChanged(taskById.get(task.id), task))
+        .map((task) => {
+          // Find the stored twin so unchanged identity fields keep their original stamps.
+          const previous = taskById.get(task.id);
           return {
             ...task,
             createdAt: previous?.createdAt ?? now,
             // Bump the update stamp only when this specific task actually changed.
-            updatedAt: hasTaskMeaningChanged(previous, task) ? now : (previous?.updatedAt ?? now),
+            updatedAt: now,
           };
-        }),
-      );
-      await database.sessions.bulkPut(
-        snapshot.journey.sessions.map((session) => ({
+        });
+      if (changedTasks.length > 0) await database.tasks.bulkPut(changedTasks);
+
+      // Write only sessions whose reviewed history actually differs from storage.
+      const changedSessions = snapshot.journey.sessions
+        .filter((session) =>
+          hasSessionMeaningChanged(sessionById.get(session.completedAt), session),
+        )
+        .map((session) => ({
           id: session.completedAt,
           completedAt: session.completedAt,
           plannedSeconds: session.plannedSeconds,
           intention: session.intention,
           taskTitle: session.taskTitle,
-        })),
-      );
-      await database.distractions.bulkPut(
-        snapshot.journey.distractions.map((item) => ({
+        }));
+      if (changedSessions.length > 0) await database.sessions.bulkPut(changedSessions);
+
+      // Write only captured thoughts that changed, preserving each honest capture moment.
+      const changedDistractions = snapshot.journey.distractions
+        .filter((item) => hasDistractionMeaningChanged(distractionById.get(item.id), item))
+        .map((item) => ({
           ...item,
-          // Keep the moment the visitor actually captured this thought, not the latest save.
-          capturedAt: previousDistractions.get(item.id)?.capturedAt ?? now,
-        })),
-      );
-      await database.reflections.bulkPut(
-        snapshot.journey.sessions.map((session) => ({
+          capturedAt: distractionById.get(item.id)?.capturedAt ?? now,
+        }));
+      if (changedDistractions.length > 0) await database.distractions.bulkPut(changedDistractions);
+
+      // Write only reflections whose optional authored fields differ from storage.
+      const changedReflections = snapshot.journey.sessions
+        .map((session) => ({
           sessionId: session.completedAt,
           nextStep: session.nextStep,
           focusRating: session.focusRating,
           notes: session.notes,
           status: session.reflectionStatus,
-        })),
+        }))
+        .filter((reflection) =>
+          hasReflectionMeaningChanged(reflectionById.get(reflection.sessionId), reflection),
+        );
+      if (changedReflections.length > 0) await database.reflections.bulkPut(changedReflections);
+
+      // Remove records the snapshot no longer contains so deletions stay transactional here too.
+      const keptTaskIds = new Set(snapshot.plan.tasks.map((task) => task.id));
+      const removedTaskIds = storedTasks
+        .filter((task) => !keptTaskIds.has(task.id))
+        .map((task) => task.id);
+      if (removedTaskIds.length > 0) await database.tasks.bulkDelete(removedTaskIds);
+      const keptSessionIds = new Set(
+        snapshot.journey.sessions.map((session) => session.completedAt),
       );
-      await database.meta.put({
-        key: "focus-plan",
-        value: { intention: snapshot.plan.intention, activeTaskId: snapshot.plan.activeTaskId },
-      });
+      const removedSessionIds = storedSessions
+        .filter((session) => !keptSessionIds.has(session.id))
+        .map((session) => session.id);
+      if (removedSessionIds.length > 0) await database.sessions.bulkDelete(removedSessionIds);
+      const keptDistractionIds = new Set(snapshot.journey.distractions.map((item) => item.id));
+      const removedDistractionIds = storedDistractions
+        .filter((item) => !keptDistractionIds.has(item.id))
+        .map((item) => item.id);
+      if (removedDistractionIds.length > 0)
+        await database.distractions.bulkDelete(removedDistractionIds);
+      const keptReflectionIds = new Set(
+        snapshot.journey.sessions.map((session) => session.completedAt),
+      );
+      const removedReflectionIds = storedReflections
+        .filter((reflection) => !keptReflectionIds.has(reflection.sessionId))
+        .map((reflection) => reflection.sessionId);
+      if (removedReflectionIds.length > 0)
+        await database.reflections.bulkDelete(removedReflectionIds);
+
+      // Update planning metadata only when its two small values actually change.
+      const planMetadata = {
+        intention: snapshot.plan.intention,
+        activeTaskId: snapshot.plan.activeTaskId,
+      };
+      if (
+        !storedMeta ||
+        storedMeta.value === undefined ||
+        JSON.stringify(storedMeta.value) !== JSON.stringify(planMetadata)
+      ) {
+        await database.meta.put({ key: "focus-plan", value: planMetadata });
+      }
     },
   );
 }
