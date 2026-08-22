@@ -466,9 +466,7 @@ test("keeps task updatedAt stable across unrelated saves and bumps on real chang
 });
 
 // Verify export, deletion, and import reproduce the exact same local workspace.
-test("round-trips tasks, intention, and captures through backup and restore", async ({
-  page,
-}) => {
+test("round-trips tasks, intention, and captures through backup and restore", async ({ page }) => {
   // Open a fresh profile and build one recognizable workspace through the ordinary UI.
   await page.goto("./");
   // Let hydration finish so planning inputs accept visitor input.
@@ -511,11 +509,9 @@ test("round-trips tasks, intention, and captures through backup and restore", as
   await expect(page.getByText("No task is selected. That is completely fine.")).toBeVisible();
   // Reopen ownership controls and import the exact downloaded file.
   await openDataControls(page);
-  await page.locator('input[type="file"]').setInputFiles(backupPath as string);
+  await page.locator('input[type="file"]').setInputFiles(backupPath);
   // Require the preview to disclose the complete restored inventory.
-  await expect(
-    page.getByText(/2 tasks · 0 sessions · 1 captured thoughts/),
-  ).toBeVisible();
+  await expect(page.getByText(/2 tasks · 0 sessions · 1 captured thoughts/)).toBeVisible();
   // Commit the replacement after reviewing the validated preview.
   await page.getByRole("button", { name: "Replace local records" }).click();
   // Close settings so restored visitor data can be compared with the original.

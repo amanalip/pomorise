@@ -59,6 +59,8 @@ describe("App", () => {
     );
     // Verify unavailable future transitions remain visible but cannot be activated.
     expect(screen.getByRole("button", { name: "Reset" })).toBeDisabled();
+    // Protect the descriptive idle title shared with the static document head.
+    expect(document.title).toBe("Pomorise – Private Pomodoro Focus Timer");
     // Close the branded shell test after checking identity, purpose, field, and empty state.
   });
 

@@ -393,8 +393,9 @@ export function App() {
 
   // Keep the browser tab honest about live progress without demanding attention.
   useEffect(() => {
-    // Start from the calm product title used by idle, completed, and skipped moments.
-    let title = "Pomorise";
+    // Start from the descriptive product title used by idle, completed, and skipped moments.
+    const idleTitle = "Pomorise – Private Pomodoro Focus Timer";
+    let title = idleTitle;
     // Show a live clock while a session counts down or runs honestly into overtime.
     if (timer.state.phase === "running" || timer.state.phase === "overtime") {
       // Reuse the exact on-screen duration so the tab and display never disagree.

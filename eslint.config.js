@@ -21,6 +21,8 @@ export default tseslint.config(
       "test-results/**",
       // Ignore static public assets such as the FAQ page and its service-worker helper.
       "public/**",
+      // Ignore small build-support Node scripts that remain formatting-checked.
+      "scripts/**",
       // Ignore JavaScript configuration modules that remain formatting-checked and fully annotated.
       "*.config.js",
       // Close the ignored-path list after every generated or non-TypeScript boundary is explicit.
