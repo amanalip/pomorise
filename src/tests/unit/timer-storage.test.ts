@@ -35,4 +35,23 @@ describe("timer recovery storage", () => {
     storage.setItem(TIMER_STORAGE_KEY, "not json");
     expect(loadTimerState(storage)).toBeNull();
   });
+
+  it("rejects states whose phase contradicts their timestamps", () => {
+    const storage = createStorage();
+    // Build a type-valid but logically impossible running timer with no boundaries.
+    const impossible = {
+      mode: "focus",
+      phase: "running",
+      sessionNumber: 1,
+      plannedSeconds: 1_500,
+      remainingMs: 1_500_000,
+      startedAt: null,
+      targetEndAt: null,
+      completedAt: null,
+      overtimeStartedAt: null,
+    };
+    // Require the invariant-aware schema to refuse recovery from the broken snapshot.
+    storage.setItem(TIMER_STORAGE_KEY, JSON.stringify(impossible));
+    expect(loadTimerState(storage)).toBeNull();
+  });
 });

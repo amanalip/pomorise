@@ -14,18 +14,46 @@ export const TIMER_STORAGE_KEY = "pomorise.timer.v1";
 export const TIMER_PREFERENCES_KEY = "pomorise.timer-preferences.v1";
 
 // Validate every persisted state field before allowing recovery into React.
-const timerStateSchema = z.object({
-  mode: z.enum(["focus", "shortBreak", "longBreak"]),
-  phase: z.enum(["idle", "running", "paused", "completed", "skipped", "overtime"]),
-  // Accept every session number the configurable long-break rhythm can produce.
-  sessionNumber: z.number().int().min(1).max(LONG_BREAK_INTERVAL_LIMITS.maximum),
-  plannedSeconds: z.number().int().positive(),
-  remainingMs: z.number().nonnegative(),
-  startedAt: z.number().nullable(),
-  targetEndAt: z.number().nullable(),
-  completedAt: z.number().nullable(),
-  overtimeStartedAt: z.number().nullable(),
-});
+const timerStateSchema = z
+  .object({
+    mode: z.enum(["focus", "shortBreak", "longBreak"]),
+    phase: z.enum(["idle", "running", "paused", "completed", "skipped", "overtime"]),
+    // Accept every session number the configurable long-break rhythm can produce.
+    sessionNumber: z.number().int().min(1).max(LONG_BREAK_INTERVAL_LIMITS.maximum),
+    plannedSeconds: z.number().int().positive(),
+    remainingMs: z.number().nonnegative(),
+    startedAt: z.number().nullable(),
+    targetEndAt: z.number().nullable(),
+    completedAt: z.number().nullable(),
+    overtimeStartedAt: z.number().nullable(),
+  })
+  // Check phase relationships so a malformed state can never reach the reducer.
+  .superRefine((state, ctx) => {
+    // A running timer must own both its start and its target boundary.
+    if (state.phase === "running" && (state.startedAt === null || state.targetEndAt === null)) {
+      ctx.addIssue({
+        code: "custom",
+        message: "A running timer requires startedAt and targetEndAt.",
+        path: ["phase"],
+      });
+    }
+    // A completed timer must know exactly when it completed.
+    if (state.phase === "completed" && state.completedAt === null) {
+      ctx.addIssue({
+        code: "custom",
+        message: "A completed timer requires completedAt.",
+        path: ["phase"],
+      });
+    }
+    // Overtime must know when the honest extra counting began.
+    if (state.phase === "overtime" && state.overtimeStartedAt === null) {
+      ctx.addIssue({
+        code: "custom",
+        message: "An overtime timer requires overtimeStartedAt.",
+        path: ["phase"],
+      });
+    }
+  });
 
 // Describe small non-personal timer choices that can be read synchronously at startup.
 export interface TimerPreferences {
