@@ -17,7 +17,7 @@
     "test:unit": "vitest run src/tests/unit",
     "test:component": "vitest run src/tests/component",
     "test:browser": "npm run build && playwright test",
-    "build": "tsc --noEmit && vite build",
+    "build": "tsc --noEmit && vite build && node scripts/inject-faq-metadata.mjs",
     "preview": "vite preview"
   },
   "dependencies": {
