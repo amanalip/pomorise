@@ -20,8 +20,8 @@ import {
   type LocalWorkspaceSnapshot,
 } from "../data/database";
 
-// Keep the application version visible without introducing a runtime network check.
-const APPLICATION_VERSION = "1.0.2";
+// Keep the application version visible by reading the value inlined from package.json.
+const APPLICATION_VERSION = __APP_VERSION__;
 
 // Describe the callback used to synchronize React after transactional database changes.
 interface DataControlsProps {

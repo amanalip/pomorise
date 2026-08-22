@@ -4,11 +4,17 @@ import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
 // Import Vitest's Vite-compatible helper so build and typed test options share one configuration.
 import { defineConfig } from "vitest/config";
+// Import the manifest of truth for the version so diagnostics never drift from the release.
+import packageJson from "./package.json" with { type: "json" };
 
 // Export the one build configuration used by local development and GitHub Actions.
 export default defineConfig({
   // Serve every production asset beneath the repository path required by GitHub Pages.
   base: "/pomorise/",
+  // Inline the declared package version wherever the interface reports it.
+  define: {
+    __APP_VERSION__: JSON.stringify(packageJson.version),
+  },
   // Enable React's JSX transform without adding any browser-time remote dependency.
   plugins: [
     react(),

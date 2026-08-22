@@ -1460,7 +1460,7 @@ export function App() {
       {/* Keep ownership and support links available at the bottom of every application view. */}
       <footer className="app-footer">
         {/* Identify the site owner and release year in one concise line. */}
-        <span>© 2026 Aman Ali Pogaku</span>
+        <span>© {new Date().getFullYear()} Aman Ali Pogaku</span>
         {/* Group project information links without competing with primary navigation. */}
         <nav aria-label="Project information">
           <a href="/pomorise/FAQs.html">FAQs</a>

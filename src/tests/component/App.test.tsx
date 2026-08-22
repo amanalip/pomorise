@@ -44,7 +44,7 @@ describe("App", () => {
     // Protect the plain-language empty task state used before Phase 4 adds stored tasks.
     expect(screen.getByText("No task is selected. That is completely fine.")).toBeVisible();
     // Keep ownership and help destinations available at the bottom of the application.
-    expect(screen.getByText("© 2026 Aman Ali Pogaku")).toBeVisible();
+    expect(screen.getByText(`© ${new Date().getFullYear()} Aman Ali Pogaku`)).toBeVisible();
     expect(screen.getByRole("link", { name: "FAQs" })).toHaveAttribute(
       "href",
       "/pomorise/FAQs.html",
