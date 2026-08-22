@@ -326,10 +326,11 @@ export function App() {
       // Stay out of the way while any modal dialog owns the interaction.
       if (document.querySelector("dialog[open]")) return;
       // Let native controls keep their own Space, Enter, and arrow behavior.
-      const target = event.target as HTMLElement | null;
+      const target = event.target;
       if (
-        target?.closest("input, textarea, select, button, a, summary") ||
-        target?.isContentEditable
+        target instanceof Element &&
+        (target.closest("input, textarea, select, button, a, summary") ||
+          (target instanceof HTMLElement && target.isContentEditable))
       ) {
         return;
       }

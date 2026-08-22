@@ -1,7 +1,7 @@
 // Import user-event so component tests exercise realistic pointer and keyboard sequences.
 import userEvent from "@testing-library/user-event";
 // Import accessible render and query helpers that avoid React implementation details.
-import { render, screen, waitFor, within } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 // Import Vitest's grouping, assertion, test functions, and spy tools for shell behavior.
 import { describe, expect, it, vi } from "vitest";
 // Import the real Phase 2 shell so tests protect visitor-visible product behavior.
@@ -209,6 +209,42 @@ describe("App", () => {
       Reflect.deleteProperty(window, "Notification");
     }
     // Close the service-worker notification test after verifying worker-scoped delivery.
+  });
+
+  // Verify shortcuts respect typing targets, open dialogs, and unavailable actions.
+  it("keeps keyboard shortcuts away from guarded contexts", async () => {
+    // Create a realistic interaction controller for focus and dialog sequences.
+    const user = userEvent.setup();
+    // Render a fresh shell with hydration completing before field interaction.
+    renderApp();
+    // Wait for the intention field so the typing guard has a real editable target.
+    const intentionField = screen.getByRole("textbox", { name: "What will you move forward?" });
+    await waitFor(() => expect(intentionField).toBeEnabled());
+    // Focus the editable field exactly like a visitor mid-sentence would.
+    await user.click(intentionField);
+    // Press Space while typing context owns the event and require no timer start.
+    fireEvent.keyDown(intentionField, { code: "Space" });
+    // The idle primary control must remain untouched by the suppressed shortcut.
+    expect(screen.getByRole("button", { name: "Start focus" })).toBeEnabled();
+    // Press an Alt chord while typing and require the same calm inaction.
+    fireEvent.keyDown(intentionField, { altKey: true, code: "KeyS" });
+    // No skip feedback may appear because editing text suppresses every chord.
+    expect(screen.queryByText("Session skipped.")).not.toBeInTheDocument();
+    // Open settings so the modal-dialog guard becomes the active context.
+    await user.click(screen.getByRole("button", { name: "Settings" }));
+    // Fire Space and reset chords at the window while the native dialog owns input.
+    fireEvent.keyDown(window, { code: "Space" });
+    fireEvent.keyDown(window, { altKey: true, code: "KeyR" });
+    // The dialog must remain open with no hidden timer transition applied.
+    expect(screen.getByRole("dialog", { name: "Settings" })).toBeVisible();
+    // Close settings through its explicit completion control.
+    await user.click(screen.getByRole("button", { name: "Done" }));
+    // Fire the reset chord during idle where Reset is intentionally unavailable.
+    fireEvent.keyDown(window, { altKey: true, code: "KeyR" });
+    // Require the idle phase to remain exactly as the visitor left it.
+    expect(screen.getByRole("button", { name: "Start focus" })).toBeEnabled();
+    expect(screen.queryByRole("button", { name: /Resume|Pause/ })).not.toBeInTheDocument();
+    // Close the guard-rail case after proving each suppression boundary holds.
   });
 
   // Verify explicit theme choices update the palette, approved logo, and local preference.
