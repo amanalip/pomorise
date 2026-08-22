@@ -241,6 +241,9 @@ export function DataControls({
               <span>
                 {pendingBackup.records.tasks.length} tasks · {pendingBackup.records.sessions.length}{" "}
                 sessions · {pendingBackup.records.distractions.length} captured thoughts
+                {pendingBackup.workspace
+                  ? " · intention and selected task included"
+                  : " · current intention stays"}
               </span>
             </div>
             <div className="data-actions">

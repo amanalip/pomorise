@@ -44,6 +44,23 @@ describe("Phase 5 local backup boundary", () => {
     );
   });
 
+  // Accept workspace metadata while keeping older workspace-free backups importable.
+  it("optionally carries the intention and selected task for complete restores", () => {
+    const enriched = parseBackupText(
+      JSON.stringify({
+        ...validBackup(),
+        workspace: { intention: "Verify restore context", activeTaskId: null },
+      }),
+    );
+    expect(enriched.workspace).toEqual({
+      intention: "Verify restore context",
+      activeTaskId: null,
+    });
+    // Prove the original version-one shape remains valid without workspace metadata.
+    const legacy = parseBackupText(JSON.stringify(validBackup()));
+    expect(legacy.workspace).toBeUndefined();
+  });
+
   // Escape commas and quotation marks so visitor wording stays in the intended CSV cells.
   it("creates a spreadsheet-friendly session CSV", () => {
     const csv = createSessionCsv(parseBackupText(JSON.stringify(validBackup())).records.sessions);

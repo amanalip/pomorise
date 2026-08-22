@@ -71,6 +71,11 @@ function syntheticBackup() {
         },
       ],
     },
+    // Carry the workspace pointer so restores rebuild the exact planning context.
+    workspace: {
+      intention: "Synthetic release intention",
+      activeTaskId: 7,
+    },
   };
   // Close the deterministic backup builder after returning every required store.
 }
@@ -263,14 +268,24 @@ test("previews valid backup replacement and rejects malformed input without part
   await expect(page.locator('input[type="file"]')).toHaveValue("");
   // Require preview counts before the test is allowed to confirm replacement.
   await expect(page.getByText(/1 tasks · 1 sessions · 1 captured thoughts/)).toBeVisible();
+  // Require the preview to disclose that planning context travels with this backup.
+  await expect(page.getByText(/intention and selected task included/)).toBeVisible();
   // Confirm the explicit replacement action after validation and preview.
   await page.getByRole("button", { name: "Replace local records" }).click();
   // Require refreshed local counts from the committed transaction.
   await expect(page.getByLabel("Local record summary")).toContainText("1 tasks");
   // Close settings to inspect the imported visitor-facing task.
   await page.getByRole("button", { name: "Done" }).click();
-  // Require the imported task title after the reducers synchronize from trusted storage.
-  await expect(page.getByText("Synthetic release task", { exact: true })).toBeVisible();
+  // Require the imported task title inside the plan list after reducers synchronize.
+  await expect(
+    page.getByLabel("Unfinished tasks").getByText("Synthetic release task"),
+  ).toBeVisible();
+  // Require the selected-task marker so the workspace pointer proves part of the restore.
+  await expect(page.getByText("1 selected")).toBeVisible();
+  // Require the imported intention so workspace metadata proves part of the atomic restore.
+  await expect(page.getByRole("textbox", { name: "What will you move forward?" })).toHaveValue(
+    "Synthetic release intention",
+  );
   // Close the import case after proving rejection safety, preview, commit, and derived UI.
 });
 

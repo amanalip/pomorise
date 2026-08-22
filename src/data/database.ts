@@ -83,6 +83,15 @@ export const storedDistractionSchema = z.object({
   capturedAt: z.number().finite(),
 });
 
+// Validate the saved intention and current-task pointer shared by hydration and backups.
+export const planMetaSchema = z
+  .object({
+    intention: z.string().max(120),
+    activeTaskId: z.number().int().positive().nullable(),
+  })
+  // Treat missing or malformed planning metadata as the calm empty workspace instead of failing.
+  .catch({ intention: "", activeTaskId: null });
+
 // Extend Dexie with typed tables while leaving schema upgrades explicit below.
 export class PomoriseDatabase extends Dexie {
   tasks!: EntityTable<StoredTask, "id">;
@@ -161,13 +170,7 @@ export async function loadLocalWorkspace(
   const sessions = z.array(storedSessionSchema).parse(rawSessions);
   const distractions = z.array(storedDistractionSchema).parse(rawDistractions);
   const reflections = z.array(storedReflectionSchema).parse(rawReflections);
-  const planMetadata = z
-    .object({
-      intention: z.string().max(120),
-      activeTaskId: z.number().int().positive().nullable(),
-    })
-    .catch({ intention: "", activeTaskId: null })
-    .parse(planMeta?.value);
+  const planMetadata = planMetaSchema.parse(planMeta?.value);
   const reflectionBySession = new Map(reflections.map((item) => [item.sessionId, item]));
   const planTasks: FocusTask[] = tasks.map((task) => ({
     id: task.id,

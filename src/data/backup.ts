@@ -3,6 +3,7 @@ import { z } from "zod";
 // Reuse the exact database record validators so storage and backup boundaries cannot drift.
 import {
   DATA_SCHEMA_VERSION,
+  planMetaSchema,
   storedDistractionSchema,
   storedReflectionSchema,
   storedSessionSchema,
@@ -26,6 +27,8 @@ export const backupSchema = z.object({
     distractions: z.array(storedDistractionSchema).max(100_000),
     reflections: z.array(storedReflectionSchema).max(100_000),
   }),
+  // Carry the optional intention and selected task so restores rebuild the full workspace.
+  workspace: planMetaSchema.optional(),
 });
 
 // Export the inferred trusted contract for previews and transactional restore.
@@ -35,17 +38,21 @@ export type PomoriseBackup = z.infer<typeof backupSchema>;
 export async function createBackup(
   database: PomoriseDatabase = pomoriseDatabase,
 ): Promise<PomoriseBackup> {
+  const [tasks, sessions, distractions, reflections, planMeta] = await Promise.all([
+    database.tasks.toArray(),
+    database.sessions.toArray(),
+    database.distractions.toArray(),
+    database.reflections.toArray(),
+    database.meta.get("focus-plan"),
+  ]);
   const backup = {
     product: "Pomorise" as const,
     formatVersion: 1 as const,
     exportedAt: Date.now(),
     dataSchemaVersion: DATA_SCHEMA_VERSION,
-    records: {
-      tasks: await database.tasks.toArray(),
-      sessions: await database.sessions.toArray(),
-      distractions: await database.distractions.toArray(),
-      reflections: await database.reflections.toArray(),
-    },
+    records: { tasks, sessions, distractions, reflections },
+    // Include the workspace pointer so a restore returns the exact planning context.
+    workspace: planMetaSchema.parse(planMeta?.value),
   };
   return backupSchema.parse(backup);
 }
@@ -70,7 +77,7 @@ export async function replaceFromBackup(
   const trusted = backupSchema.parse(backup);
   await database.transaction(
     "rw",
-    [database.tasks, database.sessions, database.distractions, database.reflections],
+    [database.tasks, database.sessions, database.distractions, database.reflections, database.meta],
     async () => {
       await Promise.all([
         database.tasks.clear(),
@@ -82,6 +89,11 @@ export async function replaceFromBackup(
       await database.sessions.bulkPut(trusted.records.sessions);
       await database.distractions.bulkPut(trusted.records.distractions);
       await database.reflections.bulkPut(trusted.records.reflections);
+      // Restore the intention and selected task inside the same atomic transaction.
+      if (trusted.workspace) {
+        await database.meta.put({ key: "focus-plan", value: trusted.workspace });
+      }
+      // Leave existing planning metadata untouched when an older backup omits it.
     },
   );
 }
