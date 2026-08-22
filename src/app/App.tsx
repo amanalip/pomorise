@@ -8,6 +8,7 @@ import {
   useRef,
   useState,
   type FormEvent,
+  type KeyboardEvent as ReactKeyboardEvent,
 } from "react";
 // Import the approved dark logo as a locally bundled identity for the dark palette.
 import darkLogoUrl from "../../assets/logos/header_dark_mode_phase6.png";
@@ -497,6 +498,24 @@ export function App() {
     timer.state.mode,
     timer.state.plannedSeconds,
   ]);
+
+  // Move between the two settings tabs with the arrow keys the tabs pattern promises.
+  function handleSettingsTabKeys(event: ReactKeyboardEvent<HTMLDivElement>) {
+    // Treat the two-tab list as a simple ring for Home, End, Left, and Right.
+    const nextView =
+      event.key === "ArrowRight" || event.key === "End"
+        ? "data"
+        : event.key === "ArrowLeft" || event.key === "Home"
+          ? "preferences"
+          : null;
+    // Leave every other key to normal focus movement between dialog controls.
+    if (nextView === null) return;
+    event.preventDefault();
+    setSettingsView(nextView);
+    // Move real focus onto the newly selected tab so the pattern stays keyboard-first.
+    document.getElementById(nextView === "data" ? "data-tab" : "preferences-tab")?.focus();
+    // Close the tablist keyboard handler after its two-destination navigation.
+  }
 
   // Move keyboard focus to a selected first-level destination without trapping the visitor.
   function navigateTo(item: (typeof navigationItems)[number]) {
@@ -1602,13 +1621,19 @@ export function App() {
         title="Settings"
       >
         {/* Separate everyday preferences from higher-stakes data ownership controls. */}
-        <div className="settings-tabs" role="tablist" aria-label="Settings sections">
+        <div
+          className="settings-tabs"
+          role="tablist"
+          aria-label="Settings sections"
+          onKeyDown={handleSettingsTabKeys}
+        >
           <Button
             aria-controls="preferences-panel"
             aria-selected={settingsView === "preferences"}
             id="preferences-tab"
             onClick={() => setSettingsView("preferences")}
             role="tab"
+            tabIndex={settingsView === "preferences" ? 0 : -1}
             variant={settingsView === "preferences" ? "secondary" : "quiet"}
           >
             Preferences
@@ -1619,6 +1644,7 @@ export function App() {
             id="data-tab"
             onClick={() => setSettingsView("data")}
             role="tab"
+            tabIndex={settingsView === "data" ? 0 : -1}
             variant={settingsView === "data" ? "secondary" : "quiet"}
           >
             Data &amp; privacy
