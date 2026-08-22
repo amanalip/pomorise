@@ -18,6 +18,8 @@ export interface SessionRecord {
   completedAt: number;
   // Preserve the planned duration so progress minutes stay deterministic.
   plannedSeconds: number;
+  // Count honestly focused extra time so continued work is never silently erased.
+  overtimeSeconds: number;
   // Keep the optional intention that was active for this completed session.
   intention: string;
   // Keep the optional selected task wording without depending on later task edits.
@@ -64,6 +66,8 @@ export type FocusJourneyAction =
       intention: string;
       taskTitle: string | null;
     }
+  // Credit focused overtime to the exact session that earned it before leaving it.
+  | { type: "RECORD_OVERTIME"; completedAt: number; overtimeSeconds: number }
   // Save optional reflection values against one completed focus session.
   | {
       type: "SAVE_REFLECTION";
@@ -137,6 +141,7 @@ export function reduceFocusJourney(
           {
             completedAt: action.completedAt,
             plannedSeconds: Math.max(0, Math.round(action.plannedSeconds)),
+            overtimeSeconds: 0,
             intention: action.intention.slice(0, 120),
             taskTitle: action.taskTitle?.slice(0, 100) ?? null,
             nextStep: "",
@@ -145,6 +150,26 @@ export function reduceFocusJourney(
             reflectionStatus: "pending",
           },
         ],
+      };
+    }
+    // Update the exact session with honestly focused overtime before it is left behind.
+    case "RECORD_OVERTIME": {
+      // Ignore invalid boundaries or non-finite overtime instead of corrupting history.
+      if (!Number.isFinite(action.completedAt) || !Number.isFinite(action.overtimeSeconds)) {
+        return state;
+      }
+      // Keep the largest credited value so repeated exits never shrink real work.
+      const trustedOvertime = Math.max(0, Math.round(action.overtimeSeconds));
+      return {
+        ...state,
+        sessions: state.sessions.map((session) =>
+          session.completedAt === action.completedAt
+            ? {
+                ...session,
+                overtimeSeconds: Math.max(session.overtimeSeconds, trustedOvertime),
+              }
+            : session,
+        ),
       };
     }
     // Save a bounded optional reflection against its exact completed session.
@@ -219,7 +244,10 @@ export function summarizeProgress(sessions: SessionRecord[], now: number): Progr
   return {
     todaySessions: todayRecords.length,
     todayMinutes: Math.round(
-      todayRecords.reduce((seconds, session) => seconds + session.plannedSeconds, 0) / 60,
+      todayRecords.reduce(
+        (seconds, session) => seconds + session.plannedSeconds + session.overtimeSeconds,
+        0,
+      ) / 60,
     ),
     weekSessions: sessions.filter((session) => session.completedAt >= weekStart).length,
   };

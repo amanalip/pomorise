@@ -77,10 +77,18 @@ describe("focus journey", () => {
     const now = new Date(2026, 7, 20, 12).getTime();
     // Build synthetic records across today, the trailing week, and an older date.
     const sessions = [
-      { completedAt: now - 60_000, plannedSeconds: 1_500 },
-      { completedAt: now - 3_600_000, plannedSeconds: 900 },
-      { completedAt: new Date(2026, 7, 17, 12).getTime(), plannedSeconds: 1_500 },
-      { completedAt: new Date(2026, 7, 1, 12).getTime(), plannedSeconds: 1_500 },
+      { completedAt: now - 60_000, plannedSeconds: 1_500, overtimeSeconds: 300 },
+      { completedAt: now - 3_600_000, plannedSeconds: 900, overtimeSeconds: 0 },
+      {
+        completedAt: new Date(2026, 7, 17, 12).getTime(),
+        plannedSeconds: 1_500,
+        overtimeSeconds: 0,
+      },
+      {
+        completedAt: new Date(2026, 7, 1, 12).getTime(),
+        plannedSeconds: 1_500,
+        overtimeSeconds: 0,
+      },
     ].map((record) => ({
       ...record,
       intention: "",
@@ -90,12 +98,42 @@ describe("focus journey", () => {
       notes: "",
       reflectionStatus: "skipped" as const,
     }));
-    // Derive counts and minutes without storing any duplicate totals.
+    // Derive counts and honest focused minutes including continued overtime work.
     expect(summarizeProgress(sessions, now)).toEqual({
       todaySessions: 2,
-      todayMinutes: 40,
+      todayMinutes: 45,
       weekSessions: 3,
     });
+  });
+
+  // Verify focused overtime is credited exactly once without shrinking earlier credit.
+  it("records overtime against its own session for honest progress", () => {
+    // Use one stable timestamp as the timer completion boundary.
+    const completedAt = new Date(2026, 7, 20, 12).getTime();
+    // Record the on-time completion before the visitor chooses to continue working.
+    const recorded = reduceFocusJourney(createInitialFocusJourney(), {
+      type: "RECORD_SESSION",
+      completedAt,
+      plannedSeconds: 1_500,
+      intention: "",
+      taskTitle: null,
+    });
+    // Credit five honestly focused extra minutes when leaving the boundary.
+    const overtime = reduceFocusJourney(recorded, {
+      type: "RECORD_OVERTIME",
+      completedAt,
+      overtimeSeconds: 300,
+    });
+    // Keep the credited value on the matching session only.
+    expect(overtime.sessions[0]?.overtimeSeconds).toBe(300);
+    // Repeat a smaller stale value so late effects can never erase real work.
+    const repeated = reduceFocusJourney(overtime, {
+      type: "RECORD_OVERTIME",
+      completedAt,
+      overtimeSeconds: 30,
+    });
+    // Protect the larger honest total after the idempotent repeat.
+    expect(repeated.sessions[0]?.overtimeSeconds).toBe(300);
   });
   // Close the complete journey group after its deterministic behavior coverage.
 });

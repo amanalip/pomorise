@@ -532,6 +532,14 @@ export function App() {
   function finishReflection(skip: boolean) {
     // Require the exact completion boundary that owns this reflection.
     if (timer.state.completedAt === null) return;
+    // Credit focused overtime once, before the boundary leaves the visible timer.
+    if (timer.state.phase === "overtime" && timer.state.overtimeStartedAt !== null) {
+      updateFocusJourney({
+        type: "RECORD_OVERTIME",
+        completedAt: timer.state.completedAt,
+        overtimeSeconds: Math.round((Date.now() - timer.state.overtimeStartedAt) / 1_000),
+      });
+    }
     // Save the optional fields or record the visitor's deliberate skip.
     updateFocusJourney(
       skip

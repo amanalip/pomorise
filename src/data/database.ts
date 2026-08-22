@@ -62,6 +62,8 @@ export const storedSessionSchema = z.object({
   id: z.number().finite(),
   completedAt: z.number().finite(),
   plannedSeconds: z.number().int().nonnegative(),
+  // Accept older records that predate honest overtime tracking by supplying zero.
+  overtimeSeconds: z.number().int().nonnegative().default(0),
   intention: z.string().max(120),
   taskTitle: z.string().max(100).nullable(),
 });
@@ -185,6 +187,7 @@ export async function loadLocalWorkspace(
     return {
       completedAt: session.completedAt,
       plannedSeconds: session.plannedSeconds,
+      overtimeSeconds: session.overtimeSeconds,
       intention: session.intention,
       taskTitle: session.taskTitle,
       nextStep: reflection?.nextStep ?? "",
@@ -240,6 +243,7 @@ function hasSessionMeaningChanged(
   // Compare the completed-session fields that visitors can review later.
   return (
     previous.plannedSeconds !== next.plannedSeconds ||
+    previous.overtimeSeconds !== next.overtimeSeconds ||
     previous.intention !== next.intention ||
     previous.taskTitle !== next.taskTitle
   );
@@ -319,6 +323,7 @@ export async function saveLocalWorkspace(
           id: session.completedAt,
           completedAt: session.completedAt,
           plannedSeconds: session.plannedSeconds,
+          overtimeSeconds: session.overtimeSeconds,
           intention: session.intention,
           taskTitle: session.taskTitle,
         }));
