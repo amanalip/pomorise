@@ -149,26 +149,38 @@ export function DataControls({
       setStatus("This browser does not offer a persistent-storage request. Backups still work.");
       return;
     }
-    const granted = await navigator.storage.persist();
-    setPersistentState(granted ? "granted" : "best-effort");
-    setStatus(
-      granted
-        ? "Storage protection is on for this browser profile."
-        : "The browser kept best-effort storage. Exported backups remain the safest copy.",
-    );
+    try {
+      const granted = await navigator.storage.persist();
+      setPersistentState(granted ? "granted" : "best-effort");
+      setStatus(
+        granted
+          ? "Storage protection is on for this browser profile."
+          : "The browser kept best-effort storage. Exported backups remain the safest copy.",
+      );
+    } catch {
+      // Keep the interface calm when the browser refuses or fails the optional request.
+      setStatus(
+        "The storage-protection request could not be completed. Exported backups remain the safest copy.",
+      );
+    }
   }
 
   // Remove completed history after an inline confirmation while preserving tasks and preferences.
   async function confirmClearHistory() {
-    onWorkspaceMutationStart();
-    await clearLocalHistory();
-    const snapshot = await loadLocalWorkspace();
-    onWorkspaceChange(snapshot);
-    setConfirmation(null);
-    await refreshCounts();
-    setStatus(
-      "Session, reflection, and distraction history was deleted. Tasks and preferences remain.",
-    );
+    try {
+      onWorkspaceMutationStart();
+      await clearLocalHistory();
+      const snapshot = await loadLocalWorkspace();
+      onWorkspaceChange(snapshot);
+      setConfirmation(null);
+      await refreshCounts();
+      setStatus(
+        "Session, reflection, and distraction history was deleted. Tasks and preferences remain.",
+      );
+    } catch {
+      // Leave every record untouched and say so when the deletion cannot complete.
+      setStatus("History could not be deleted right now. Your records are unchanged.");
+    }
   }
 
   // Restore non-personal appearance and timer choices without changing tasks or completed history.
@@ -180,13 +192,18 @@ export function DataControls({
 
   // Remove all structured personal data only after a separate exact-scope confirmation.
   async function confirmDeleteEverything() {
-    onWorkspaceMutationStart();
-    await deleteAllLocalData();
-    const snapshot = await loadLocalWorkspace();
-    onWorkspaceChange(snapshot);
-    setConfirmation(null);
-    await refreshCounts();
-    setStatus("All tasks and history were deleted from this browser. Preferences remain.");
+    try {
+      onWorkspaceMutationStart();
+      await deleteAllLocalData();
+      const snapshot = await loadLocalWorkspace();
+      onWorkspaceChange(snapshot);
+      setConfirmation(null);
+      await refreshCounts();
+      setStatus("All tasks and history were deleted from this browser. Preferences remain.");
+    } catch {
+      // Keep every record and say so when the verified deletion cannot complete.
+      setStatus("Deletion could not be completed right now. Your records are unchanged.");
+    }
   }
 
   return (
