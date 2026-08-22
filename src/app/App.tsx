@@ -192,6 +192,8 @@ export function App() {
   const [reflectionNextStep, setReflectionNextStep] = useState("");
   const [reflectionRating, setReflectionRating] = useState<number | null>(null);
   const [reflectionNotes, setReflectionNotes] = useState("");
+  // Track the keyboard-focused rating so older browsers can still show a focus ring.
+  const [focusedRating, setFocusedRating] = useState<number | null>(null);
   // Provide restrained feedback for capture and review actions outside timer announcements.
   const [journeyStatus, setJourneyStatus] = useTransientStatus();
   // Report notification support and permission results beside the explicit setting.
@@ -1051,11 +1053,29 @@ export function App() {
                   <div>
                     {[1, 2, 3, 4, 5].map((rating) => (
                       // Give each bounded numeric option a native label and stable identity.
-                      <label key={rating}>
+                      <label
+                        key={rating}
+                        // Mirror selection and keyboard focus through classes that need no :has().
+                        className={
+                          [
+                            reflectionRating === rating ? "is-selected" : "",
+                            focusedRating === rating ? "is-focused" : "",
+                          ]
+                            .filter(Boolean)
+                            .join(" ") || undefined
+                        }
+                      >
                         <input
                           checked={reflectionRating === rating}
                           name="focus-rating"
+                          onBlur={() => setFocusedRating(null)}
                           onChange={() => setReflectionRating(rating)}
+                          onFocus={(event) => {
+                            // Reserve the ring for keyboard focus so pointer clicks stay calm.
+                            if (event.currentTarget.matches(":focus-visible")) {
+                              setFocusedRating(rating);
+                            }
+                          }}
                           type="radio"
                           value={rating}
                         />

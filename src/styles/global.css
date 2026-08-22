@@ -863,9 +863,17 @@ img {
 }
 
 /* Mark the chosen rating with a persistent non-motion treatment. */
-.rating-control label:has(input:checked) {
+.rating-control label:has(input:checked),
+/* Mirror the same treatment through a class so older browsers stay equally clear. */
+.rating-control label.is-selected {
   background: var(--color-accent-soft);
   border-color: var(--color-accent);
+}
+
+/* Give keyboard focus the shared ring even where the :has() selector is unavailable. */
+.rating-control label.is-focused {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
 }
 
 /* Keep the optional notes label and textarea visibly connected. */
