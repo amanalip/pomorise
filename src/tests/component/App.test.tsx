@@ -249,6 +249,30 @@ describe("App", () => {
     // Close the guard-rail case after proving each suppression boundary holds.
   });
 
+  // Verify reviewed duration rhythms apply across modes and honest custom states show.
+  it("applies duration presets and reveals the custom state after edits", async () => {
+    // Create a realistic interaction controller for dialog and field behavior.
+    const user = userEvent.setup();
+    // Render the shell before opening the preferences destination.
+    renderApp();
+    // Open the native settings dialog through its header action.
+    await user.click(screen.getByRole("button", { name: "Settings" }));
+    // Apply the deep work rhythm through its labeled preset control.
+    await user.click(screen.getByRole("button", { name: "Deep Work 50/10/20" }));
+    // Require every duration field to reflect the preset exactly.
+    expect(screen.getByRole("spinbutton", { name: "Focus minutes" })).toHaveValue(50);
+    expect(screen.getByRole("spinbutton", { name: "Short break minutes" })).toHaveValue(10);
+    expect(screen.getByRole("spinbutton", { name: "Long break minutes" })).toHaveValue(20);
+    // The pressed state marks the matching rhythm without relying on color alone.
+    expect(screen.getByRole("button", { name: "Deep Work 50/10/20" })).toBePressed();
+    // Edit one field so the values no longer match any reviewed rhythm.
+    await user.clear(screen.getByRole("spinbutton", { name: "Focus minutes" }));
+    await user.type(screen.getByRole("spinbutton", { name: "Focus minutes" }), "30");
+    // Require the custom label because honesty beats pretending a preset is active.
+    expect(screen.getByText("Custom")).toBeVisible();
+    // Close the preset case after proving apply, pressed-state, and custom detection.
+  });
+
   // Verify explicit theme choices update the palette, approved logo, and local preference.
   it("changes and persists appearance from the accessible settings dialog", async () => {
     // Create a realistic visitor interaction controller for dialog and radio behavior.

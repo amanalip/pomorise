@@ -40,6 +40,7 @@ import {
   formatDuration,
   LONG_BREAK_INTERVAL_LIMITS,
   TIMER_LIMITS,
+  type TimerDurations,
   type TimerMode,
   type TimerState,
 } from "../timer/engine";
@@ -75,6 +76,20 @@ const modeNames: Record<TimerMode, string> = {
   shortBreak: "Short break",
   longBreak: "Long break",
 };
+
+// Offer two reviewed duration rhythms so visitors can start from trusted shapes.
+const DURATION_PRESETS: { id: string; label: string; durations: TimerDurations }[] = [
+  {
+    id: "classic",
+    label: "Classic 25/5/15",
+    durations: { focus: 25 * 60, shortBreak: 5 * 60, longBreak: 15 * 60 },
+  },
+  {
+    id: "deep-work",
+    label: "Deep Work 50/10/20",
+    durations: { focus: 50 * 60, shortBreak: 10 * 60, longBreak: 20 * 60 },
+  },
+];
 
 // Let every transient confirmation stay readable before it quietly leaves the interface.
 const STATUS_CLEAR_DELAY_MS = 6000;
@@ -577,6 +592,22 @@ export function App() {
     setReflectionRating(null);
     setReflectionNotes("");
     // Close the reflection boundary after continuing the timer cycle.
+  }
+
+  // Apply one reviewed duration rhythm across all three modes at once.
+  function applyDurationPreset(preset: (typeof DURATION_PRESETS)[number]) {
+    // Release local drafts because the preset owns every field value now.
+    setDurationDrafts({});
+    setDurationError(null);
+    // Copy nested durations so later edits cannot mutate the shared preset object.
+    timer.setPreferences({
+      ...timer.preferences,
+      durations: { ...preset.durations },
+    });
+    // Synchronize the visible idle clock when the current mode is affected.
+    if (timer.state.phase === "idle") {
+      timer.send({ type: "SET_DURATION", seconds: preset.durations[timer.state.mode] });
+    }
   }
 
   // Update one bounded duration and synchronize the idle clock for the selected mode.
@@ -1610,6 +1641,31 @@ export function App() {
             {/* Let visitors tune each mode within the centrally approved safety bounds. */}
             <fieldset className="settings-group">
               <legend>Session durations</legend>
+              {/* Offer trusted starting rhythms while honest custom values stay visible. */}
+              <div className="duration-presets" role="group" aria-label="Duration presets">
+                {DURATION_PRESETS.map((preset) => {
+                  // Detect an exact match so the active rhythm is always explicit.
+                  const isActive = (["focus", "shortBreak", "longBreak"] as const).every(
+                    (mode) => timer.preferences.durations[mode] === preset.durations[mode],
+                  );
+                  return (
+                    <Button
+                      key={preset.id}
+                      aria-pressed={isActive}
+                      onClick={() => applyDurationPreset(preset)}
+                      variant={isActive ? "secondary" : "quiet"}
+                    >
+                      {preset.label}
+                    </Button>
+                  );
+                })}
+                {/* Name the custom state whenever neither reviewed rhythm matches exactly. */}
+                {!DURATION_PRESETS.some((preset) =>
+                  (["focus", "shortBreak", "longBreak"] as const).every(
+                    (mode) => timer.preferences.durations[mode] === preset.durations[mode],
+                  ),
+                ) && <span className="duration-presets__custom">Custom</span>}
+              </div>
               <div className="duration-settings">
                 {(
                   [
