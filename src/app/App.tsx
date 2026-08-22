@@ -1,5 +1,14 @@
 // Import React reference and state tools for the settings dialog and shell-only demonstrations.
-import { lazy, Suspense, useEffect, useReducer, useRef, useState, type FormEvent } from "react";
+import {
+  lazy,
+  Suspense,
+  useCallback,
+  useEffect,
+  useReducer,
+  useRef,
+  useState,
+  type FormEvent,
+} from "react";
 // Import the approved dark logo as a locally bundled identity for the dark palette.
 import darkLogoUrl from "../../assets/logos/header_dark_mode_phase6.png";
 // Import the approved light logo as a locally bundled identity for the light palette.
@@ -53,6 +62,53 @@ const phaseLabels = {
   overtime: "Overtime",
 } as const;
 
+// Let every transient confirmation stay readable before it quietly leaves the interface.
+const STATUS_CLEAR_DELAY_MS = 6000;
+
+// Hold one piece of interface feedback and clear it automatically unless marked persistent.
+function useTransientStatus(): [string, (message: string, persist?: boolean) => void] {
+  // Store the current notice text as ordinary component state.
+  const [status, setStatus] = useState("");
+  // Remember the pending clear schedule so a newer message can replace an older one.
+  const statusClearTimeout = useRef<number | null>(null);
+
+  // Cancel any scheduled clear when the owning component unmounts.
+  useEffect(
+    () => () => {
+      // Remove the pending timeout so an unmounted owner never updates again.
+      if (statusClearTimeout.current !== null) window.clearTimeout(statusClearTimeout.current);
+      // Close the cleanup guard after covering both schedule states.
+    },
+    [],
+  );
+
+  // Publish a message and schedule its quiet removal unless the caller marks it persistent.
+  const setTransientStatus = useCallback((message: string, persist = false) => {
+    // Replace any earlier schedule so the newest message owns the full display window.
+    if (statusClearTimeout.current !== null) {
+      window.clearTimeout(statusClearTimeout.current);
+      statusClearTimeout.current = null;
+      // Close the replacement branch after handing the window to the new message.
+    }
+    // Show the new message immediately for sighted visitors and screen readers alike.
+    setStatus(message);
+    // Leave persistent guidance in place until the visitor's next action replaces it.
+    if (!persist && message !== "") {
+      // Schedule removal only after the polite message has had time to be read.
+      statusClearTimeout.current = window.setTimeout(() => {
+        // Return to the calm no-message state instead of leaving stale feedback behind.
+        setStatus("");
+        statusClearTimeout.current = null;
+        // Close the scheduled clear after restoring the quiet interface.
+      }, STATUS_CLEAR_DELAY_MS);
+      // Close the persistence branch after scheduling only true confirmations.
+    }
+    // Keep the publisher stable so effect dependency lists never churn.
+  }, []);
+
+  return [status, setTransientStatus];
+}
+
 // Render the responsive shell around the reliable Phase 3 timer engine.
 export function App() {
   // Read both stored and resolved theme values from the application-level provider.
@@ -92,11 +148,11 @@ export function App() {
   const [reflectionRating, setReflectionRating] = useState<number | null>(null);
   const [reflectionNotes, setReflectionNotes] = useState("");
   // Provide restrained feedback for capture and review actions outside timer announcements.
-  const [journeyStatus, setJourneyStatus] = useState("");
+  const [journeyStatus, setJourneyStatus] = useTransientStatus();
   // Report notification support and permission results beside the explicit setting.
-  const [notificationStatus, setNotificationStatus] = useState("");
+  const [notificationStatus, setNotificationStatus] = useTransientStatus();
   // Report the result of the explicit local-sound confirmation beside its setting.
-  const [soundStatus, setSoundStatus] = useState("");
+  const [soundStatus, setSoundStatus] = useTransientStatus();
   // Hold the native dialog element so settings can use its modal browser behavior.
   const settingsDialogRef = useRef<HTMLDialogElement>(null);
   // Keep preferences and data ownership as two calm, discoverable settings destinations.
@@ -365,6 +421,7 @@ export function App() {
     if (!("Notification" in window)) {
       setNotificationStatus(
         "This browser does not support notifications. The timer still works normally.",
+        true,
       );
       return;
     }
@@ -372,6 +429,7 @@ export function App() {
       timer.setPreferences({ ...timer.preferences, notificationsEnabled: false });
       setNotificationStatus(
         "Chrome has blocked notifications for this site. Open the site controls beside the address bar, allow Notifications, then try again.",
+        true,
       );
       return;
     }
@@ -383,11 +441,13 @@ export function App() {
         granted
           ? "Browser notifications are on."
           : "Notifications were not allowed. If Chrome no longer shows the prompt, open the site controls beside the address bar and allow Notifications.",
+        !granted,
       );
     } catch {
       timer.setPreferences({ ...timer.preferences, notificationsEnabled: false });
       setNotificationStatus(
         "Notifications could not be enabled. The timer still works normally without them.",
+        true,
       );
     }
   }
@@ -407,6 +467,7 @@ export function App() {
       confirmed
         ? "Local completion sound is on. Chrome has no separate sound permission prompt. If it stays silent, open the site controls beside the address bar and allow Sound."
         : "Sound permission was not granted. The timer remains silent.",
+      !confirmed,
     );
   }
 
