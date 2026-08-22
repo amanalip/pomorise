@@ -1849,6 +1849,21 @@ img {
   outline-offset: 3px;
 }
 
+/* Keep the sound preview attached to its toggle and dialog explanation alike. */
+.sound-preview {
+  /* Align the preview button into the reading flow of its surrounding surface. */
+  display: flex;
+  margin: 0 0 var(--space-4);
+  /* Close the sound preview group after defining its calm spacing. */
+}
+
+/* Inside preferences, align the preview with the checkbox column for a deliberate rhythm. */
+#preferences-panel .sound-preview {
+  /* Match the exact width of the native checkbox plus its shared gap. */
+  padding-left: calc(1.25rem + var(--space-3));
+  /* Close the scoped alignment override after matching its related control. */
+}
+
 /* Reflow the shell into one content column before either region becomes cramped. */
 @media (max-width: 58rem) {
   /* Keep footer content above the persistent compact navigation bar. */

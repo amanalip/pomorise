@@ -186,6 +186,18 @@ export function useTimer() {
     setAnnouncement("Timer recalculated using the changed device clock.");
   }, [refresh]);
 
+  // Let visitors preview the exact completion tone during an explicit settings gesture.
+  const playTestTone = useCallback(() => {
+    // Refuse quietly on browsers without Web Audio support.
+    if (!window.AudioContext) return;
+    // Reuse or create the shared context inside this visitor gesture so playback is allowed.
+    completionAudioContext ??= new window.AudioContext();
+    if (completionAudioContext.state === "suspended") void completionAudioContext.resume();
+    // Play the same short tone that announces real session completions.
+    playCompletionTone();
+    // Keep the preview stable because it depends only on browser capabilities.
+  }, []);
+
   return {
     state,
     preferences,
@@ -198,6 +210,7 @@ export function useTimer() {
     setPreferences,
     keepRemainingTime,
     useChangedClock,
+    playTestTone,
   };
 }
 

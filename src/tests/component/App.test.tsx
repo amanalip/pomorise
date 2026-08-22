@@ -1,9 +1,9 @@
 // Import user-event so component tests exercise realistic pointer and keyboard sequences.
 import userEvent from "@testing-library/user-event";
 // Import accessible render and query helpers that avoid React implementation details.
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 // Import Vitest's grouping, assertion, and test functions for shell behavior.
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 // Import the real Phase 2 shell so tests protect visitor-visible product behavior.
 import { App } from "../../app/App";
 // Import the shared provider so component tests use the production theme boundary.
@@ -177,12 +177,15 @@ describe("App", () => {
       "src",
       expect.stringContaining("dark_mode_phase6.png"),
     );
-    // Require an explicit browser confirmation before local completion sound becomes active.
-    const confirmSound = vi.spyOn(window, "confirm").mockReturnValue(true);
+    // Require an explicit in-app confirmation before local completion sound becomes active.
     await user.click(screen.getByRole("checkbox", { name: /Play a local completion sound/ }));
-    expect(confirmSound).toHaveBeenCalledOnce();
+    // Verify the calm in-app dialog replaces any blocking native browser prompt.
+    const soundDialog = screen.getByRole("dialog", { name: "Play a local completion sound" });
+    expect(soundDialog).toBeVisible();
+    // Confirm enablement through the dialog's primary outcome control.
+    await user.click(within(soundDialog).getByRole("button", { name: "Turn on" }));
+    // Verify the preference flipped only after the explicit in-app confirmation.
     expect(screen.getByRole("checkbox", { name: /Play a local completion sound/ })).toBeChecked();
-    confirmSound.mockRestore();
     // Close settings through the dialog's explicit completion control.
     await user.click(screen.getByRole("button", { name: "Done" }));
     // Verify dismissal removes the modal from role-based navigation.

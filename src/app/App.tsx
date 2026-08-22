@@ -187,6 +187,10 @@ export function App() {
   const [soundStatus, setSoundStatus] = useTransientStatus();
   // Hold the native dialog element so settings can use its modal browser behavior.
   const settingsDialogRef = useRef<HTMLDialogElement>(null);
+  // Hold the native dialog element so sound confirmation uses the same modal behavior.
+  const soundDialogRef = useRef<HTMLDialogElement>(null);
+  // Track the sound confirmation dialog so Escape and explicit actions stay synchronized.
+  const [isSoundDialogOpen, setIsSoundDialogOpen] = useState(false);
   // Keep preferences and data ownership as two calm, discoverable settings destinations.
   const [settingsView, setSettingsView] = useState<"preferences" | "data">("preferences");
   // Prevent an empty first render from overwriting IndexedDB before hydration completes.
@@ -283,8 +287,8 @@ export function App() {
     function handleTimerShortcut(event: KeyboardEvent) {
       // Leave browser and operating system chord combinations completely untouched.
       if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
-      // Stay out of the way while the modal settings dialog owns the interaction.
-      if (settingsDialogRef.current?.open) return;
+      // Stay out of the way while any modal dialog owns the interaction.
+      if (document.querySelector("dialog[open]")) return;
       // Let native controls keep their own Space, Enter, and arrow behavior.
       const target = event.target as HTMLElement | null;
       if (
@@ -547,23 +551,40 @@ export function App() {
     }
   }
 
-  // Ask for explicit browser-level confirmation before enabling locally generated sound.
+  // Offer an in-app sound confirmation with a live preview instead of a blocking browser prompt.
   function changeSound(enabled: boolean) {
     if (!enabled) {
       timer.setPreferences({ ...timer.preferences, soundEnabled: false });
       setSoundStatus("Local completion sound is off.");
       return;
     }
-    const confirmed = window.confirm(
-      "Allow Pomorise to play a locally generated sound when a session finishes?",
-    );
-    timer.setPreferences({ ...timer.preferences, soundEnabled: confirmed });
+    // Ignore repeated enable requests while the confirmation conversation is already open.
+    if (isSoundDialogOpen && soundDialogRef.current?.open) return;
+    // Open the calm in-app explanation so the tone can be heard before it is trusted.
+    setIsSoundDialogOpen(true);
+    // Ask the native dialog to manage modality only once per confirmation conversation.
+    if (!soundDialogRef.current?.open) soundDialogRef.current?.showModal();
+  }
+
+  // Enable the completion sound after the visitor confirmed it inside the application.
+  function confirmSoundEnable() {
+    timer.setPreferences({ ...timer.preferences, soundEnabled: true });
     setSoundStatus(
-      confirmed
-        ? "Local completion sound is on. Chrome has no separate sound permission prompt. If it stays silent, open the site controls beside the address bar and allow Sound."
-        : "Sound permission was not granted. The timer remains silent.",
-      !confirmed,
+      "Local completion sound is on. Chrome has no separate sound permission prompt. If it stays silent, open the site controls beside the address bar and allow Sound.",
     );
+    closeSoundDialog();
+  }
+
+  // Leave the sound disabled when the visitor declines the in-app confirmation.
+  function declineSoundEnable() {
+    setSoundStatus("The completion sound remains off.");
+    closeSoundDialog();
+  }
+
+  // Close the sound dialog through its explicit controls and reset its React state together.
+  function closeSoundDialog() {
+    setIsSoundDialogOpen(false);
+    soundDialogRef.current?.close();
   }
 
   // Derive the visible keyboard hints from the same phase logic that gates the shortcuts.
@@ -1474,6 +1495,16 @@ export function App() {
                 </small>
               </span>
             </label>
+            {/* Keep a preview reachable while the sound is trusted so it can be rechecked anytime. */}
+            {timer.preferences.soundEnabled && (
+              <div className="sound-preview">
+                {/* Play the exact completion tone on this explicit visitor gesture. */}
+                <Button onClick={timer.playTestTone} variant="secondary">
+                  Play test tone
+                </Button>
+                {/* Close the inline preview after its single clear action. */}
+              </div>
+            )}
             {soundStatus && <Notice>{soundStatus}</Notice>}
             <label className="setting-toggle">
               <input
@@ -1520,6 +1551,38 @@ export function App() {
           {/* Close the dialog action group after its single clear completion control. */}
         </div>
         {/* Close the settings dialog after its explanation, theme choices, and action. */}
+      </Dialog>
+
+      {/* Confirm sound enablement in place so the tone can be previewed before it is trusted. */}
+      <Dialog
+        onClose={() => setIsSoundDialogOpen(false)}
+        ref={soundDialogRef}
+        title="Play a local completion sound"
+      >
+        {/* Explain exactly what will happen before asking for confirmation. */}
+        <p className="dialog__intro">
+          Pomorise can play one short locally generated tone when a session finishes. The sound
+          never leaves this browser and no audio file is downloaded.
+        </p>
+        {/* Offer a live preview so the decision is based on hearing, not imagination. */}
+        <div className="sound-preview">
+          {/* Play the exact completion tone on this explicit visitor gesture. */}
+          <Button onClick={timer.playTestTone} variant="secondary">
+            Play test tone
+          </Button>
+          {/* Close the preview group after its single clear action. */}
+        </div>
+        {/* Separate the declining and confirming choices at the logical end of the content. */}
+        <div className="dialog__actions">
+          {/* Preserve the off state when the visitor declines without changing anything else. */}
+          <Button onClick={declineSoundEnable} variant="quiet">
+            Keep it off
+          </Button>
+          {/* Confirm enablement as the primary outcome of this conversation. */}
+          <Button onClick={confirmSoundEnable}>Turn on</Button>
+          {/* Close the confirmation actions after both outcomes are reachable. */}
+        </div>
+        {/* Close the sound confirmation dialog after its explanation and actions. */}
       </Dialog>
       {/* Close the application frame after every shell region and settings surface. */}
     </div>
