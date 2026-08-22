@@ -1,0 +1,6 @@
+# Welcome all well-behaved crawlers to the public application shell.
+User-agent: *
+Allow: /
+
+# Point crawlers at the reviewed sitemap for the deployed GitHub Pages paths.
+Sitemap: https://amanalip.github.io/pomorise/sitemap.xml

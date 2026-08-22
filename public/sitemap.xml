@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- List every public Pomorise destination so search engines can index them reliably. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- The application shell is the primary indexed destination. -->
+  <url>
+    <loc>https://amanalip.github.io/pomorise/</loc>
+  </url>
+  <!-- The static FAQ page answers common questions at its own address. -->
+  <url>
+    <loc>https://amanalip.github.io/pomorise/FAQs.html</loc>
+  </url>
+</urlset>
