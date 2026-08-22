@@ -6,6 +6,7 @@ import {
   formatDuration,
   getOvertimeMs,
   getRemainingMs,
+  TIMER_LIMITS,
   timerReducer,
   type TimerEvent,
   type TimerPhase,
@@ -44,6 +45,29 @@ describe("timer engine accuracy", () => {
     const completed = timerReducer(resumed, { type: "TICK", now: 140_000 });
     const overtime = timerReducer(completed, { type: "START_OVERTIME", now: 150_000 });
     expect(getOvertimeMs(overtime, 151_000)).toBe(1_000);
+  });
+
+  it("treats the duration maximum as an absolute per-session ceiling", () => {
+    // Build a paused session one minute below the absolute limit.
+    const nearLimit = timerReducer(
+      timerReducer(createTimerState("focus", TIMER_LIMITS.maximumMinutes * 60 - 60), {
+        type: "START",
+        now: 0,
+      }),
+      { type: "PAUSE", now: 1_000 },
+    );
+    // Expect the paused remaining time to sit exactly one minute under the ceiling.
+    expect(nearLimit.remainingMs).toBe((TIMER_LIMITS.maximumMinutes - 1) * 60_000);
+    // Add one minute and confirm the session lands exactly on the absolute ceiling.
+    const atLimit = timerReducer(nearLimit, { type: "ADD_TIME", seconds: 60, now: 2_000 });
+    expect(atLimit.remainingMs).toBe(TIMER_LIMITS.maximumMinutes * 60_000);
+    // Attempt another minute and prove the state stays untouched at the ceiling.
+    expect(timerReducer(atLimit, { type: "ADD_TIME", seconds: 60, now: 3_000 })).toBe(atLimit);
+    // Repeat the ceiling check while running so live target movement is capped too.
+    const resumedAtLimit = timerReducer(atLimit, { type: "RESUME", now: 4_000 });
+    expect(timerReducer(resumedAtLimit, { type: "ADD_TIME", seconds: 60, now: 5_000 })).toBe(
+      resumedAtLimit,
+    );
   });
 });
 

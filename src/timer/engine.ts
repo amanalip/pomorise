@@ -159,13 +159,24 @@ export function timerReducer(state: TimerState, event: TimerEvent): TimerState {
         throw new RangeError("Added time must be a positive number of seconds.");
       }
       const addedMs = event.seconds * 1_000;
-      return state.phase === "running"
-        ? {
-            ...state,
-            remainingMs: getRemainingMs(state, event.now) + addedMs,
-            targetEndAt: (state.targetEndAt ?? event.now) + addedMs,
-          }
-        : { ...state, remainingMs: state.remainingMs + addedMs };
+      // Treat the reviewed duration maximum as an absolute per-session ceiling.
+      const maximumRemainingMs = TIMER_LIMITS.maximumMinutes * 60_000;
+      if (state.phase === "running") {
+        // Measure current time first so the target moves only by the amount truly added.
+        const remainingMs = getRemainingMs(state, event.now);
+        const cappedRemaining = Math.min(remainingMs + addedMs, maximumRemainingMs);
+        // Ignore the request entirely when the session already holds the full ceiling.
+        if (cappedRemaining === remainingMs) return state;
+        return {
+          ...state,
+          remainingMs: cappedRemaining,
+          targetEndAt: (state.targetEndAt ?? event.now) + (cappedRemaining - remainingMs),
+        };
+      }
+      const cappedRemaining = Math.min(state.remainingMs + addedMs, maximumRemainingMs);
+      // Keep paused state untouched when it already sits at the absolute limit.
+      if (cappedRemaining === state.remainingMs) return state;
+      return { ...state, remainingMs: cappedRemaining };
     }
     case "TICK": {
       if (state.phase !== "running") throw new InvalidTimerTransitionError(state.phase, event.type);

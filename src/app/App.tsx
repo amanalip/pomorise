@@ -955,6 +955,7 @@ export function App() {
             {(timer.state.phase === "running" || timer.state.phase === "paused") && (
               <Button
                 variant="secondary"
+                disabled={timer.remainingMs >= TIMER_LIMITS.maximumMinutes * 60_000}
                 onClick={() =>
                   timer.send(
                     { type: "ADD_TIME", seconds: 60, now: Date.now() },
