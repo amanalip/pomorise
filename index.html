@@ -28,6 +28,10 @@
         // Stamp only the dark attribute because light tokens are the root default.
         if (theme === "dark") {
           document.documentElement.dataset.theme = "dark";
+          // Match browser chrome to the dark canvas before anything paints.
+          document
+            .querySelector('meta[name="theme-color"]')
+            ?.setAttribute("content", "#170f1d");
         }
       })();
     </script>
@@ -35,8 +39,8 @@
     <link rel="icon" type="image/png" sizes="192x192" href="/pomorise/icons/pomorise-192.png" />
     <!-- Give iOS a local high-resolution identity without making a network request. -->
     <link rel="apple-touch-icon" href="/pomorise/icons/apple-touch-icon.png" />
-    <!-- Match browser chrome to the approved deep-plum application identity. -->
-    <meta name="theme-color" content="#321b3b" />
+    <!-- Start browser chrome at the light ivory canvas; scripts below keep it synchronized with the active palette. -->
+    <meta name="theme-color" content="#fbf5ec" />
     <!-- Provide a concise search and installation description. -->
     <meta
       name="description"

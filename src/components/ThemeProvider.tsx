@@ -24,6 +24,13 @@ interface ThemeContextValue {
 const themeStorageKey = "pomorise.theme";
 // Match the browser media feature that communicates the operating system's dark preference.
 const darkThemeQuery = "(prefers-color-scheme: dark)";
+// Mirror each resolved palette's canvas color into browser chrome for installed and mobile visitors.
+const themeCanvasColors: Record<ResolvedTheme, string> = {
+  // Use the light ivory canvas approved for the default palette.
+  light: "#fbf5ec",
+  // Use the midnight-violet canvas approved for the dark palette.
+  dark: "#170f1d",
+};
 
 // Create an initially unavailable context so missing providers fail with a useful message.
 const ThemeContext = createContext<ThemeContextValue | null>(null);
@@ -97,6 +104,10 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     // Expose the resolved theme to CSS tokens and native browser color handling.
     document.documentElement.dataset.theme = resolvedTheme;
+    // Keep the browser chrome color aligned with the visible canvas across palette switches.
+    document
+      .querySelector('meta[name="theme-color"]')
+      ?.setAttribute("content", themeCanvasColors[resolvedTheme]);
     // Attempt to persist only the explicit preference selected by the visitor.
     try {
       // Store the non-sensitive appearance value locally without making any network request.
