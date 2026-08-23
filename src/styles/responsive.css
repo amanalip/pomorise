@@ -1,0 +1,282 @@
+@media (max-width: 36rem) {
+  .rhythm-setting {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+/* Present optional timer preferences as full-width native checkbox targets. */
+.setting-toggle {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: start;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+  cursor: pointer;
+}
+
+/* Preserve a generous native checkbox target without replacing its semantics. */
+.setting-toggle input {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin: 0.15rem 0 0;
+  accent-color: var(--color-accent-strong);
+}
+
+/* Stack each preference name and its contextual consequence. */
+.setting-toggle span {
+  display: grid;
+  gap: var(--space-1);
+}
+
+/* Keep optional setting explanations readable and visually secondary. */
+.setting-toggle small {
+  color: var(--color-ink-muted);
+  line-height: 1.4;
+}
+
+/* Give native checkboxes the same high-contrast keyboard focus treatment. */
+.setting-toggle input:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+/* Keep the sound preview attached to its toggle and dialog explanation alike. */
+.sound-preview {
+  /* Align the preview button into the reading flow of its surrounding surface. */
+  display: flex;
+  margin: 0 0 var(--space-4);
+  /* Close the sound preview group after defining its calm spacing. */
+}
+
+/* Inside preferences, align the preview with the checkbox column for a deliberate rhythm. */
+#preferences-panel .sound-preview {
+  /* Match the exact width of the native checkbox plus its shared gap. */
+  padding-left: calc(1.25rem + var(--space-3));
+  /* Close the scoped alignment override after matching its related control. */
+}
+
+/* Reflow the shell into one content column before either region becomes cramped. */
+@media (max-width: 58rem) {
+  /* Keep footer content above the persistent compact navigation bar. */
+  .app-footer {
+    padding-bottom: 5.5rem;
+  }
+
+  /* Keep the header simple when the full desktop navigation no longer fits comfortably. */
+  .app-header {
+    /* Let identity expand while settings stays anchored at the opposite edge. */
+    grid-template-columns: minmax(0, 1fr) auto;
+    /* Close the compact header grid after removing the middle navigation column. */
+  }
+
+  /* Remove duplicated desktop destinations once compact navigation becomes available. */
+  .desktop-navigation {
+    /* Hide the wide navigation to avoid duplicate keyboard stops. */
+    display: none;
+    /* Close the hidden desktop navigation state at the responsive breakpoint. */
+  }
+
+  /* Stack timer and support content into the natural document order. */
+  .workspace {
+    /* Replace the two-column desktop grid with one overflow-safe content column. */
+    grid-template-columns: minmax(0, 1fr);
+    /* Add bottom room so sticky compact navigation never covers the last card. */
+    padding-bottom: 6rem;
+    /* Close the single-column workspace after protecting compact navigation space. */
+  }
+
+  /* Present mobile navigation as a persistent reachable destination bar. */
+  .mobile-navigation {
+    /* Keep navigation visible near the viewport bottom while content scrolls. */
+    position: sticky;
+    /* Anchor the compact navigation at the bottom edge. */
+    bottom: 0;
+    /* Keep the bar above scrolling cards but below modal settings. */
+    z-index: var(--layer-navigation);
+    /* Use grid so all three destinations receive equal target width. */
+    display: grid;
+    /* Divide the available width evenly between primary destinations. */
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    /* Preserve narrow gaps between independent keyboard targets. */
+    gap: var(--space-1);
+    /* Paint an opaque raised surface so content never lowers label contrast beneath it. */
+    background: var(--color-surface);
+    /* Separate the persistent navigation from scrolling content. */
+    border-top: 1px solid var(--color-border);
+    /* Respect device safe areas while maintaining touch-friendly internal room. */
+    padding: var(--space-2) var(--space-3) max(var(--space-2), env(safe-area-inset-bottom));
+    /* Add restrained upward depth to distinguish the persistent navigation plane. */
+    box-shadow: 0 -0.5rem 1.5rem rgb(50 27 59 / 8%);
+    /* Close the compact navigation bar after defining sticky responsive behavior. */
+  }
+  /* Close the tablet breakpoint after reflowing header, workspace, and navigation. */
+}
+
+/* Tighten surface geometry and controls for the narrowest supported mobile widths. */
+@media (max-width: 36rem) {
+  /* Lift transient status above the persistent mobile destination bar. */
+  .pwa-status {
+    /* Preserve access to all three mobile navigation targets beneath the toast. */
+    bottom: 5.5rem;
+    /* Close the mobile status position after protecting persistent navigation. */
+  }
+
+  /* Stack transient status actions so enlarged text cannot force horizontal overflow. */
+  .pwa-status__content {
+    align-items: stretch;
+  }
+
+  .pwa-status__actions .button {
+    flex: 1 1 9rem;
+  }
+
+  /* Preserve the header hierarchy while reducing unused edge space. */
+  .app-header {
+    /* Use compact spacing so logo and settings remain on one row at 320 pixels. */
+    padding: var(--space-3) var(--space-4);
+    /* Reduce the gap before the settings action without merging targets. */
+    gap: var(--space-3);
+    /* Close the narrow header adjustment after protecting its one-row layout. */
+  }
+
+  /* Keep the approved identity readable without crowding settings. */
+  .app-header__brand {
+    gap: var(--space-2);
+  }
+
+  /* Keep the approved mark compact enough to leave a full settings target. */
+  .app-header__mark {
+    width: 2.25rem;
+    height: 3rem;
+  }
+
+  /* Remove only the supporting promise when the phone width cannot hold it cleanly. */
+  .app-header__identity span {
+    display: none;
+  }
+
+  /* Stack privacy overview facts below the promise on compact screens. */
+  .data-overview {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Stack record counts so each label remains contained at narrow widths. */
+  .data-counts {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Stack ownership and project links without crowding the narrow viewport. */
+  .app-footer {
+    align-items: flex-start;
+    flex-direction: column;
+    padding-bottom: 6rem;
+  }
+
+  /* Align stacked footer links with the ownership line above them. */
+  .app-footer nav {
+    justify-content: flex-start;
+  }
+
+  /* Let status labels move below longer ownership explanations when necessary. */
+  .data-section__heading {
+    flex-direction: column;
+  }
+
+  /* Reduce the settings action's horizontal space while preserving target height. */
+  .settings-button {
+    /* Keep the label comfortably padded without consuming central workspace width. */
+    padding-inline: var(--space-4);
+    /* Close the compact settings adjustment after preserving touch height. */
+  }
+
+  /* Use compact page edges while keeping every surface away from the viewport boundary. */
+  .workspace {
+    /* Reduce outer whitespace rather than internal target dimensions. */
+    padding: var(--space-4) var(--space-3) 5.5rem;
+    /* Keep stacked cards close enough to feel like one focus workspace. */
+    gap: var(--space-4);
+    /* Close the narrow workspace adjustment after preserving overflow-safe edges. */
+  }
+
+  /* Use a slightly tighter central surface on the narrowest phones. */
+  .timer-card {
+    /* Reduce only card padding while preserving interactive target sizes. */
+    padding: var(--space-5) var(--space-4);
+    /* Keep the vertical flow comfortable at compact widths. */
+    gap: var(--space-3);
+    /* Close the compact timer card after preserving content hierarchy. */
+  }
+
+  /* Let contextual session labels wrap rather than squeeze or overflow. */
+  .timer-card__eyebrow {
+    /* Permit mode and sequence labels to form another line under text zoom. */
+    flex-wrap: wrap;
+    /* Close the compact timer context adjustment after allowing safe wrapping. */
+  }
+
+  /* Reduce only the display scale enough to fit the minimum supported viewport. */
+  .timer-display__time {
+    /* Preserve a strong focal size while preventing digit overflow at 320 pixels. */
+    font-size: clamp(4rem, 20vw, 5rem);
+    /* Close the compact countdown scale after protecting minimum-width layout. */
+  }
+
+  /* Let timer actions distribute naturally across one or two compact rows. */
+  .timer-actions .button {
+    /* Allow each action to grow so wrapped rows remain balanced. */
+    flex: 1 1 7rem;
+    /* Close the narrow timer action adjustment after enabling balanced wrapping. */
+  }
+
+  /* Stack support card title and count if increased text no longer fits one row. */
+  .card__heading-row {
+    /* Permit both concise elements to wrap before they cause overflow. */
+    flex-wrap: wrap;
+    /* Close the compact support heading adjustment after allowing safe wrapping. */
+  }
+
+  /* Keep theme options readable when translated labels or zoom require extra room. */
+  .segmented:not(.timer-mode-control) .segmented__track {
+    /* Stack options into one column instead of compressing label text. */
+    grid-template-columns: 1fr;
+    /* Close the narrow segmented adjustment after protecting readable targets. */
+  }
+
+  /* Stack duration choices before their labels become cramped. */
+  .duration-settings {
+    grid-template-columns: 1fr;
+  }
+
+  /* Let stacked duration labels use their natural height above equal-sized inputs. */
+  .duration-settings label {
+    grid-template-rows: auto 3.25rem;
+  }
+  /* Close the mobile breakpoint after protecting narrow controls and surfaces. */
+}
+
+/* Remove non-essential motion when the visitor requests reduced animation. */
+@media (prefers-reduced-motion: reduce) {
+  /* Disable smooth anchor movement because it is not required for navigation. */
+  html {
+    /* Move directly to the requested focus destination. */
+    scroll-behavior: auto;
+    /* Close the reduced-motion document behavior after disabling smooth travel. */
+  }
+
+  /* Remove visual transitions from all elements without changing interaction results. */
+  *,
+  /* Continue the reduced-motion selector for generated content before elements. */
+  *::before,
+  /* Continue the reduced-motion selector for generated content after elements. */
+  *::after {
+    /* Make any future animation effectively immediate without hiding final state. */
+    animation-duration: 0.01ms !important;
+    /* Prevent future decorative animations from repeating. */
+    animation-iteration-count: 1 !important;
+    /* Make interaction transitions effectively immediate. */
+    transition-duration: 0.01ms !important;
+    /* Close the reduced-motion universal treatment after neutralizing motion timing. */
+  }
+  /* Close the reduced-motion query after preserving every interaction without animation. */
+}

@@ -1,0 +1,306 @@
+/* Group the selected task's wording, estimate, and completion action without crowding the card. */
+.current-task {
+  /* Use a small vertical rhythm so the selected work reads as one unit. */
+  display: grid;
+  /* Separate the task details and action with comfortable compact space. */
+  gap: var(--space-2);
+  /* Give the selected task a calm bounded surface distinct from the entry form. */
+  padding: var(--space-4);
+  /* Use the grouped surface token in both themes. */
+  background: var(--color-surface-muted);
+  /* Draw a quiet boundary that does not imply urgency or completion. */
+  border: 1px solid var(--color-border);
+  /* Reuse the small project radius for this nested planning group. */
+  border-radius: var(--radius-sm);
+  /* Close the current-task group after defining its calm hierarchy. */
+}
+
+/* Keep the current estimate visibly secondary to the visitor's task wording. */
+.current-task > span {
+  /* Use readable muted ink rather than opacity for supporting information. */
+  color: var(--color-ink-muted);
+  /* Keep the estimate concise beside other supporting interface copy. */
+  font-size: 0.875rem;
+  /* Close the current estimate treatment after defining its hierarchy. */
+}
+
+/* Arrange the small task form as a clear sequence inside the supporting card. */
+.task-form {
+  /* Use grid so labels remain attached to their native controls under zoom. */
+  display: grid;
+  /* Keep each planning input visually connected without merging targets. */
+  gap: var(--space-3);
+  /* Separate entry from the selected task or empty-state explanation above it. */
+  margin-top: var(--space-5);
+  /* Close the task form after establishing its compact vertical flow. */
+}
+
+/* Keep the session estimate label and native select relationship visible. */
+.task-estimate {
+  /* Use grid to place the readable label directly above its select. */
+  display: grid;
+  /* Keep label and control close enough to scan as one relationship. */
+  gap: var(--space-2);
+  /* Strengthen the essential control label consistently with text fields. */
+  font-weight: 750;
+  /* Close the task-estimate label after matching the field hierarchy. */
+}
+
+/* Give the native estimate select the same readable control treatment as text fields. */
+.task-estimate select {
+  /* Preserve a comfortable pointer and touch target. */
+  min-height: 3.25rem;
+  /* Use the main surface so the selected number remains readable. */
+  background: var(--color-surface);
+  /* Draw a visible theme-aware boundary around the native control. */
+  border: 1px solid var(--color-border);
+  /* Reuse the small field radius for consistent form geometry. */
+  border-radius: var(--radius-sm);
+  /* Keep the selected estimate in the active theme's primary ink. */
+  color: var(--color-ink);
+  /* Add comfortable room around the native option text. */
+  padding-inline: var(--space-4);
+  /* Close the estimate-select treatment after size, color, and boundary. */
+}
+
+/* Present the compact task collection without browser list decoration. */
+.task-list {
+  /* Use grid so each task remains a distinct readable row. */
+  display: grid;
+  /* Separate rows enough for their independent action targets. */
+  gap: var(--space-2);
+  /* Remove browser bullets because row boundaries communicate collection structure visually. */
+  list-style: none;
+  /* Keep the list aligned with the card's content edges. */
+  margin: var(--space-5) 0 0;
+  /* Remove browser indentation while preserving semantic list behavior. */
+  padding: 0;
+  /* Close the task-list layout after establishing its compact stack. */
+}
+
+/* Balance task wording and its current next action inside one bounded row. */
+.task-list__item {
+  /* Use flex so text receives available width before the action. */
+  display: flex;
+  /* Keep the wording and state aligned around their visual center. */
+  align-items: center;
+  /* Place the task action at the opposite logical edge. */
+  justify-content: space-between;
+  /* Preserve separation when visitor text grows. */
+  gap: var(--space-3);
+  /* Draw a quiet divider without creating a stack of heavy cards. */
+  border-top: 1px solid var(--color-border);
+  /* Give each row comfortable internal height. */
+  padding-block: var(--space-3);
+  /* Close the task row after defining its readable relationship. */
+}
+
+/* Stack a task title and estimate as one flexible text group. */
+.task-list__item > span:first-child {
+  /* Allow long visitor text to wrap instead of forcing horizontal overflow. */
+  min-width: 0;
+  /* Use grid so the estimate stays directly beneath its task title. */
+  display: grid;
+  /* Keep the two related lines close together. */
+  gap: var(--space-1);
+  /* Close the task text group after protecting its wrapping behavior. */
+}
+
+/* Present task estimates as supporting information inside each row. */
+.task-list__item small {
+  /* Use muted ink while keeping the estimate fully readable. */
+  color: var(--color-ink-muted);
+  /* Close the list estimate treatment after applying its secondary hierarchy. */
+}
+
+/* Distinguish finished work without removing it from the visitor's immediate context. */
+.task-list__item--complete strong {
+  /* Use muted ink to reduce emphasis after completion. */
+  color: var(--color-ink-muted);
+  /* Add a familiar completion mark that does not depend on color. */
+  text-decoration: line-through;
+  /* Close the completed task wording after its non-color state indicator. */
+}
+
+/* Keep a history row's badge and correction action grouped at one calm edge. */
+.task-list__end {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+/* Present the installation offer as one quiet settings row. */
+.install-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+/* Keep the installation hint readable without competing with actions. */
+.install-row__hint {
+  color: var(--color-ink-muted);
+  font-size: 0.875rem;
+}
+
+/* Let one task row stretch its inline edit across the available width. */
+.task-edit {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  min-width: 0;
+  flex: 1;
+}
+
+/* Give the edited title room to grow while the estimate stays compact. */
+.task-edit .field__control:first-child {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+}
+
+/* Keep the recent-sessions disclosure consistent with the task history pattern. */
+.recent-sessions summary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  cursor: pointer;
+  font-weight: 750;
+  padding-block: var(--space-2);
+}
+
+/* Separate each remembered session with the same quiet divider language. */
+.recent-sessions__list {
+  list-style: none;
+  margin: var(--space-2) 0 0;
+  padding: 0;
+}
+
+/* Group one session's date, facts, and reflection into a readable block. */
+.recent-sessions__list li {
+  border-top: 1px solid var(--color-border);
+  padding-block: var(--space-3);
+  display: grid;
+  gap: var(--space-1);
+}
+
+/* Keep supporting session facts in the shared muted hierarchy. */
+.recent-sessions__list small {
+  color: var(--color-ink-muted);
+}
+
+/* Let reflection lines wrap comfortably without extra margins. */
+.recent-sessions__list p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Present the trailing week as one short calm chart row. */
+.focus-chart {
+  margin: var(--space-4) 0;
+}
+
+/* Give the seven bars one shared baseline and even spacing. */
+.focus-chart__bars {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-2);
+  height: 4rem;
+}
+
+/* Let every column share the width equally with a soft rounded bar. */
+.focus-chart__column {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  flex: 1;
+  height: 100%;
+}
+
+/* Draw each day as a quiet plum bar that reads without grid lines. */
+.focus-chart__bar {
+  width: min(1.75rem, 100%);
+  background: var(--color-accent-soft);
+  border-radius: var(--radius-1) var(--radius-1) 0 0;
+}
+
+/* Keep weekday letters and honest minute totals aligned under their bars. */
+.focus-chart__labels {
+  display: flex;
+  gap: var(--space-2);
+  list-style: none;
+  margin: var(--space-1) 0 0;
+  padding: 0;
+}
+
+/* Stack each label column exactly beneath its corresponding bar. */
+.focus-chart__labels li {
+  flex: 1;
+  text-align: center;
+  color: var(--color-ink-muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+/* Reveal the minute total as readable supporting text, not decoration. */
+.focus-chart__labels li span {
+  display: block;
+}
+
+/* Separate completed task records from the active planning controls above them. */
+.task-history {
+  /* Create a quiet boundary before the audit trail without adding another card. */
+  margin-top: var(--space-4);
+  /* Align the history disclosure with the task rows and supporting copy. */
+  padding-top: var(--space-4);
+  /* Use the existing theme-aware divider for consistent grouping. */
+  border-top: 1px solid var(--color-border);
+  /* Close the history container after establishing its visual boundary. */
+}
+
+/* Make the native history disclosure read like an intentional section heading. */
+.task-history summary {
+  /* Keep the heading and completed count on one balanced row. */
+  display: flex;
+  /* Align the native disclosure marker, label, and count comfortably. */
+  align-items: center;
+  /* Place the count at the opposite edge while preserving the native marker. */
+  justify-content: space-between;
+  /* Maintain readable separation when the card becomes narrow. */
+  gap: var(--space-3);
+  /* Signal the native disclosure interaction consistently. */
+  cursor: pointer;
+  /* Match subordinate card headings without competing with the main task title. */
+  font-weight: 750;
+  /* Close the summary treatment after preserving native disclosure behavior. */
+}
+
+/* Keep the completed audit list close to its disclosure heading. */
+.task-history__list {
+  /* Use a smaller separation than the primary form-to-list transition. */
+  margin-top: var(--space-3);
+  /* Close the history list adjustment after refining its local rhythm. */
+}
+
+/* Separate retained thoughts from actionable tasks without making another heavy card. */
+.kept-thoughts {
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+}
+
+/* Keep the retained-thought heading subordinate to the task card heading. */
+.kept-thoughts h3 {
+  margin: 0 0 var(--space-2);
+  font-size: 0.95rem;
+}
+
+/* Present kept thoughts as a readable plain list. */
+.kept-thoughts ul {
+  margin: 0;
+  padding-inline-start: var(--space-5);
+  color: var(--color-ink-muted);
+}

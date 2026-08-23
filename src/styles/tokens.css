@@ -1,0 +1,128 @@
+/* Define shared geometry, type, motion, and light-theme color decisions at the document root. */
+:root {
+  /* Use only local system fonts so typography never creates a remote request. */
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  /* Improve the consistency and readability of system-font rendering. */
+  font-synthesis: none;
+  /* Give native controls permission to render for the current light palette. */
+  color-scheme: light;
+  /* Use a compact modular scale for reusable space inside controls and cards. */
+  --space-1: 0.25rem;
+  /* Provide a small gap for tightly related labels and indicators. */
+  --space-2: 0.5rem;
+  /* Provide the default compact control and text spacing. */
+  --space-3: 0.75rem;
+  /* Provide a comfortable base unit for controls and card rhythm. */
+  --space-4: 1rem;
+  /* Separate related groups without breaking their visual connection. */
+  --space-5: 1.25rem;
+  /* Give primary card content a calm medium separation. */
+  --space-6: 1.5rem;
+  /* Separate larger interface regions at compact widths. */
+  --space-8: 2rem;
+  /* Give major desktop regions generous breathing room. */
+  --space-10: 2.5rem;
+  /* Round small badges and text fields without making them pill-shaped. */
+  --radius-sm: 0.75rem;
+  /* Round cards and grouped controls with a friendly product character. */
+  --radius-md: 1.125rem;
+  /* Give the central timer surface a distinctive spacious silhouette. */
+  --radius-lg: 1.75rem;
+  /* Make primary buttons approachable while preserving a clear rectangular target. */
+  --radius-pill: 999px;
+  /* Keep content transitions restrained and fast enough not to delay interaction. */
+  --motion-fast: 140ms;
+  /* Give meaningful visual progress enough time to remain calm and understandable. */
+  --motion-slow: 320ms;
+  /* Use a smooth non-bouncy curve for quiet state changes. */
+  --motion-curve: cubic-bezier(0.2, 0.8, 0.2, 1);
+  /* Set the approved soft ivory direction as the outer page canvas. */
+  --color-canvas: #fbf5ec;
+  /* Use a subtly lighter ivory for raised content surfaces. */
+  --color-surface: #fffaf3;
+  /* Use a warm tinted surface for grouped secondary controls. */
+  --color-surface-muted: #f3eadf;
+  /* Use deep plum as the primary readable ink derived from the approved logo. */
+  --color-ink: #321b3b;
+  /* Use a softened plum for descriptions that still exceeds readable contrast. */
+  --color-ink-muted: #6f6073;
+  /* Use a quiet mauve border to separate surfaces without strong visual noise. */
+  --color-border: #d9ccd8;
+  /* Use warm coral as the approved high-emphasis action color. */
+  --color-accent: #df594f;
+  /* Darken coral for readable action text and stronger hover feedback. */
+  --color-accent-strong: #a42e39;
+  /* Use deep plum on coral so the primary button remains high contrast. */
+  --color-on-accent: #211126;
+  /* Use pale coral for selected tracks and informational explanations. */
+  --color-accent-soft: #fde0d5;
+  /* Use a distinct blue-violet ring that stays visible beside coral controls. */
+  --color-focus: #6656cf;
+  /* Use subdued warm gray for controls that cannot currently be activated. */
+  --color-disabled: #a89da7;
+  /* Use a calm green family for successful future state messages. */
+  --color-success: #2f6e57;
+  /* Use a deep amber family for warnings that does not rely on bright yellow. */
+  --color-warning: #80521d;
+  /* Use deep red for recoverable errors with readable light-theme contrast. */
+  --color-error: #a02f42;
+  /* Define a gentle surface shadow derived from plum rather than pure black. */
+  --shadow-sm: 0 0.5rem 1.5rem rgb(50 27 59 / 8%);
+  /* Define stronger depth only for the central workspace and modal dialog. */
+  --shadow-lg: 0 1.5rem 4rem rgb(50 27 59 / 14%);
+  /* Keep overlay content above the application shell and sticky navigation. */
+  --layer-dialog: 30;
+  /* Keep compact navigation above scrolling page content. */
+  --layer-navigation: 20;
+  /* Keep the keyboard skip link above every standard shell surface. */
+  --layer-skip-link: 40;
+  /* Close the root tokens after defining the complete light visual system. */
+}
+
+/* Replace only semantic colors and native rendering instructions for the approved dark palette. */
+:root[data-theme="dark"] {
+  /* Tell the browser to paint supported native controls with dark defaults. */
+  color-scheme: dark;
+  /* Use the approved midnight-violet direction as the dark page canvas. */
+  --color-canvas: #170f1d;
+  /* Lift primary content slightly above the midnight canvas. */
+  --color-surface: #24152d;
+  /* Use a softer violet for grouped secondary controls. */
+  --color-surface-muted: #33213c;
+  /* Use the approved pale lavender-white as primary dark-theme ink. */
+  --color-ink: #fff7ee;
+  /* Use muted lavender for secondary copy while preserving readable contrast. */
+  --color-ink-muted: #c8b9c9;
+  /* Use a mid-violet line that remains visible without outlining every surface strongly. */
+  --color-border: #544159;
+  /* Brighten the approved coral accent for the midnight background. */
+  --color-accent: #ff7565;
+  /* Use pale apricot for hover and selected accent emphasis. */
+  --color-accent-strong: #ffae72;
+  /* Use midnight ink on luminous coral for strong button-label contrast. */
+  --color-on-accent: #211126;
+  /* Use a restrained plum-coral tint behind dark-theme informational content. */
+  --color-accent-soft: #4b293b;
+  /* Use luminous apricot for a focus ring distinct from coral action fills. */
+  --color-focus: #ffc28b;
+  /* Use muted lavender for unavailable controls on the dark surface. */
+  --color-disabled: #786b7b;
+  /* Use pale mint for readable dark-theme success states. */
+  --color-success: #8ed5b7;
+  /* Use pale apricot for readable dark-theme warning states. */
+  --color-warning: #f0bc72;
+  /* Use pale rose for readable dark-theme error states. */
+  --color-error: #ff9ca9;
+  /* Deepen the compact shadow so surfaces remain distinct on midnight violet. */
+  --shadow-sm: 0 0.75rem 2rem rgb(0 0 0 / 22%);
+  /* Deepen the elevated shadow without turning it into a sharp border. */
+  --shadow-lg: 0 1.75rem 4.5rem rgb(0 0 0 / 32%);
+  /* Close dark tokens after replacing every palette-dependent value. */
+}

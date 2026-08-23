@@ -1,0 +1,591 @@
+/* Present explanations and statuses with a reusable non-color-only boundary. */
+.notice {
+  /* Use the soft accent surface for informative default messages. */
+  background: var(--color-accent-soft);
+  /* Add a visible left boundary so the pattern never depends on fill color alone. */
+  border-inline-start: 0.25rem solid var(--color-accent);
+  /* Round the notice enough to match cards while preserving its directional marker. */
+  border-radius: var(--radius-sm);
+  /* Keep notice text readable using the primary theme ink. */
+  color: var(--color-ink);
+  /* Remove browser paragraph margins so callers control surrounding rhythm. */
+  margin: 0;
+  /* Create comfortable but compact room around concise messages. */
+  padding: var(--space-3) var(--space-4);
+  /* Use slightly compact text appropriate for contextual guidance. */
+  font-size: 0.9rem;
+  /* Close the default notice pattern after applying its readable explanation surface. */
+}
+
+/* Distinguish successful future statuses with both color and the shared boundary shape. */
+.notice--success {
+  /* Use the semantic success token for the leading status boundary. */
+  border-inline-start-color: var(--color-success);
+  /* Close the success notice modifier after applying its semantic boundary. */
+}
+
+/* Distinguish warning explanations without using color as the only visual cue. */
+.notice--warning {
+  /* Use the semantic warning token for the leading status boundary. */
+  border-inline-start-color: var(--color-warning);
+  /* Close the warning notice modifier after applying its semantic boundary. */
+}
+
+/* Distinguish recoverable errors while preserving the common readable notice geometry. */
+.notice--error {
+  /* Use the semantic error token for the leading status boundary. */
+  border-inline-start-color: var(--color-error);
+  /* Close the error notice modifier after applying its semantic boundary. */
+}
+
+/* Keep offline and update choices visible in a corner without covering primary navigation. */
+.pwa-status {
+  position: fixed;
+  z-index: calc(var(--layer-dialog) - 1);
+  inset: auto var(--space-4) var(--space-4) auto;
+  width: min(30rem, calc(100% - (2 * var(--space-4))));
+  filter: drop-shadow(var(--shadow-lg));
+}
+
+/* Let long status explanations wrap while keeping their explicit choices nearby. */
+.pwa-status__content,
+.storage-warning {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+/* Keep update consent and dismissal in one compact, touch-friendly row. */
+.pwa-status__actions,
+.recovery-screen__actions {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+/* Center the root recovery path without hiding the browser's normal reload controls. */
+.recovery-screen {
+  display: grid;
+  place-items: center;
+  min-height: 100dvh;
+  padding: var(--space-6);
+  background: var(--color-canvas);
+}
+
+/* Keep error recovery readable at text zoom and ordinary desktop widths. */
+.recovery-screen > .notice {
+  width: min(38rem, 100%);
+  padding: var(--space-6);
+}
+
+.recovery-screen h1 {
+  margin-top: 0;
+}
+
+/* Use a softer surface for the future permission-explanation pattern. */
+.permission-card {
+  /* Replace the standard card surface with the grouped muted surface. */
+  background: var(--color-surface-muted);
+  /* Remove depth so permissions never appear more urgent than the timer. */
+  box-shadow: none;
+  /* Close the permission card adjustment after reducing its visual pressure. */
+}
+
+/* Hide compact navigation while the full header navigation has enough space. */
+.mobile-navigation {
+  /* Remove compact navigation from desktop layout and accessibility order. */
+  display: none;
+  /* Close the default compact navigation state after hiding it on wide screens. */
+}
+
+/* Style the native modal while preserving browser-owned semantics and focus behavior. */
+.dialog {
+  /* Keep settings above the shell and its compact sticky navigation. */
+  z-index: var(--layer-dialog);
+  /* Limit the modal to a readable compact measure on wide screens. */
+  width: min(calc(100% - 2rem), 42rem);
+  /* Keep every setting and the completion action within the visible desktop viewport. */
+  max-height: calc(100dvh - 2rem);
+  /* Scroll only the dialog when a short viewport cannot contain all settings. */
+  overflow: auto;
+  /* Remove inconsistent browser dialog margins inside the centered modal algorithm. */
+  margin: auto;
+  /* Paint the dialog with the active raised surface. */
+  background: var(--color-surface);
+  /* Draw an explicit theme-aware modal boundary. */
+  border: 1px solid var(--color-border);
+  /* Use the largest surface radius for the focused modal task. */
+  border-radius: var(--radius-lg);
+  /* Use primary ink for all inherited dialog text. */
+  color: var(--color-ink);
+  /* Give the modal content spacious but responsive internal room. */
+  padding: clamp(var(--space-6), 5vw, var(--space-8));
+  /* Separate the modal from its backdrop with the strong elevation token. */
+  box-shadow: var(--shadow-lg);
+  /* Close the native dialog treatment after applying size, theme, and elevation. */
+}
+
+/* Allow the data ownership view to breathe without making everyday settings oversized. */
+.dialog--wide {
+  width: min(calc(100% - 2rem), 48rem);
+  max-height: min(90dvh, 54rem);
+  overflow: auto;
+}
+
+/* Keep the completion action reachable and logically end-aligned while a longer data view scrolls beneath it. */
+.dialog__actions {
+  /* Use flex so additional future actions can join without rewriting layout. */
+  display: flex;
+  /* Place the current primary completion action at the logical end. */
+  justify-content: flex-end;
+  /* Stay pinned above scrolling modal content instead of drifting out of reach. */
+  position: sticky;
+  /* Anchor against the dialog's own responsive padding so the bar meets its edge. */
+  bottom: calc(-1 * clamp(var(--space-6), 5vw, var(--space-8)));
+  /* Keep the action bar above the content that scrolls underneath it. */
+  z-index: 1;
+  /* Separate the notice and action group with the shared comfortable rhythm. */
+  margin-top: var(--space-6);
+  /* Stretch across the dialog padding so the gradient reaches both edges. */
+  margin-inline: calc(-1 * clamp(var(--space-6), 5vw, var(--space-8)));
+  /* Pad the pinned bar back to the dialog's inner rhythm. */
+  padding: var(--space-4) clamp(var(--space-6), 5vw, var(--space-8));
+  /* Fade the surface upward so scrolled content dissolves behind the pinned action. */
+  background: linear-gradient(to top, var(--color-surface) 76%, transparent);
+}
+
+/* Keep the two settings destinations visible and balanced at the top of the modal. */
+.settings-tabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+  margin: var(--space-4) 0 var(--space-6);
+  padding: var(--space-1);
+  background: var(--color-surface-muted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+}
+
+/* Fill each tab track cell so selection reads as navigation rather than loose actions. */
+.settings-tabs .button {
+  width: 100%;
+}
+
+/* Stack ownership controls with generous separators and no dashboard clutter. */
+.data-controls {
+  display: grid;
+  gap: var(--space-5);
+}
+
+/* Use a soft editorial hero to communicate the privacy promise before technical controls. */
+.data-overview {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-5);
+  align-items: start;
+  padding: clamp(var(--space-5), 4vw, var(--space-8));
+  background: linear-gradient(135deg, var(--color-accent-soft), var(--color-surface-muted));
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+/* Prevent long privacy copy from escaping its rounded overview surface. */
+.data-overview > * {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* Keep ownership headings and explanations in a compact readable rhythm. */
+.data-overview h2,
+.data-section h2,
+.danger-zone h2 {
+  margin: 0;
+}
+
+.data-overview p,
+.data-section p,
+.danger-zone p {
+  margin: var(--space-2) 0 0;
+  color: var(--color-ink-muted);
+}
+
+/* Introduce the local-only promise with quiet editorial metadata. */
+.data-kicker {
+  display: block;
+  margin-bottom: var(--space-2);
+  color: var(--color-accent-strong);
+  font-size: 0.75rem;
+  font-weight: 850;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+/* Present aggregate counts as calm facts instead of performance targets. */
+.data-counts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.data-counts span {
+  display: grid;
+  align-content: start;
+  gap: var(--space-1);
+  min-width: 0;
+  min-height: 5rem;
+  padding: var(--space-3) var(--space-4);
+  background: color-mix(in srgb, var(--color-surface) 72%, transparent);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-ink-muted);
+  font-size: 0.875rem;
+  overflow-wrap: anywhere;
+}
+
+.data-counts strong {
+  display: block;
+  color: var(--color-ink);
+  font-size: 1.35rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Keep ownership and project links distinct from the focused workspace above them. */
+.app-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-5) clamp(var(--space-4), 4vw, var(--space-8));
+  border-top: 1px solid var(--color-border);
+  color: var(--color-ink-muted);
+  font-size: 0.875rem;
+}
+
+/* Let informational footer links wrap cleanly at narrow widths. */
+.app-footer nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--space-4);
+}
+
+/* Keep footer links recognizable in both approved themes. */
+.app-footer a {
+  color: var(--color-ink);
+  font-weight: 750;
+}
+
+/* Separate each ownership task with space and a quiet top boundary. */
+.data-section,
+.danger-zone {
+  display: grid;
+  gap: var(--space-4);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-border);
+}
+
+/* Balance explanations with concise trust or browser-status labels. */
+.data-section__heading {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+/* Use compact persistent labels without suggesting gamified achievement. */
+.privacy-chip,
+.storage-state {
+  flex: 0 0 auto;
+  padding: var(--space-1) var(--space-3);
+  background: var(--color-surface-muted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  color: var(--color-ink-muted);
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.storage-state--granted {
+  border-color: var(--color-success);
+  color: var(--color-ink);
+}
+
+/* Let backup and deletion choices wrap before labels or touch targets become cramped. */
+.data-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* Hide the native file field visually while retaining its programmatic input behavior. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Give validated import details a clear intermediate state before replacement. */
+.import-preview,
+.delete-confirmation {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--color-surface-muted);
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-md);
+}
+
+.import-preview > div:first-child {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.import-preview span {
+  color: var(--color-ink-muted);
+}
+
+/* Keep diagnostics available on demand instead of crowding the default privacy view. */
+.data-details {
+  padding: var(--space-4);
+  background: var(--color-surface-muted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.data-details summary {
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.data-details dl {
+  display: grid;
+  gap: var(--space-2);
+  margin: var(--space-4) 0 0;
+}
+
+.data-details dl > div {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.data-details dd {
+  margin: 0;
+  font-weight: 750;
+}
+
+/* Distinguish irreversible controls with structure and language, not alarming red fill. */
+.danger-zone {
+  border-top-color: var(--color-error);
+}
+
+/* Dim the application behind settings without making the modal edge ambiguous. */
+.dialog::backdrop {
+  /* Use translucent midnight plum so both light and dark shells recede consistently. */
+  background: rgb(23 15 29 / 68%);
+  /* Soften the underlying page slightly without obscuring its orientation entirely. */
+  backdrop-filter: blur(0.2rem);
+  /* Close the native backdrop treatment after defining modal separation. */
+}
+
+/* Give the modal title clear hierarchy above appearance settings. */
+.dialog__title {
+  /* Remove browser heading margins so the dialog owns its vertical rhythm. */
+  margin: 0;
+  /* Keep the compact modal title clearly below the page heading scale. */
+  font-size: 1.75rem;
+  /* Close the modal title treatment after defining hierarchy and spacing. */
+}
+
+/* Introduce the settings scope without crowding the first control. */
+.dialog__intro {
+  /* Separate introductory copy from the title and theme choices. */
+  margin: var(--space-2) 0 var(--space-6);
+  /* Use muted ink for secondary explanatory content. */
+  color: var(--color-ink-muted);
+  /* Close the dialog introduction after defining its rhythm and tone. */
+}
+
+/* Remove inconsistent native fieldset styling around segmented theme choices. */
+.segmented {
+  /* Remove the browser fieldset border because the inner track owns the visual group. */
+  border: 0;
+  /* Remove native fieldset margins that vary between browsers. */
+  margin: 0 0 var(--space-5);
+  /* Remove native fieldset padding so it aligns with other modal content. */
+  padding: 0;
+  /* Close the segmented semantic group reset after preserving its native meaning. */
+}
+
+/* Keep the segmented group's visible legend readable and close to its options. */
+.segmented__legend {
+  /* Add only the lower spacing needed before the shared option track. */
+  padding: 0 0 var(--space-2);
+  /* Use primary ink because the legend is the control group's accessible name. */
+  color: var(--color-ink);
+  /* Strengthen the label enough to distinguish it from explanatory copy. */
+  font-weight: 750;
+  /* Close the segmented legend treatment after defining essential label hierarchy. */
+}
+
+/* Arrange mutually exclusive options inside one responsive shared track. */
+.segmented__track {
+  /* Use grid so every available theme receives equal target width. */
+  display: grid;
+  /* Divide the track into three equal columns for System, Light, and Dark. */
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  /* Leave a narrow gap so every focused option has a distinct outline. */
+  gap: var(--space-1);
+  /* Use the muted surface as the shared control background. */
+  background: var(--color-surface-muted);
+  /* Draw one outer boundary around the complete related control. */
+  border: 1px solid var(--color-border);
+  /* Match the shared medium radius used by grouped surfaces. */
+  border-radius: var(--radius-md);
+  /* Leave a compact inset around individual selectable segments. */
+  padding: var(--space-1);
+  /* Close the segmented track after defining equal-width responsive options. */
+}
+
+/* Make each native radio label a complete touch-friendly selectable segment. */
+.segmented__option {
+  /* Establish a containing block for the transparent native radio target. */
+  position: relative;
+  /* Place the native radio and text at the center of the full option target. */
+  display: grid;
+  /* Keep the visually hidden radio and visible label in the same grid area. */
+  place-items: center;
+  /* Preserve at least the common 44-pixel touch target height. */
+  min-height: 2.75rem;
+  /* Round individual selection surfaces inside the shared track. */
+  border-radius: calc(var(--radius-md) - var(--space-1));
+  /* Keep option labels readable before and after selection. */
+  color: var(--color-ink-muted);
+  /* Signal radio availability to pointer users. */
+  cursor: pointer;
+  /* Prevent short option names from wrapping inside equal columns. */
+  white-space: nowrap;
+  /* Close the segmented option target after defining its size and alignment. */
+}
+
+/* Stretch each transparent native radio across its full visible label target. */
+.segmented__option input {
+  /* Position the native radio relative to the complete segmented option. */
+  position: absolute;
+  /* Cover the full visible segment so pointer and touch activation never miss the input. */
+  inset: 0;
+  /* Fill the complete segment width rather than the browser's small radio-circle width. */
+  width: 100%;
+  /* Fill the complete touch target height while preserving native radio behavior. */
+  height: 100%;
+  /* Remove native margins that could shift the transparent target away from its label. */
+  margin: 0;
+  /* Keep the native input interactive while hiding only its browser-specific circle. */
+  opacity: 0;
+  /* Match the visible label's pointer affordance across the complete target. */
+  cursor: pointer;
+  /* Close the transparent native radio target after preserving full-size interaction. */
+}
+
+/* Give visible option text consistent readable control emphasis. */
+.segmented__option span {
+  /* Let pointer events reach the full-size native input beneath the visible text. */
+  pointer-events: none;
+  /* Strengthen short control labels for quick scanning. */
+  font-weight: 750;
+  /* Close the segmented text treatment after defining readable emphasis. */
+}
+
+/* Paint the selected native radio's complete label surface. */
+.segmented__option:has(input:checked) {
+  /* Use the primary raised surface to lift the selected option from its track. */
+  background: var(--color-surface);
+  /* Use primary ink rather than color alone to strengthen selection. */
+  color: var(--color-ink);
+  /* Add restrained depth as a second non-color selection cue. */
+  box-shadow: var(--shadow-sm);
+  /* Close the selected segment state after applying surface, text, and depth. */
+}
+
+/* Group duration fields under one native legend without browser-specific spacing. */
+.settings-group {
+  border: 0;
+  margin: 0 0 var(--space-5);
+  padding: 0;
+}
+
+/* Treat the duration legend as an essential settings label. */
+.settings-group legend {
+  padding: 0 0 var(--space-2);
+  font-weight: 750;
+}
+
+/* Keep preset choices on one calm row that wraps gracefully on small screens. */
+.duration-presets {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+/* Present the custom state as quiet text so it never competes with actions. */
+.duration-presets__custom {
+  color: var(--color-ink-muted);
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+/* Keep three duration choices compact while allowing the dialog to reflow. */
+.duration-settings {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+/* Keep every duration label visibly connected to its number input. */
+.duration-settings label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  color: var(--color-ink-muted);
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+/* Preserve the label rhythm while leaving room for an optional inline error. */
+.duration-settings label > span:first-child {
+  min-height: 2.5rem;
+}
+
+/* Give every duration box the same complete grid-cell dimensions. */
+.duration-settings .field__control {
+  width: 100%;
+  height: 3.25rem;
+}
+
+/* Keep the rhythm label connected to its number input like the duration cells. */
+.rhythm-setting {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 6.5rem;
+  align-items: end;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+  color: var(--color-ink-muted);
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+/* Give the rhythm input the same comfortable target as the duration boxes. */
+.rhythm-setting .field__control {
+  height: 3.25rem;
+}
+
+/* Stack the rhythm label above its input before the row becomes cramped. */

@@ -1,0 +1,98 @@
+/* Create the approved calm horizon for the semantic rise-progress treatment. */
+.progress-rise {
+  position: relative;
+  height: 5rem;
+  margin-block: var(--space-3);
+  overflow: hidden;
+  background: linear-gradient(to top, var(--color-accent-soft), transparent 72%);
+  border-bottom: 3px solid var(--color-ink);
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+}
+
+/* Paint one sun whose height reflects only the accompanying semantic session count. */
+.progress-rise span {
+  position: absolute;
+  inset-inline-start: 50%;
+  bottom: -3rem;
+  width: 4.5rem;
+  aspect-ratio: 1;
+  background: linear-gradient(to top, var(--color-accent-strong), var(--color-accent));
+  border-radius: 50%;
+  transform: translate(-50%, 0);
+  transition: transform var(--motion-slow) var(--motion-curve);
+}
+
+/* Lift the sun gently after one completed session. */
+.progress-rise--1 span {
+  transform: translate(-50%, -1rem);
+}
+
+/* Continue the visual rise after two completed sessions. */
+.progress-rise--2 span {
+  transform: translate(-50%, -2rem);
+}
+
+/* Bring most of the sun above the horizon after three completed sessions. */
+.progress-rise--3 span {
+  transform: translate(-50%, -3rem);
+}
+
+/* Complete the bounded visual rise at four or more sessions. */
+.progress-rise--4 span {
+  transform: translate(-50%, -4rem);
+}
+
+/* Present exact progress values as a compact semantic definition list. */
+.progress-data {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0 0 var(--space-5);
+}
+
+/* Balance each progress label with its exact derived value. */
+.progress-data > div {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-block: var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Keep definition labels readable but secondary to their values. */
+.progress-data dt {
+  color: var(--color-ink-muted);
+}
+
+/* Strengthen exact progress values and keep changing digits stable. */
+.progress-data dd {
+  margin: 0;
+  color: var(--color-ink);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Group a large progress value with its plain-language explanation. */
+.supporting-stat {
+  /* Use flex so value and label align cleanly on one readable line. */
+  display: flex;
+  /* Align the smaller label to the large value's text baseline. */
+  align-items: baseline;
+  /* Separate number and explanation without weakening their relationship. */
+  gap: var(--space-3);
+  /* Keep card spacing controlled rather than inherited from browser paragraphs. */
+  margin: var(--space-3) 0 var(--space-5);
+  /* Use muted ink for the explanatory portion of the metric. */
+  color: var(--color-ink-muted);
+  /* Close the supporting statistic layout after grouping value and meaning. */
+}
+
+/* Give the empty progress number clear but subordinate visual emphasis. */
+.supporting-stat strong {
+  /* Use primary ink so the value reads immediately. */
+  color: var(--color-ink);
+  /* Make the value prominent without competing with the central countdown. */
+  font-size: 2rem;
+  /* Keep future changing values stable in width. */
+  font-variant-numeric: tabular-nums;
+  /* Close the support value treatment after defining emphasis and stability. */
+}
