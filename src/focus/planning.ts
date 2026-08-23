@@ -43,7 +43,9 @@ export type FocusPlanAction =
   // Mark one task complete and release it when it was the current selection.
   | { type: "COMPLETE_TASK"; taskId: number }
   // Return one completed task to the unfinished plan without erasing its history.
-  | { type: "REOPEN_TASK"; taskId: number };
+  | { type: "REOPEN_TASK"; taskId: number }
+  // Rename one unfinished task or adjust its remaining-session estimate.
+  | { type: "EDIT_TASK"; taskId: number; title: string; estimatedSessions: number };
 
 // Prevent the planning layer from expanding into an overwhelming backlog.
 export const MAX_FOCUS_TASKS = 5;
@@ -155,6 +157,33 @@ export function reduceFocusPlan(state: FocusPlanState, action: FocusPlanAction):
         ),
         // Select the reopened work only when nothing else currently holds the focus anchor.
         activeTaskId: state.activeTaskId ?? action.taskId,
+      };
+    }
+    // Edit one unfinished task's wording and estimate under the same trusted bounds.
+    case "EDIT_TASK": {
+      // Find the unfinished target so completed history stays immutable.
+      const target = state.tasks.find((task) => task.id === action.taskId && !task.completed);
+      if (!target) return state;
+      // Remove accidental outer whitespace while preserving visitor wording.
+      const title = action.title.trim();
+      // Reject invalid wording or estimates that fall below already-credited sessions.
+      if (
+        !title ||
+        title.length > 100 ||
+        !Number.isInteger(action.estimatedSessions) ||
+        action.estimatedSessions < Math.max(1, target.completedSessions) ||
+        action.estimatedSessions > MAX_ESTIMATED_SESSIONS
+      ) {
+        return state;
+      }
+      // Update only the matching task while keeping selection and history intact.
+      return {
+        ...state,
+        tasks: state.tasks.map((task) =>
+          task.id === action.taskId
+            ? { ...task, title, estimatedSessions: action.estimatedSessions }
+            : task,
+        ),
       };
     }
     // Preserve the current plan if a future caller reaches this reducer with no recognized action.

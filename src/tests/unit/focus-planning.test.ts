@@ -94,6 +94,48 @@ describe("focus planning", () => {
     expect(next.tasks[0]?.completed).toBe(true);
     expect(next.activeTaskId).toBe(2);
   });
+  // Verify unfinished tasks can be renamed and re-estimated under trusted bounds.
+  it("edits an unfinished task without touching credited sessions", () => {
+    // Plan one two-session task and carry a session into it before editing.
+    const planned = reduceFocusPlan(createInitialFocusPlan(), {
+      type: "ADD_TASK",
+      title: "Draft vaguely",
+      estimatedSessions: 3,
+    });
+    const carried = reduceFocusPlan(planned, {
+      type: "CARRY_TASK",
+      taskId: 1,
+      completedAt: 9_000,
+    });
+    // Rename the task and lower the estimate to the credited floor.
+    const edited = reduceFocusPlan(carried, {
+      type: "EDIT_TASK",
+      taskId: 1,
+      title: "  Draft precisely  ",
+      estimatedSessions: 1,
+    });
+    // Protect the trimmed wording, the floored estimate, and the untouched credit.
+    expect(edited.tasks[0]).toMatchObject({
+      title: "Draft precisely",
+      estimatedSessions: 1,
+      completedSessions: 1,
+    });
+    // Refuse estimates that fall below the already-credited session count.
+    expect(
+      reduceFocusPlan(edited, {
+        type: "EDIT_TASK",
+        taskId: 1,
+        title: "Too small",
+        estimatedSessions: 0,
+      }),
+    ).toBe(edited);
+    // Refuse blank wording so history can never lose its visitor-authored meaning.
+    expect(
+      reduceFocusPlan(edited, { type: "EDIT_TASK", taskId: 1, title: "   ", estimatedSessions: 2 }),
+    ).toBe(edited);
+    // Close the edit case after proving both honest bounds.
+  });
+
   // Verify reopening returns finished work to the plan without losing its history.
   it("reopens a completed task and restores its selection when idle", () => {
     // Plan, carry, and complete one task through the ordinary transitions.

@@ -204,6 +204,12 @@ export function App() {
   const [taskDraft, setTaskDraft] = useState("");
   // Start each new task with one approachable estimated focus session.
   const [taskEstimate, setTaskEstimate] = useState(1);
+  // Track which unfinished task is being edited so only one row changes at a time.
+  const [editingTaskId, setEditingTaskId] = useState<number | null>(null);
+  // Hold the in-progress edited title outside the reviewed task collection.
+  const [editTaskTitle, setEditTaskTitle] = useState("");
+  // Hold the in-progress edited estimate for the same single-row edit surface.
+  const [editTaskEstimate, setEditTaskEstimate] = useState(1);
   // Coordinate captured thoughts, completed sessions, reflections, and derived progress.
   const [focusJourney, updateFocusJourney] = useReducer(
     reduceFocusJourney,
@@ -608,6 +614,25 @@ export function App() {
           : "Distraction dismissed.",
     );
     // Close the review action after applying its optional task conversion.
+  }
+
+  // Begin one bounded inline edit with the task's current trusted values.
+  function beginEditTask(taskId: number, title: string, estimatedSessions: number) {
+    setEditingTaskId(taskId);
+    setEditTaskTitle(title);
+    setEditTaskEstimate(estimatedSessions);
+  }
+
+  // Commit the open edit through the guarded reducer and close the row quietly.
+  function saveEditedTask() {
+    if (editingTaskId === null) return;
+    updateFocusPlan({
+      type: "EDIT_TASK",
+      taskId: editingTaskId,
+      title: editTaskTitle,
+      estimatedSessions: editTaskEstimate,
+    });
+    setEditingTaskId(null);
   }
 
   // Finish optional reflection and move to the break chosen by the timer cycle.
@@ -1487,24 +1512,86 @@ export function App() {
                 {pendingTasks.map((task) => (
                   // Preserve task identity across selection and completion updates.
                   <li className="task-list__item" key={task.id}>
-                    {/* Keep title and estimate together before the relevant action. */}
-                    <span>
-                      <strong>{task.title}</strong>
-                      <small>
-                        {task.completedSessions} of {task.estimatedSessions}{" "}
-                        {task.estimatedSessions === 1 ? "session" : "sessions"}
-                      </small>
-                    </span>
-                    {/* Distinguish the current task from other selectable unfinished work. */}
-                    {task.id === focusPlan.activeTaskId ? (
-                      <span className="badge">Current</span>
-                    ) : (
-                      <Button
-                        onClick={() => updateFocusPlan({ type: "SELECT_TASK", taskId: task.id })}
-                        variant="quiet"
+                    {editingTaskId === task.id ? (
+                      // Swap the row into one compact inline edit surface while active.
+                      <form
+                        className="task-edit"
+                        onSubmit={(event: FormEvent<HTMLFormElement>) => {
+                          event.preventDefault();
+                          saveEditedTask();
+                        }}
                       >
-                        Choose
-                      </Button>
+                        <input
+                          aria-label="Task title"
+                          className="field__control"
+                          maxLength={100}
+                          onChange={(event) => setEditTaskTitle(event.currentTarget.value)}
+                          type="text"
+                          value={editTaskTitle}
+                        />
+                        <select
+                          aria-label="Estimated sessions"
+                          className="field__control"
+                          onChange={(event) =>
+                            setEditTaskEstimate(Number(event.currentTarget.value))
+                          }
+                          value={editTaskEstimate}
+                        >
+                          {/* Offer every legal estimate including the credited minimum. */}
+                          {Array.from(
+                            {
+                              length:
+                                MAX_ESTIMATED_SESSIONS - Math.max(1, task.completedSessions) + 1,
+                            },
+                            (_, index) => Math.max(1, task.completedSessions) + index,
+                          ).map((value) => (
+                            <option key={value} value={value}>
+                              {value}
+                            </option>
+                          ))}
+                        </select>
+                        <Button disabled={!editTaskTitle.trim()} type="submit" variant="secondary">
+                          Save
+                        </Button>
+                        <Button onClick={() => setEditingTaskId(null)} variant="quiet">
+                          Cancel
+                        </Button>
+                        {/* Close the inline edit form after its bounded controls. */}
+                      </form>
+                    ) : (
+                      <>
+                        {/* Keep title and estimate together before the relevant action. */}
+                        <span>
+                          <strong>{task.title}</strong>
+                          <small>
+                            {task.completedSessions} of {task.estimatedSessions}{" "}
+                            {task.estimatedSessions === 1 ? "session" : "sessions"}
+                          </small>
+                        </span>
+                        {/* Group the row's quiet corrections before the state indicator. */}
+                        <span className="task-list__end">
+                          {task.id === focusPlan.activeTaskId ? (
+                            <span className="badge">Current</span>
+                          ) : (
+                            <Button
+                              onClick={() =>
+                                updateFocusPlan({ type: "SELECT_TASK", taskId: task.id })
+                              }
+                              variant="quiet"
+                            >
+                              Choose
+                            </Button>
+                          )}
+                          <Button
+                            onClick={() =>
+                              beginEditTask(task.id, task.title, task.estimatedSessions)
+                            }
+                            variant="quiet"
+                          >
+                            Edit
+                          </Button>
+                        </span>
+                      </>
                     )}
                   </li>
                 ))}

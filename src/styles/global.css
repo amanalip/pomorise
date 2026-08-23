@@ -1163,6 +1163,23 @@ img {
   font-size: 0.875rem;
 }
 
+/* Let one task row stretch its inline edit across the available width. */
+.task-edit {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  min-width: 0;
+  flex: 1;
+}
+
+/* Give the edited title room to grow while the estimate stays compact. */
+.task-edit .field__control:first-child {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+}
+
 /* Separate completed task records from the active planning controls above them. */
 .task-history {
   /* Create a quiet boundary before the audit trail without adding another card. */
