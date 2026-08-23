@@ -45,7 +45,9 @@ export type FocusPlanAction =
   // Return one completed task to the unfinished plan without erasing its history.
   | { type: "REOPEN_TASK"; taskId: number }
   // Rename one unfinished task or adjust its remaining-session estimate.
-  | { type: "EDIT_TASK"; taskId: number; title: string; estimatedSessions: number };
+  | { type: "EDIT_TASK"; taskId: number; title: string; estimatedSessions: number }
+  // Remove one unfinished task the visitor no longer wants without touching history.
+  | { type: "DELETE_TASK"; taskId: number };
 
 // Prevent the planning layer from expanding into an overwhelming backlog.
 export const MAX_FOCUS_TASKS = 5;
@@ -184,6 +186,16 @@ export function reduceFocusPlan(state: FocusPlanState, action: FocusPlanAction):
             ? { ...task, title, estimatedSessions: action.estimatedSessions }
             : task,
         ),
+      };
+    }
+    // Remove one unfinished task entirely while preserving completed history records.
+    case "DELETE_TASK": {
+      // Ignore unknown or already-completed tasks so history can never be erased here.
+      if (!state.tasks.some((task) => task.id === action.taskId && !task.completed)) return state;
+      return {
+        ...state,
+        tasks: state.tasks.filter((task) => task.id !== action.taskId),
+        activeTaskId: state.activeTaskId === action.taskId ? null : state.activeTaskId,
       };
     }
     // Preserve the current plan if a future caller reaches this reducer with no recognized action.

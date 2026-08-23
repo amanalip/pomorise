@@ -94,6 +94,38 @@ describe("focus planning", () => {
     expect(next.tasks[0]?.completed).toBe(true);
     expect(next.activeTaskId).toBe(2);
   });
+  // Verify unfinished tasks can be removed while completed history stays untouchable.
+  it("deletes an unfinished task and releases its selection", () => {
+    // Plan two tasks and select the second so deletion must clear the anchor.
+    let state = reduceFocusPlan(createInitialFocusPlan(), {
+      type: "ADD_TASK",
+      title: "Keep this one",
+      estimatedSessions: 1,
+    });
+    state = reduceFocusPlan(state, {
+      type: "ADD_TASK",
+      title: "Drop this one",
+      estimatedSessions: 2,
+    });
+    state = reduceFocusPlan(state, { type: "SELECT_TASK", taskId: 2 });
+    // Remove the selected unfinished task through its explicit action.
+    const removed = reduceFocusPlan(state, { type: "DELETE_TASK", taskId: 2 });
+    // Protect the surviving task and the released focus anchor.
+    expect(removed.tasks.map((task) => task.title)).toEqual(["Keep this one"]);
+    expect(removed.activeTaskId).toBeNull();
+    // Ignore removal requests for unknown identities without changing anything.
+    expect(reduceFocusPlan(removed, { type: "DELETE_TASK", taskId: 99 })).toBe(removed);
+    // Complete the survivor and prove history cannot be deleted through this action.
+    const completed = reduceFocusPlan(removed, {
+      type: "CARRY_TASK",
+      taskId: 1,
+      completedAt: 11_000,
+    });
+    const finished = reduceFocusPlan(completed, { type: "COMPLETE_TASK", taskId: 1 });
+    expect(reduceFocusPlan(finished, { type: "DELETE_TASK", taskId: 1 })).toBe(finished);
+    // Close the removal case after proving both scope boundaries.
+  });
+
   // Verify unfinished tasks can be renamed and re-estimated under trusted bounds.
   it("edits an unfinished task without touching credited sessions", () => {
     // Plan one two-session task and carry a session into it before editing.

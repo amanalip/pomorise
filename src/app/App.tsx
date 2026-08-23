@@ -204,6 +204,8 @@ export function App() {
   const [taskDraft, setTaskDraft] = useState("");
   // Start each new task with one approachable estimated focus session.
   const [taskEstimate, setTaskEstimate] = useState(1);
+  // Track which unfinished task has an open removal confirmation.
+  const [confirmingDeleteTaskId, setConfirmingDeleteTaskId] = useState<number | null>(null);
   // Track which unfinished task is being edited so only one row changes at a time.
   const [editingTaskId, setEditingTaskId] = useState<number | null>(null);
   // Hold the in-progress edited title outside the reviewed task collection.
@@ -1590,6 +1592,33 @@ export function App() {
                           >
                             Edit
                           </Button>
+                          {/* Confirm removal inline so no blocking dialog is required. */}
+                          {confirmingDeleteTaskId === task.id ? (
+                            <>
+                              <Button
+                                onClick={() => {
+                                  updateFocusPlan({ type: "DELETE_TASK", taskId: task.id });
+                                  setConfirmingDeleteTaskId(null);
+                                }}
+                                variant="secondary"
+                              >
+                                Confirm
+                              </Button>
+                              <Button
+                                onClick={() => setConfirmingDeleteTaskId(null)}
+                                variant="quiet"
+                              >
+                                Keep
+                              </Button>
+                            </>
+                          ) : (
+                            <Button
+                              onClick={() => setConfirmingDeleteTaskId(task.id)}
+                              variant="quiet"
+                            >
+                              Remove
+                            </Button>
+                          )}
                         </span>
                       </>
                     )}
