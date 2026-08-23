@@ -841,8 +841,8 @@ export function App() {
           {navigationItems.map((item) => (
             // Reuse the stable item name as React's identity for each destination.
             <Button
-              // Communicate the currently selected page through the standard ARIA state.
-              aria-current={activeNavigation === item ? "page" : undefined}
+              // Mark the current section generically because these are views, not pages.
+              aria-current={activeNavigation === item ? "true" : undefined}
               // Preserve the stable destination name as React's list key.
               key={item}
               // Switch the highlighted shell destination without pretending to load future content.
@@ -1633,8 +1633,8 @@ export function App() {
         {navigationItems.map((item) => (
           // Render each mobile destination as a native button with visible selected state.
           <Button
-            // Communicate selection independently of the visual coral indicator.
-            aria-current={activeNavigation === item ? "page" : undefined}
+            // Mark the current section generically because these are views, not pages.
+            aria-current={activeNavigation === item ? "true" : undefined}
             // Preserve the stable destination name as React's list key.
             key={item}
             // Synchronize mobile and desktop selections through one shared state value.
