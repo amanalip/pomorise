@@ -94,6 +94,34 @@ describe("focus planning", () => {
     expect(next.tasks[0]?.completed).toBe(true);
     expect(next.activeTaskId).toBe(2);
   });
+  // Verify reopening returns finished work to the plan without losing its history.
+  it("reopens a completed task and restores its selection when idle", () => {
+    // Plan, carry, and complete one task through the ordinary transitions.
+    const planned = reduceFocusPlan(createInitialFocusPlan(), {
+      type: "ADD_TASK",
+      title: "Mistakenly finished",
+      estimatedSessions: 2,
+    });
+    const carried = reduceFocusPlan(planned, {
+      type: "CARRY_TASK",
+      taskId: 1,
+      completedAt: 5_000,
+    });
+    const completed = reduceFocusPlan(carried, { type: "COMPLETE_TASK", taskId: 1 });
+    // Confirm the completion released the active selection before reopening.
+    expect(completed.activeTaskId).toBeNull();
+    // Reopen through history so the task becomes actionable again.
+    const reopened = reduceFocusPlan(completed, { type: "REOPEN_TASK", taskId: 1 });
+    // Protect the preserved session credit while restoring unfinished status.
+    expect(reopened.tasks[0]?.completed).toBe(false);
+    expect(reopened.tasks[0]?.completedSessions).toBe(1);
+    // The reopened task takes the empty focus anchor without a second click.
+    expect(reopened.activeTaskId).toBe(1);
+    // Ignore reopen requests for unknown or still-unfinished tasks safely.
+    expect(reduceFocusPlan(reopened, { type: "REOPEN_TASK", taskId: 99 })).toBe(reopened);
+    // Close the reopen case after proving history stays honest.
+  });
+
   // Keep completed history from consuming the small active-plan capacity.
   it("allows new tasks when only completed history fills the list", () => {
     // Fill the plan entirely with finished work like a long-lived browser profile would hold.

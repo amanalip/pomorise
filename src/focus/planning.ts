@@ -41,7 +41,9 @@ export type FocusPlanAction =
   // Carry current unfinished work into another session without using pressure-driven language.
   | { type: "CARRY_TASK"; taskId: number; completedAt: number }
   // Mark one task complete and release it when it was the current selection.
-  | { type: "COMPLETE_TASK"; taskId: number };
+  | { type: "COMPLETE_TASK"; taskId: number }
+  // Return one completed task to the unfinished plan without erasing its history.
+  | { type: "REOPEN_TASK"; taskId: number };
 
 // Prevent the planning layer from expanding into an overwhelming backlog.
 export const MAX_FOCUS_TASKS = 5;
@@ -140,6 +142,19 @@ export function reduceFocusPlan(state: FocusPlanState, action: FocusPlanAction):
           task.id === action.taskId ? { ...task, completed: true } : task,
         ),
         activeTaskId: state.activeTaskId === action.taskId ? null : state.activeTaskId,
+      };
+    }
+    // Reopen one finished task so corrected mistakes stay recoverable from history.
+    case "REOPEN_TASK": {
+      // Ignore unknown or still-unfinished tasks without changing any state.
+      if (!state.tasks.some((task) => task.id === action.taskId && task.completed)) return state;
+      return {
+        ...state,
+        tasks: state.tasks.map((task) =>
+          task.id === action.taskId ? { ...task, completed: false } : task,
+        ),
+        // Select the reopened work only when nothing else currently holds the focus anchor.
+        activeTaskId: state.activeTaskId ?? action.taskId,
       };
     }
     // Preserve the current plan if a future caller reaches this reducer with no recognized action.

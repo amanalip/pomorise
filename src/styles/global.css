@@ -1140,6 +1140,14 @@ img {
   /* Close the completed task wording after its non-color state indicator. */
 }
 
+/* Keep a history row's badge and correction action grouped at one calm edge. */
+.task-list__end {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
 /* Separate completed task records from the active planning controls above them. */
 .task-history {
   /* Create a quiet boundary before the audit trail without adding another card. */

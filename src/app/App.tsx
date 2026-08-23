@@ -1535,7 +1535,16 @@ export function App() {
                           focus {task.estimatedSessions === 1 ? "session" : "sessions"}
                         </small>
                       </span>
-                      <span className="badge">Complete</span>
+                      {/* Offer a calm correction path without hiding the completion record. */}
+                      <span className="task-list__end">
+                        <Button
+                          onClick={() => updateFocusPlan({ type: "REOPEN_TASK", taskId: task.id })}
+                          variant="quiet"
+                        >
+                          Reopen
+                        </Button>
+                        <span className="badge">Complete</span>
+                      </span>
                     </li>
                   ))}
                 </ul>
