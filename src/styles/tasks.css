@@ -304,3 +304,20 @@
   padding-inline-start: var(--space-5);
   color: var(--color-ink-muted);
 }
+
+/* Lay each retained thought's wording beside its late review choices. */
+.kept-thoughts li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+/* Keep late review and removal choices in one compact touch-friendly row. */
+.kept-thoughts__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}

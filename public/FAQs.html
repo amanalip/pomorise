@@ -8,6 +8,20 @@
       content="Answers to common questions about Pomorise tasks, timers, privacy, storage, alerts, backups, and offline use."
     />
     <link rel="icon" type="image/png" href="/pomorise/icons/pomorise-192.png" />
+    <script>
+      // Resolve the same saved pomorise.theme preference as the application before first paint,
+      // so an explicit Light or Dark choice never disagrees with the operating system palette.
+      (function () {
+        try {
+          var stored = localStorage.getItem("pomorise.theme");
+          var systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+          document.documentElement.dataset.theme =
+            stored === "light" || stored === "dark" ? stored : systemDark ? "dark" : "light";
+        } catch (error) {
+          // Leave data-theme unset so the stylesheet follows the operating system instead.
+        }
+      })();
+    </script>
     <link rel="stylesheet" href="/pomorise/faqs.css" />
     <title>Pomorise FAQs</title>
   </head>

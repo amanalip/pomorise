@@ -27,6 +27,19 @@ function validBackup() {
   };
 }
 
+// Build a session that used Add Time and overtime so export honesty can be proven.
+function extendedSession() {
+  return {
+    id: 1_800_000_060_000,
+    completedAt: 1_800_000_060_000,
+    plannedSeconds: 1_500,
+    addedSeconds: 300,
+    overtimeSeconds: 120,
+    intention: "Extend the draft",
+    taskTitle: null,
+  };
+}
+
 // Protect imports from malformed shapes and preserve portable session wording safely.
 describe("Phase 5 local backup boundary", () => {
   // Accept a complete compatible backup after checking every nested record.
@@ -67,5 +80,21 @@ describe("Phase 5 local backup boundary", () => {
     expect(csv).toContain('"Draft, then review"');
     expect(csv).toContain('"Write ""First Light"""');
     expect(csv.split("\r\n")).toHaveLength(2);
+  });
+
+  // Report planned, added, overtime, and total focused minutes so Add Time is never lost.
+  it("exports added and overtime minutes with the full focused total", () => {
+    // Parse a valid backup so the extended record passes through the same trust boundary.
+    const parsed = parseBackupText(JSON.stringify(validBackup()));
+    parsed.records.sessions.push(extendedSession());
+    const rows = createSessionCsv(parsed.records.sessions).split("\r\n");
+    // Require the header to expose every honest duration column.
+    expect(rows[0]).toBe(
+      "completed_at,planned_minutes,added_minutes,overtime_minutes,focused_minutes,intention,task",
+    );
+    // Require the extended session row to carry 25 planned, 5 added, 2 overtime, 32 focused.
+    expect(rows[2]).toContain(",25,5,2,32,");
+    // Require older records without added time to export zero-filled columns.
+    expect(rows[1]).toContain(",25,0,0,25,");
   });
 });

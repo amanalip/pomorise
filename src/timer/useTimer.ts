@@ -287,7 +287,12 @@ export function useTimer() {
     state,
     preferences,
     displayNow,
-    remainingMs: getRemainingMs(state, displayNow),
+    // Freeze the visible countdown at its last trusted value until the recovery
+    // choice is made, so a changed wall clock can never repaint it beforehand.
+    remainingMs:
+      clockRecovery !== null
+        ? clockRecovery.remainingBeforeChangeMs
+        : getRemainingMs(state, displayNow),
     overtimeMs: getOvertimeMs(state, displayNow),
     announcement,
     clockRecovery,

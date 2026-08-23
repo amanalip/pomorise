@@ -21,6 +21,8 @@ const timerStateSchema = z
     // Accept every session number the configurable long-break rhythm can produce.
     sessionNumber: z.number().int().min(1).max(LONG_BREAK_INTERVAL_LIMITS.maximum),
     plannedSeconds: z.number().int().positive(),
+    // Accept older saved timers that predate separate added-time tracking by supplying zero.
+    addedSeconds: z.number().int().nonnegative().default(0),
     remainingMs: z.number().nonnegative(),
     startedAt: z.number().nullable(),
     targetEndAt: z.number().nullable(),

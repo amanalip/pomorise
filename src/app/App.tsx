@@ -539,10 +539,12 @@ export function App() {
     // Ignore non-focus sessions and timer states without a real completion timestamp.
     if (timer.state.mode !== "focus" || timer.state.completedAt === null) return;
     // Record immutable planning context without coupling it back into timer transitions.
+    // Include added time so completed focus totals reflect every deliberate extension.
     updateFocusJourney({
       type: "RECORD_SESSION",
       completedAt: timer.state.completedAt,
       plannedSeconds: timer.state.plannedSeconds,
+      addedSeconds: timer.state.addedSeconds,
       intention: focusPlan.intention,
       taskTitle: activeTask?.title ?? null,
     });
@@ -550,6 +552,7 @@ export function App() {
   }, [
     activeTask?.title,
     focusPlan.intention,
+    timer.state.addedSeconds,
     timer.state.completedAt,
     timer.state.mode,
     timer.state.plannedSeconds,
@@ -606,8 +609,14 @@ export function App() {
   ) {
     // Find the pending plain-text thought before optionally converting it into a task.
     const distraction = focusJourney.distractions.find((item) => item.id === distractionId);
-    // Refuse stale review requests that no longer point to a pending thought.
-    if (!distraction || distraction.resolution !== "pending") return;
+    // Ignore stale review requests that no longer point to a reviewable thought.
+    // Kept thoughts stay actionable so they can later become tasks or be dismissed.
+    if (
+      !distraction ||
+      (distraction.resolution !== "pending" && distraction.resolution !== "kept")
+    ) {
+      return;
+    }
     // Convert only when the deliberately small task list still has unfinished capacity.
     if (resolution === "task") {
       if (countUnfinishedTasks(focusPlan.tasks) >= MAX_FOCUS_TASKS) {
@@ -627,6 +636,15 @@ export function App() {
           : "Distraction dismissed.",
     );
     // Close the review action after applying its optional task conversion.
+  }
+
+  // Remove one retained thought entirely after its explicit delete choice.
+  function deleteDistraction(distractionId: number) {
+    // Drop the exact captured thought without touching tasks or timer state.
+    updateFocusJourney({ type: "DELETE_DISTRACTION", distractionId });
+    // Confirm the quiet deletion so the list change is never silent.
+    setJourneyStatus("Captured thought deleted.");
+    // Close the delete action after its bounded journey update.
   }
 
   // Begin one bounded inline edit with the task's current trusted values.
@@ -1253,8 +1271,9 @@ export function App() {
                 <h2 id="reflection-title">Close this session gently</h2>
                 {/* Summarize the completed progress before asking for optional detail. */}
                 <p>
-                  You completed {Math.round(timer.state.plannedSeconds / 60)} focus minutes.
-                  Everything below is optional.
+                  You completed{" "}
+                  {Math.round((timer.state.plannedSeconds + timer.state.addedSeconds) / 60)} focus
+                  minutes. Everything below is optional.
                 </p>
                 {/* Keep the next return point concise and directly editable. */}
                 <Field
@@ -1703,12 +1722,38 @@ export function App() {
               // Group kept thoughts separately from actionable focus tasks.
               <div className="kept-thoughts">
                 <h3>Kept for later</h3>
+                {/* Explain that retained thoughts stay actionable instead of read-only. */}
+                <p className="field__hint">
+                  Kept thoughts can still become tasks, be dismissed, or be deleted.
+                </p>
                 <ul>
                   {focusJourney.distractions
                     .filter((item) => item.resolution === "kept")
                     .map((item) => (
-                      // Render retained visitor wording as plain text under its stable identity.
-                      <li key={item.id}>{item.text}</li>
+                      // Group each retained wording with its late review and removal choices.
+                      <li key={item.id}>
+                        {/* Render retained visitor wording as plain text. */}
+                        <strong>{item.text}</strong>
+                        {/* Offer the same calm outcomes as post-session review. */}
+                        <div className="kept-thoughts__actions">
+                          <Button
+                            disabled={countUnfinishedTasks(focusPlan.tasks) >= MAX_FOCUS_TASKS}
+                            onClick={() => resolveDistraction(item.id, "task")}
+                            variant="secondary"
+                          >
+                            Make task
+                          </Button>
+                          <Button
+                            onClick={() => resolveDistraction(item.id, "dismissed")}
+                            variant="quiet"
+                          >
+                            Dismiss
+                          </Button>
+                          <Button onClick={() => deleteDistraction(item.id)} variant="quiet">
+                            Delete
+                          </Button>
+                        </div>
+                      </li>
                     ))}
                 </ul>
               </div>
@@ -1798,7 +1843,13 @@ export function App() {
                       <li key={session.completedAt}>
                         <strong>{formatSessionDate(session.completedAt)}</strong>
                         <small>
-                          {Math.round((session.plannedSeconds + session.overtimeSeconds) / 60)} min
+                          {Math.round(
+                            (session.plannedSeconds +
+                              session.addedSeconds +
+                              session.overtimeSeconds) /
+                              60,
+                          )}{" "}
+                          min
                           {/* Show the rating only when the visitor gave one. */}
                           {session.focusRating !== null && ` · rated ${session.focusRating}`}
                           {/* Name the task only when one was selected during the session. */}

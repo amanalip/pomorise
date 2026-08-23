@@ -33,6 +33,53 @@ describe("focus journey", () => {
     expect(reviewed.distractions[0]?.resolution).toBe("kept");
   });
 
+  // Verify kept thoughts stay actionable instead of becoming read-only records.
+  it("lets kept thoughts later become tasks, be dismissed, or be deleted", () => {
+    // Capture one thought and keep it for later through the ordinary review path.
+    const captured = reduceFocusJourney(createInitialFocusJourney(), {
+      type: "CAPTURE_DISTRACTION",
+      text: "Check the refund policy",
+    });
+    const kept = reduceFocusJourney(captured, {
+      type: "RESOLVE_DISTRACTION",
+      distractionId: 1,
+      resolution: "kept",
+    });
+    // Convert the kept thought after the fact so late decisions remain possible.
+    const converted = reduceFocusJourney(kept, {
+      type: "RESOLVE_DISTRACTION",
+      distractionId: 1,
+      resolution: "task",
+    });
+    expect(converted.distractions[0]?.resolution).toBe("task");
+    // Capture and keep a second thought, then dismiss it later without recreating it first.
+    const capturedSecond = reduceFocusJourney(converted, {
+      type: "CAPTURE_DISTRACTION",
+      text: "Reorder the outline",
+    });
+    const keptSecond = reduceFocusJourney(capturedSecond, {
+      type: "RESOLVE_DISTRACTION",
+      distractionId: 2,
+      resolution: "kept",
+    });
+    const dismissedLater = reduceFocusJourney(keptSecond, {
+      type: "RESOLVE_DISTRACTION",
+      distractionId: 2,
+      resolution: "dismissed",
+    });
+    expect(dismissedLater.distractions[1]?.resolution).toBe("dismissed");
+    // Remove one retained thought entirely so nothing becomes permanent clutter.
+    const deleted = reduceFocusJourney(keptSecond, {
+      type: "DELETE_DISTRACTION",
+      distractionId: 2,
+    });
+    expect(deleted.distractions.map((item) => item.id)).toEqual([1]);
+    // Ignore deletions that point at unknown identities instead of changing state.
+    expect(
+      reduceFocusJourney(dismissedLater, { type: "DELETE_DISTRACTION", distractionId: 99 }),
+    ).toBe(dismissedLater);
+  });
+
   // Verify one completion can be recorded once and receive an optional reflection.
   it("records one unique session and saves bounded reflection", () => {
     // Use one stable timestamp as the timer completion boundary.
@@ -42,6 +89,7 @@ describe("focus journey", () => {
       type: "RECORD_SESSION",
       completedAt,
       plannedSeconds: 1_500,
+      addedSeconds: 0,
       intention: "Draft the opening",
       taskTitle: "Write article",
     });
@@ -50,6 +98,7 @@ describe("focus journey", () => {
       type: "RECORD_SESSION",
       completedAt,
       plannedSeconds: 1_500,
+      addedSeconds: 0,
       intention: "Draft the opening",
       taskTitle: "Write article",
     });
@@ -78,16 +127,18 @@ describe("focus journey", () => {
     const now = new Date(2026, 7, 20, 12).getTime();
     // Build synthetic records across today, the trailing week, and an older date.
     const sessions = [
-      { completedAt: now - 60_000, plannedSeconds: 1_500, overtimeSeconds: 300 },
-      { completedAt: now - 3_600_000, plannedSeconds: 900, overtimeSeconds: 0 },
+      { completedAt: now - 60_000, plannedSeconds: 1_500, addedSeconds: 300, overtimeSeconds: 300 },
+      { completedAt: now - 3_600_000, plannedSeconds: 900, addedSeconds: 0, overtimeSeconds: 0 },
       {
         completedAt: new Date(2026, 7, 17, 12).getTime(),
         plannedSeconds: 1_500,
+        addedSeconds: 0,
         overtimeSeconds: 0,
       },
       {
         completedAt: new Date(2026, 7, 1, 12).getTime(),
         plannedSeconds: 1_500,
+        addedSeconds: 0,
         overtimeSeconds: 0,
       },
     ].map((record) => ({
@@ -102,7 +153,7 @@ describe("focus journey", () => {
     // Derive counts, honest focused minutes, and the gentle average of rated sessions.
     expect(summarizeProgress(sessions, now)).toEqual({
       todaySessions: 2,
-      todayMinutes: 45,
+      todayMinutes: 50,
       weekSessions: 3,
       averageFocusRating: 4,
     });
@@ -120,6 +171,7 @@ describe("focus journey", () => {
       type: "RECORD_SESSION",
       completedAt,
       plannedSeconds: 1_500,
+      addedSeconds: 0,
       intention: "",
       taskTitle: null,
     });
@@ -140,6 +192,27 @@ describe("focus journey", () => {
     // Protect the larger honest total after the idempotent repeat.
     expect(repeated.sessions[0]?.overtimeSeconds).toBe(300);
   });
+  // Verify deliberate Add Time extensions are stored on the exact completed session.
+  it("records added time separately so focused totals stay honest", () => {
+    // Use one stable timestamp as the timer completion boundary.
+    const completedAt = new Date(2026, 7, 20, 12).getTime();
+    // Record a session whose visitor extended it by five focused minutes.
+    const recorded = reduceFocusJourney(createInitialFocusJourney(), {
+      type: "RECORD_SESSION",
+      completedAt,
+      plannedSeconds: 1_500,
+      addedSeconds: 300,
+      intention: "",
+      taskTitle: null,
+    });
+    // Keep planned and added values distinct so summaries and exports can report both.
+    expect(recorded.sessions[0]).toMatchObject({
+      plannedSeconds: 1_500,
+      addedSeconds: 300,
+      overtimeSeconds: 0,
+    });
+  });
+
   // Verify the trailing-week series buckets sessions by honest local days.
   it("summarizes seven local days of focused minutes for the chart", () => {
     // Anchor at local noon so every day boundary is deterministic in any timezone.
@@ -149,6 +222,7 @@ describe("focus journey", () => {
       {
         completedAt: now - 3_600_000,
         plannedSeconds: 1_500,
+        addedSeconds: 300,
         overtimeSeconds: 300,
         intention: "",
         taskTitle: null,
@@ -160,6 +234,7 @@ describe("focus journey", () => {
       {
         completedAt: now - 2 * 86_400_000,
         plannedSeconds: 900,
+        addedSeconds: 0,
         overtimeSeconds: 0,
         intention: "",
         taskTitle: null,
@@ -171,6 +246,7 @@ describe("focus journey", () => {
       {
         completedAt: new Date(2026, 6, 20).getTime(),
         plannedSeconds: 1_500,
+        addedSeconds: 0,
         overtimeSeconds: 0,
         intention: "",
         taskTitle: null,
@@ -185,8 +261,8 @@ describe("focus journey", () => {
     expect(week).toHaveLength(7);
     // Require the oldest entry to sit six local days before today's midnight.
     expect(new Date(week[0]?.dayStart as number).getDate()).toBe(new Date(now).getDate() - 6);
-    // Require today's bucket to include planned plus honestly focused overtime.
-    expect(week[6]?.minutes).toBe(30);
+    // Require today's bucket to include planned, added, and honestly focused overtime.
+    expect(week[6]?.minutes).toBe(35);
     // Require the two-days-ago bucket to capture its own session only.
     expect(week[4]?.minutes).toBe(15);
     // Require empty days to stay present as calm zero values.

@@ -164,6 +164,56 @@ describe("App", () => {
     // Close the Phase 4 component case after its add, selection, and completion journey.
   });
 
+  // Verify kept thoughts stay actionable instead of becoming read-only records.
+  it("lets a kept thought later become a task, be dismissed, or be deleted", async () => {
+    // Create a realistic visitor interaction controller for capture and review sequences.
+    const user = userEvent.setup();
+    // Build one deterministic completed focus session without waiting for wall time.
+    const started = timerReducer(createTimerState("focus", 60), { type: "START", now: 0 });
+    const completed = timerReducer(started, { type: "TICK", now: 60_000 });
+    saveTimerState(completed);
+    renderApp();
+    // Enter overtime so the quick-capture surface is reachable after completion.
+    await user.click(screen.getByRole("button", { name: "Keep working" }));
+    // Capture one thought and keep it for later through the post-session review choice.
+    await user.type(screen.getByRole("textbox", { name: "Quick capture" }), "Outline the summary");
+    await user.click(screen.getByRole("button", { name: "Capture and continue" }));
+    await user.click(screen.getByRole("button", { name: "Keep for later" }));
+    expect(screen.getByText("Distraction kept for later.")).toBeVisible();
+    // Locate the retained collection so every late action stays scoped to it.
+    const keptSection = screen
+      .getByRole("heading", { name: "Kept for later" })
+      .closest("div") as HTMLElement;
+    // Convert the kept wording into a planned task instead of leaving it stuck.
+    await user.click(within(keptSection).getByRole("button", { name: "Make task" }));
+    expect(screen.getByText("Distraction converted to a task.")).toBeVisible();
+    expect(screen.getAllByText("Outline the summary").length).toBeGreaterThan(0);
+    // Keep a second thought and dismiss it afterward so late dismissal is possible too.
+    await user.type(screen.getByRole("textbox", { name: "Quick capture" }), "Reorder the outline");
+    await user.click(screen.getByRole("button", { name: "Capture and continue" }));
+    await user.click(screen.getByRole("button", { name: "Keep for later" }));
+    const keptAgain = screen
+      .getByRole("heading", { name: "Kept for later" })
+      .closest("div") as HTMLElement;
+    await user.click(within(keptAgain).getByRole("button", { name: "Dismiss" }));
+    expect(screen.getByText("Distraction dismissed.")).toBeVisible();
+    // Keep a third thought and delete it entirely so nothing becomes permanent clutter.
+    await user.type(
+      screen.getByRole("textbox", { name: "Quick capture" }),
+      "Check the refund policy",
+    );
+    await user.click(screen.getByRole("button", { name: "Capture and continue" }));
+    await user.click(screen.getByRole("button", { name: "Keep for later" }));
+    const keptThird = screen
+      .getByRole("heading", { name: "Kept for later" })
+      .closest("div") as HTMLElement;
+    await user.click(within(keptThird).getByRole("button", { name: "Delete" }));
+    expect(screen.getByText("Captured thought deleted.")).toBeVisible();
+    // Require the removed wording to leave the interface completely.
+    expect(screen.queryByText("Check the refund policy")).not.toBeInTheDocument();
+    // Close the kept-thought case after proving every late action stays available.
+  });
+
   // Verify completion alerts prefer the service-worker channel that Android requires.
   it("shows the completion alert through a registered service worker", async () => {
     // Model a granted desktop-style Notification API for the fallback guard checks.

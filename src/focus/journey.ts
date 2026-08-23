@@ -18,6 +18,8 @@ export interface SessionRecord {
   completedAt: number;
   // Preserve the planned duration so progress minutes stay deterministic.
   plannedSeconds: number;
+  // Count deliberate Add Time extensions used during this completed session.
+  addedSeconds: number;
   // Count honestly focused extra time so continued work is never silently erased.
   overtimeSeconds: number;
   // Keep the optional intention that was active for this completed session.
@@ -63,11 +65,14 @@ export type FocusJourneyAction =
       type: "RECORD_SESSION";
       completedAt: number;
       plannedSeconds: number;
+      addedSeconds: number;
       intention: string;
       taskTitle: string | null;
     }
   // Credit focused overtime to the exact session that earned it before leaving it.
   | { type: "RECORD_OVERTIME"; completedAt: number; overtimeSeconds: number }
+  // Remove one retained or pending thought entirely after its explicit delete choice.
+  | { type: "DELETE_DISTRACTION"; distractionId: number }
   // Save optional reflection values against one completed focus session.
   | {
       type: "SAVE_REFLECTION";
@@ -112,16 +117,27 @@ export function reduceFocusJourney(
         nextDistractionId: state.nextDistractionId + 1,
       };
     }
-    // Apply one review choice only to a still-pending captured thought.
+    // Apply one review choice to a still-pending captured thought or a kept one.
+    // Kept thoughts must stay actionable so they can later become tasks or be dismissed.
     case "RESOLVE_DISTRACTION":
       return state.distractions.some(
-        (item) => item.id === action.distractionId && item.resolution === "pending",
+        (item) =>
+          item.id === action.distractionId &&
+          (item.resolution === "pending" || item.resolution === "kept"),
       )
         ? {
             ...state,
             distractions: state.distractions.map((item) =>
               item.id === action.distractionId ? { ...item, resolution: action.resolution } : item,
             ),
+          }
+        : state;
+    // Remove one thought entirely so retained wording never becomes read-only clutter.
+    case "DELETE_DISTRACTION":
+      return state.distractions.some((item) => item.id === action.distractionId)
+        ? {
+            ...state,
+            distractions: state.distractions.filter((item) => item.id !== action.distractionId),
           }
         : state;
     // Add one session for each unique timer completion timestamp.
@@ -141,6 +157,7 @@ export function reduceFocusJourney(
           {
             completedAt: action.completedAt,
             plannedSeconds: Math.max(0, Math.round(action.plannedSeconds)),
+            addedSeconds: Math.max(0, Math.round(action.addedSeconds)),
             overtimeSeconds: 0,
             intention: action.intention.slice(0, 120),
             taskTitle: action.taskTitle?.slice(0, 100) ?? null,
@@ -251,7 +268,8 @@ export function summarizeProgress(sessions: SessionRecord[], now: number): Progr
     todaySessions: todayRecords.length,
     todayMinutes: Math.round(
       todayRecords.reduce(
-        (seconds, session) => seconds + session.plannedSeconds + session.overtimeSeconds,
+        (seconds, session) =>
+          seconds + session.plannedSeconds + session.addedSeconds + session.overtimeSeconds,
         0,
       ) / 60,
     ),
@@ -270,7 +288,7 @@ export function summarizeProgress(sessions: SessionRecord[], now: number): Progr
 export interface WeekDaySummary {
   // Hold the local midnight boundary so charts can label each day deterministically.
   dayStart: number;
-  // Sum planned plus overtime minutes so the chart matches the honest daily totals.
+  // Sum planned, added, and overtime minutes so the chart matches honest focused totals.
   minutes: number;
 }
 
@@ -294,8 +312,11 @@ export function summarizeWeek(sessions: SessionRecord[], now: number): WeekDaySu
         .filter(
           (session) => session.completedAt >= dayStart && session.completedAt < dayEnd.getTime(),
         )
-        .reduce((total, session) => total + session.plannedSeconds + session.overtimeSeconds, 0) /
-        60,
+        .reduce(
+          (total, session) =>
+            total + session.plannedSeconds + session.addedSeconds + session.overtimeSeconds,
+          0,
+        ) / 60,
     );
     return { dayStart, minutes };
   });

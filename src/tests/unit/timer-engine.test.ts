@@ -47,6 +47,23 @@ describe("timer engine accuracy", () => {
     expect(getOvertimeMs(overtime, 151_000)).toBe(1_000);
   });
 
+  it("credits every Add Time extension so completed focus totals stay honest", () => {
+    // Run a short session and extend it twice while running.
+    let state = timerReducer(createTimerState("focus", 60), { type: "START", now: 0 });
+    state = timerReducer(state, { type: "ADD_TIME", seconds: 300, now: 1_000 });
+    expect(state.addedSeconds).toBe(300);
+    state = timerReducer(state, { type: "ADD_TIME", seconds: 60, now: 2_000 });
+    // Accumulate repeated extensions instead of replacing the earlier credit.
+    expect(state.addedSeconds).toBe(360);
+    // Pause, extend again, and confirm paused additions count too.
+    state = timerReducer(state, { type: "PAUSE", now: 3_000 });
+    state = timerReducer(state, { type: "ADD_TIME", seconds: 60, now: 4_000 });
+    expect(state.addedSeconds).toBe(420);
+    // Reset through the ordinary transition and require a fresh zero credit.
+    const reset = timerReducer(state, { type: "RESET" });
+    expect(reset.addedSeconds).toBe(0);
+  });
+
   it("restores a same-mode snapshot so a reset can be undone", () => {
     // Start a short session and pause it to build one meaningful pre-reset snapshot.
     const started = timerReducer(createTimerState("focus", 60), { type: "START", now: 0 });

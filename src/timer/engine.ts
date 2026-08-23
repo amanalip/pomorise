@@ -26,6 +26,8 @@ export interface TimerState {
   phase: TimerPhase;
   sessionNumber: number;
   plannedSeconds: number;
+  // Count every deliberate Add Time extension so focused totals stay honest later.
+  addedSeconds: number;
   remainingMs: number;
   startedAt: number | null;
   targetEndAt: number | null;
@@ -78,6 +80,7 @@ export function createTimerState(
     phase: "idle",
     sessionNumber,
     plannedSeconds,
+    addedSeconds: 0,
     remainingMs: plannedSeconds * 1_000,
     startedAt: null,
     targetEndAt: null,
@@ -176,6 +179,8 @@ export function timerReducer(state: TimerState, event: TimerEvent): TimerState {
         if (cappedRemaining === remainingMs) return state;
         return {
           ...state,
+          // Credit only the granted extension so completed focus totals include it.
+          addedSeconds: state.addedSeconds + Math.round((cappedRemaining - remainingMs) / 1_000),
           remainingMs: cappedRemaining,
           targetEndAt: (state.targetEndAt ?? event.now) + (cappedRemaining - remainingMs),
         };
@@ -183,7 +188,13 @@ export function timerReducer(state: TimerState, event: TimerEvent): TimerState {
       const cappedRemaining = Math.min(state.remainingMs + addedMs, maximumRemainingMs);
       // Keep paused state untouched when it already sits at the absolute limit.
       if (cappedRemaining === state.remainingMs) return state;
-      return { ...state, remainingMs: cappedRemaining };
+      return {
+        ...state,
+        // Credit paused extensions too so resumed sessions record the full truth.
+        addedSeconds:
+          state.addedSeconds + Math.round((cappedRemaining - state.remainingMs) / 1_000),
+        remainingMs: cappedRemaining,
+      };
     }
     case "TICK": {
       if (state.phase !== "running") throw new InvalidTimerTransitionError(state.phase, event.type);

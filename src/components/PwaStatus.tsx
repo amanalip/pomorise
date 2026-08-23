@@ -2,9 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { registerSW } from "virtual:pwa-register";
 import { Button, Notice } from "./ui";
 
-// Describe the small set of service-worker and connectivity messages that need visitor action.
-type PwaMessage = "offline" | "update" | null;
-
 // Describe the browser's deferred installation invitation without relying on DOM vendor types.
 interface InstallInvitation extends Event {
   prompt: () => Promise<void>;
@@ -52,7 +49,13 @@ export function InstallPomorise() {
 
 // Register production offline support and keep every disruptive update behind explicit consent.
 export function PwaStatus() {
-  const [message, setMessage] = useState<PwaMessage>(() => (navigator.onLine ? null : "offline"));
+  // Track offline connectivity and available updates as separate states so one
+  // connectivity change can never erase the other visitor choice or notice.
+  const [isOffline, setIsOffline] = useState(() => !navigator.onLine);
+  const [updateAvailable, setUpdateAvailable] = useState(false);
+  // Keep each notice individually dismissible while later events can show it again.
+  const [offlineDismissed, setOfflineDismissed] = useState(false);
+  const [updateDismissed, setUpdateDismissed] = useState(false);
 
   // Hold the generated update action without starting service-worker work during React render.
   const applyUpdateRef = useRef<(reloadPage?: boolean) => Promise<void>>(() => Promise.resolve());
@@ -64,7 +67,11 @@ export function PwaStatus() {
       // Register from the same generated module after first-screen bandwidth is no longer critical.
       applyUpdateRef.current = registerSW({
         immediate: true,
-        onNeedRefresh: () => setMessage("update"),
+        onNeedRefresh: () => {
+          // Record the update without touching offline state so both notices can coexist.
+          setUpdateAvailable(true);
+          setUpdateDismissed(false);
+        },
         onOfflineReady: () => {
           // Settings already explains offline readiness, so installation needs no obstructive toast.
         },
@@ -80,8 +87,12 @@ export function PwaStatus() {
 
   // Report real connectivity changes without implying that a first uncached visit can load offline.
   useEffect(() => {
-    const handleOffline = () => setMessage("offline");
-    const handleOnline = () => setMessage((current) => (current === "offline" ? null : current));
+    const handleOffline = () => {
+      // Record the offline state without touching any pending update choice.
+      setIsOffline(true);
+      setOfflineDismissed(false);
+    };
+    const handleOnline = () => setIsOffline(false);
     window.addEventListener("offline", handleOffline);
     window.addEventListener("online", handleOnline);
     return () => {
@@ -90,27 +101,43 @@ export function PwaStatus() {
     };
   }, []);
 
-  if (!message) return null;
+  // Derive each visible notice independently so returning online restores a lost update prompt.
+  const showOffline = isOffline && !offlineDismissed;
+  const showUpdate = updateAvailable && !updateDismissed;
+
+  if (!showOffline && !showUpdate) return null;
 
   return (
     <aside className="pwa-status" aria-label="Application status">
-      <Notice role="status" tone={message === "offline" ? "warning" : "info"}>
-        <div className="pwa-status__content">
-          <span>
-            {message === "update"
-              ? "A Pomorise update is ready. Your current session will not reload unless you choose it."
-              : "You are offline. Previously loaded Pomorise features and local data remain available."}
-          </span>
-          <div className="pwa-status__actions">
-            {message === "update" && (
-              <Button onClick={() => void applyUpdateRef.current(true)}>Update and reload</Button>
-            )}
-            <Button onClick={() => setMessage(null)} variant="quiet">
-              {message === "update" ? "Later" : "Dismiss"}
-            </Button>
+      {showOffline && (
+        <Notice role="status" tone="warning">
+          <div className="pwa-status__content">
+            <span>
+              You are offline. Previously loaded Pomorise features and local data remain available.
+            </span>
+            <div className="pwa-status__actions">
+              <Button onClick={() => setOfflineDismissed(true)} variant="quiet">
+                Dismiss
+              </Button>
+            </div>
           </div>
-        </div>
-      </Notice>
+        </Notice>
+      )}
+      {showUpdate && (
+        <Notice role="status" tone="info">
+          <div className="pwa-status__content">
+            <span>
+              A Pomorise update is ready. Your current session will not reload unless you choose it.
+            </span>
+            <div className="pwa-status__actions">
+              <Button onClick={() => void applyUpdateRef.current(true)}>Update and reload</Button>
+              <Button onClick={() => setUpdateDismissed(true)} variant="quiet">
+                Later
+              </Button>
+            </div>
+          </div>
+        </Notice>
+      )}
     </aside>
   );
 }

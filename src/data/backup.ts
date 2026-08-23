@@ -106,10 +106,22 @@ function csvCell(value: string | number | null): string {
 
 // Create a portable session-history table with no dependency on a charting or cloud service.
 export function createSessionCsv(records: PomoriseBackup["records"]["sessions"]): string {
-  const header = ["completed_at", "planned_minutes", "intention", "task"];
+  // Report planned, added, overtime, and total focused minutes so Add Time is never lost.
+  const header = [
+    "completed_at",
+    "planned_minutes",
+    "added_minutes",
+    "overtime_minutes",
+    "focused_minutes",
+    "intention",
+    "task",
+  ];
   const rows = records.map((session) => [
     new Date(session.completedAt).toISOString(),
     Math.round(session.plannedSeconds / 60),
+    Math.round(session.addedSeconds / 60),
+    Math.round(session.overtimeSeconds / 60),
+    Math.round((session.plannedSeconds + session.addedSeconds + session.overtimeSeconds) / 60),
     session.intention,
     session.taskTitle,
   ]);

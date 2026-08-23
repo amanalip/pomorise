@@ -1,7 +1,7 @@
 /* Define every Pomorise brand color once so the static FAQ page cannot drift internally.
    Values mirror the approved tokens in src/styles/global.css and must be updated together. */
 :root {
-  color-scheme: light dark;
+  color-scheme: light;
   font-family:
     Inter,
     ui-sans-serif,
@@ -28,9 +28,25 @@
   background: var(--faq-canvas);
 }
 
-/* Swap only token values for dark visitors instead of restating every rule. */
+/* Honor the app's saved pomorise.theme choice, which the page script mirrors
+   into data-theme before first paint so both surfaces can never disagree.
+   These token values mirror the dark block below and must be updated together. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --faq-canvas: #170f1d;
+  --faq-surface: #24152d;
+  --faq-ink: #fff7ee;
+  --faq-ink-muted: #c8b9c9;
+  --faq-border: #544159;
+  --faq-accent-strong: #ffae72;
+  --faq-shadow: rgb(0 0 0 / 20%);
+}
+
+/* Keep operating-system following intact when scripting is unavailable and no
+   explicit preference was resolved. Values mirror the block above exactly. */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme]) {
+    color-scheme: dark;
     --faq-canvas: #170f1d;
     --faq-surface: #24152d;
     --faq-ink: #fff7ee;
