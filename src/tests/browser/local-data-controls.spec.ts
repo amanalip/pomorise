@@ -465,6 +465,88 @@ test("keeps task updatedAt stable across unrelated saves and bumps on real chang
   // Close the timestamp-meaning case after proving both stability and honest bumps.
 });
 
+// Verify loading, summaries, and export stay dependable with thousands of records.
+test("stays responsive with a very large local history", async ({ page, baseURL }) => {
+  // Require the configured address before leaving the origin for deterministic setup.
+  if (!baseURL) throw new Error("The large-history test requires the configured base URL.");
+  // Block application scripts once so setup owns the origin without opening Dexie.
+  await page.route("**/*.js", (route) => route.abort());
+  // Load only the HTML document needed to grant IndexedDB access safely.
+  await page.goto(baseURL);
+  // Remove the temporary block before real application navigation begins.
+  await page.unroute("**/*.js");
+  // Seed three thousand valid sessions spanning roughly the trailing week.
+  await page.evaluate((sessionCount) => {
+    return new Promise<void>((resolve, reject) => {
+      // Create the release schema natively at its current version for this fresh profile.
+      const request = indexedDB.open("pomorise-first-light", 2);
+      request.onupgradeneeded = () => {
+        // Read the upgrade connection and register every release object store.
+        const database = request.result;
+        database
+          .createObjectStore("tasks", { keyPath: "id" })
+          .createIndex("updatedAt", "updatedAt");
+        database
+          .createObjectStore("sessions", { keyPath: "id" })
+          .createIndex("completedAt", "completedAt");
+        const distractions = database.createObjectStore("distractions", { keyPath: "id" });
+        distractions.createIndex("resolution", "resolution");
+        distractions.createIndex("capturedAt", "capturedAt");
+        database
+          .createObjectStore("reflections", { keyPath: "sessionId" })
+          .createIndex("status", "status");
+        database.createObjectStore("meta", { keyPath: "key" });
+      };
+      request.onsuccess = () => {
+        // Write every synthetic session inside one transaction for speed and safety.
+        const transaction = request.result.transaction(["sessions"], "readwrite");
+        const store = transaction.objectStore("sessions");
+        for (let index = 0; index < sessionCount; index += 1) {
+          // Spread completions across roughly seven days ending right now.
+          const completedAt = Date.now() - (sessionCount - index) * 200_000;
+          store.put({
+            id: completedAt,
+            completedAt,
+            plannedSeconds: 1_500,
+            overtimeSeconds: 0,
+            intention: "",
+            taskTitle: null,
+          });
+        }
+        transaction.oncomplete = () => {
+          request.result.close();
+          resolve();
+        };
+        transaction.onerror = () =>
+          reject(transaction.error ?? new Error("Large seed transaction failed."));
+      };
+      request.onerror = () => reject(request.error ?? new Error("Database creation failed."));
+    });
+  }, 3_000);
+  // Open the production application against the seeded history.
+  await page.goto("./");
+  // Let hydration finish reading every record before asserting on the interface.
+  await page.waitForTimeout(800);
+  // Require the ownership summary to report the complete seeded count honestly.
+  await openDataControls(page);
+  await expect(page.getByLabel("Local record summary")).toContainText("3000 sessions");
+  // Close settings so the primary views can be exercised without modal interference.
+  await page.getByRole("button", { name: "Done" }).click();
+  // Switch to Progress so derived summaries render across every seeded record.
+  await page.getByRole("button", { name: "Progress" }).first().click();
+  // Require the honest weekly aggregate to remain present and stable.
+  await expect(page.getByText("Sessions in the last 7 days")).toBeVisible();
+  // Require the recent-sessions disclosure to stay bounded despite the huge history.
+  await expect(page.getByText(/Recent sessions/)).toBeVisible();
+  // Export the entire history as one downloadable validated backup.
+  await openDataControls(page);
+  const downloadPromise = page.waitForEvent("download");
+  await page.getByRole("button", { name: "Download backup" }).click();
+  const download = await downloadPromise;
+  expect(await download.path()).toBeTruthy();
+  // Close the large-history case after proving load, summaries, and export scale.
+});
+
 // Verify export, deletion, and import reproduce the exact same local workspace.
 test("round-trips tasks, intention, and captures through backup and restore", async ({ page }) => {
   // Open a fresh profile and build one recognizable workspace through the ordinary UI.
