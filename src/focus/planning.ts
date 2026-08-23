@@ -47,7 +47,9 @@ export type FocusPlanAction =
   // Rename one unfinished task or adjust its remaining-session estimate.
   | { type: "EDIT_TASK"; taskId: number; title: string; estimatedSessions: number }
   // Remove one unfinished task the visitor no longer wants without touching history.
-  | { type: "DELETE_TASK"; taskId: number };
+  | { type: "DELETE_TASK"; taskId: number }
+  // Reorder one unfinished task among its unfinished neighbors without full project tooling.
+  | { type: "MOVE_TASK"; taskId: number; direction: -1 | 1 };
 
 // Prevent the planning layer from expanding into an overwhelming backlog.
 export const MAX_FOCUS_TASKS = 5;
@@ -197,6 +199,29 @@ export function reduceFocusPlan(state: FocusPlanState, action: FocusPlanAction):
         tasks: state.tasks.filter((task) => task.id !== action.taskId),
         activeTaskId: state.activeTaskId === action.taskId ? null : state.activeTaskId,
       };
+    }
+    // Swap one unfinished task with its nearest unfinished neighbor in one direction.
+    case "MOVE_TASK": {
+      // Locate the moving unfinished task within the mixed-order collection.
+      const fromIndex = state.tasks.findIndex(
+        (task) => task.id === action.taskId && !task.completed,
+      );
+      if (fromIndex === -1) return state;
+      // Walk past completed history so unfinished tasks order among themselves.
+      let toIndex = fromIndex + action.direction;
+      while (toIndex >= 0 && toIndex < state.tasks.length && state.tasks[toIndex]?.completed) {
+        toIndex += action.direction;
+      }
+      // Refuse moves that would leave the unfinished group entirely.
+      if (toIndex < 0 || toIndex >= state.tasks.length) return state;
+      const destination = state.tasks[toIndex];
+      const moving = state.tasks[fromIndex];
+      if (!destination || !moving) return state;
+      // Rebuild the array once with the two positions exchanged.
+      const tasks = [...state.tasks];
+      tasks[fromIndex] = destination;
+      tasks[toIndex] = moving;
+      return { ...state, tasks };
     }
     // Preserve the current plan if a future caller reaches this reducer with no recognized action.
     default:

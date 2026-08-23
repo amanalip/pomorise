@@ -1592,6 +1592,25 @@ export function App() {
                           >
                             Edit
                           </Button>
+                          {/* Offer simple ordering without introducing drag complexity. */}
+                          <Button
+                            aria-label={`Move ${task.title} up`}
+                            onClick={() =>
+                              updateFocusPlan({ type: "MOVE_TASK", taskId: task.id, direction: -1 })
+                            }
+                            variant="quiet"
+                          >
+                            ↑
+                          </Button>
+                          <Button
+                            aria-label={`Move ${task.title} down`}
+                            onClick={() =>
+                              updateFocusPlan({ type: "MOVE_TASK", taskId: task.id, direction: 1 })
+                            }
+                            variant="quiet"
+                          >
+                            ↓
+                          </Button>
                           {/* Confirm removal inline so no blocking dialog is required. */}
                           {confirmingDeleteTaskId === task.id ? (
                             <>

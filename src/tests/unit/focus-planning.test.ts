@@ -94,6 +94,28 @@ describe("focus planning", () => {
     expect(next.tasks[0]?.completed).toBe(true);
     expect(next.activeTaskId).toBe(2);
   });
+  // Verify unfinished tasks reorder among themselves without disturbing history order.
+  it("moves a task past completed records to swap unfinished neighbors", () => {
+    // Build one mixed list: finished, first, second so moves must skip completed rows.
+    let state = reduceFocusPlan(createInitialFocusPlan(), {
+      type: "ADD_TASK",
+      title: "Finished earlier",
+      estimatedSessions: 1,
+    });
+    state = reduceFocusPlan(state, { type: "ADD_TASK", title: "First", estimatedSessions: 1 });
+    state = reduceFocusPlan(state, { type: "ADD_TASK", title: "Second", estimatedSessions: 1 });
+    state = reduceFocusPlan(state, { type: "COMPLETE_TASK", taskId: 1 });
+    // Move the second unfinished task up and require the completed record to stay put.
+    const moved = reduceFocusPlan(state, { type: "MOVE_TASK", taskId: 3, direction: -1 });
+    expect(moved.tasks.map((task) => task.id)).toEqual([1, 3, 2]);
+    // Refuse moving the topmost unfinished task above the unfinished group.
+    const blocked = reduceFocusPlan(moved, { type: "MOVE_TASK", taskId: 3, direction: -1 });
+    expect(blocked).toBe(moved);
+    // Ignore unknown identities without allocating any new state.
+    expect(reduceFocusPlan(moved, { type: "MOVE_TASK", taskId: 99, direction: 1 })).toBe(moved);
+    // Close the ordering case after proving calm, bounded reordering.
+  });
+
   // Verify unfinished tasks can be removed while completed history stays untouchable.
   it("deletes an unfinished task and releases its selection", () => {
     // Plan two tasks and select the second so deletion must clear the anchor.
