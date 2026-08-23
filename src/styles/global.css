@@ -1180,6 +1180,42 @@ img {
   margin: 0;
 }
 
+/* Keep the recent-sessions disclosure consistent with the task history pattern. */
+.recent-sessions summary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  cursor: pointer;
+  font-weight: 750;
+  padding-block: var(--space-2);
+}
+
+/* Separate each remembered session with the same quiet divider language. */
+.recent-sessions__list {
+  list-style: none;
+  margin: var(--space-2) 0 0;
+  padding: 0;
+}
+
+/* Group one session's date, facts, and reflection into a readable block. */
+.recent-sessions__list li {
+  border-top: 1px solid var(--color-border);
+  padding-block: var(--space-3);
+  display: grid;
+  gap: var(--space-1);
+}
+
+/* Keep supporting session facts in the shared muted hierarchy. */
+.recent-sessions__list small {
+  color: var(--color-ink-muted);
+}
+
+/* Let reflection lines wrap comfortably without extra margins. */
+.recent-sessions__list p {
+  margin: 0;
+  line-height: 1.5;
+}
+
 /* Separate completed task records from the active planning controls above them. */
 .task-history {
   /* Create a quiet boundary before the audit trail without adding another card. */

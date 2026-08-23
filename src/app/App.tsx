@@ -182,6 +182,14 @@ function getTimerShortcutHints(phase: TimerState["phase"]): TimerShortcutHint[] 
   return [];
 }
 
+// Format one completion boundary as a short local date for the recent-sessions list.
+function formatSessionDate(completedAt: number): string {
+  return new Date(completedAt).toLocaleDateString(undefined, {
+    month: "short",
+    day: "numeric",
+  });
+}
+
 // Render the responsive shell around the reliable Phase 3 timer engine.
 export function App() {
   // Read both stored and resolved theme values from the application-level provider.
@@ -1742,6 +1750,39 @@ export function App() {
                 </div>
               )}
             </dl>
+            {/* Let visitors revisit their own recent reflections without leaving the page. */}
+            {focusJourney.sessions.length > 0 && (
+              <details className="recent-sessions">
+                {/* Summarize the review purpose and record count before expansion. */}
+                <summary>
+                  <span>Recent sessions</span>
+                  <span className="badge">{Math.min(5, focusJourney.sessions.length)}</span>
+                </summary>
+                {/* Present the newest reflections first in one calm readable list. */}
+                <ul className="recent-sessions__list" aria-label="Recent completed sessions">
+                  {focusJourney.sessions
+                    .slice(-5)
+                    .reverse()
+                    .map((session) => (
+                      // Keep each reflection grouped beside its completion boundary.
+                      <li key={session.completedAt}>
+                        <strong>{formatSessionDate(session.completedAt)}</strong>
+                        <small>
+                          {Math.round((session.plannedSeconds + session.overtimeSeconds) / 60)} min
+                          {/* Show the rating only when the visitor gave one. */}
+                          {session.focusRating !== null && ` · rated ${session.focusRating}`}
+                          {/* Name the task only when one was selected during the session. */}
+                          {session.taskTitle !== null && ` · ${session.taskTitle}`}
+                        </small>
+                        {/* Reveal the saved next step as the most useful private cue. */}
+                        {session.nextStep && <p>Next: {session.nextStep}</p>}
+                        {/* Preserve optional notes without ever requiring them. */}
+                        {session.notes && <p>{session.notes}</p>}
+                      </li>
+                    ))}
+                </ul>
+              </details>
+            )}
             {/* Explain the current device-local privacy boundary without implying cloud sync. */}
             <Notice>
               Private progress is saved on this device. No account or upload is involved.
