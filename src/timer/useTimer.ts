@@ -107,6 +107,52 @@ export function useTimer() {
   const [clockRecovery, setClockRecovery] = useState<ClockRecovery | null>(null);
   const observationRef = useRef({ wall: Date.now(), monotonic: performance.now() });
   const previousPhaseRef = useRef(state.phase);
+  // Hold the active wake-lock sentinel so it can be released exactly once per session.
+  const wakeLockRef = useRef<WakeLockSentinel | null>(null);
+
+  // Keep the screen awake only while a session actively counts or runs overtime.
+  useEffect(() => {
+    // Decide the target state from the explicit preference and the live phase.
+    const wantsLock =
+      preferences.wakeLockEnabled && (state.phase === "running" || state.phase === "overtime");
+    let cancelled = false;
+    // Synchronize one sentinel toward the desired state without ever throwing.
+    async function synchronizeWakeLock() {
+      try {
+        if (wantsLock && wakeLockRef.current === null && "wakeLock" in navigator) {
+          // Request through the platform API inside this visitor-granted context.
+          const sentinel = await navigator.wakeLock.request("screen");
+          // Respect an unmount that happened while the request was in flight.
+          if (cancelled) {
+            await sentinel.release();
+            return;
+          }
+          // Forget the sentinel automatically when the browser releases it.
+          sentinel.addEventListener("release", () => {
+            wakeLockRef.current = null;
+          });
+          wakeLockRef.current = sentinel;
+        } else if (!wantsLock && wakeLockRef.current !== null) {
+          // Release promptly whenever the phase or preference no longer wants the lock.
+          await wakeLockRef.current.release();
+          wakeLockRef.current = null;
+        }
+      } catch {
+        // Wake locks are best-effort; the timer never depends on them.
+      }
+    }
+    void synchronizeWakeLock();
+    // Re-acquire after tab switches because browsers drop sentinels when hidden.
+    const handleVisibility = () => {
+      if (document.visibilityState === "visible") void synchronizeWakeLock();
+    };
+    document.addEventListener("visibilitychange", handleVisibility);
+    return () => {
+      cancelled = true;
+      document.removeEventListener("visibilitychange", handleVisibility);
+      void wakeLockRef.current?.release();
+    };
+  }, [preferences.wakeLockEnabled, state.phase]);
 
   // Apply a meaningful event, persist its result once, and provide restrained status feedback.
   const send = useCallback(

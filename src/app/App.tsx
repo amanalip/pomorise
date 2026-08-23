@@ -2057,6 +2057,23 @@ export function App() {
                 <small>When a break ends, the next focus session begins on its own.</small>
               </span>
             </label>
+            {/* Ask for a wake lock only during active sessions when the platform allows it. */}
+            <label className="setting-toggle">
+              <input
+                checked={timer.preferences.wakeLockEnabled}
+                onChange={(event) =>
+                  timer.setPreferences({
+                    ...timer.preferences,
+                    wakeLockEnabled: event.currentTarget.checked,
+                  })
+                }
+                type="checkbox"
+              />
+              <span>
+                <strong>Keep the screen awake during sessions</strong>
+                <small>Asks your browser to keep the display on while a session runs.</small>
+              </span>
+            </label>
             <label className="setting-toggle">
               <input
                 checked={timer.preferences.soundEnabled}

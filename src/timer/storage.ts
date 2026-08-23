@@ -64,6 +64,8 @@ export interface TimerPreferences {
   automaticBreaks: boolean;
   // Begin the next focus session on its own when a break completes.
   automaticFocus: boolean;
+  // Ask the browser to keep the screen awake during active sessions when supported.
+  wakeLockEnabled: boolean;
   soundEnabled: boolean;
   notificationsEnabled: boolean;
 }
@@ -74,6 +76,7 @@ export const DEFAULT_TIMER_PREFERENCES: TimerPreferences = {
   longBreakInterval: DEFAULT_LONG_BREAK_INTERVAL,
   automaticBreaks: false,
   automaticFocus: false,
+  wakeLockEnabled: false,
   soundEnabled: false,
   notificationsEnabled: false,
 };
@@ -108,6 +111,7 @@ const timerPreferencesSchema = z.object({
   automaticTransitions: z.boolean().optional(),
   automaticBreaks: z.boolean().optional(),
   automaticFocus: z.boolean().optional(),
+  wakeLockEnabled: z.boolean().optional(),
   soundEnabled: z.boolean(),
   notificationsEnabled: z.boolean(),
 });
@@ -160,6 +164,8 @@ export function loadTimerPreferences(storage: Storage = window.localStorage): Ti
       // Legacy profiles only ever auto-started focus, so migration preserves that meaning.
       automaticBreaks: parsed.automaticBreaks ?? false,
       automaticFocus: parsed.automaticFocus ?? parsed.automaticTransitions ?? false,
+      // Older profiles never had a wake-lock choice, so quiet is the safe default.
+      wakeLockEnabled: parsed.wakeLockEnabled ?? false,
       soundEnabled: parsed.soundEnabled,
       notificationsEnabled: parsed.notificationsEnabled,
     };
