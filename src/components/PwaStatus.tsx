@@ -5,6 +5,51 @@ import { Button, Notice } from "./ui";
 // Describe the small set of service-worker and connectivity messages that need visitor action.
 type PwaMessage = "offline" | "update" | null;
 
+// Describe the browser's deferred installation invitation without relying on DOM vendor types.
+interface InstallInvitation extends Event {
+  prompt: () => Promise<void>;
+}
+
+// Offer installation only while the browser itself is actively inviting it.
+export function InstallPomorise() {
+  // Hold the captured invitation so the visitor's own gesture can trigger the prompt.
+  const [invitation, setInvitation] = useState<InstallInvitation | null>(null);
+
+  // Capture the standard beforeinstallprompt event instead of letting browser UI compete.
+  useEffect(() => {
+    // Ignore already-installed sessions because standalone windows need no install option.
+    if (window.matchMedia("(display-mode: standalone)").matches) return undefined;
+    // Store the deferred invitation after suppressing the browser's automatic banner.
+    const captureInvitation = (event: Event) => {
+      event.preventDefault();
+      setInvitation(event as InstallInvitation);
+    };
+    window.addEventListener("beforeinstallprompt", captureInvitation);
+    return () => window.removeEventListener("beforeinstallprompt", captureInvitation);
+  }, []);
+
+  // Stay invisible whenever installation is unavailable, declined, or already complete.
+  if (!invitation) return null;
+
+  return (
+    <div className="install-row">
+      {/* Trigger the platform dialog from one explicit visitor gesture. */}
+      <Button
+        onClick={() => {
+          void invitation.prompt();
+          setInvitation(null);
+        }}
+        variant="secondary"
+      >
+        Install Pomorise
+      </Button>
+      {/* Explain the outcome honestly without promising offline behavior on first run. */}
+      <span className="install-row__hint">Adds Pomorise to this device through your browser.</span>
+      {/* Close the restrained installation offer after its single clear action. */}
+    </div>
+  );
+}
+
 // Register production offline support and keep every disruptive update behind explicit consent.
 export function PwaStatus() {
   const [message, setMessage] = useState<PwaMessage>(() => (navigator.onLine ? null : "offline"));

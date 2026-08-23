@@ -1148,6 +1148,21 @@ img {
   flex-shrink: 0;
 }
 
+/* Present the installation offer as one quiet settings row. */
+.install-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+/* Keep the installation hint readable without competing with actions. */
+.install-row__hint {
+  color: var(--color-ink-muted);
+  font-size: 0.875rem;
+}
+
 /* Separate completed task records from the active planning controls above them. */
 .task-history {
   /* Create a quiet boundary before the audit trail without adding another card. */

@@ -16,6 +16,8 @@ import darkLogoUrl from "../../assets/logos/header_dark_mode_phase6.png";
 import lightLogoUrl from "../../assets/logos/header_light_mode_phase6.png";
 // Import theme state so the logo and appearance settings follow one resolved preference.
 import { useTheme } from "../components/ThemeProvider";
+// Import the restrained installation offer that follows the browser's own invitation.
+import { InstallPomorise } from "../components/PwaStatus";
 // Import project-owned primitives that establish Phase 2 interaction and surface patterns.
 import { Button, Card, Dialog, Field, Notice, SegmentedControl } from "../components/ui";
 // Import only the workspace type so Dexie and Zod stay outside the first-screen bundle.
@@ -1705,6 +1707,8 @@ export function App() {
           <div aria-labelledby="preferences-tab" id="preferences-panel" role="tabpanel">
             {/* Introduce appearance and timer choices that remain local to this browser. */}
             <p className="dialog__intro">Choose how Pomorise looks and behaves on this device.</p>
+            {/* Offer installation only while the browser itself invites it. */}
+            <InstallPomorise />
             {/* Present the three exclusive theme choices as accessible native radio inputs. */}
             <SegmentedControl
               // Give the radio group a concise visible legend.
