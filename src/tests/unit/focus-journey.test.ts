@@ -5,6 +5,7 @@ import {
   createInitialFocusJourney,
   reduceFocusJourney,
   summarizeProgress,
+  summarizeWeek,
 } from "../../focus/journey";
 
 // Protect capture, reflection, and summary behavior across the complete Phase 4 journey.
@@ -139,5 +140,58 @@ describe("focus journey", () => {
     // Protect the larger honest total after the idempotent repeat.
     expect(repeated.sessions[0]?.overtimeSeconds).toBe(300);
   });
+  // Verify the trailing-week series buckets sessions by honest local days.
+  it("summarizes seven local days of focused minutes for the chart", () => {
+    // Anchor at local noon so every day boundary is deterministic in any timezone.
+    const now = new Date(2026, 7, 20, 12).getTime();
+    // Place sessions today, two days ago, and outside the seven-day window.
+    const sessions = [
+      {
+        completedAt: now - 3_600_000,
+        plannedSeconds: 1_500,
+        overtimeSeconds: 300,
+        intention: "",
+        taskTitle: null,
+        nextStep: "",
+        focusRating: null,
+        notes: "",
+        reflectionStatus: "skipped" as const,
+      },
+      {
+        completedAt: now - 2 * 86_400_000,
+        plannedSeconds: 900,
+        overtimeSeconds: 0,
+        intention: "",
+        taskTitle: null,
+        nextStep: "",
+        focusRating: null,
+        notes: "",
+        reflectionStatus: "skipped" as const,
+      },
+      {
+        completedAt: new Date(2026, 6, 20).getTime(),
+        plannedSeconds: 1_500,
+        overtimeSeconds: 0,
+        intention: "",
+        taskTitle: null,
+        nextStep: "",
+        focusRating: null,
+        notes: "",
+        reflectionStatus: "skipped" as const,
+      },
+    ];
+    // Derive exactly seven day summaries ending with today.
+    const week = summarizeWeek(sessions, now);
+    expect(week).toHaveLength(7);
+    // Require the oldest entry to sit six local days before today's midnight.
+    expect(new Date(week[0]?.dayStart as number).getDate()).toBe(new Date(now).getDate() - 6);
+    // Require today's bucket to include planned plus honestly focused overtime.
+    expect(week[6]?.minutes).toBe(30);
+    // Require the two-days-ago bucket to capture its own session only.
+    expect(week[4]?.minutes).toBe(15);
+    // Require empty days to stay present as calm zero values.
+    expect(week[1]?.minutes).toBe(0);
+  });
+
   // Close the complete journey group after its deterministic behavior coverage.
 });

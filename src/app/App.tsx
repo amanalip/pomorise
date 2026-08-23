@@ -36,6 +36,7 @@ import {
   createInitialFocusJourney,
   reduceFocusJourney,
   summarizeProgress,
+  summarizeWeek,
   type DistractionResolution,
 } from "../focus/journey";
 // Import the timestamp-based timer interface and pure display helpers.
@@ -528,6 +529,8 @@ export function App() {
   );
   // Derive private summaries from session records rather than storing duplicate totals.
   const progressSummary = summarizeProgress(focusJourney.sessions, Date.now());
+  // Build the trailing-week focused-minute series for the calm chart treatment.
+  const weekSummary = summarizeWeek(focusJourney.sessions, Date.now());
   // Choose the active local guide only when the visitor requests guided break support.
   const activeBreakGuide = BREAK_GUIDES.find((guide) => guide.id === breakGuideId);
 
@@ -1750,6 +1753,33 @@ export function App() {
                 </div>
               )}
             </dl>
+            {/* Pair the honest weekly bars with a complete semantic alternative. */}
+            <div className="focus-chart">
+              {/* Hide the decorative bars from assistive technology behind labeled text. */}
+              <div className="focus-chart__bars" aria-hidden="true">
+                {weekSummary.map((day) => {
+                  // Scale every bar against the week's calm maximum without exaggeration.
+                  const tallest = Math.max(...weekSummary.map((entry) => entry.minutes), 1);
+                  return (
+                    <span key={day.dayStart} className="focus-chart__column">
+                      <span
+                        className="focus-chart__bar"
+                        style={{ height: `${Math.max(4, (day.minutes / tallest) * 100)}%` }}
+                      />
+                    </span>
+                  );
+                })}
+              </div>
+              {/* Provide the same seven values as readable text for every visitor. */}
+              <ul className="focus-chart__labels">
+                {weekSummary.map((day) => (
+                  <li key={day.dayStart}>
+                    {new Date(day.dayStart).toLocaleDateString(undefined, { weekday: "narrow" })}
+                    <span>{day.minutes} min</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
             {/* Let visitors revisit their own recent reflections without leaving the page. */}
             {focusJourney.sessions.length > 0 && (
               <details className="recent-sessions">

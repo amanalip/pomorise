@@ -266,6 +266,41 @@ export function summarizeProgress(sessions: SessionRecord[], now: number): Progr
   // Close the progress calculation after returning its semantic summary.
 }
 
+// Describe one local calendar day's focused total for the trailing-week chart.
+export interface WeekDaySummary {
+  // Hold the local midnight boundary so charts can label each day deterministically.
+  dayStart: number;
+  // Sum planned plus overtime minutes so the chart matches the honest daily totals.
+  minutes: number;
+}
+
+// Derive seven trailing local days of focused minutes without storing duplicate totals.
+export function summarizeWeek(sessions: SessionRecord[], now: number): WeekDaySummary[] {
+  // Anchor the window at today's local midnight using native calendar semantics.
+  const anchor = new Date(now);
+  anchor.setHours(0, 0, 0, 0);
+  // Build exactly seven entries from six days ago through today, oldest first.
+  return Array.from({ length: 7 }, (_, index) => {
+    // Walk backwards so index zero is always the oldest shown day.
+    const day = new Date(anchor);
+    day.setDate(day.getDate() - (6 - index));
+    const dayStart = day.getTime();
+    // Close the day at the following local midnight regardless of DST shifts.
+    const dayEnd = new Date(day);
+    dayEnd.setDate(dayEnd.getDate() + 1);
+    // Sum honest focused minutes for every session completed inside this local day.
+    const minutes = Math.round(
+      sessions
+        .filter(
+          (session) => session.completedAt >= dayStart && session.completedAt < dayEnd.getTime(),
+        )
+        .reduce((total, session) => total + session.plannedSeconds + session.overtimeSeconds, 0) /
+        60,
+    );
+    return { dayStart, minutes };
+  });
+}
+
 // Offer a small approved set of break guides without requiring network content.
 export const BREAK_GUIDES = [
   {

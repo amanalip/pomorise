@@ -1216,6 +1216,58 @@ img {
   line-height: 1.5;
 }
 
+/* Present the trailing week as one short calm chart row. */
+.focus-chart {
+  margin: var(--space-4) 0;
+}
+
+/* Give the seven bars one shared baseline and even spacing. */
+.focus-chart__bars {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-2);
+  height: 4rem;
+}
+
+/* Let every column share the width equally with a soft rounded bar. */
+.focus-chart__column {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  flex: 1;
+  height: 100%;
+}
+
+/* Draw each day as a quiet plum bar that reads without grid lines. */
+.focus-chart__bar {
+  width: min(1.75rem, 100%);
+  background: var(--color-accent-soft);
+  border-radius: var(--radius-1) var(--radius-1) 0 0;
+}
+
+/* Keep weekday letters and honest minute totals aligned under their bars. */
+.focus-chart__labels {
+  display: flex;
+  gap: var(--space-2);
+  list-style: none;
+  margin: var(--space-1) 0 0;
+  padding: 0;
+}
+
+/* Stack each label column exactly beneath its corresponding bar. */
+.focus-chart__labels li {
+  flex: 1;
+  text-align: center;
+  color: var(--color-ink-muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+/* Reveal the minute total as readable supporting text, not decoration. */
+.focus-chart__labels li span {
+  display: block;
+}
+
 /* Separate completed task records from the active planning controls above them. */
 .task-history {
   /* Create a quiet boundary before the audit trail without adding another card. */
